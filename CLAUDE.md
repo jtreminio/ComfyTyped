@@ -14,7 +14,7 @@ Run from the repo root (`src/Extensions/ComfyTyped/`).
 
 Build the library:
 ```
-dotnet build src/ComfyTyped.csproj
+dotnet build ComfyTyped.csproj
 ```
 
 Run all tests:
@@ -82,7 +82,9 @@ Extensions consume ComfyTyped through `lib/ComfyTyped.dll` only:
 
 This is intentional. Extensions should have **no source-level dependency** on this repo — an extension author can run codegen, vendor the DLL, and discard the ComfyTyped source. Do not "fix" consumer csprojs to use `<ProjectReference>` against this project. The DLL is the API surface.
 
-The DLL takes a transitive build-time dependency on `SwarmUI.csproj` (because `ComfyTyped.SwarmUI.MediaRef`/`BridgeSync` reference SwarmUI types in their public API). Consumer extensions already reference SwarmUI, so this resolves cleanly. ComfyTyped's csproj uses a `<ProjectReference>` to SwarmUI under `Condition="Exists('../../../SwarmUI.csproj')"`.
+The DLL takes a transitive build-time dependency on `SwarmUI.csproj` (because `ComfyTyped.SwarmUI.MediaRef`/`BridgeSync` reference SwarmUI types in their public API). Consumer extensions already reference SwarmUI, so this resolves cleanly. ComfyTyped's csproj uses a `<ProjectReference>` to SwarmUI under `Condition="Exists('../../SwarmUI.csproj')"`.
+
+`ComfyTyped.csproj` lives at the **extension root** (`src/Extensions/ComfyTyped/ComfyTyped.csproj`), not inside `src/`. This is required: SwarmUI's `ExtensionsManager` scans each extension directory's root for any `*.csproj` and synthesizes `SwarmAutoGenExtensionProjectFile.csproj` if it finds none — and that synthesized csproj uses default SDK file inclusion which sweeps up `Tests/`, `tools/`, and inner `obj/` artifacts, breaking the build. The root csproj explicitly excludes `Tests/**`, `tools/**`, `bin/**`, and `obj/**` so the SwarmUI build matches the standalone build.
 
 ## Tests
 

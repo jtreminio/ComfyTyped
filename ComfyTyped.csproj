@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>ComfyTyped</AssemblyName>
+    <RootNamespace>ComfyTyped</RootNamespace>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <!-- This csproj sits at the extension root so SwarmUI's ExtensionsManager
+       picks it up instead of synthesizing SwarmAutoGenExtensionProjectFile.csproj.
+       The library's source lives entirely under src/. Keep tests, the codegen tool,
+       and build artifacts of those subprojects out of this assembly. -->
+  <ItemGroup>
+    <Compile Remove="Tests/**" />
+    <Compile Remove="tools/**" />
+    <Compile Remove="bin/**" />
+    <Compile Remove="obj/**" />
+    <None Remove="Tests/**" />
+    <None Remove="tools/**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+  </ItemGroup>
+
+  <ItemGroup Condition="Exists('../../SwarmUI.csproj')">
+    <ProjectReference Include="../../SwarmUI.csproj">
+      <Private>false</Private>
+      <Properties>_EnableMacOSCodeSign=false;StaticWebAssetsEnabled=false</Properties>
+      <GlobalPropertiesToRemove>BaseIntermediateOutputPath;TargetName</GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
