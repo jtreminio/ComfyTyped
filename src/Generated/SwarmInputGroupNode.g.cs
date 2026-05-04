@@ -11,7 +11,7 @@ public sealed class SwarmInputGroupNode : ComfyNode
     public override string ClassType => "SwarmInputGroup";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> GROUP { get; }
+    public NodeOutput<GroupType> GROUP { get; }
 
     // ── Inputs ──
     public NodeInput<StringType> Title { get; }
@@ -23,7 +23,7 @@ public sealed class SwarmInputGroupNode : ComfyNode
 
     public SwarmInputGroupNode()
     {
-        GROUP = AddOutput<AnyType>(0, "GROUP");
+        GROUP = AddOutput<GroupType>(0, "GROUP");
         Title = AddInput<StringType>("title", required: true);
         Title.Set("My Group");
         OpenByDefault = AddInput<BooleanType>("open_by_default", required: true);

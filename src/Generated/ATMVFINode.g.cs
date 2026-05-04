@@ -18,7 +18,7 @@ public sealed class ATMVFINode : ComfyNode
     public NodeInput<IntType> ClearCacheAfterNFrames { get; }
     public NodeInput<IntType> Multiplier { get; }
     public NodeInput<StringType> GlobalMotion { get; }
-    public NodeInput<AnyType> OptionalInterpolationStates { get; } // optional
+    public NodeInput<InterpolationStatesType> OptionalInterpolationStates { get; } // optional
 
     public ATMVFINode()
     {
@@ -30,6 +30,6 @@ public sealed class ATMVFINode : ComfyNode
         Multiplier = AddInput<IntType>("multiplier", required: true);
         Multiplier.Set(2L);
         GlobalMotion = AddInput<StringType>("global_motion", required: true);
-        OptionalInterpolationStates = AddInput<AnyType>("optional_interpolation_states", required: false);
+        OptionalInterpolationStates = AddInput<InterpolationStatesType>("optional_interpolation_states", required: false);
     }
 }

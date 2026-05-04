@@ -13,7 +13,7 @@ public sealed class PhotoMakerEncodeNode : ComfyNode
     public NodeOutput<ConditioningType> CONDITIONING { get; }
 
     // ── Inputs ──
-    public NodeInput<AnyType> Photomaker { get; }
+    public NodeInput<PhotomakerType> Photomaker { get; }
     public NodeInput<ImageType> Image { get; }
     public NodeInput<ClipType> Clip { get; }
     public NodeInput<StringType> Text { get; }
@@ -21,7 +21,7 @@ public sealed class PhotoMakerEncodeNode : ComfyNode
     public PhotoMakerEncodeNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Photomaker = AddInput<AnyType>("photomaker", required: true);
+        Photomaker = AddInput<PhotomakerType>("photomaker", required: true);
         Image = AddInput<ImageType>("image", required: true);
         Clip = AddInput<ClipType>("clip", required: true);
         Text = AddInput<StringType>("text", required: true);

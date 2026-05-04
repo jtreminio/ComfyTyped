@@ -10,14 +10,14 @@ public sealed class AudioEncoderLoaderNode : ComfyNode
     public override string ClassType => "AudioEncoderLoader";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> AUDIOENCODER { get; }
+    public NodeOutput<AudioEncoderType> AUDIOENCODER { get; }
 
     // ── Inputs ──
     public NodeInput<StringType> AudioEncoderName { get; }
 
     public AudioEncoderLoaderNode()
     {
-        AUDIOENCODER = AddOutput<AnyType>(0, "AUDIO_ENCODER");
+        AUDIOENCODER = AddOutput<AudioEncoderType>(0, "AUDIO_ENCODER");
         AudioEncoderName = AddInput<StringType>("audio_encoder_name", required: true);
     }
 }

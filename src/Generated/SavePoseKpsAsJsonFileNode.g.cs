@@ -10,12 +10,12 @@ public sealed class SavePoseKpsAsJsonFileNode : ComfyNode
     public override string ClassType => "SavePoseKpsAsJsonFile";
 
     // ── Inputs ──
-    public NodeInput<AnyType> PoseKps { get; }
+    public NodeInput<PoseKeypointType> PoseKps { get; }
     public NodeInput<StringType> FilenamePrefix { get; }
 
     public SavePoseKpsAsJsonFileNode()
     {
-        PoseKps = AddInput<AnyType>("pose_kps", required: true);
+        PoseKps = AddInput<PoseKeypointType>("pose_kps", required: true);
         FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
         FilenamePrefix.Set("PoseKeypoint");
     }

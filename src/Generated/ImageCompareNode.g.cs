@@ -11,13 +11,13 @@ public sealed class ImageCompareNode : ComfyNode
     public override string ClassType => "ImageCompare";
 
     // ── Inputs ──
-    public NodeInput<AnyType> CompareView { get; }
+    public NodeInput<ImagecompareType> CompareView { get; }
     public NodeInput<ImageType> ImageA { get; } // optional
     public NodeInput<ImageType> ImageB { get; } // optional
 
     public ImageCompareNode()
     {
-        CompareView = AddInput<AnyType>("compare_view", required: true);
+        CompareView = AddInput<ImagecompareType>("compare_view", required: true);
         ImageA = AddInput<ImageType>("image_a", required: false);
         ImageB = AddInput<ImageType>("image_b", required: false);
     }

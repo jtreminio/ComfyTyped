@@ -18,7 +18,7 @@ public sealed class STMFNetVFINode : ComfyNode
     public NodeInput<IntType> ClearCacheAfterNFrames { get; }
     public NodeInput<IntType> Multiplier { get; }
     public NodeInput<BooleanType> DuplicateFirstLastFrames { get; }
-    public NodeInput<AnyType> OptionalInterpolationStates { get; } // optional
+    public NodeInput<InterpolationStatesType> OptionalInterpolationStates { get; } // optional
 
     public STMFNetVFINode()
     {
@@ -31,6 +31,6 @@ public sealed class STMFNetVFINode : ComfyNode
         Multiplier.Set(2L);
         DuplicateFirstLastFrames = AddInput<BooleanType>("duplicate_first_last_frames", required: true);
         DuplicateFirstLastFrames.Set(false);
-        OptionalInterpolationStates = AddInput<AnyType>("optional_interpolation_states", required: false);
+        OptionalInterpolationStates = AddInput<InterpolationStatesType>("optional_interpolation_states", required: false);
     }
 }

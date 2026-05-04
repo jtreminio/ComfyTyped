@@ -18,7 +18,7 @@ public sealed class MOMOVFINode : ComfyNode
     public NodeInput<IntType> ClearCacheAfterNFrames { get; }
     public NodeInput<IntType> Multiplier { get; }
     public NodeInput<IntType> NumInferenceSteps { get; }
-    public NodeInput<AnyType> OptionalInterpolationStates { get; } // optional
+    public NodeInput<InterpolationStatesType> OptionalInterpolationStates { get; } // optional
 
     public MOMOVFINode()
     {
@@ -31,6 +31,6 @@ public sealed class MOMOVFINode : ComfyNode
         Multiplier.Set(2L);
         NumInferenceSteps = AddInput<IntType>("num_inference_steps", required: true);
         NumInferenceSteps.Set(8L);
-        OptionalInterpolationStates = AddInput<AnyType>("optional_interpolation_states", required: false);
+        OptionalInterpolationStates = AddInput<InterpolationStatesType>("optional_interpolation_states", required: false);
     }
 }

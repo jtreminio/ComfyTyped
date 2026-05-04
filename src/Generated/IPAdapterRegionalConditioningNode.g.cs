@@ -10,7 +10,7 @@ public sealed class IPAdapterRegionalConditioningNode : ComfyNode
     public override string ClassType => "IPAdapterRegionalConditioning";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> IPADAPTERPARAMS { get; }
+    public NodeOutput<IpadapterParamsType> IPADAPTERPARAMS { get; }
     public NodeOutput<ConditioningType> POSITIVE { get; }
     public NodeOutput<ConditioningType> NEGATIVE { get; }
 
@@ -27,7 +27,7 @@ public sealed class IPAdapterRegionalConditioningNode : ComfyNode
 
     public IPAdapterRegionalConditioningNode()
     {
-        IPADAPTERPARAMS = AddOutput<AnyType>(0, "IPADAPTER_PARAMS");
+        IPADAPTERPARAMS = AddOutput<IpadapterParamsType>(0, "IPADAPTER_PARAMS");
         POSITIVE = AddOutput<ConditioningType>(1, "POSITIVE");
         NEGATIVE = AddOutput<ConditioningType>(2, "NEGATIVE");
         Image = AddInput<ImageType>("image", required: true);

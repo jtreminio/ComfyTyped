@@ -13,11 +13,11 @@ public sealed class RecordAudioNode : ComfyNode
     public NodeOutput<AudioType> AUDIO { get; }
 
     // ── Inputs ──
-    public NodeInput<AnyType> Audio { get; }
+    public NodeInput<AudioRecordType> Audio { get; }
 
     public RecordAudioNode()
     {
         AUDIO = AddOutput<AudioType>(0, "AUDIO");
-        Audio = AddInput<AnyType>("audio", required: true);
+        Audio = AddInput<AudioRecordType>("audio", required: true);
     }
 }

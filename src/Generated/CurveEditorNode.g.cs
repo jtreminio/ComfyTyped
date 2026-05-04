@@ -10,16 +10,16 @@ public sealed class CurveEditorNode : ComfyNode
     public override string ClassType => "CurveEditor";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> Curve { get; }
+    public NodeOutput<CurveType> Curve { get; }
 
     // ── Inputs ──
-    public NodeInput<AnyType> CurveInput { get; }
-    public NodeInput<AnyType> Histogram { get; } // optional
+    public NodeInput<CurveType> CurveInput { get; }
+    public NodeInput<HistogramType> Histogram { get; } // optional
 
     public CurveEditorNode()
     {
-        Curve = AddOutput<AnyType>(0, "curve");
-        CurveInput = AddInput<AnyType>("curve", required: true);
-        Histogram = AddInput<AnyType>("histogram", required: false);
+        Curve = AddOutput<CurveType>(0, "curve");
+        CurveInput = AddInput<CurveType>("curve", required: true);
+        Histogram = AddInput<HistogramType>("histogram", required: false);
     }
 }

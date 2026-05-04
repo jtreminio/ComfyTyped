@@ -10,7 +10,7 @@ public sealed class WanMoveTracksFromCoordsNode : ComfyNode
     public override string ClassType => "WanMoveTracksFromCoords";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> TRACKS { get; }
+    public NodeOutput<TracksType> TRACKS { get; }
     public NodeOutput<IntType> TrackLength { get; }
 
     // ── Inputs ──
@@ -19,7 +19,7 @@ public sealed class WanMoveTracksFromCoordsNode : ComfyNode
 
     public WanMoveTracksFromCoordsNode()
     {
-        TRACKS = AddOutput<AnyType>(0, "TRACKS");
+        TRACKS = AddOutput<TracksType>(0, "TRACKS");
         TrackLength = AddOutput<IntType>(1, "track_length");
         TrackCoords = AddInput<StringType>("track_coords", required: false);
         TrackCoords.Set("[]");

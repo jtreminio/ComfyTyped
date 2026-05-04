@@ -10,7 +10,7 @@ public sealed class PrimitiveBoundingBoxNode : ComfyNode
     public override string ClassType => "PrimitiveBoundingBox";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> BOUNDINGBOX { get; }
+    public NodeOutput<BoundingBoxType> BOUNDINGBOX { get; }
 
     // ── Inputs ──
     public NodeInput<IntType> X { get; }
@@ -20,7 +20,7 @@ public sealed class PrimitiveBoundingBoxNode : ComfyNode
 
     public PrimitiveBoundingBoxNode()
     {
-        BOUNDINGBOX = AddOutput<AnyType>(0, "BOUNDING_BOX");
+        BOUNDINGBOX = AddOutput<BoundingBoxType>(0, "BOUNDING_BOX");
         X = AddInput<IntType>("x", required: true);
         X.Set(0L);
         Y = AddInput<IntType>("y", required: true);

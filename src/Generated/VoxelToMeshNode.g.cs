@@ -10,17 +10,17 @@ public sealed class VoxelToMeshNode : ComfyNode
     public override string ClassType => "VoxelToMesh";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> MESH { get; }
+    public NodeOutput<MeshType> MESH { get; }
 
     // ── Inputs ──
-    public NodeInput<AnyType> Voxel { get; }
+    public NodeInput<VoxelType> Voxel { get; }
     public NodeInput<StringType> Algorithm { get; }
     public NodeInput<FloatType> Threshold { get; }
 
     public VoxelToMeshNode()
     {
-        MESH = AddOutput<AnyType>(0, "MESH");
-        Voxel = AddInput<AnyType>("voxel", required: true);
+        MESH = AddOutput<MeshType>(0, "MESH");
+        Voxel = AddInput<VoxelType>("voxel", required: true);
         Algorithm = AddInput<StringType>("algorithm", required: true);
         Threshold = AddInput<FloatType>("threshold", required: true);
         Threshold.Set(0.6);

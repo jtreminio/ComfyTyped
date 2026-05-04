@@ -11,14 +11,14 @@ public sealed class SwarmEmbedLoaderListProviderNode : ComfyNode
     public override string ClassType => "SwarmEmbedLoaderListProvider";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> EMBEDDING { get; }
+    public NodeOutput<EmbeddingType> EMBEDDING { get; }
 
     // ── Inputs ──
     public NodeInput<StringType> EmbedName { get; }
 
     public SwarmEmbedLoaderListProviderNode()
     {
-        EMBEDDING = AddOutput<AnyType>(0, "EMBEDDING");
+        EMBEDDING = AddOutput<EmbeddingType>(0, "EMBEDDING");
         EmbedName = AddInput<StringType>("embed_name", required: true);
     }
 }

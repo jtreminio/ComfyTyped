@@ -15,7 +15,7 @@ public sealed class CropByBBoxesNode : ComfyNode
 
     // ── Inputs ──
     public NodeInput<ImageType> Image { get; }
-    public NodeInput<AnyType> Bboxes { get; }
+    public NodeInput<BoundingBoxType> Bboxes { get; }
     public NodeInput<IntType> OutputWidth { get; }
     public NodeInput<IntType> OutputHeight { get; }
     public NodeInput<IntType> Padding { get; }
@@ -25,7 +25,7 @@ public sealed class CropByBBoxesNode : ComfyNode
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
         Image = AddInput<ImageType>("image", required: true);
-        Bboxes = AddInput<AnyType>("bboxes", required: true);
+        Bboxes = AddInput<BoundingBoxType>("bboxes", required: true);
         OutputWidth = AddInput<IntType>("output_width", required: true);
         OutputWidth.Set(512L);
         OutputHeight = AddInput<IntType>("output_height", required: true);

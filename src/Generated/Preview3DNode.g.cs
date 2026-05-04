@@ -11,14 +11,14 @@ public sealed class Preview3DNode : ComfyNode
 
     // ── Inputs ──
     public NodeInput<StringType> ModelFile { get; }
-    public NodeInput<AnyType> CameraInfo { get; } // optional
+    public NodeInput<Load3dCameraType> CameraInfo { get; } // optional
     public NodeInput<ImageType> BgImage { get; } // optional
 
     public Preview3DNode()
     {
         ModelFile = AddInput<StringType>("model_file", required: true);
         ModelFile.Set("");
-        CameraInfo = AddInput<AnyType>("camera_info", required: false);
+        CameraInfo = AddInput<Load3dCameraType>("camera_info", required: false);
         BgImage = AddInput<ImageType>("bg_image", required: false);
     }
 }

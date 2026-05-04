@@ -18,7 +18,7 @@ public sealed class ConditioningSetPropertiesNode : ComfyNode
     public NodeInput<StringType> SetCondArea { get; }
     public NodeInput<MaskType> Mask { get; } // optional
     public NodeInput<HooksType> Hooks { get; } // optional
-    public NodeInput<AnyType> Timesteps { get; } // optional
+    public NodeInput<TimestepsRangeType> Timesteps { get; } // optional
 
     public ConditioningSetPropertiesNode()
     {
@@ -29,6 +29,6 @@ public sealed class ConditioningSetPropertiesNode : ComfyNode
         SetCondArea = AddInput<StringType>("set_cond_area", required: true);
         Mask = AddInput<MaskType>("mask", required: false);
         Hooks = AddInput<HooksType>("hooks", required: false);
-        Timesteps = AddInput<AnyType>("timesteps", required: false);
+        Timesteps = AddInput<TimestepsRangeType>("timesteps", required: false);
     }
 }

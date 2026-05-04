@@ -20,7 +20,7 @@ public sealed class WanSoundImageToVideoExtendNode : ComfyNode
     public NodeInput<VaeType> Vae { get; }
     public NodeInput<IntType> Length { get; }
     public NodeInput<LatentType> VideoLatent { get; }
-    public NodeInput<AnyType> AudioEncoderOutput { get; } // optional
+    public NodeInput<AudioEncoderOutputType> AudioEncoderOutput { get; } // optional
     public NodeInput<ImageType> RefImage { get; } // optional
     public NodeInput<ImageType> ControlVideo { get; } // optional
 
@@ -35,7 +35,7 @@ public sealed class WanSoundImageToVideoExtendNode : ComfyNode
         Length = AddInput<IntType>("length", required: true);
         Length.Set(77L);
         VideoLatent = AddInput<LatentType>("video_latent", required: true);
-        AudioEncoderOutput = AddInput<AnyType>("audio_encoder_output", required: false);
+        AudioEncoderOutput = AddInput<AudioEncoderOutputType>("audio_encoder_output", required: false);
         RefImage = AddInput<ImageType>("ref_image", required: false);
         ControlVideo = AddInput<ImageType>("control_video", required: false);
     }

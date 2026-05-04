@@ -15,10 +15,10 @@ public sealed class IPAdapterWeightsFromStrategyNode : ComfyNode
     public NodeOutput<IntType> TotalFrames { get; }
     public NodeOutput<ImageType> Image1 { get; }
     public NodeOutput<ImageType> Image2 { get; }
-    public NodeOutput<AnyType> WeightsStrategy { get; }
+    public NodeOutput<WeightsStrategyType> WeightsStrategy { get; }
 
     // ── Inputs ──
-    public NodeInput<AnyType> WeightsStrategyInput { get; }
+    public NodeInput<WeightsStrategyType> WeightsStrategyInput { get; }
     public NodeInput<ImageType> Image { get; } // optional
 
     public IPAdapterWeightsFromStrategyNode()
@@ -28,8 +28,8 @@ public sealed class IPAdapterWeightsFromStrategyNode : ComfyNode
         TotalFrames = AddOutput<IntType>(2, "total_frames");
         Image1 = AddOutput<ImageType>(3, "image_1");
         Image2 = AddOutput<ImageType>(4, "image_2");
-        WeightsStrategy = AddOutput<AnyType>(5, "weights_strategy");
-        WeightsStrategyInput = AddInput<AnyType>("weights_strategy", required: true);
+        WeightsStrategy = AddOutput<WeightsStrategyType>(5, "weights_strategy");
+        WeightsStrategyInput = AddInput<WeightsStrategyType>("weights_strategy", required: true);
         Image = AddInput<ImageType>("image", required: false);
     }
 }

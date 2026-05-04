@@ -13,13 +13,13 @@ public sealed class IPAdapterPromptScheduleFromWeightsStrategyNode : ComfyNode
     public NodeOutput<StringType> PromptSchedule { get; }
 
     // ── Inputs ──
-    public NodeInput<AnyType> WeightsStrategy { get; }
+    public NodeInput<WeightsStrategyType> WeightsStrategy { get; }
     public NodeInput<StringType> Prompt { get; }
 
     public IPAdapterPromptScheduleFromWeightsStrategyNode()
     {
         PromptSchedule = AddOutput<StringType>(0, "prompt_schedule");
-        WeightsStrategy = AddInput<AnyType>("weights_strategy", required: true);
+        WeightsStrategy = AddInput<WeightsStrategyType>("weights_strategy", required: true);
         Prompt = AddInput<StringType>("prompt", required: true);
         Prompt.Set("");
     }

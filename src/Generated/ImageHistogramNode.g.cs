@@ -10,22 +10,22 @@ public sealed class ImageHistogramNode : ComfyNode
     public override string ClassType => "ImageHistogram";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> Rgb { get; }
-    public NodeOutput<AnyType> Luminance { get; }
-    public NodeOutput<AnyType> Red { get; }
-    public NodeOutput<AnyType> Green { get; }
-    public NodeOutput<AnyType> Blue { get; }
+    public NodeOutput<HistogramType> Rgb { get; }
+    public NodeOutput<HistogramType> Luminance { get; }
+    public NodeOutput<HistogramType> Red { get; }
+    public NodeOutput<HistogramType> Green { get; }
+    public NodeOutput<HistogramType> Blue { get; }
 
     // ── Inputs ──
     public NodeInput<ImageType> Image { get; }
 
     public ImageHistogramNode()
     {
-        Rgb = AddOutput<AnyType>(0, "rgb");
-        Luminance = AddOutput<AnyType>(1, "luminance");
-        Red = AddOutput<AnyType>(2, "red");
-        Green = AddOutput<AnyType>(3, "green");
-        Blue = AddOutput<AnyType>(4, "blue");
+        Rgb = AddOutput<HistogramType>(0, "rgb");
+        Luminance = AddOutput<HistogramType>(1, "luminance");
+        Red = AddOutput<HistogramType>(2, "red");
+        Green = AddOutput<HistogramType>(3, "green");
+        Blue = AddOutput<HistogramType>(4, "blue");
         Image = AddInput<ImageType>("image", required: true);
     }
 }

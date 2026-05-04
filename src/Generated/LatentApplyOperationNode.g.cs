@@ -14,12 +14,12 @@ public sealed class LatentApplyOperationNode : ComfyNode
 
     // ── Inputs ──
     public NodeInput<LatentType> Samples { get; }
-    public NodeInput<AnyType> Operation { get; }
+    public NodeInput<LatentOperationType> Operation { get; }
 
     public LatentApplyOperationNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
         Samples = AddInput<LatentType>("samples", required: true);
-        Operation = AddInput<AnyType>("operation", required: true);
+        Operation = AddInput<LatentOperationType>("operation", required: true);
     }
 }

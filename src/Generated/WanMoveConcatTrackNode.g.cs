@@ -10,16 +10,16 @@ public sealed class WanMoveConcatTrackNode : ComfyNode
     public override string ClassType => "WanMoveConcatTrack";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> TRACKS { get; }
+    public NodeOutput<TracksType> TRACKS { get; }
 
     // ── Inputs ──
-    public NodeInput<AnyType> Tracks1 { get; }
-    public NodeInput<AnyType> Tracks2 { get; } // optional
+    public NodeInput<TracksType> Tracks1 { get; }
+    public NodeInput<TracksType> Tracks2 { get; } // optional
 
     public WanMoveConcatTrackNode()
     {
-        TRACKS = AddOutput<AnyType>(0, "TRACKS");
-        Tracks1 = AddInput<AnyType>("tracks_1", required: true);
-        Tracks2 = AddInput<AnyType>("tracks_2", required: false);
+        TRACKS = AddOutput<TracksType>(0, "TRACKS");
+        Tracks1 = AddInput<TracksType>("tracks_1", required: true);
+        Tracks2 = AddInput<TracksType>("tracks_2", required: false);
     }
 }

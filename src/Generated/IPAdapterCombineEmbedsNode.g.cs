@@ -10,24 +10,24 @@ public sealed class IPAdapterCombineEmbedsNode : ComfyNode
     public override string ClassType => "IPAdapterCombineEmbeds";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> EMBEDS { get; }
+    public NodeOutput<EmbedsType> EMBEDS { get; }
 
     // ── Inputs ──
-    public NodeInput<AnyType> Embed1 { get; }
+    public NodeInput<EmbedsType> Embed1 { get; }
     public NodeInput<StringType> Method { get; }
-    public NodeInput<AnyType> Embed2 { get; } // optional
-    public NodeInput<AnyType> Embed3 { get; } // optional
-    public NodeInput<AnyType> Embed4 { get; } // optional
-    public NodeInput<AnyType> Embed5 { get; } // optional
+    public NodeInput<EmbedsType> Embed2 { get; } // optional
+    public NodeInput<EmbedsType> Embed3 { get; } // optional
+    public NodeInput<EmbedsType> Embed4 { get; } // optional
+    public NodeInput<EmbedsType> Embed5 { get; } // optional
 
     public IPAdapterCombineEmbedsNode()
     {
-        EMBEDS = AddOutput<AnyType>(0, "EMBEDS");
-        Embed1 = AddInput<AnyType>("embed1", required: true);
+        EMBEDS = AddOutput<EmbedsType>(0, "EMBEDS");
+        Embed1 = AddInput<EmbedsType>("embed1", required: true);
         Method = AddInput<StringType>("method", required: true);
-        Embed2 = AddInput<AnyType>("embed2", required: false);
-        Embed3 = AddInput<AnyType>("embed3", required: false);
-        Embed4 = AddInput<AnyType>("embed4", required: false);
-        Embed5 = AddInput<AnyType>("embed5", required: false);
+        Embed2 = AddInput<EmbedsType>("embed2", required: false);
+        Embed3 = AddInput<EmbedsType>("embed3", required: false);
+        Embed4 = AddInput<EmbedsType>("embed4", required: false);
+        Embed5 = AddInput<EmbedsType>("embed5", required: false);
     }
 }

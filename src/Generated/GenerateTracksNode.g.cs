@@ -10,7 +10,7 @@ public sealed class GenerateTracksNode : ComfyNode
     public override string ClassType => "GenerateTracks";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> TRACKS { get; }
+    public NodeOutput<TracksType> TRACKS { get; }
     public NodeOutput<IntType> TrackLength { get; }
 
     // ── Inputs ──
@@ -31,7 +31,7 @@ public sealed class GenerateTracksNode : ComfyNode
 
     public GenerateTracksNode()
     {
-        TRACKS = AddOutput<AnyType>(0, "TRACKS");
+        TRACKS = AddOutput<TracksType>(0, "TRACKS");
         TrackLength = AddOutput<IntType>(1, "track_length");
         Width = AddInput<IntType>("width", required: true);
         Width.Set(832L);

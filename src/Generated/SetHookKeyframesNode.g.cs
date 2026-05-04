@@ -14,12 +14,12 @@ public sealed class SetHookKeyframesNode : ComfyNode
 
     // ── Inputs ──
     public NodeInput<HooksType> Hooks { get; }
-    public NodeInput<AnyType> HookKf { get; } // optional
+    public NodeInput<HookKeyframesType> HookKf { get; } // optional
 
     public SetHookKeyframesNode()
     {
         HOOKS = AddOutput<HooksType>(0, "HOOKS");
         Hooks = AddInput<HooksType>("hooks", required: true);
-        HookKf = AddInput<AnyType>("hook_kf", required: false);
+        HookKf = AddInput<HookKeyframesType>("hook_kf", required: false);
     }
 }

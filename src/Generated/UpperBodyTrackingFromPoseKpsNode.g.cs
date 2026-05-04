@@ -10,11 +10,11 @@ public sealed class UpperBodyTrackingFromPoseKpsNode : ComfyNode
     public override string ClassType => "UpperBodyTrackingFromPoseKps";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> Tracking { get; }
+    public NodeOutput<TrackingType> Tracking { get; }
     public NodeOutput<StringType> Prompt { get; }
 
     // ── Inputs ──
-    public NodeInput<AnyType> PoseKps { get; }
+    public NodeInput<PoseKeypointType> PoseKps { get; }
     public NodeInput<StringType> IdInclude { get; }
     public NodeInput<StringType> HeadWidthHeight { get; }
     public NodeInput<StringType> NeckWidthHeight { get; }
@@ -27,9 +27,9 @@ public sealed class UpperBodyTrackingFromPoseKpsNode : ComfyNode
 
     public UpperBodyTrackingFromPoseKpsNode()
     {
-        Tracking = AddOutput<AnyType>(0, "tracking");
+        Tracking = AddOutput<TrackingType>(0, "tracking");
         Prompt = AddOutput<StringType>(1, "prompt");
-        PoseKps = AddInput<AnyType>("pose_kps", required: true);
+        PoseKps = AddInput<PoseKeypointType>("pose_kps", required: true);
         IdInclude = AddInput<StringType>("id_include", required: true);
         IdInclude.Set("");
         HeadWidthHeight = AddInput<StringType>("Head_width_height", required: true);

@@ -13,7 +13,7 @@ public sealed class FacialPartColoringFromPoseKpsNode : ComfyNode
     public NodeOutput<ImageType> IMAGE { get; }
 
     // ── Inputs ──
-    public NodeInput<AnyType> PoseKps { get; }
+    public NodeInput<PoseKeypointType> PoseKps { get; }
     public NodeInput<StringType> Mode { get; }
     public NodeInput<StringType> Skin { get; }
     public NodeInput<StringType> LeftEye { get; }
@@ -26,7 +26,7 @@ public sealed class FacialPartColoringFromPoseKpsNode : ComfyNode
     public FacialPartColoringFromPoseKpsNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        PoseKps = AddInput<AnyType>("pose_kps", required: true);
+        PoseKps = AddInput<PoseKeypointType>("pose_kps", required: true);
         Mode = AddInput<StringType>("mode", required: true);
         Mode.Set("polygon");
         Skin = AddInput<StringType>("skin", required: true);

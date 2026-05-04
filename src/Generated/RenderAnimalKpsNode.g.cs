@@ -13,11 +13,11 @@ public sealed class RenderAnimalKpsNode : ComfyNode
     public NodeOutput<ImageType> IMAGE { get; }
 
     // ── Inputs ──
-    public NodeInput<AnyType> Kps { get; }
+    public NodeInput<PoseKeypointType> Kps { get; }
 
     public RenderAnimalKpsNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Kps = AddInput<AnyType>("kps", required: true);
+        Kps = AddInput<PoseKeypointType>("kps", required: true);
     }
 }

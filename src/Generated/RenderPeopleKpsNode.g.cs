@@ -13,7 +13,7 @@ public sealed class RenderPeopleKpsNode : ComfyNode
     public NodeOutput<ImageType> IMAGE { get; }
 
     // ── Inputs ──
-    public NodeInput<AnyType> Kps { get; }
+    public NodeInput<PoseKeypointType> Kps { get; }
     public NodeInput<BooleanType> RenderBody { get; }
     public NodeInput<BooleanType> RenderHand { get; }
     public NodeInput<BooleanType> RenderFace { get; }
@@ -21,7 +21,7 @@ public sealed class RenderPeopleKpsNode : ComfyNode
     public RenderPeopleKpsNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Kps = AddInput<AnyType>("kps", required: true);
+        Kps = AddInput<PoseKeypointType>("kps", required: true);
         RenderBody = AddInput<BooleanType>("render_body", required: true);
         RenderBody.Set(true);
         RenderHand = AddInput<BooleanType>("render_hand", required: true);

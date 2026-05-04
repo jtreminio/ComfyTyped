@@ -24,7 +24,7 @@ public sealed class WanCameraImageToVideoNode : ComfyNode
     public NodeInput<IntType> BatchSize { get; }
     public NodeInput<ClipVisionOutputType> ClipVisionOutput { get; } // optional
     public NodeInput<ImageType> StartImage { get; } // optional
-    public NodeInput<AnyType> CameraConditions { get; } // optional
+    public NodeInput<WanCameraEmbeddingType> CameraConditions { get; } // optional
 
     public WanCameraImageToVideoNode()
     {
@@ -44,6 +44,6 @@ public sealed class WanCameraImageToVideoNode : ComfyNode
         BatchSize.Set(1L);
         ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output", required: false);
         StartImage = AddInput<ImageType>("start_image", required: false);
-        CameraConditions = AddInput<AnyType>("camera_conditions", required: false);
+        CameraConditions = AddInput<WanCameraEmbeddingType>("camera_conditions", required: false);
     }
 }

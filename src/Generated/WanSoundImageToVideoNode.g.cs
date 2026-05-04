@@ -22,7 +22,7 @@ public sealed class WanSoundImageToVideoNode : ComfyNode
     public NodeInput<IntType> Height { get; }
     public NodeInput<IntType> Length { get; }
     public NodeInput<IntType> BatchSize { get; }
-    public NodeInput<AnyType> AudioEncoderOutput { get; } // optional
+    public NodeInput<AudioEncoderOutputType> AudioEncoderOutput { get; } // optional
     public NodeInput<ImageType> RefImage { get; } // optional
     public NodeInput<ImageType> ControlVideo { get; } // optional
     public NodeInput<ImageType> RefMotion { get; } // optional
@@ -43,7 +43,7 @@ public sealed class WanSoundImageToVideoNode : ComfyNode
         Length.Set(77L);
         BatchSize = AddInput<IntType>("batch_size", required: true);
         BatchSize.Set(1L);
-        AudioEncoderOutput = AddInput<AnyType>("audio_encoder_output", required: false);
+        AudioEncoderOutput = AddInput<AudioEncoderOutputType>("audio_encoder_output", required: false);
         RefImage = AddInput<ImageType>("ref_image", required: false);
         ControlVideo = AddInput<ImageType>("control_video", required: false);
         RefMotion = AddInput<ImageType>("ref_motion", required: false);

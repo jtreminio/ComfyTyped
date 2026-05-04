@@ -10,7 +10,7 @@ public sealed class WanCameraEmbeddingNode : ComfyNode
     public override string ClassType => "WanCameraEmbedding";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> CameraEmbedding { get; }
+    public NodeOutput<WanCameraEmbeddingType> CameraEmbedding { get; }
     public NodeOutput<IntType> Width { get; }
     public NodeOutput<IntType> Height { get; }
     public NodeOutput<IntType> Length { get; }
@@ -28,7 +28,7 @@ public sealed class WanCameraEmbeddingNode : ComfyNode
 
     public WanCameraEmbeddingNode()
     {
-        CameraEmbedding = AddOutput<AnyType>(0, "camera_embedding");
+        CameraEmbedding = AddOutput<WanCameraEmbeddingType>(0, "camera_embedding");
         Width = AddOutput<IntType>(1, "width");
         Height = AddOutput<IntType>(2, "height");
         Length = AddOutput<IntType>(3, "length");

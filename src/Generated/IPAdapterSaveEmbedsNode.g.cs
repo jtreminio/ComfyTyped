@@ -10,12 +10,12 @@ public sealed class IPAdapterSaveEmbedsNode : ComfyNode
     public override string ClassType => "IPAdapterSaveEmbeds";
 
     // ── Inputs ──
-    public NodeInput<AnyType> Embeds { get; }
+    public NodeInput<EmbedsType> Embeds { get; }
     public NodeInput<StringType> FilenamePrefix { get; }
 
     public IPAdapterSaveEmbedsNode()
     {
-        Embeds = AddInput<AnyType>("embeds", required: true);
+        Embeds = AddInput<EmbedsType>("embeds", required: true);
         FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
         FilenamePrefix.Set("IP_embeds");
     }

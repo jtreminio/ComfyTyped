@@ -13,13 +13,13 @@ public sealed class SAM3TrackToMaskNode : ComfyNode
     public NodeOutput<MaskType> Masks { get; }
 
     // ── Inputs ──
-    public NodeInput<AnyType> TrackData { get; }
+    public NodeInput<Sam3TrackDataType> TrackData { get; }
     public NodeInput<StringType> ObjectIndices { get; }
 
     public SAM3TrackToMaskNode()
     {
         Masks = AddOutput<MaskType>(0, "masks");
-        TrackData = AddInput<AnyType>("track_data", required: true);
+        TrackData = AddInput<Sam3TrackDataType>("track_data", required: true);
         ObjectIndices = AddInput<StringType>("object_indices", required: true);
         ObjectIndices.Set("");
     }

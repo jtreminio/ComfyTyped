@@ -10,7 +10,7 @@ public sealed class IPAdapterInsightFaceLoaderNode : ComfyNode
     public override string ClassType => "IPAdapterInsightFaceLoader";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> INSIGHTFACE { get; }
+    public NodeOutput<InsightfaceType> INSIGHTFACE { get; }
 
     // ── Inputs ──
     public NodeInput<StringType> Provider { get; }
@@ -18,7 +18,7 @@ public sealed class IPAdapterInsightFaceLoaderNode : ComfyNode
 
     public IPAdapterInsightFaceLoaderNode()
     {
-        INSIGHTFACE = AddOutput<AnyType>(0, "INSIGHTFACE");
+        INSIGHTFACE = AddOutput<InsightfaceType>(0, "INSIGHTFACE");
         Provider = AddInput<StringType>("provider", required: true);
         ModelName = AddInput<StringType>("model_name", required: true);
     }

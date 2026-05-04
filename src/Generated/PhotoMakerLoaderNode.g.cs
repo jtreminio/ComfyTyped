@@ -10,14 +10,14 @@ public sealed class PhotoMakerLoaderNode : ComfyNode
     public override string ClassType => "PhotoMakerLoader";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> PHOTOMAKER { get; }
+    public NodeOutput<PhotomakerType> PHOTOMAKER { get; }
 
     // ── Inputs ──
     public NodeInput<StringType> PhotomakerModelName { get; }
 
     public PhotoMakerLoaderNode()
     {
-        PHOTOMAKER = AddOutput<AnyType>(0, "PHOTOMAKER");
+        PHOTOMAKER = AddOutput<PhotomakerType>(0, "PHOTOMAKER");
         PhotomakerModelName = AddInput<StringType>("photomaker_model_name", required: true);
     }
 }

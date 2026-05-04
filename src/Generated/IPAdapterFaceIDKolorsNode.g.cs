@@ -28,7 +28,7 @@ public sealed class IPAdapterFaceIDKolorsNode : ComfyNode
     public NodeInput<ImageType> ImageNegative { get; } // optional
     public NodeInput<MaskType> AttnMask { get; } // optional
     public NodeInput<ClipVisionType> ClipVision { get; } // optional
-    public NodeInput<AnyType> Insightface { get; } // optional
+    public NodeInput<InsightfaceType> Insightface { get; } // optional
 
     public IPAdapterFaceIDKolorsNode()
     {
@@ -53,6 +53,6 @@ public sealed class IPAdapterFaceIDKolorsNode : ComfyNode
         ImageNegative = AddInput<ImageType>("image_negative", required: false);
         AttnMask = AddInput<MaskType>("attn_mask", required: false);
         ClipVision = AddInput<ClipVisionType>("clip_vision", required: false);
-        Insightface = AddInput<AnyType>("insightface", required: false);
+        Insightface = AddInput<InsightfaceType>("insightface", required: false);
     }
 }

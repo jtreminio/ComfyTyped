@@ -10,12 +10,12 @@ public sealed class LossGraphNodeNode : ComfyNode
     public override string ClassType => "LossGraphNode";
 
     // ── Inputs ──
-    public NodeInput<AnyType> Loss { get; }
+    public NodeInput<LossMapType> Loss { get; }
     public NodeInput<StringType> FilenamePrefix { get; }
 
     public LossGraphNodeNode()
     {
-        Loss = AddInput<AnyType>("loss", required: true);
+        Loss = AddInput<LossMapType>("loss", required: true);
         FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
         FilenamePrefix.Set("loss_graph");
     }

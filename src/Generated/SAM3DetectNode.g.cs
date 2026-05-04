@@ -11,7 +11,7 @@ public sealed class SAM3DetectNode : ComfyNode
 
     // ── Outputs ──
     public NodeOutput<MaskType> Masks { get; }
-    public NodeOutput<AnyType> Bboxes { get; }
+    public NodeOutput<BoundingBoxType> Bboxes { get; }
 
     // ── Inputs ──
     public NodeInput<ModelType> Model { get; }
@@ -20,14 +20,14 @@ public sealed class SAM3DetectNode : ComfyNode
     public NodeInput<IntType> RefineIterations { get; }
     public NodeInput<BooleanType> IndividualMasks { get; }
     public NodeInput<ConditioningType> Conditioning { get; } // optional
-    public NodeInput<AnyType> BboxesInput { get; } // optional
+    public NodeInput<BoundingBoxType> BboxesInput { get; } // optional
     public NodeInput<StringType> PositiveCoords { get; } // optional
     public NodeInput<StringType> NegativeCoords { get; } // optional
 
     public SAM3DetectNode()
     {
         Masks = AddOutput<MaskType>(0, "masks");
-        Bboxes = AddOutput<AnyType>(1, "bboxes");
+        Bboxes = AddOutput<BoundingBoxType>(1, "bboxes");
         Model = AddInput<ModelType>("model", required: true);
         Image = AddInput<ImageType>("image", required: true);
         Threshold = AddInput<FloatType>("threshold", required: true);
@@ -37,7 +37,7 @@ public sealed class SAM3DetectNode : ComfyNode
         IndividualMasks = AddInput<BooleanType>("individual_masks", required: true);
         IndividualMasks.Set(false);
         Conditioning = AddInput<ConditioningType>("conditioning", required: false);
-        BboxesInput = AddInput<AnyType>("bboxes", required: false);
+        BboxesInput = AddInput<BoundingBoxType>("bboxes", required: false);
         PositiveCoords = AddInput<StringType>("positive_coords", required: false);
         NegativeCoords = AddInput<StringType>("negative_coords", required: false);
     }

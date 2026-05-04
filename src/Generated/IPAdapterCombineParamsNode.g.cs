@@ -10,22 +10,22 @@ public sealed class IPAdapterCombineParamsNode : ComfyNode
     public override string ClassType => "IPAdapterCombineParams";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> IPADAPTERPARAMS { get; }
+    public NodeOutput<IpadapterParamsType> IPADAPTERPARAMS { get; }
 
     // ── Inputs ──
-    public NodeInput<AnyType> Params1 { get; }
-    public NodeInput<AnyType> Params2 { get; }
-    public NodeInput<AnyType> Params3 { get; } // optional
-    public NodeInput<AnyType> Params4 { get; } // optional
-    public NodeInput<AnyType> Params5 { get; } // optional
+    public NodeInput<IpadapterParamsType> Params1 { get; }
+    public NodeInput<IpadapterParamsType> Params2 { get; }
+    public NodeInput<IpadapterParamsType> Params3 { get; } // optional
+    public NodeInput<IpadapterParamsType> Params4 { get; } // optional
+    public NodeInput<IpadapterParamsType> Params5 { get; } // optional
 
     public IPAdapterCombineParamsNode()
     {
-        IPADAPTERPARAMS = AddOutput<AnyType>(0, "IPADAPTER_PARAMS");
-        Params1 = AddInput<AnyType>("params_1", required: true);
-        Params2 = AddInput<AnyType>("params_2", required: true);
-        Params3 = AddInput<AnyType>("params_3", required: false);
-        Params4 = AddInput<AnyType>("params_4", required: false);
-        Params5 = AddInput<AnyType>("params_5", required: false);
+        IPADAPTERPARAMS = AddOutput<IpadapterParamsType>(0, "IPADAPTER_PARAMS");
+        Params1 = AddInput<IpadapterParamsType>("params_1", required: true);
+        Params2 = AddInput<IpadapterParamsType>("params_2", required: true);
+        Params3 = AddInput<IpadapterParamsType>("params_3", required: false);
+        Params4 = AddInput<IpadapterParamsType>("params_4", required: false);
+        Params5 = AddInput<IpadapterParamsType>("params_5", required: false);
     }
 }

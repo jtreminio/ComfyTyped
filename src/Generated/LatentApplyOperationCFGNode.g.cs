@@ -14,12 +14,12 @@ public sealed class LatentApplyOperationCFGNode : ComfyNode
 
     // ── Inputs ──
     public NodeInput<ModelType> Model { get; }
-    public NodeInput<AnyType> Operation { get; }
+    public NodeInput<LatentOperationType> Operation { get; }
 
     public LatentApplyOperationCFGNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
         Model = AddInput<ModelType>("model", required: true);
-        Operation = AddInput<AnyType>("operation", required: true);
+        Operation = AddInput<LatentOperationType>("operation", required: true);
     }
 }

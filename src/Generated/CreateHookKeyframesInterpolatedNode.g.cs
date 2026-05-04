@@ -10,7 +10,7 @@ public sealed class CreateHookKeyframesInterpolatedNode : ComfyNode
     public override string ClassType => "CreateHookKeyframesInterpolated";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> HOOKKF { get; }
+    public NodeOutput<HookKeyframesType> HOOKKF { get; }
 
     // ── Inputs ──
     public NodeInput<FloatType> StrengthStart { get; }
@@ -20,11 +20,11 @@ public sealed class CreateHookKeyframesInterpolatedNode : ComfyNode
     public NodeInput<FloatType> EndPercent { get; }
     public NodeInput<IntType> KeyframesCount { get; }
     public NodeInput<BooleanType> PrintKeyframes { get; }
-    public NodeInput<AnyType> PrevHookKf { get; } // optional
+    public NodeInput<HookKeyframesType> PrevHookKf { get; } // optional
 
     public CreateHookKeyframesInterpolatedNode()
     {
-        HOOKKF = AddOutput<AnyType>(0, "HOOK_KF");
+        HOOKKF = AddOutput<HookKeyframesType>(0, "HOOK_KF");
         StrengthStart = AddInput<FloatType>("strength_start", required: true);
         StrengthStart.Set(1.0);
         StrengthEnd = AddInput<FloatType>("strength_end", required: true);
@@ -38,6 +38,6 @@ public sealed class CreateHookKeyframesInterpolatedNode : ComfyNode
         KeyframesCount.Set(5L);
         PrintKeyframes = AddInput<BooleanType>("print_keyframes", required: true);
         PrintKeyframes.Set(false);
-        PrevHookKf = AddInput<AnyType>("prev_hook_kf", required: false);
+        PrevHookKf = AddInput<HookKeyframesType>("prev_hook_kf", required: false);
     }
 }

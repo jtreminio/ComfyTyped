@@ -10,20 +10,20 @@ public sealed class CreateHookKeyframeNode : ComfyNode
     public override string ClassType => "CreateHookKeyframe";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> HOOKKF { get; }
+    public NodeOutput<HookKeyframesType> HOOKKF { get; }
 
     // ── Inputs ──
     public NodeInput<FloatType> StrengthMult { get; }
     public NodeInput<FloatType> StartPercent { get; }
-    public NodeInput<AnyType> PrevHookKf { get; } // optional
+    public NodeInput<HookKeyframesType> PrevHookKf { get; } // optional
 
     public CreateHookKeyframeNode()
     {
-        HOOKKF = AddOutput<AnyType>(0, "HOOK_KF");
+        HOOKKF = AddOutput<HookKeyframesType>(0, "HOOK_KF");
         StrengthMult = AddInput<FloatType>("strength_mult", required: true);
         StrengthMult.Set(1.0);
         StartPercent = AddInput<FloatType>("start_percent", required: true);
         StartPercent.Set(0.0);
-        PrevHookKf = AddInput<AnyType>("prev_hook_kf", required: false);
+        PrevHookKf = AddInput<HookKeyframesType>("prev_hook_kf", required: false);
     }
 }

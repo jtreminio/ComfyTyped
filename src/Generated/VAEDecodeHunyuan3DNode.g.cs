@@ -10,7 +10,7 @@ public sealed class VAEDecodeHunyuan3DNode : ComfyNode
     public override string ClassType => "VAEDecodeHunyuan3D";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> VOXEL { get; }
+    public NodeOutput<VoxelType> VOXEL { get; }
 
     // ── Inputs ──
     public NodeInput<LatentType> Samples { get; }
@@ -20,7 +20,7 @@ public sealed class VAEDecodeHunyuan3DNode : ComfyNode
 
     public VAEDecodeHunyuan3DNode()
     {
-        VOXEL = AddOutput<AnyType>(0, "VOXEL");
+        VOXEL = AddOutput<VoxelType>(0, "VOXEL");
         Samples = AddInput<LatentType>("samples", required: true);
         Vae = AddInput<VaeType>("vae", required: true);
         NumChunks = AddInput<IntType>("num_chunks", required: true);

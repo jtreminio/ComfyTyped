@@ -11,12 +11,12 @@ public sealed class SaveSVGNodeNode : ComfyNode
     public override string ClassType => "SaveSVGNode";
 
     // ── Inputs ──
-    public NodeInput<AnyType> Svg { get; }
+    public NodeInput<SvgType> Svg { get; }
     public NodeInput<StringType> FilenamePrefix { get; }
 
     public SaveSVGNodeNode()
     {
-        Svg = AddInput<AnyType>("svg", required: true);
+        Svg = AddInput<SvgType>("svg", required: true);
         FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
         FilenamePrefix.Set("svg/ComfyUI");
     }

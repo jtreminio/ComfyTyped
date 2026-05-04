@@ -10,7 +10,7 @@ public sealed class LatentOperationSharpenNode : ComfyNode
     public override string ClassType => "LatentOperationSharpen";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> LATENTOPERATION { get; }
+    public NodeOutput<LatentOperationType> LATENTOPERATION { get; }
 
     // ── Inputs ──
     public NodeInput<IntType> SharpenRadius { get; }
@@ -19,7 +19,7 @@ public sealed class LatentOperationSharpenNode : ComfyNode
 
     public LatentOperationSharpenNode()
     {
-        LATENTOPERATION = AddOutput<AnyType>(0, "LATENT_OPERATION");
+        LATENTOPERATION = AddOutput<LatentOperationType>(0, "LATENT_OPERATION");
         SharpenRadius = AddInput<IntType>("sharpen_radius", required: true);
         SharpenRadius.Set(9L);
         Sigma = AddInput<FloatType>("sigma", required: true);

@@ -17,7 +17,7 @@ public sealed class PainterNode : ComfyNode
     public NodeInput<StringType> Mask { get; }
     public NodeInput<IntType> Width { get; }
     public NodeInput<IntType> Height { get; }
-    public NodeInput<AnyType> BgColor { get; }
+    public NodeInput<ColorType> BgColor { get; }
     public NodeInput<ImageType> Image { get; } // optional
 
     public PainterNode()
@@ -30,7 +30,7 @@ public sealed class PainterNode : ComfyNode
         Width.Set(512L);
         Height = AddInput<IntType>("height", required: true);
         Height.Set(512L);
-        BgColor = AddInput<AnyType>("bg_color", required: true);
+        BgColor = AddInput<ColorType>("bg_color", required: true);
         Image = AddInput<ImageType>("image", required: false);
     }
 }

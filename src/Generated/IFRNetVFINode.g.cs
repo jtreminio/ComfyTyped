@@ -18,7 +18,7 @@ public sealed class IFRNetVFINode : ComfyNode
     public NodeInput<IntType> ClearCacheAfterNFrames { get; }
     public NodeInput<IntType> Multiplier { get; }
     public NodeInput<StringType> ScaleFactor { get; }
-    public NodeInput<AnyType> OptionalInterpolationStates { get; } // optional
+    public NodeInput<InterpolationStatesType> OptionalInterpolationStates { get; } // optional
 
     public IFRNetVFINode()
     {
@@ -31,6 +31,6 @@ public sealed class IFRNetVFINode : ComfyNode
         Multiplier.Set(2L);
         ScaleFactor = AddInput<StringType>("scale_factor", required: true);
         ScaleFactor.Set("1");
-        OptionalInterpolationStates = AddInput<AnyType>("optional_interpolation_states", required: false);
+        OptionalInterpolationStates = AddInput<InterpolationStatesType>("optional_interpolation_states", required: false);
     }
 }

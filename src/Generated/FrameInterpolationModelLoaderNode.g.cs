@@ -10,14 +10,14 @@ public sealed class FrameInterpolationModelLoaderNode : ComfyNode
     public override string ClassType => "FrameInterpolationModelLoader";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> INTERPMODEL { get; }
+    public NodeOutput<InterpModelType> INTERPMODEL { get; }
 
     // ── Inputs ──
     public NodeInput<StringType> ModelName { get; }
 
     public FrameInterpolationModelLoaderNode()
     {
-        INTERPMODEL = AddOutput<AnyType>(0, "INTERP_MODEL");
+        INTERPMODEL = AddOutput<InterpModelType>(0, "INTERP_MODEL");
         ModelName = AddInput<StringType>("model_name", required: true);
     }
 }

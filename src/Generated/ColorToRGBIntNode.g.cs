@@ -14,11 +14,11 @@ public sealed class ColorToRGBIntNode : ComfyNode
     public NodeOutput<IntType> RgbInt { get; }
 
     // ── Inputs ──
-    public NodeInput<AnyType> Color { get; }
+    public NodeInput<ColorType> Color { get; }
 
     public ColorToRGBIntNode()
     {
         RgbInt = AddOutput<IntType>(0, "rgb_int");
-        Color = AddInput<AnyType>("color", required: true);
+        Color = AddInput<ColorType>("color", required: true);
     }
 }

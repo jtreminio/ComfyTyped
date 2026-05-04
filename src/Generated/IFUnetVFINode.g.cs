@@ -19,7 +19,7 @@ public sealed class IFUnetVFINode : ComfyNode
     public NodeInput<IntType> Multiplier { get; }
     public NodeInput<FloatType> ScaleFactor { get; }
     public NodeInput<BooleanType> Ensemble { get; }
-    public NodeInput<AnyType> OptionalInterpolationStates { get; } // optional
+    public NodeInput<InterpolationStatesType> OptionalInterpolationStates { get; } // optional
 
     public IFUnetVFINode()
     {
@@ -34,6 +34,6 @@ public sealed class IFUnetVFINode : ComfyNode
         ScaleFactor.Set(1.0);
         Ensemble = AddInput<BooleanType>("ensemble", required: true);
         Ensemble.Set(true);
-        OptionalInterpolationStates = AddInput<AnyType>("optional_interpolation_states", required: false);
+        OptionalInterpolationStates = AddInput<InterpolationStatesType>("optional_interpolation_states", required: false);
     }
 }

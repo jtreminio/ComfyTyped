@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -11,19 +12,26 @@ public static partial class Program
     private const string CoreMarkerNamespace = "ComfyTyped.Types";
     private const string CoreNodeRegistrationsTypeName = "ComfyTyped.Generated.NodeRegistrations";
     private const string CoreNodeRegistryTypeName = "ComfyTyped.Core.NodeRegistry";
-    private const string CoreIOTypeMapTypeName = "ComfyTyped.Types.IOTypeMap";
+    private const string CoreIComfyTypeName = "ComfyTyped.Types.IComfyType";
 
-    // IO types that map to C# primitives (can be literal values)
-    private static readonly Dictionary<string, (string MarkerType, string CSharpType, string DefaultLiteral)> PrimitiveTypes = new()
+    // Defaults applied by --root for generating ComfyTyped's own nodes.
+    private const string RootOutputDir = "src/Generated";
+    private const string RootNamespace = "ComfyTyped.Generated";
+    private const string RootMarkerNamespace = "ComfyTyped.Types";
+    private const string RootRegistrationsClass = "NodeRegistrations";
+
+    // ComfyUI primitive types that can carry literal values.
+    private static readonly Dictionary<string, (string Marker, string CSharp)> PrimitiveTypes = new()
     {
-        ["INT"] = ("IntType", "long", "0"),
-        ["FLOAT"] = ("FloatType", "double", "0.0"),
-        ["STRING"] = ("StringType", "string", "\"\""),
-        ["BOOLEAN"] = ("BooleanType", "bool", "false"),
+        ["INT"] = ("IntType", "long"),
+        ["FLOAT"] = ("FloatType", "double"),
+        ["STRING"] = ("StringType", "string"),
+        ["BOOLEAN"] = ("BooleanType", "bool"),
     };
 
-    // Default ComfyUI type → marker mapping (all in the ComfyTyped.Types namespace).
-    // Extensions add their own via --extra-type-mappings.
+    // Hand-written marker mapping. Mirrors src/Types/IOTypes.cs. Anything not in this
+    // map (and not in --core-assembly's IComfyType set when in diff mode) gets an
+    // auto-generated marker class emitted next to the node files.
     private static readonly Dictionary<string, string> CoreTypeMapping = new(StringComparer.OrdinalIgnoreCase)
     {
         ["MODEL"] = "ModelType",
@@ -59,14 +67,35 @@ public static partial class Program
         ["COMFY_MATCHTYPE_V3"] = "ComfyMatchTypeV3",
     };
 
+    // SwarmUI's "native" surface area: bundled packs (Swarm*) plus installable features
+    // registered in upstream SwarmUI/src/Core/InstallableFeatures.cs. Re-sync this list
+    // if SwarmUI adds/removes a RegisterInstallableFeature call.
+    private static readonly HashSet<string> SwarmNativeModules = new(StringComparer.Ordinal)
+    {
+        "custom_nodes.SwarmComfyCommon",
+        "custom_nodes.SwarmComfyExtra",
+        "custom_nodes.ComfyUI_IPAdapter_plus",
+        "custom_nodes.comfyui_controlnet_aux",
+        "custom_nodes.ComfyUI-Frame-Interpolation",
+        "custom_nodes.ComfyUI-GIMM-VFI",
+        "custom_nodes.ComfyUI_TensorRT",
+        "custom_nodes.ComfyUI-segment-anything-2",
+        "custom_nodes.ComfyUI_bnb_nf4_fp4_Loaders",
+        "custom_nodes.ComfyUI-GGUF",
+        "custom_nodes.ComfyUI_ExtraModels",
+        "custom_nodes.ComfyUI-nunchaku",
+        "custom_nodes.ComfyUI-TeaCache",
+        "custom_nodes.ComfyUI-SAI_API",
+    };
+
     private sealed record MarkerInfo(string ShortName, string Namespace);
 
     private sealed record Options(
-        string ObjectInfoPath,
+        string ComfyJsonSource,
         string OutputDir,
         string Namespace,
+        string MarkerNamespace,
         string RegistrationsClass,
-        List<string> ExtraTypeMappingPaths,
         string? CoreAssemblyPath,
         bool NativeOnly);
 
@@ -83,34 +112,32 @@ public static partial class Program
             return 1;
         }
 
-        // Build the type mapping: core defaults + extras (last writer wins).
         Dictionary<string, MarkerInfo> typeMapping = new(StringComparer.OrdinalIgnoreCase);
         foreach ((string comfyType, string shortName) in CoreTypeMapping)
         {
             typeMapping[comfyType] = new MarkerInfo(shortName, CoreMarkerNamespace);
         }
-        foreach (string path in opts.ExtraTypeMappingPaths)
-        {
-            LoadExtraTypeMappings(path, typeMapping);
-        }
 
-        // Build skip-sets from --core-assembly (diff mode).
         HashSet<string> classTypeSkipSet = new(StringComparer.Ordinal);
-        HashSet<string> knownTypeNameSet = new(StringComparer.OrdinalIgnoreCase);
         if (opts.CoreAssemblyPath is not null)
         {
-            LoadCoreSkipSets(opts.CoreAssemblyPath, classTypeSkipSet, knownTypeNameSet);
-            Console.WriteLine($"Diff mode: {classTypeSkipSet.Count} class_types and {knownTypeNameSet.Count} marker types loaded from core assembly.");
+            int markersBefore = typeMapping.Count;
+            LoadCoreSkipSets(opts.CoreAssemblyPath, classTypeSkipSet, typeMapping);
+            int extraMarkers = typeMapping.Count - markersBefore;
+            Console.WriteLine(
+                $"Diff mode: skipping {classTypeSkipSet.Count} class_types, "
+                + $"reusing {extraMarkers} marker types from core.");
         }
 
-        JObject objectInfo = JObject.Parse(File.ReadAllText(opts.ObjectInfoPath));
+        Dictionary<string, MarkerInfo> generatedMarkers = new(StringComparer.OrdinalIgnoreCase);
+        JObject objectInfo = LoadComfyJson(opts.ComfyJsonSource);
         Directory.CreateDirectory(opts.OutputDir);
         ClearGeneratedFiles(opts.OutputDir);
 
         int generated = 0;
         int skippedDiff = 0;
-        int skippedParse = 0;
         int skippedNonNative = 0;
+        int skippedParse = 0;
 
         foreach (JProperty nodeProp in objectInfo.Properties())
         {
@@ -119,6 +146,7 @@ public static partial class Program
                 continue;
             }
             string classType = nodeProp.Name;
+
             if (classTypeSkipSet.Contains(classType))
             {
                 skippedDiff++;
@@ -130,7 +158,8 @@ public static partial class Program
                 continue;
             }
 
-            NodeDef? nodeDef = ParseNodeDef(classType, nodeInfo, typeMapping);
+            NodeDef? nodeDef = ParseNodeDef(
+                classType, nodeInfo, typeMapping, generatedMarkers, opts.MarkerNamespace);
             if (nodeDef is null)
             {
                 Console.Error.WriteLine($"  SKIP: {classType} (could not parse)");
@@ -138,128 +167,94 @@ public static partial class Program
                 continue;
             }
 
-            string code = GenerateNodeClass(nodeDef, opts.Namespace);
-            string fileName = $"{nodeDef.ClassName}.g.cs";
-            File.WriteAllText(Path.Combine(opts.OutputDir, fileName), code);
+            File.WriteAllText(
+                Path.Combine(opts.OutputDir, $"{nodeDef.ClassName}.g.cs"),
+                GenerateNodeClass(nodeDef, opts.Namespace));
             generated++;
         }
 
-        string registrationCode = GenerateRegistrationFile(opts.Namespace, opts.RegistrationsClass);
-        File.WriteAllText(Path.Combine(opts.OutputDir, $"{opts.RegistrationsClass}.g.cs"), registrationCode);
+        foreach ((string comfyType, MarkerInfo info) in generatedMarkers)
+        {
+            File.WriteAllText(
+                Path.Combine(opts.OutputDir, $"{info.ShortName}.g.cs"),
+                GenerateMarkerClass(comfyType, info));
+        }
 
-        Console.WriteLine($"Generated {generated} node classes; skipped {skippedDiff} (already in core), {skippedNonNative} (non-native), {skippedParse} (parse).");
+        File.WriteAllText(
+            Path.Combine(opts.OutputDir, $"{opts.RegistrationsClass}.g.cs"),
+            GenerateRegistrationFile(opts.Namespace, opts.RegistrationsClass));
+
+        Console.WriteLine(
+            $"Generated {generated} nodes and {generatedMarkers.Count} markers; "
+            + $"skipped {skippedDiff} (in core), {skippedNonNative} (non-native), {skippedParse} (parse).");
+
         return 0;
     }
 
-    // SwarmUI's "native" surface area is two groups of packs, both treated as native here:
-    //   1. Bundled — ship with SwarmUI by default (Swarm* prefixes).
-    //   2. Installable features — registered in upstream
-    //      SwarmUI/src/Core/InstallableFeatures.cs and fetched via EnsureNodeRepo when
-    //      the user triggers the corresponding feature (some auto-install at startup,
-    //      others install on button click — both go through the same registry).
-    // Source of truth: upstream/master InstallableFeatures.cs static constructor.
-    // Re-sync this list if SwarmUI adds/removes a RegisterInstallableFeature call.
-    private static readonly HashSet<string> SwarmNativeModules = new(StringComparer.Ordinal)
-    {
-        // Bundled
-        "custom_nodes.SwarmComfyCommon",
-        "custom_nodes.SwarmComfyExtra",
-
-        // Installable features (InstallableFeatures.cs)
-        "custom_nodes.ComfyUI_IPAdapter_plus",         // ipadapter
-        "custom_nodes.comfyui_controlnet_aux",         // controlnet_preprocessors
-        "custom_nodes.ComfyUI-Frame-Interpolation",    // frame_interpolation
-        "custom_nodes.ComfyUI-GIMM-VFI",               // gimm_vfi
-        "custom_nodes.ComfyUI_TensorRT",               // comfyui_tensorrt
-        "custom_nodes.ComfyUI-segment-anything-2",     // sam2
-        "custom_nodes.ComfyUI_bnb_nf4_fp4_Loaders",    // bnb_nf4
-        "custom_nodes.ComfyUI-GGUF",                   // gguf
-        "custom_nodes.ComfyUI_ExtraModels",            // extramodels
-        "custom_nodes.ComfyUI-nunchaku",               // nunchaku
-        "custom_nodes.ComfyUI-TeaCache",               // teacache
-        "custom_nodes.ComfyUI-SAI_API",                // sai_api
-    };
-
-    // A node is "native" if its python_module is the core `nodes` module, anything under
-    // `comfy_extras.*`, or one of the SwarmUI-shipped packs above.
-    // Everything else (comfy_api_nodes.*, third-party custom_nodes.*, missing) is non-native.
-    private static bool IsNativeModule(string? pythonModule)
-    {
-        if (string.IsNullOrEmpty(pythonModule))
-        {
-            return false;
-        }
-
-        return pythonModule == "nodes"
+    private static bool IsNativeModule(string? pythonModule) =>
+        !string.IsNullOrEmpty(pythonModule)
+        && (pythonModule == "nodes"
             || pythonModule.StartsWith("comfy_extras.", StringComparison.Ordinal)
-            || SwarmNativeModules.Contains(pythonModule);
-    }
+            || SwarmNativeModules.Contains(pythonModule));
 
-    // ── CLI parsing ─────────────────────────────────────────────────
+    // CLI
 
     private static Options? ParseArgs(string[] args)
     {
-        string? objectInfoPath = null;
-        string? outputDir = null;
-        string ns = "ComfyTyped.Generated";
-        string registrationsClass = "NodeRegistrations";
-        List<string> extraMappings = [];
+        bool root = args.Any(a => a == "--root");
+
+        string? comfyJsonSource = null;
+        string? outputDir = root ? RootOutputDir : null;
+        string? ns = root ? RootNamespace : null;
+        string? markerNs = root ? RootMarkerNamespace : null;
+        string registrationsClass = RootRegistrationsClass;
         string? coreAssembly = null;
-        bool nativeOnly = false;
-        List<string> positional = [];
+        bool nativeOnly = root;
 
         for (int i = 0; i < args.Length; i++)
         {
             string a = args[i];
             switch (a)
             {
-                case "--object-info":
-                    objectInfoPath = NextArg(args, ref i, a);
-                    break;
-                case "--output":
-                    outputDir = NextArg(args, ref i, a);
-                    break;
-                case "--namespace":
-                    ns = NextArg(args, ref i, a);
-                    break;
-                case "--registrations-class":
-                    registrationsClass = NextArg(args, ref i, a);
-                    break;
-                case "--extra-type-mappings":
-                    extraMappings.Add(NextArg(args, ref i, a));
-                    break;
-                case "--core-assembly":
-                    coreAssembly = NextArg(args, ref i, a);
-                    break;
-                case "--native-only":
-                    nativeOnly = true;
-                    break;
-                case "--help" or "-h":
+                case "--root": break;
+                case "--comfy-json": comfyJsonSource = NextArg(args, ref i, a); break;
+                case "--output": outputDir = NextArg(args, ref i, a); break;
+                case "--namespace": ns = NextArg(args, ref i, a); break;
+                case "--marker-namespace": markerNs = NextArg(args, ref i, a); break;
+                case "--registrations-class": registrationsClass = NextArg(args, ref i, a); break;
+                case "--core-assembly": coreAssembly = NextArg(args, ref i, a); break;
+                case "--native-only": nativeOnly = true; break;
+                case "--help" or "-h": PrintUsage(); return null;
+                default:
+                    Console.Error.WriteLine($"Unknown argument: {a}");
                     PrintUsage();
                     return null;
-                default:
-                    if (a.StartsWith("--", StringComparison.Ordinal))
-                    {
-                        Console.Error.WriteLine($"Unknown flag: {a}");
-                        PrintUsage();
-                        return null;
-                    }
-                    positional.Add(a);
-                    break;
             }
         }
 
-        // Back-compat: positional <object_info> <output>
-        if (objectInfoPath is null && positional.Count >= 1) objectInfoPath = positional[0];
-        if (outputDir is null && positional.Count >= 2) outputDir = positional[1];
-
-        if (objectInfoPath is null || outputDir is null)
+        if (comfyJsonSource is null)
         {
-            PrintUsage();
-            return null;
+            return Fail("--comfy-json is required.");
+        }
+        if (outputDir is null)
+        {
+            return Fail("--output is required (or pass --root for repo defaults).");
+        }
+        if (ns is null)
+        {
+            return Fail("--namespace is required (or pass --root for repo defaults).");
         }
 
-        return new Options(objectInfoPath, outputDir, ns, registrationsClass, extraMappings, coreAssembly, nativeOnly);
+        return new Options(
+            comfyJsonSource, outputDir, ns, markerNs ?? ns, registrationsClass, coreAssembly, nativeOnly);
+    }
+
+    private static Options? Fail(string message)
+    {
+        Console.Error.WriteLine(message);
+        PrintUsage();
+
+        return null;
     }
 
     private static string NextArg(string[] args, ref int i, string flag)
@@ -274,101 +269,135 @@ public static partial class Program
 
     private static void PrintUsage()
     {
-        Console.Error.WriteLine("""
-            Usage: ComfyTyped.CodeGen [options] [<object_info.json> <output_dir>]
+        Console.Error.WriteLine($$"""
+            Usage: ComfyTyped.CodeGen [options]
                    ComfyTyped.CodeGen prune --generated-dir <dir> --source <dir> [--source <dir>...] [--dry-run]
 
-            Options:
-              --object-info <path>             Path to the ComfyUI object_info.json dump.
+            Required:
+              --comfy-json <path|url>          Source for ComfyUI object_info.
+                                               If the value starts with http:// or https://,
+                                               it is fetched over HTTP; otherwise it is read
+                                               from disk.
+                                               Example: http://127.0.0.1:8188/object_info
+
+            Output:
+              --root                           Generate ComfyTyped's own nodes. Sugar for:
+                                                 --output {{RootOutputDir}}
+                                                 --namespace {{RootNamespace}}
+                                                 --marker-namespace {{RootMarkerNamespace}}
+                                                 --registrations-class {{RootRegistrationsClass}}
+                                                 --native-only
+                                               Any of these flags after --root override.
               --output <dir>                   Output directory for *.g.cs files.
-              --namespace <ns>                 Generated namespace (default: ComfyTyped.Generated).
+              --namespace <ns>                 Namespace for generated node classes.
+              --marker-namespace <ns>          Namespace for auto-generated IComfyType marker
+                                               classes (defaults to --namespace). Markers for
+                                               ComfyUI types not already covered by the codegen's
+                                               built-in mapping or core's IOTypeMap are emitted
+                                               automatically.
               --registrations-class <name>     Static class name for node registrations
-                                               (default: NodeRegistrations).
-              --extra-type-mappings <path>     JSON file mapping ComfyUI type names to fully-
-                                               qualified marker types. May be repeated.
-                                               Example value: { "SEEDVR2_DIT": "SwarmUI.SeedVR2.Types.SeedVr2DitType" }
-              --core-assembly <path>           ComfyTyped.dll. When provided, class_types
-                                               already registered by core are skipped (diff mode).
+                                               (default: {{RootRegistrationsClass}}).
+
+            Filtering:
+              --core-assembly <path>           ComfyTyped.dll. When provided, class_types and
+                                               marker types already in core are skipped/reused
+                                               (diff mode).
               --native-only                    Only emit nodes whose python_module is `nodes`,
                                                starts with `comfy_extras.`, or is one of the
                                                SwarmUI-bundled / SwarmUI-installable packs
-                                               (see SwarmNativeModules in source). Use when
-                                               generating the core assembly so api/third-party
-                                               custom nodes are excluded.
-              -h, --help                       Show this message.
+                                               (see SwarmNativeModules in source). Implied by --root.
 
-            Positional <object_info.json> <output_dir> are accepted for back-compat.
+              -h, --help                       Show this message.
             """);
     }
 
-    // ── Extra type mappings ─────────────────────────────────────────
+    // Source loading
 
-    private static void LoadExtraTypeMappings(string path, Dictionary<string, MarkerInfo> mapping)
+    private static JObject LoadComfyJson(string source)
     {
-        JObject json = JObject.Parse(File.ReadAllText(path));
-        foreach (JProperty prop in json.Properties())
+        bool isHttp = Uri.TryCreate(source, UriKind.Absolute, out Uri? uri)
+            && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps);
+        if (!isHttp)
         {
-            string fqn = prop.Value?.ToString() ?? "";
-            if (string.IsNullOrWhiteSpace(fqn))
-            {
-                Console.Error.WriteLine($"  WARN: skipping mapping {prop.Name} (empty value) in {path}");
-                continue;
-            }
-            int dot = fqn.LastIndexOf('.');
-            MarkerInfo info = dot < 0
-                ? new MarkerInfo(fqn, CoreMarkerNamespace)
-                : new MarkerInfo(fqn[(dot + 1)..], fqn[..dot]);
-            mapping[prop.Name] = info;
+            return JObject.Parse(File.ReadAllText(source));
         }
+
+        using HttpClient http = new() { Timeout = TimeSpan.FromMinutes(2) };
+        HttpResponseMessage resp;
+        try
+        {
+            resp = http.GetAsync(uri).GetAwaiter().GetResult();
+        }
+        catch (HttpRequestException ex)
+        {
+            throw new InvalidOperationException($"Failed to fetch {uri}: {ex.Message}", ex);
+        }
+        if (!resp.IsSuccessStatusCode)
+        {
+            throw new InvalidOperationException(
+                $"Fetching {uri} returned HTTP {(int)resp.StatusCode} {resp.ReasonPhrase}.");
+        }
+
+        return JObject.Parse(resp.Content.ReadAsStringAsync().GetAwaiter().GetResult());
     }
 
-    // ── Diff mode ───────────────────────────────────────────────────
+    // Diff mode
 
-    private static void LoadCoreSkipSets(string coreAssemblyPath, HashSet<string> classTypes, HashSet<string> typeNames)
+    private static void LoadCoreSkipSets(
+        string coreAssemblyPath,
+        HashSet<string> classTypes,
+        Dictionary<string, MarkerInfo> typeMapping)
     {
         Assembly asm = Assembly.LoadFrom(Path.GetFullPath(coreAssemblyPath));
 
-        // Invoke ComfyTyped.Generated.NodeRegistrations.EnsureRegistered()
-        Type? regType = asm.GetType(CoreNodeRegistrationsTypeName);
-        MethodInfo? ensure = regType?.GetMethod("EnsureRegistered", BindingFlags.Public | BindingFlags.Static);
-        if (ensure is null)
-        {
-            throw new InvalidOperationException(
-                $"Could not find {CoreNodeRegistrationsTypeName}.EnsureRegistered() in {coreAssemblyPath}.");
-        }
-        ensure.Invoke(null, null);
+        Type GetTypeOrThrow(string fullName) => asm.GetType(fullName)
+            ?? throw new InvalidOperationException($"{fullName} not found in {coreAssemblyPath}.");
 
-        // Read NodeRegistry.RegisteredTypes
-        Type? registryType = asm.GetType(CoreNodeRegistryTypeName)
-            ?? throw new InvalidOperationException($"Could not find {CoreNodeRegistryTypeName} in {coreAssemblyPath}.");
-        PropertyInfo? regProp = registryType.GetProperty("RegisteredTypes", BindingFlags.Public | BindingFlags.Static)
-            ?? throw new InvalidOperationException($"{CoreNodeRegistryTypeName}.RegisteredTypes not found.");
-        if (regProp.GetValue(null) is IEnumerable<string> known)
+        Type registrations = GetTypeOrThrow(CoreNodeRegistrationsTypeName);
+        Type registry = GetTypeOrThrow(CoreNodeRegistryTypeName);
+        Type iComfyType = GetTypeOrThrow(CoreIComfyTypeName);
+
+        registrations
+            .GetMethod("EnsureRegistered", BindingFlags.Public | BindingFlags.Static)!
+            .Invoke(null, null);
+
+        IEnumerable<string> registered = (IEnumerable<string>)registry
+            .GetProperty("RegisteredTypes", BindingFlags.Public | BindingFlags.Static)!
+            .GetValue(null)!;
+        foreach (string s in registered)
         {
-            foreach (string s in known) classTypes.Add(s);
+            classTypes.Add(s);
         }
 
-        // Read IOTypeMap.KnownTypeNames (advisory only — used by callers who want to detect collisions)
-        Type? mapType = asm.GetType(CoreIOTypeMapTypeName);
-        PropertyInfo? namesProp = mapType?.GetProperty("KnownTypeNames", BindingFlags.Public | BindingFlags.Static);
-        if (namesProp?.GetValue(null) is IEnumerable<string> names)
+        foreach (Type t in asm.GetTypes())
         {
-            foreach (string s in names) typeNames.Add(s);
+            if (!t.IsClass || t.IsAbstract || !iComfyType.IsAssignableFrom(t))
+            {
+                continue;
+            }
+            PropertyInfo? prop = t.GetProperty("TypeName", BindingFlags.Public | BindingFlags.Static);
+            if (prop?.GetValue(null) is string typeName && t.Namespace is { Length: > 0 } markerNs)
+            {
+                typeMapping[typeName] = new MarkerInfo(t.Name, markerNs);
+            }
         }
     }
 
-    // ── Output cleanup ──────────────────────────────────────────────
+    // Output cleanup
 
     private static void ClearGeneratedFiles(string outputDir)
     {
-        if (!Directory.Exists(outputDir)) return;
+        if (!Directory.Exists(outputDir))
+        {
+            return;
+        }
         foreach (string file in Directory.EnumerateFiles(outputDir, "*.g.cs", SearchOption.TopDirectoryOnly))
         {
             File.Delete(file);
         }
     }
 
-    // ── Parsing ─────────────────────────────────────────────────────
+    // Parsing
 
     private sealed record InputDef(
         string Name,
@@ -395,49 +424,59 @@ public static partial class Program
         string? Category,
         string? Description);
 
-    private static NodeDef? ParseNodeDef(string classType, JObject nodeInfo, Dictionary<string, MarkerInfo> typeMapping)
+    private static NodeDef? ParseNodeDef(
+        string classType,
+        JObject nodeInfo,
+        Dictionary<string, MarkerInfo> typeMapping,
+        Dictionary<string, MarkerInfo> generatedMarkers,
+        string markerNamespace)
     {
-        List<InputDef> inputs = [];
         List<OutputDef> outputs = [];
+        List<InputDef> inputs = [];
 
-        // Parse outputs FIRST so input names can avoid collisions
-        JArray? outputTypes = nodeInfo["output"] as JArray;
-        JArray? outputNames = nodeInfo["output_name"] as JArray;
-        if (outputTypes is not null)
+        // Parse outputs first so input names can dedupe against output property names.
+        if (nodeInfo["output"] is JArray outputTypes)
         {
+            JArray? outputNames = nodeInfo["output_name"] as JArray;
             for (int i = 0; i < outputTypes.Count; i++)
             {
                 string comfyType = outputTypes[i]?.ToString() ?? "*";
                 string slotName = outputNames is not null && i < outputNames.Count
                     ? outputNames[i]?.ToString() ?? comfyType
                     : comfyType;
-                MarkerInfo marker = ResolveMarkerType(comfyType, typeMapping);
+                MarkerInfo marker = ResolveMarkerType(comfyType, typeMapping, generatedMarkers, markerNamespace);
                 string propName = SanitizeOutputPropertyName(slotName, i, outputs);
                 outputs.Add(new OutputDef(slotName, propName, i, comfyType, marker));
             }
         }
 
-        // Parse inputs
-        JObject? inputSection = nodeInfo["input"] as JObject;
-        if (inputSection is not null)
+        if (nodeInfo["input"] is JObject inputSection)
         {
-            _currentOutputs = outputs;
-            ParseInputSection(inputSection["required"] as JObject, required: true, inputs, typeMapping);
-            ParseInputSection(inputSection["optional"] as JObject, required: false, inputs, typeMapping);
-            _currentOutputs = null;
+            ParseInputSection(
+                inputSection["required"] as JObject, required: true,
+                inputs, outputs, typeMapping, generatedMarkers, markerNamespace);
+            ParseInputSection(
+                inputSection["optional"] as JObject, required: false,
+                inputs, outputs, typeMapping, generatedMarkers, markerNamespace);
         }
 
-        string className = SanitizeClassName(classType);
-        string? category = nodeInfo.Value<string>("category");
-        string? description = nodeInfo.Value<string>("description");
-
-        return new NodeDef(classType, className, inputs, outputs, category, description);
+        return new NodeDef(
+            classType,
+            SanitizeClassName(classType),
+            inputs,
+            outputs,
+            nodeInfo.Value<string>("category"),
+            nodeInfo.Value<string>("description"));
     }
 
-    // Thread-local scratch for passing outputs list into ParseInputSection
-    [ThreadStatic] private static List<OutputDef>? _currentOutputs;
-
-    private static void ParseInputSection(JObject? section, bool required, List<InputDef> inputs, Dictionary<string, MarkerInfo> typeMapping)
+    private static void ParseInputSection(
+        JObject? section,
+        bool required,
+        List<InputDef> inputs,
+        List<OutputDef> outputs,
+        Dictionary<string, MarkerInfo> typeMapping,
+        Dictionary<string, MarkerInfo> generatedMarkers,
+        string markerNamespace)
     {
         if (section is null)
         {
@@ -446,77 +485,60 @@ public static partial class Program
 
         foreach (JProperty inputProp in section.Properties())
         {
-            string inputName = inputProp.Name;
             if (inputProp.Value is not JArray spec || spec.Count == 0)
             {
                 continue;
             }
 
-            string comfyType;
+            string comfyType = spec[0] is JArray ? "COMBO" : spec[0]?.ToString() ?? "*";
+
             object? defaultValue = null;
-
-            if (spec[0] is JArray)
+            if (spec.Count >= 2 && spec[1] is JObject options && options["default"] is JToken defToken)
             {
-                // COMBO type: first element is an array of allowed values
-                comfyType = "COMBO";
-            }
-            else
-            {
-                comfyType = spec[0]?.ToString() ?? "*";
-            }
-
-            // Extract default value from options dict
-            if (spec.Count >= 2 && spec[1] is JObject options)
-            {
-                JToken? defToken = options["default"];
-                if (defToken is not null)
+                defaultValue = defToken.Type switch
                 {
-                    defaultValue = defToken.Type switch
-                    {
-                        JTokenType.Integer => (long)defToken,
-                        JTokenType.Float => (double)defToken,
-                        JTokenType.String => (string?)defToken,
-                        JTokenType.Boolean => (bool)defToken,
-                        _ => null
-                    };
-                }
+                    JTokenType.Integer => (long)defToken,
+                    JTokenType.Float => (double)defToken,
+                    JTokenType.String => (string?)defToken,
+                    JTokenType.Boolean => (bool)defToken,
+                    _ => null
+                };
             }
 
-            // Determine the effective type for COMBO and special types
+            // COMBO, multi-types ("CLIP,GEMMA"), and dynamic V3 widget types collapse to STRING.
             string effectiveType = comfyType;
-            if (comfyType == "COMBO" || comfyType.Contains(','))
-            {
-                effectiveType = "STRING"; // COMBO and multi-types become string inputs
-            }
-            // Handle V3 special types
-            if (comfyType.StartsWith("COMFY_AUTOGROW_V3") || comfyType.StartsWith("COMFY_DYNAMICCOMBO_V3"))
+            if (comfyType == "COMBO"
+                || comfyType.Contains(',')
+                || comfyType.StartsWith("COMFY_AUTOGROW_V3", StringComparison.Ordinal)
+                || comfyType.StartsWith("COMFY_DYNAMICCOMBO_V3", StringComparison.Ordinal))
             {
                 effectiveType = "STRING";
             }
 
-            MarkerInfo marker = ResolveMarkerType(effectiveType, typeMapping);
-            bool isPrimitive = PrimitiveTypes.ContainsKey(effectiveType);
-            string? csharpType = isPrimitive ? PrimitiveTypes[effectiveType].CSharpType : null;
-            string propName = SanitizeInputPropertyName(inputName, inputs, _currentOutputs);
+            MarkerInfo marker = ResolveMarkerType(effectiveType, typeMapping, generatedMarkers, markerNamespace);
+            bool isPrimitive = PrimitiveTypes.TryGetValue(effectiveType, out var prim);
+            string? csharpType = isPrimitive ? prim.CSharp : null;
+            string propName = SanitizeInputPropertyName(inputProp.Name, inputs, outputs);
 
-            inputs.Add(new InputDef(inputName, propName, comfyType, marker, required, isPrimitive, csharpType, defaultValue));
+            inputs.Add(new InputDef(
+                inputProp.Name, propName, comfyType, marker, required, isPrimitive, csharpType, defaultValue));
         }
     }
 
-    // ── Code generation ─────────────────────────────────────────────
+    // Code generation
 
     private static string GenerateNodeClass(NodeDef node, string ns)
     {
         StringBuilder sb = new();
-
         sb.AppendLine("// <auto-generated/>");
         sb.AppendLine("using ComfyTyped.Core;");
 
-        // Emit a using for every distinct marker namespace this node references.
-        // ComfyTyped.Types is always emitted because primitives and AnyType live there.
+        // Always emit ComfyTyped.Types (primitives + AnyType live there). Add any other
+        // marker namespaces this node references. Skip the node's own namespace.
         SortedSet<string> markerNamespaces = new(StringComparer.Ordinal) { CoreMarkerNamespace };
         foreach (OutputDef o in node.Outputs) markerNamespaces.Add(o.Marker.Namespace);
         foreach (InputDef inp in node.Inputs) markerNamespaces.Add(inp.Marker.Namespace);
+        markerNamespaces.Remove(ns);
         foreach (string nsRef in markerNamespaces)
         {
             sb.AppendLine($"using {nsRef};");
@@ -526,11 +548,9 @@ public static partial class Program
         sb.AppendLine($"namespace {ns};");
         sb.AppendLine();
 
-        // XML doc
         if (!string.IsNullOrWhiteSpace(node.Description))
         {
-            string escaped = EscapeXml(node.Description);
-            string[] lines = escaped.Split('\n');
+            string[] lines = EscapeXml(node.Description).Split('\n');
             if (lines.Length == 1)
             {
                 sb.AppendLine($"/// <summary>{lines[0].Trim()}</summary>");
@@ -556,48 +576,46 @@ public static partial class Program
         sb.AppendLine($"    public override string ClassType => \"{node.ClassType}\";");
         sb.AppendLine();
 
-        // Output properties
         if (node.Outputs.Count > 0)
         {
             sb.AppendLine("    // ── Outputs ──");
-            foreach (OutputDef output in node.Outputs)
+            foreach (OutputDef o in node.Outputs)
             {
-                sb.AppendLine($"    public NodeOutput<{output.Marker.ShortName}> {output.PropertyName} {{ get; }}");
+                sb.AppendLine($"    public NodeOutput<{o.Marker.ShortName}> {o.PropertyName} {{ get; }}");
             }
             sb.AppendLine();
         }
 
-        // Input properties
         if (node.Inputs.Count > 0)
         {
             sb.AppendLine("    // ── Inputs ──");
-            foreach (InputDef input in node.Inputs)
+            foreach (InputDef inp in node.Inputs)
             {
-                string reqMarker = input.Required ? "" : " // optional";
-                sb.AppendLine($"    public NodeInput<{input.Marker.ShortName}> {input.PropertyName} {{ get; }}{reqMarker}");
+                string tail = inp.Required ? "" : " // optional";
+                sb.AppendLine(
+                    $"    public NodeInput<{inp.Marker.ShortName}> {inp.PropertyName} {{ get; }}{tail}");
             }
             sb.AppendLine();
         }
 
-        // Constructor
         sb.AppendLine($"    public {node.ClassName}()");
         sb.AppendLine("    {");
-        foreach (OutputDef output in node.Outputs)
+        foreach (OutputDef o in node.Outputs)
         {
-            sb.AppendLine($"        {output.PropertyName} = AddOutput<{output.Marker.ShortName}>({output.SlotIndex}, \"{output.Name}\");");
+            sb.AppendLine(
+                $"        {o.PropertyName} = AddOutput<{o.Marker.ShortName}>({o.SlotIndex}, \"{o.Name}\");");
         }
-        foreach (InputDef input in node.Inputs)
+        foreach (InputDef inp in node.Inputs)
         {
-            sb.AppendLine($"        {input.PropertyName} = AddInput<{input.Marker.ShortName}>(\"{input.Name}\", required: {(input.Required ? "true" : "false")});");
-            // Set default value if primitive and has a default
-            if (input.IsPrimitive && input.DefaultValue is not null)
+            string req = inp.Required ? "true" : "false";
+            sb.AppendLine(
+                $"        {inp.PropertyName} = AddInput<{inp.Marker.ShortName}>(\"{inp.Name}\", required: {req});");
+            if (inp.IsPrimitive && inp.DefaultValue is not null)
             {
-                string literal = FormatLiteral(input.DefaultValue, input.CSharpType!);
-                sb.AppendLine($"        {input.PropertyName}.Set({literal});");
+                sb.AppendLine($"        {inp.PropertyName}.Set({FormatLiteral(inp.DefaultValue, inp.CSharpType!)});");
             }
         }
         sb.AppendLine("    }");
-
         sb.AppendLine("}");
 
         return sb.ToString();
@@ -623,7 +641,26 @@ public static partial class Program
         return sb.ToString();
     }
 
-    // ── Naming helpers ──────────────────────────────────────────────
+    private static string GenerateMarkerClass(string comfyType, MarkerInfo info)
+    {
+        StringBuilder sb = new();
+        sb.AppendLine("// <auto-generated/>");
+        if (info.Namespace != CoreMarkerNamespace)
+        {
+            sb.AppendLine("using ComfyTyped.Types;");
+        }
+        sb.AppendLine();
+        sb.AppendLine($"namespace {info.Namespace};");
+        sb.AppendLine();
+        sb.AppendLine($"/// <summary>Marker for ComfyUI type \"{EscapeXml(comfyType)}\".</summary>");
+        sb.AppendLine(
+            $"public sealed class {info.ShortName} : IComfyType "
+            + $"{{ public static string TypeName => \"{EscapeCSharpString(comfyType)}\"; }}");
+
+        return sb.ToString();
+    }
+
+    // Naming
 
     private static string SanitizeClassName(string classType)
     {
@@ -632,12 +669,12 @@ public static partial class Program
         {
             sanitized = "_" + sanitized;
         }
-        sanitized = ToPascalCase(sanitized);
 
-        return sanitized + "Node";
+        return ToPascalCase(sanitized) + "Node";
     }
 
-    private static string SanitizeInputPropertyName(string inputName, List<InputDef> existingInputs, List<OutputDef>? existingOutputs)
+    private static string SanitizeInputPropertyName(
+        string inputName, List<InputDef> existingInputs, List<OutputDef> existingOutputs)
     {
         string name = ToPascalCase(inputName);
         if (string.IsNullOrEmpty(name))
@@ -649,10 +686,11 @@ public static partial class Program
         {
             name = "ClassTypeInput";
         }
+
         string baseName = name;
         int suffix = 2;
         while (existingInputs.Any(i => i.PropertyName == name)
-            || (existingOutputs?.Any(o => o.PropertyName == name) ?? false))
+            || existingOutputs.Any(o => o.PropertyName == name))
         {
             name = baseName + "Input" + (suffix > 2 ? suffix.ToString() : "");
             suffix++;
@@ -669,6 +707,7 @@ public static partial class Program
             name = $"Output{index}";
         }
         name = EnsureValidIdentifier(name);
+
         string baseName = name;
         int suffix = 2;
         while (existing.Any(o => o.PropertyName == name))
@@ -730,14 +769,60 @@ public static partial class Program
         };
     }
 
-    private static MarkerInfo ResolveMarkerType(string comfyType, Dictionary<string, MarkerInfo> typeMapping)
+    private static MarkerInfo ResolveMarkerType(
+        string comfyType,
+        Dictionary<string, MarkerInfo> typeMapping,
+        Dictionary<string, MarkerInfo> generatedMarkers,
+        string markerNamespace)
     {
         if (typeMapping.TryGetValue(comfyType, out MarkerInfo? marker))
         {
             return marker;
         }
 
-        return new MarkerInfo("AnyType", CoreMarkerNamespace);
+        // Things that don't represent a single nameable type → AnyType.
+        if (string.IsNullOrEmpty(comfyType)
+            || comfyType == "*"
+            || comfyType == "COMBO"
+            || comfyType.Contains(','))
+        {
+            return new MarkerInfo("AnyType", CoreMarkerNamespace);
+        }
+
+        // Mechanical: split on non-alphanumeric, capitalize each chunk's first letter,
+        // lowercase the rest, append "Type". SEEDVR2_DIT → Seedvr2DitType.
+        MarkerInfo info = new(MarkerClassName(comfyType), markerNamespace);
+        typeMapping[comfyType] = info;
+        generatedMarkers[comfyType] = info;
+
+        return info;
+    }
+
+    private static string MarkerClassName(string comfyType)
+    {
+        StringBuilder sb = new();
+        bool nextUpper = true;
+        foreach (char c in comfyType)
+        {
+            if (!char.IsLetterOrDigit(c))
+            {
+                nextUpper = true;
+                continue;
+            }
+            sb.Append(nextUpper ? char.ToUpperInvariant(c) : char.ToLowerInvariant(c));
+            nextUpper = false;
+        }
+        if (sb.Length == 0)
+        {
+            sb.Append('_');
+        }
+        if (char.IsDigit(sb[0]))
+        {
+            sb.Insert(0, '_');
+        }
+        sb.Append("Type");
+
+        return sb.ToString();
     }
 
     private static string FormatLiteral(object value, string csharpType) => csharpType switch
@@ -750,7 +835,7 @@ public static partial class Program
         },
         "double" => value switch
         {
-            double d => d.ToString("G", CultureInfo.InvariantCulture) + (d == Math.Floor(d) && !d.ToString(CultureInfo.InvariantCulture).Contains('E') ? ".0" : ""),
+            double d => FormatDouble(d),
             long l => $"{l}.0",
             _ => $"{value}"
         },
@@ -762,6 +847,14 @@ public static partial class Program
         },
         _ => value.ToString() ?? "null"
     };
+
+    private static string FormatDouble(double d)
+    {
+        string s = d.ToString("G", CultureInfo.InvariantCulture);
+        bool needsDecimal = d == Math.Floor(d) && !s.Contains('E');
+
+        return needsDecimal ? s + ".0" : s;
+    }
 
     private static string EscapeCSharpString(string s) =>
         s.Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\n", "\\n").Replace("\r", "\\r");
@@ -775,16 +868,15 @@ public static partial class Program
     [GeneratedRegex(@"public\s+sealed\s+class\s+([A-Za-z_][A-Za-z0-9_]*)\s*:\s*ComfyNode")]
     private static partial Regex GeneratedClassRegex();
 
-    // ── Prune subcommand ────────────────────────────────────────────
+    // Prune
     //
-    // Use case: an extension developer dumps object_info.json from their local
-    // ComfyUI (which has unrelated custom-node packs installed), generates with
-    // --core-assembly to filter out core, and ends up with .g.cs files for
-    // every non-core class_type — including packs they don't actually use.
-    // `prune` deletes any *.g.cs whose class name is never referenced as an
-    // identifier in the extension's own source files. The reflection-based
-    // NodeRegistrations.EnsureRegistered() automatically reflects the surviving
-    // set after a recompile, so no registration list needs editing.
+    // Use case: an extension developer dumps object_info.json from their local ComfyUI
+    // (which has unrelated custom-node packs installed), generates with --core-assembly
+    // to filter out core, and ends up with .g.cs files for every non-core class_type —
+    // including packs they don't actually use. `prune` deletes any *.g.cs whose class
+    // name is never referenced as an identifier in the extension's own source files.
+    // The reflection-based NodeRegistrations.EnsureRegistered() automatically reflects
+    // the surviving set after a recompile, so no registration list needs editing.
 
     private sealed record PruneOptions(string GeneratedDir, List<string> SourceDirs, bool DryRun);
 
@@ -801,21 +893,18 @@ public static partial class Program
             return 1;
         }
 
-        // Map every *.g.cs file (except NodeRegistrations) to the class it declares.
         Dictionary<string, string> classToPath = new(StringComparer.Ordinal);
         foreach (string file in Directory.EnumerateFiles(opts.GeneratedDir, "*.g.cs", SearchOption.TopDirectoryOnly))
         {
             string name = Path.GetFileName(file);
-            if (name.Equals("NodeRegistrations.g.cs", StringComparison.Ordinal))
+            if (name == "NodeRegistrations.g.cs")
             {
                 continue;
             }
-
-            string text = File.ReadAllText(file);
-            Match m = GeneratedClassRegex().Match(text);
+            Match m = GeneratedClassRegex().Match(File.ReadAllText(file));
             if (!m.Success)
             {
-                Console.Error.WriteLine($"prune: skipping {name} (no `public sealed class X : ComfyNode` declaration found)");
+                Console.Error.WriteLine($"prune: skipping {name} (no `public sealed class X : ComfyNode` declaration)");
                 continue;
             }
             classToPath[m.Groups[1].Value] = file;
@@ -827,8 +916,6 @@ public static partial class Program
             return 0;
         }
 
-        // Concatenate every source file once, then test each class name with a
-        // whole-word regex against that combined buffer.
         StringBuilder allSource = new();
         int sourceFileCount = 0;
         foreach (string srcDir in opts.SourceDirs)
@@ -847,15 +934,15 @@ public static partial class Program
         string combined = allSource.ToString();
 
         List<string> toPrune = [];
-        foreach ((string className, string _) in classToPath)
+        foreach (string className in classToPath.Keys)
         {
             if (!Regex.IsMatch(combined, $@"\b{Regex.Escape(className)}\b"))
             {
                 toPrune.Add(className);
             }
         }
-
         toPrune.Sort(StringComparer.Ordinal);
+
         foreach (string className in toPrune)
         {
             string path = classToPath[className];
@@ -873,7 +960,9 @@ public static partial class Program
 
         int kept = classToPath.Count - toPrune.Count;
         string verb = opts.DryRun ? "would prune" : "pruned";
-        Console.WriteLine($"prune: scanned {sourceFileCount} source files; kept {kept}/{classToPath.Count} generated classes; {verb} {toPrune.Count}.");
+        Console.WriteLine(
+            $"prune: scanned {sourceFileCount} source files; "
+            + $"kept {kept}/{classToPath.Count} generated classes; {verb} {toPrune.Count}.");
 
         return 0;
     }
@@ -889,18 +978,10 @@ public static partial class Program
             string a = args[i];
             switch (a)
             {
-                case "--generated-dir":
-                    generatedDir = NextArg(args, ref i, a);
-                    break;
-                case "--source":
-                    sourceDirs.Add(NextArg(args, ref i, a));
-                    break;
-                case "--dry-run":
-                    dryRun = true;
-                    break;
-                case "--help" or "-h":
-                    PrintPruneUsage();
-                    return null;
+                case "--generated-dir": generatedDir = NextArg(args, ref i, a); break;
+                case "--source": sourceDirs.Add(NextArg(args, ref i, a)); break;
+                case "--dry-run": dryRun = true; break;
+                case "--help" or "-h": PrintPruneUsage(); return null;
                 default:
                     Console.Error.WriteLine($"prune: unknown flag: {a}");
                     PrintPruneUsage();

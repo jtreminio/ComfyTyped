@@ -13,7 +13,7 @@ public sealed class SDPoseDrawKeypointsNode : ComfyNode
     public NodeOutput<ImageType> IMAGE { get; }
 
     // ── Inputs ──
-    public NodeInput<AnyType> Keypoints { get; }
+    public NodeInput<PoseKeypointType> Keypoints { get; }
     public NodeInput<BooleanType> DrawBody { get; }
     public NodeInput<BooleanType> DrawHands { get; }
     public NodeInput<BooleanType> DrawFace { get; }
@@ -25,7 +25,7 @@ public sealed class SDPoseDrawKeypointsNode : ComfyNode
     public SDPoseDrawKeypointsNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Keypoints = AddInput<AnyType>("keypoints", required: true);
+        Keypoints = AddInput<PoseKeypointType>("keypoints", required: true);
         DrawBody = AddInput<BooleanType>("draw_body", required: true);
         DrawBody.Set(true);
         DrawHands = AddInput<BooleanType>("draw_hands", required: true);

@@ -15,13 +15,13 @@ public sealed class IPAdapterEmbedsNode : ComfyNode
     // ── Inputs ──
     public NodeInput<ModelType> Model { get; }
     public NodeInput<IpAdapterType> Ipadapter { get; }
-    public NodeInput<AnyType> PosEmbed { get; }
+    public NodeInput<EmbedsType> PosEmbed { get; }
     public NodeInput<FloatType> Weight { get; }
     public NodeInput<StringType> WeightType { get; }
     public NodeInput<FloatType> StartAt { get; }
     public NodeInput<FloatType> EndAt { get; }
     public NodeInput<StringType> EmbedsScaling { get; }
-    public NodeInput<AnyType> NegEmbed { get; } // optional
+    public NodeInput<EmbedsType> NegEmbed { get; } // optional
     public NodeInput<MaskType> AttnMask { get; } // optional
     public NodeInput<ClipVisionType> ClipVision { get; } // optional
 
@@ -30,7 +30,7 @@ public sealed class IPAdapterEmbedsNode : ComfyNode
         MODEL = AddOutput<ModelType>(0, "MODEL");
         Model = AddInput<ModelType>("model", required: true);
         Ipadapter = AddInput<IpAdapterType>("ipadapter", required: true);
-        PosEmbed = AddInput<AnyType>("pos_embed", required: true);
+        PosEmbed = AddInput<EmbedsType>("pos_embed", required: true);
         Weight = AddInput<FloatType>("weight", required: true);
         Weight.Set(1.0);
         WeightType = AddInput<StringType>("weight_type", required: true);
@@ -39,7 +39,7 @@ public sealed class IPAdapterEmbedsNode : ComfyNode
         EndAt = AddInput<FloatType>("end_at", required: true);
         EndAt.Set(1.0);
         EmbedsScaling = AddInput<StringType>("embeds_scaling", required: true);
-        NegEmbed = AddInput<AnyType>("neg_embed", required: false);
+        NegEmbed = AddInput<EmbedsType>("neg_embed", required: false);
         AttnMask = AddInput<MaskType>("attn_mask", required: false);
         ClipVision = AddInput<ClipVisionType>("clip_vision", required: false);
     }

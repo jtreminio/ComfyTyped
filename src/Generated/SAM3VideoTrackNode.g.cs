@@ -10,7 +10,7 @@ public sealed class SAM3VideoTrackNode : ComfyNode
     public override string ClassType => "SAM3_VideoTrack";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> TrackData { get; }
+    public NodeOutput<Sam3TrackDataType> TrackData { get; }
 
     // ── Inputs ──
     public NodeInput<ImageType> Images { get; }
@@ -23,7 +23,7 @@ public sealed class SAM3VideoTrackNode : ComfyNode
 
     public SAM3VideoTrackNode()
     {
-        TrackData = AddOutput<AnyType>(0, "track_data");
+        TrackData = AddOutput<Sam3TrackDataType>(0, "track_data");
         Images = AddInput<ImageType>("images", required: true);
         Model = AddInput<ModelType>("model", required: true);
         DetectionThreshold = AddInput<FloatType>("detection_threshold", required: true);

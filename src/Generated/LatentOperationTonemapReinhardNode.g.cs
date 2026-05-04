@@ -10,14 +10,14 @@ public sealed class LatentOperationTonemapReinhardNode : ComfyNode
     public override string ClassType => "LatentOperationTonemapReinhard";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> LATENTOPERATION { get; }
+    public NodeOutput<LatentOperationType> LATENTOPERATION { get; }
 
     // ── Inputs ──
     public NodeInput<FloatType> Multiplier { get; }
 
     public LatentOperationTonemapReinhardNode()
     {
-        LATENTOPERATION = AddOutput<AnyType>(0, "LATENT_OPERATION");
+        LATENTOPERATION = AddOutput<LatentOperationType>(0, "LATENT_OPERATION");
         Multiplier = AddInput<FloatType>("multiplier", required: true);
         Multiplier.Set(1.0);
     }

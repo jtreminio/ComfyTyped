@@ -10,18 +10,18 @@ public sealed class MaskOptFlowNode : ComfyNode
     public override string ClassType => "MaskOptFlow";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> OPTICALFLOW { get; }
+    public NodeOutput<OpticalFlowType> OPTICALFLOW { get; }
     public NodeOutput<ImageType> PREVIEWIMAGE { get; }
 
     // ── Inputs ──
-    public NodeInput<AnyType> OpticalFlow { get; }
+    public NodeInput<OpticalFlowType> OpticalFlow { get; }
     public NodeInput<MaskType> Mask { get; }
 
     public MaskOptFlowNode()
     {
-        OPTICALFLOW = AddOutput<AnyType>(0, "OPTICAL_FLOW");
+        OPTICALFLOW = AddOutput<OpticalFlowType>(0, "OPTICAL_FLOW");
         PREVIEWIMAGE = AddOutput<ImageType>(1, "PREVIEW_IMAGE");
-        OpticalFlow = AddInput<AnyType>("optical_flow", required: true);
+        OpticalFlow = AddInput<OpticalFlowType>("optical_flow", required: true);
         Mask = AddInput<MaskType>("mask", required: true);
     }
 }

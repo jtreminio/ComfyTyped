@@ -10,7 +10,7 @@ public sealed class UnimatchOptFlowPreprocessorNode : ComfyNode
     public override string ClassType => "Unimatch_OptFlowPreprocessor";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> OPTICALFLOW { get; }
+    public NodeOutput<OpticalFlowType> OPTICALFLOW { get; }
     public NodeOutput<ImageType> PREVIEWIMAGE { get; }
 
     // ── Inputs ──
@@ -21,7 +21,7 @@ public sealed class UnimatchOptFlowPreprocessorNode : ComfyNode
 
     public UnimatchOptFlowPreprocessorNode()
     {
-        OPTICALFLOW = AddOutput<AnyType>(0, "OPTICAL_FLOW");
+        OPTICALFLOW = AddOutput<OpticalFlowType>(0, "OPTICAL_FLOW");
         PREVIEWIMAGE = AddOutput<ImageType>(1, "PREVIEW_IMAGE");
         Image = AddInput<ImageType>("image", required: true);
         CkptName = AddInput<StringType>("ckpt_name", required: true);

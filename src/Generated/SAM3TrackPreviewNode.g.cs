@@ -10,14 +10,14 @@ public sealed class SAM3TrackPreviewNode : ComfyNode
     public override string ClassType => "SAM3_TrackPreview";
 
     // ── Inputs ──
-    public NodeInput<AnyType> TrackData { get; }
+    public NodeInput<Sam3TrackDataType> TrackData { get; }
     public NodeInput<FloatType> Opacity { get; }
     public NodeInput<FloatType> Fps { get; }
     public NodeInput<ImageType> Images { get; } // optional
 
     public SAM3TrackPreviewNode()
     {
-        TrackData = AddInput<AnyType>("track_data", required: true);
+        TrackData = AddInput<Sam3TrackDataType>("track_data", required: true);
         Opacity = AddInput<FloatType>("opacity", required: true);
         Opacity.Set(0.5);
         Fps = AddInput<FloatType>("fps", required: true);

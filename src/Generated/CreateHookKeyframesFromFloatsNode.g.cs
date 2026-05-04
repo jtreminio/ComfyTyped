@@ -10,25 +10,25 @@ public sealed class CreateHookKeyframesFromFloatsNode : ComfyNode
     public override string ClassType => "CreateHookKeyframesFromFloats";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> HOOKKF { get; }
+    public NodeOutput<HookKeyframesType> HOOKKF { get; }
 
     // ── Inputs ──
-    public NodeInput<AnyType> FloatsStrength { get; }
+    public NodeInput<FloatsType> FloatsStrength { get; }
     public NodeInput<FloatType> StartPercent { get; }
     public NodeInput<FloatType> EndPercent { get; }
     public NodeInput<BooleanType> PrintKeyframes { get; }
-    public NodeInput<AnyType> PrevHookKf { get; } // optional
+    public NodeInput<HookKeyframesType> PrevHookKf { get; } // optional
 
     public CreateHookKeyframesFromFloatsNode()
     {
-        HOOKKF = AddOutput<AnyType>(0, "HOOK_KF");
-        FloatsStrength = AddInput<AnyType>("floats_strength", required: true);
+        HOOKKF = AddOutput<HookKeyframesType>(0, "HOOK_KF");
+        FloatsStrength = AddInput<FloatsType>("floats_strength", required: true);
         StartPercent = AddInput<FloatType>("start_percent", required: true);
         StartPercent.Set(0.0);
         EndPercent = AddInput<FloatType>("end_percent", required: true);
         EndPercent.Set(1.0);
         PrintKeyframes = AddInput<BooleanType>("print_keyframes", required: true);
         PrintKeyframes.Set(false);
-        PrevHookKf = AddInput<AnyType>("prev_hook_kf", required: false);
+        PrevHookKf = AddInput<HookKeyframesType>("prev_hook_kf", required: false);
     }
 }

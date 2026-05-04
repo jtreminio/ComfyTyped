@@ -24,7 +24,7 @@ public sealed class WanMoveTrackToVideoNode : ComfyNode
     public NodeInput<IntType> Length { get; }
     public NodeInput<IntType> BatchSize { get; }
     public NodeInput<ImageType> StartImage { get; }
-    public NodeInput<AnyType> Tracks { get; } // optional
+    public NodeInput<TracksType> Tracks { get; } // optional
     public NodeInput<ClipVisionOutputType> ClipVisionOutput { get; } // optional
 
     public WanMoveTrackToVideoNode()
@@ -46,7 +46,7 @@ public sealed class WanMoveTrackToVideoNode : ComfyNode
         BatchSize = AddInput<IntType>("batch_size", required: true);
         BatchSize.Set(1L);
         StartImage = AddInput<ImageType>("start_image", required: true);
-        Tracks = AddInput<AnyType>("tracks", required: false);
+        Tracks = AddInput<TracksType>("tracks", required: false);
         ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output", required: false);
     }
 }

@@ -26,7 +26,7 @@ public sealed class WanInfiniteTalkToVideoNode : ComfyNode
     public NodeInput<IntType> Width { get; }
     public NodeInput<IntType> Height { get; }
     public NodeInput<IntType> Length { get; }
-    public NodeInput<AnyType> AudioEncoderOutput1 { get; }
+    public NodeInput<AudioEncoderOutputType> AudioEncoderOutput1 { get; }
     public NodeInput<IntType> MotionFrameCount { get; }
     public NodeInput<FloatType> AudioScale { get; }
     public NodeInput<ClipVisionOutputType> ClipVisionOutput { get; } // optional
@@ -52,7 +52,7 @@ public sealed class WanInfiniteTalkToVideoNode : ComfyNode
         Height.Set(480L);
         Length = AddInput<IntType>("length", required: true);
         Length.Set(81L);
-        AudioEncoderOutput1 = AddInput<AnyType>("audio_encoder_output_1", required: true);
+        AudioEncoderOutput1 = AddInput<AudioEncoderOutputType>("audio_encoder_output_1", required: true);
         MotionFrameCount = AddInput<IntType>("motion_frame_count", required: true);
         MotionFrameCount.Set(9L);
         AudioScale = AddInput<FloatType>("audio_scale", required: true);

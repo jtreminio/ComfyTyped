@@ -14,12 +14,12 @@ public sealed class ImageCropV2Node : ComfyNode
 
     // ── Inputs ──
     public NodeInput<ImageType> Image { get; }
-    public NodeInput<AnyType> CropRegion { get; }
+    public NodeInput<BoundingBoxType> CropRegion { get; }
 
     public ImageCropV2Node()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
         Image = AddInput<ImageType>("image", required: true);
-        CropRegion = AddInput<AnyType>("crop_region", required: true);
+        CropRegion = AddInput<BoundingBoxType>("crop_region", required: true);
     }
 }

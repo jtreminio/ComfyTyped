@@ -11,7 +11,7 @@ public sealed class TrainLoraNodeNode : ComfyNode
 
     // ── Outputs ──
     public NodeOutput<LoraModelType> Lora { get; }
-    public NodeOutput<AnyType> LossMap { get; }
+    public NodeOutput<LossMapType> LossMap { get; }
     public NodeOutput<IntType> Steps { get; }
 
     // ── Inputs ──
@@ -40,7 +40,7 @@ public sealed class TrainLoraNodeNode : ComfyNode
     public TrainLoraNodeNode()
     {
         Lora = AddOutput<LoraModelType>(0, "lora");
-        LossMap = AddOutput<AnyType>(1, "loss_map");
+        LossMap = AddOutput<LossMapType>(1, "loss_map");
         Steps = AddOutput<IntType>(2, "steps");
         Model = AddInput<ModelType>("model", required: true);
         Latents = AddInput<LatentType>("latents", required: true);

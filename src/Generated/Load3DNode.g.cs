@@ -14,13 +14,13 @@ public sealed class Load3DNode : ComfyNode
     public NodeOutput<MaskType> Mask { get; }
     public NodeOutput<StringType> MeshPath { get; }
     public NodeOutput<ImageType> Normal { get; }
-    public NodeOutput<AnyType> CameraInfo { get; }
+    public NodeOutput<Load3dCameraType> CameraInfo { get; }
     public NodeOutput<VideoType> RecordingVideo { get; }
-    public NodeOutput<AnyType> Model3d { get; }
+    public NodeOutput<File3dType> Model3d { get; }
 
     // ── Inputs ──
     public NodeInput<StringType> ModelFile { get; }
-    public NodeInput<AnyType> ImageInput { get; }
+    public NodeInput<Load3dType> ImageInput { get; }
     public NodeInput<IntType> Width { get; }
     public NodeInput<IntType> Height { get; }
 
@@ -30,11 +30,11 @@ public sealed class Load3DNode : ComfyNode
         Mask = AddOutput<MaskType>(1, "mask");
         MeshPath = AddOutput<StringType>(2, "mesh_path");
         Normal = AddOutput<ImageType>(3, "normal");
-        CameraInfo = AddOutput<AnyType>(4, "camera_info");
+        CameraInfo = AddOutput<Load3dCameraType>(4, "camera_info");
         RecordingVideo = AddOutput<VideoType>(5, "recording_video");
-        Model3d = AddOutput<AnyType>(6, "model_3d");
+        Model3d = AddOutput<File3dType>(6, "model_3d");
         ModelFile = AddInput<StringType>("model_file", required: true);
-        ImageInput = AddInput<AnyType>("image", required: true);
+        ImageInput = AddInput<Load3dType>("image", required: true);
         Width = AddInput<IntType>("width", required: true);
         Width.Set(1024L);
         Height = AddInput<IntType>("height", required: true);

@@ -15,7 +15,7 @@ public sealed class IPAdapterWeightsNode : ComfyNode
     public NodeOutput<IntType> TotalFrames { get; }
     public NodeOutput<ImageType> Image1 { get; }
     public NodeOutput<ImageType> Image2 { get; }
-    public NodeOutput<AnyType> WeightsStrategy { get; }
+    public NodeOutput<WeightsStrategyType> WeightsStrategy { get; }
 
     // ── Inputs ──
     public NodeInput<StringType> WeightsInput { get; }
@@ -35,7 +35,7 @@ public sealed class IPAdapterWeightsNode : ComfyNode
         TotalFrames = AddOutput<IntType>(2, "total_frames");
         Image1 = AddOutput<ImageType>(3, "image_1");
         Image2 = AddOutput<ImageType>(4, "image_2");
-        WeightsStrategy = AddOutput<AnyType>(5, "weights_strategy");
+        WeightsStrategy = AddOutput<WeightsStrategyType>(5, "weights_strategy");
         WeightsInput = AddInput<StringType>("weights", required: true);
         WeightsInput.Set("1.0, 0.0");
         Timing = AddInput<StringType>("timing", required: true);

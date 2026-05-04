@@ -10,14 +10,14 @@ public sealed class IPAdapterLoadEmbedsNode : ComfyNode
     public override string ClassType => "IPAdapterLoadEmbeds";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> EMBEDS { get; }
+    public NodeOutput<EmbedsType> EMBEDS { get; }
 
     // ── Inputs ──
     public NodeInput<StringType> Embeds { get; }
 
     public IPAdapterLoadEmbedsNode()
     {
-        EMBEDS = AddOutput<AnyType>(0, "EMBEDS");
+        EMBEDS = AddOutput<EmbedsType>(0, "EMBEDS");
         Embeds = AddInput<StringType>("embeds", required: true);
     }
 }

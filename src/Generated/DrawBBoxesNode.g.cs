@@ -13,13 +13,13 @@ public sealed class DrawBBoxesNode : ComfyNode
     public NodeOutput<ImageType> OutImage { get; }
 
     // ── Inputs ──
-    public NodeInput<AnyType> Bboxes { get; }
+    public NodeInput<BoundingBoxType> Bboxes { get; }
     public NodeInput<ImageType> Image { get; } // optional
 
     public DrawBBoxesNode()
     {
         OutImage = AddOutput<ImageType>(0, "out_image");
-        Bboxes = AddInput<AnyType>("bboxes", required: true);
+        Bboxes = AddInput<BoundingBoxType>("bboxes", required: true);
         Image = AddInput<ImageType>("image", required: false);
     }
 }

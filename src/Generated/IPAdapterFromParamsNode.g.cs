@@ -15,7 +15,7 @@ public sealed class IPAdapterFromParamsNode : ComfyNode
     // ── Inputs ──
     public NodeInput<ModelType> Model { get; }
     public NodeInput<IpAdapterType> Ipadapter { get; }
-    public NodeInput<AnyType> IpadapterParams { get; }
+    public NodeInput<IpadapterParamsType> IpadapterParams { get; }
     public NodeInput<StringType> CombineEmbeds { get; }
     public NodeInput<StringType> EmbedsScaling { get; }
     public NodeInput<ImageType> ImageNegative { get; } // optional
@@ -26,7 +26,7 @@ public sealed class IPAdapterFromParamsNode : ComfyNode
         MODEL = AddOutput<ModelType>(0, "MODEL");
         Model = AddInput<ModelType>("model", required: true);
         Ipadapter = AddInput<IpAdapterType>("ipadapter", required: true);
-        IpadapterParams = AddInput<AnyType>("ipadapter_params", required: true);
+        IpadapterParams = AddInput<IpadapterParamsType>("ipadapter_params", required: true);
         CombineEmbeds = AddInput<StringType>("combine_embeds", required: true);
         EmbedsScaling = AddInput<StringType>("embeds_scaling", required: true);
         ImageNegative = AddInput<ImageType>("image_negative", required: false);

@@ -10,8 +10,8 @@ public sealed class IPAdapterEncoderNode : ComfyNode
     public override string ClassType => "IPAdapterEncoder";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> PosEmbed { get; }
-    public NodeOutput<AnyType> NegEmbed { get; }
+    public NodeOutput<EmbedsType> PosEmbed { get; }
+    public NodeOutput<EmbedsType> NegEmbed { get; }
 
     // ── Inputs ──
     public NodeInput<IpAdapterType> Ipadapter { get; }
@@ -22,8 +22,8 @@ public sealed class IPAdapterEncoderNode : ComfyNode
 
     public IPAdapterEncoderNode()
     {
-        PosEmbed = AddOutput<AnyType>(0, "pos_embed");
-        NegEmbed = AddOutput<AnyType>(1, "neg_embed");
+        PosEmbed = AddOutput<EmbedsType>(0, "pos_embed");
+        NegEmbed = AddOutput<EmbedsType>(1, "neg_embed");
         Ipadapter = AddInput<IpAdapterType>("ipadapter", required: true);
         Image = AddInput<ImageType>("image", required: true);
         Weight = AddInput<FloatType>("weight", required: true);

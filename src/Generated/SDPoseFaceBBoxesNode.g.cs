@@ -10,17 +10,17 @@ public sealed class SDPoseFaceBBoxesNode : ComfyNode
     public override string ClassType => "SDPoseFaceBBoxes";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> Bboxes { get; }
+    public NodeOutput<BoundingBoxType> Bboxes { get; }
 
     // ── Inputs ──
-    public NodeInput<AnyType> Keypoints { get; }
+    public NodeInput<PoseKeypointType> Keypoints { get; }
     public NodeInput<FloatType> Scale { get; }
     public NodeInput<BooleanType> ForceSquare { get; }
 
     public SDPoseFaceBBoxesNode()
     {
-        Bboxes = AddOutput<AnyType>(0, "bboxes");
-        Keypoints = AddInput<AnyType>("keypoints", required: true);
+        Bboxes = AddOutput<BoundingBoxType>(0, "bboxes");
+        Keypoints = AddInput<PoseKeypointType>("keypoints", required: true);
         Scale = AddInput<FloatType>("scale", required: true);
         Scale.Set(1.5);
         ForceSquare = AddInput<BooleanType>("force_square", required: true);

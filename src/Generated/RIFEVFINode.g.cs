@@ -23,7 +23,7 @@ public sealed class RIFEVFINode : ComfyNode
     public NodeInput<StringType> Dtype { get; }
     public NodeInput<BooleanType> TorchCompile { get; }
     public NodeInput<IntType> BatchSize { get; }
-    public NodeInput<AnyType> OptionalInterpolationStates { get; } // optional
+    public NodeInput<InterpolationStatesType> OptionalInterpolationStates { get; } // optional
 
     public RIFEVFINode()
     {
@@ -47,6 +47,6 @@ public sealed class RIFEVFINode : ComfyNode
         TorchCompile.Set(false);
         BatchSize = AddInput<IntType>("batch_size", required: true);
         BatchSize.Set(1L);
-        OptionalInterpolationStates = AddInput<AnyType>("optional_interpolation_states", required: false);
+        OptionalInterpolationStates = AddInput<InterpolationStatesType>("optional_interpolation_states", required: false);
     }
 }

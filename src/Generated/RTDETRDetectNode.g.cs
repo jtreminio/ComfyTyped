@@ -10,7 +10,7 @@ public sealed class RTDETRDetectNode : ComfyNode
     public override string ClassType => "RTDETR_detect";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> Bboxes { get; }
+    public NodeOutput<BoundingBoxType> Bboxes { get; }
 
     // ── Inputs ──
     public NodeInput<ModelType> Model { get; }
@@ -21,7 +21,7 @@ public sealed class RTDETRDetectNode : ComfyNode
 
     public RTDETRDetectNode()
     {
-        Bboxes = AddOutput<AnyType>(0, "bboxes");
+        Bboxes = AddOutput<BoundingBoxType>(0, "bboxes");
         Model = AddInput<ModelType>("model", required: true);
         Image = AddInput<ImageType>("image", required: true);
         Threshold = AddInput<FloatType>("threshold", required: true);

@@ -10,7 +10,7 @@ public sealed class MakeInterpolationStateListNode : ComfyNode
     public override string ClassType => "Make Interpolation State List";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> INTERPOLATIONSTATES { get; }
+    public NodeOutput<InterpolationStatesType> INTERPOLATIONSTATES { get; }
 
     // ── Inputs ──
     public NodeInput<StringType> FrameIndices { get; }
@@ -18,7 +18,7 @@ public sealed class MakeInterpolationStateListNode : ComfyNode
 
     public MakeInterpolationStateListNode()
     {
-        INTERPOLATIONSTATES = AddOutput<AnyType>(0, "INTERPOLATION_STATES");
+        INTERPOLATIONSTATES = AddOutput<InterpolationStatesType>(0, "INTERPOLATION_STATES");
         FrameIndices = AddInput<StringType>("frame_indices", required: true);
         FrameIndices.Set("1,2,3");
         IsSkipList = AddInput<BooleanType>("is_skip_list", required: true);

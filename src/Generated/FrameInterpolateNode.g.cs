@@ -13,14 +13,14 @@ public sealed class FrameInterpolateNode : ComfyNode
     public NodeOutput<ImageType> IMAGE { get; }
 
     // ── Inputs ──
-    public NodeInput<AnyType> InterpModel { get; }
+    public NodeInput<InterpModelType> InterpModel { get; }
     public NodeInput<ImageType> Images { get; }
     public NodeInput<IntType> Multiplier { get; }
 
     public FrameInterpolateNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        InterpModel = AddInput<AnyType>("interp_model", required: true);
+        InterpModel = AddInput<InterpModelType>("interp_model", required: true);
         Images = AddInput<ImageType>("images", required: true);
         Multiplier = AddInput<IntType>("multiplier", required: true);
         Multiplier.Set(2L);

@@ -17,7 +17,7 @@ public sealed class FILMVFINode : ComfyNode
     public NodeInput<ImageType> Frames { get; }
     public NodeInput<IntType> ClearCacheAfterNFrames { get; }
     public NodeInput<IntType> Multiplier { get; }
-    public NodeInput<AnyType> OptionalInterpolationStates { get; } // optional
+    public NodeInput<InterpolationStatesType> OptionalInterpolationStates { get; } // optional
 
     public FILMVFINode()
     {
@@ -28,6 +28,6 @@ public sealed class FILMVFINode : ComfyNode
         ClearCacheAfterNFrames.Set(10L);
         Multiplier = AddInput<IntType>("multiplier", required: true);
         Multiplier.Set(2L);
-        OptionalInterpolationStates = AddInput<AnyType>("optional_interpolation_states", required: false);
+        OptionalInterpolationStates = AddInput<InterpolationStatesType>("optional_interpolation_states", required: false);
     }
 }

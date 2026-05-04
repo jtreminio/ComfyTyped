@@ -15,7 +15,7 @@ public sealed class MeshGraphormerImpactDetectorDepthMapPreprocessorNode : Comfy
 
     // ── Inputs ──
     public NodeInput<ImageType> Image { get; }
-    public NodeInput<AnyType> BboxDetector { get; }
+    public NodeInput<BboxDetectorType> BboxDetector { get; }
     public NodeInput<FloatType> BboxThreshold { get; } // optional
     public NodeInput<IntType> BboxDilation { get; } // optional
     public NodeInput<FloatType> BboxCropFactor { get; } // optional
@@ -31,7 +31,7 @@ public sealed class MeshGraphormerImpactDetectorDepthMapPreprocessorNode : Comfy
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
         INPAINTINGMASK = AddOutput<MaskType>(1, "INPAINTING_MASK");
         Image = AddInput<ImageType>("image", required: true);
-        BboxDetector = AddInput<AnyType>("bbox_detector", required: true);
+        BboxDetector = AddInput<BboxDetectorType>("bbox_detector", required: true);
         BboxThreshold = AddInput<FloatType>("bbox_threshold", required: false);
         BboxThreshold.Set(0.5);
         BboxDilation = AddInput<IntType>("bbox_dilation", required: false);

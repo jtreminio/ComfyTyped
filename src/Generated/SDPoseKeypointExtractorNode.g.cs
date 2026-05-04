@@ -11,23 +11,23 @@ public sealed class SDPoseKeypointExtractorNode : ComfyNode
     public override string ClassType => "SDPoseKeypointExtractor";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> Keypoints { get; }
+    public NodeOutput<PoseKeypointType> Keypoints { get; }
 
     // ── Inputs ──
     public NodeInput<ModelType> Model { get; }
     public NodeInput<VaeType> Vae { get; }
     public NodeInput<ImageType> Image { get; }
     public NodeInput<IntType> BatchSize { get; }
-    public NodeInput<AnyType> Bboxes { get; } // optional
+    public NodeInput<BoundingBoxType> Bboxes { get; } // optional
 
     public SDPoseKeypointExtractorNode()
     {
-        Keypoints = AddOutput<AnyType>(0, "keypoints");
+        Keypoints = AddOutput<PoseKeypointType>(0, "keypoints");
         Model = AddInput<ModelType>("model", required: true);
         Vae = AddInput<VaeType>("vae", required: true);
         Image = AddInput<ImageType>("image", required: true);
         BatchSize = AddInput<IntType>("batch_size", required: true);
         BatchSize.Set(16L);
-        Bboxes = AddInput<AnyType>("bboxes", required: false);
+        Bboxes = AddInput<BoundingBoxType>("bboxes", required: false);
     }
 }

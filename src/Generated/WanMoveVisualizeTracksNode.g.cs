@@ -18,7 +18,7 @@ public sealed class WanMoveVisualizeTracksNode : ComfyNode
     public NodeInput<IntType> CircleSize { get; }
     public NodeInput<FloatType> Opacity { get; }
     public NodeInput<IntType> LineWidth { get; }
-    public NodeInput<AnyType> Tracks { get; } // optional
+    public NodeInput<TracksType> Tracks { get; } // optional
 
     public WanMoveVisualizeTracksNode()
     {
@@ -32,6 +32,6 @@ public sealed class WanMoveVisualizeTracksNode : ComfyNode
         Opacity.Set(0.75);
         LineWidth = AddInput<IntType>("line_width", required: true);
         LineWidth.Set(16L);
-        Tracks = AddInput<AnyType>("tracks", required: false);
+        Tracks = AddInput<TracksType>("tracks", required: false);
     }
 }

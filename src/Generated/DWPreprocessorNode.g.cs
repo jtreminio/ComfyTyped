@@ -11,7 +11,7 @@ public sealed class DWPreprocessorNode : ComfyNode
 
     // ── Outputs ──
     public NodeOutput<ImageType> IMAGE { get; }
-    public NodeOutput<AnyType> POSEKEYPOINT { get; }
+    public NodeOutput<PoseKeypointType> POSEKEYPOINT { get; }
 
     // ── Inputs ──
     public NodeInput<ImageType> Image { get; }
@@ -26,7 +26,7 @@ public sealed class DWPreprocessorNode : ComfyNode
     public DWPreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        POSEKEYPOINT = AddOutput<AnyType>(1, "POSE_KEYPOINT");
+        POSEKEYPOINT = AddOutput<PoseKeypointType>(1, "POSE_KEYPOINT");
         Image = AddInput<ImageType>("image", required: true);
         DetectHand = AddInput<StringType>("detect_hand", required: false);
         DetectHand.Set("enable");

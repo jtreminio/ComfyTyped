@@ -21,7 +21,7 @@ public sealed class SwarmInputModelNameNode : ComfyNode
     public NodeInput<FloatType> OrderPriority { get; }
     public NodeInput<BooleanType> IsAdvanced { get; }
     public NodeInput<StringType> RawId { get; }
-    public NodeInput<AnyType> Group { get; } // optional
+    public NodeInput<GroupType> Group { get; } // optional
 
     public SwarmInputModelNameNode()
     {
@@ -39,6 +39,6 @@ public sealed class SwarmInputModelNameNode : ComfyNode
         IsAdvanced.Set(false);
         RawId = AddInput<StringType>("raw_id", required: true);
         RawId.Set("");
-        Group = AddInput<AnyType>("group", required: false);
+        Group = AddInput<GroupType>("group", required: false);
     }
 }

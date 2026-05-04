@@ -10,9 +10,9 @@ public sealed class ConditioningTimestepsRangeNode : ComfyNode
     public override string ClassType => "ConditioningTimestepsRange";
 
     // ── Outputs ──
-    public NodeOutput<AnyType> TIMESTEPSRANGE { get; }
-    public NodeOutput<AnyType> BEFORERANGE { get; }
-    public NodeOutput<AnyType> AFTERRANGE { get; }
+    public NodeOutput<TimestepsRangeType> TIMESTEPSRANGE { get; }
+    public NodeOutput<TimestepsRangeType> BEFORERANGE { get; }
+    public NodeOutput<TimestepsRangeType> AFTERRANGE { get; }
 
     // ── Inputs ──
     public NodeInput<FloatType> StartPercent { get; }
@@ -20,9 +20,9 @@ public sealed class ConditioningTimestepsRangeNode : ComfyNode
 
     public ConditioningTimestepsRangeNode()
     {
-        TIMESTEPSRANGE = AddOutput<AnyType>(0, "TIMESTEPS_RANGE");
-        BEFORERANGE = AddOutput<AnyType>(1, "BEFORE_RANGE");
-        AFTERRANGE = AddOutput<AnyType>(2, "AFTER_RANGE");
+        TIMESTEPSRANGE = AddOutput<TimestepsRangeType>(0, "TIMESTEPS_RANGE");
+        BEFORERANGE = AddOutput<TimestepsRangeType>(1, "BEFORE_RANGE");
+        AFTERRANGE = AddOutput<TimestepsRangeType>(2, "AFTER_RANGE");
         StartPercent = AddInput<FloatType>("start_percent", required: true);
         StartPercent.Set(0.0);
         EndPercent = AddInput<FloatType>("end_percent", required: true);

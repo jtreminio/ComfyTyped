@@ -23,7 +23,7 @@ public sealed class SwarmInputImageNode : ComfyNode
     public NodeInput<BooleanType> IsAdvanced { get; }
     public NodeInput<StringType> RawId { get; }
     public NodeInput<StringType> Image { get; }
-    public NodeInput<AnyType> Group { get; } // optional
+    public NodeInput<GroupType> Group { get; } // optional
 
     public SwarmInputImageNode()
     {
@@ -44,6 +44,6 @@ public sealed class SwarmInputImageNode : ComfyNode
         RawId = AddInput<StringType>("raw_id", required: true);
         RawId.Set("");
         Image = AddInput<StringType>("image", required: true);
-        Group = AddInput<AnyType>("group", required: false);
+        Group = AddInput<GroupType>("group", required: false);
     }
 }
