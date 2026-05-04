@@ -1,3 +1,8 @@
+using ComfyTyped.Core;
+using Newtonsoft.Json.Linq;
+using SwarmUI.Builtin_ComfyUIBackend;
+using SwarmUI.Text2Image;
+
 namespace ComfyTyped.SwarmUI;
 
 /// <summary>

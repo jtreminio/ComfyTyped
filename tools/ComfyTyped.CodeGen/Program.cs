@@ -516,7 +516,7 @@ public static partial class Program
             }
 
             MarkerInfo marker = ResolveMarkerType(effectiveType, typeMapping, generatedMarkers, markerNamespace);
-            bool isPrimitive = PrimitiveTypes.TryGetValue(effectiveType, out var prim);
+            bool isPrimitive = PrimitiveTypes.TryGetValue(effectiveType, out (string Marker, string CSharp) prim);
             string? csharpType = isPrimitive ? prim.CSharp : null;
             string propName = SanitizeInputPropertyName(inputProp.Name, inputs, outputs);
 
@@ -536,8 +536,14 @@ public static partial class Program
         // Always emit ComfyTyped.Types (primitives + AnyType live there). Add any other
         // marker namespaces this node references. Skip the node's own namespace.
         SortedSet<string> markerNamespaces = new(StringComparer.Ordinal) { CoreMarkerNamespace };
-        foreach (OutputDef o in node.Outputs) markerNamespaces.Add(o.Marker.Namespace);
-        foreach (InputDef inp in node.Inputs) markerNamespaces.Add(inp.Marker.Namespace);
+        foreach (OutputDef o in node.Outputs)
+        {
+            markerNamespaces.Add(o.Marker.Namespace);
+        }
+        foreach (InputDef inp in node.Inputs)
+        {
+            markerNamespaces.Add(inp.Marker.Namespace);
+        }
         markerNamespaces.Remove(ns);
         foreach (string nsRef in markerNamespaces)
         {
@@ -865,8 +871,11 @@ public static partial class Program
     [GeneratedRegex(@"[^a-zA-Z0-9_]")]
     private static partial Regex InvalidCharsRegex();
 
-    [GeneratedRegex(@"public\s+sealed\s+class\s+([A-Za-z_][A-Za-z0-9_]*)\s*:\s*ComfyNode")]
-    private static partial Regex GeneratedClassRegex();
+    [GeneratedRegex(@"public\s+sealed\s+class\s+([A-Za-z_][A-Za-z0-9_]*)\s*:\s*(ComfyNode|IComfyType)")]
+    private static partial Regex GeneratedDeclRegex();
+
+    [GeneratedRegex(@"public\s+override\s+string\s+ClassType\s*=>\s*""([^""]+)""")]
+    private static partial Regex GeneratedClassTypeRegex();
 
     // Prune
     //
@@ -879,6 +888,8 @@ public static partial class Program
     // the surviving set after a recompile, so no registration list needs editing.
 
     private sealed record PruneOptions(string GeneratedDir, List<string> SourceDirs, bool DryRun);
+
+    private sealed record PruneCandidate(string ClassName, string ClassType, bool IsNode, string FilePath, string Text);
 
     private static int RunPrune(string[] args)
     {
@@ -893,7 +904,9 @@ public static partial class Program
             return 1;
         }
 
-        Dictionary<string, string> classToPath = new(StringComparer.Ordinal);
+        // Enumerate every generated *.g.cs as a candidate. Both ComfyNode subclasses
+        // and IComfyType marker classes are eligible for pruning.
+        List<PruneCandidate> candidates = [];
         foreach (string file in Directory.EnumerateFiles(opts.GeneratedDir, "*.g.cs", SearchOption.TopDirectoryOnly))
         {
             string name = Path.GetFileName(file);
@@ -901,20 +914,35 @@ public static partial class Program
             {
                 continue;
             }
-            Match m = GeneratedClassRegex().Match(File.ReadAllText(file));
+            string text = File.ReadAllText(file);
+            Match m = GeneratedDeclRegex().Match(text);
             if (!m.Success)
             {
-                Console.Error.WriteLine($"prune: skipping {name} (no `public sealed class X : ComfyNode` declaration)");
+                Console.Error.WriteLine($"prune: skipping {name} (no `public sealed class X : ComfyNode|IComfyType` declaration)");
                 continue;
             }
-            classToPath[m.Groups[1].Value] = file;
+            string className = m.Groups[1].Value;
+            bool isNode = m.Groups[2].Value == "ComfyNode";
+            string classType = "";
+            if (isNode)
+            {
+                Match ct = GeneratedClassTypeRegex().Match(text);
+                classType = ct.Success ? ct.Groups[1].Value : "";
+            }
+            candidates.Add(new PruneCandidate(className, classType, isNode, file, text));
         }
 
-        if (classToPath.Count == 0)
+        if (candidates.Count == 0)
         {
             Console.WriteLine("prune: no candidate generated files found.");
             return 0;
         }
+
+        // Skip files under --generated-dir when scanning consumer sources: each generated
+        // *.g.cs declares its own class, so including those files would self-reference
+        // every candidate and prevent any pruning.
+        string generatedDirPrefix = Path.GetFullPath(opts.GeneratedDir).TrimEnd(Path.DirectorySeparatorChar)
+            + Path.DirectorySeparatorChar;
 
         StringBuilder allSource = new();
         int sourceFileCount = 0;
@@ -927,42 +955,69 @@ public static partial class Program
             }
             foreach (string file in Directory.EnumerateFiles(srcDir, "*.cs", SearchOption.AllDirectories))
             {
+                if (Path.GetFullPath(file).StartsWith(generatedDirPrefix, StringComparison.Ordinal))
+                {
+                    continue;
+                }
                 allSource.AppendLine(File.ReadAllText(file));
                 sourceFileCount++;
             }
         }
-        string combined = allSource.ToString();
+        string consumerSource = allSource.ToString();
 
-        List<string> toPrune = [];
-        foreach (string className in classToPath.Keys)
+        // Pass 1: a Node is kept if its class name OR its class_type string appears
+        // word-bounded in consumer source. Consumers usually reference nodes by
+        // class_type ("g.CreateNode(\"FooBar\", ...)") rather than by typed class name.
+        HashSet<string> keptNames = new(StringComparer.Ordinal);
+        StringBuilder extendedSourceBuilder = new(consumerSource);
+        foreach (PruneCandidate c in candidates.Where(c => c.IsNode))
         {
-            if (!Regex.IsMatch(combined, $@"\b{Regex.Escape(className)}\b"))
+            bool classNameUsed = Regex.IsMatch(consumerSource, $@"\b{Regex.Escape(c.ClassName)}\b");
+            bool classTypeUsed = !string.IsNullOrEmpty(c.ClassType)
+                && Regex.IsMatch(consumerSource, $@"\b{Regex.Escape(c.ClassType)}\b");
+            if (classNameUsed || classTypeUsed)
             {
-                toPrune.Add(className);
+                keptNames.Add(c.ClassName);
+                extendedSourceBuilder.AppendLine(c.Text);
             }
         }
-        toPrune.Sort(StringComparer.Ordinal);
 
-        foreach (string className in toPrune)
+        // Pass 2: an IComfyType marker is kept if its class name appears word-bounded
+        // in (consumer source) ∪ (content of kept Node files). Markers only carry
+        // weight as type parameters on `NodeInput<T>` / `NodeOutput<T>`, so once every
+        // referencing Node is pruned the marker becomes dead code.
+        string extendedSource = extendedSourceBuilder.ToString();
+        foreach (PruneCandidate c in candidates.Where(c => !c.IsNode))
         {
-            string path = classToPath[className];
-            string rel = Path.GetRelativePath(Environment.CurrentDirectory, path);
+            if (Regex.IsMatch(extendedSource, $@"\b{Regex.Escape(c.ClassName)}\b"))
+            {
+                keptNames.Add(c.ClassName);
+            }
+        }
+
+        List<PruneCandidate> toPrune = [.. candidates
+            .Where(c => !keptNames.Contains(c.ClassName))
+            .OrderBy(c => c.ClassName, StringComparer.Ordinal)];
+
+        foreach (PruneCandidate c in toPrune)
+        {
+            string rel = Path.GetRelativePath(Environment.CurrentDirectory, c.FilePath);
             if (opts.DryRun)
             {
                 Console.WriteLine($"would prune: {rel}");
             }
             else
             {
-                File.Delete(path);
+                File.Delete(c.FilePath);
                 Console.WriteLine($"pruned: {rel}");
             }
         }
 
-        int kept = classToPath.Count - toPrune.Count;
+        int kept = candidates.Count - toPrune.Count;
         string verb = opts.DryRun ? "would prune" : "pruned";
         Console.WriteLine(
             $"prune: scanned {sourceFileCount} source files; "
-            + $"kept {kept}/{classToPath.Count} generated classes; {verb} {toPrune.Count}.");
+            + $"kept {kept}/{candidates.Count} generated classes; {verb} {toPrune.Count}.");
 
         return 0;
     }
@@ -1003,9 +1058,13 @@ public static partial class Program
         Console.Error.WriteLine("""
             Usage: ComfyTyped.CodeGen prune --generated-dir <dir> --source <dir> [--source <dir>...] [--dry-run]
 
-            Deletes *.g.cs files in --generated-dir whose class name is not referenced
-            as an identifier in any *.cs file under the --source directories.
-            NodeRegistrations.g.cs is always preserved.
+            Deletes unused *.g.cs files in --generated-dir. A node file is kept if its
+            C# class name OR its ComfyUI class_type string appears word-bounded in any
+            *.cs file under the --source directories. An IComfyType marker file is kept
+            if its class name appears either in --source or in the content of a kept
+            node file. Files under --generated-dir are excluded from the source scan
+            so generated self-references don't defeat the prune. NodeRegistrations.g.cs
+            is always preserved.
 
             Run before shipping an extension to drop generated classes for unrelated
             custom-node packs that were present in the developer's object_info.json

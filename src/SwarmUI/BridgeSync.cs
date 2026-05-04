@@ -1,3 +1,6 @@
+using Newtonsoft.Json.Linq;
+using SwarmUI.Builtin_ComfyUIBackend;
+
 namespace ComfyTyped.SwarmUI;
 
 /// <summary>
