@@ -4,32 +4,41 @@ Strongly-typed C# bindings for ComfyUI workflow JSON. Replaces stringly-typed `J
 
 ## CodeGen
 
-Generate the core assembly's nodes (native ComfyUI nodes + comfy_extras + SwarmUI bundled/installable packs):
+### Regenerating ComfyTyped's own nodes
+
+`--root` is sugar for the repo defaults (`--output src/Generated --namespace
+ComfyTyped.Generated --marker-namespace ComfyTyped.Types
+--registrations-class NodeRegistrations --native-only`). Because those defaults
+are relative paths, run from the ComfyTyped checkout:
 
 ```
+cd /path/to/ComfyTyped
+dotnet run --project /path/to/ComfyTyped/tools/ComfyTyped.CodeGen -- \
+  --root \
+  --comfy-json object_info.json
+```
+
+`--comfy-json` accepts a local file or an HTTP URL — fetch live from a running
+ComfyUI instead of the committed `object_info.json`:
+
+```
+cd /path/to/ComfyTyped
 dotnet run --project tools/ComfyTyped.CodeGen -- \
-  --comfy-json object_info.json \
-  --output src/Generated \
-  --namespace ComfyTyped.Generated \
-  --registrations-class NodeRegistrations
-```
-
-`--comfy-json` accepts a local file or an HTTP URL — fetch live from a running ComfyUI:
-
-```
-dotnet run --project tools/ComfyTyped.CodeGen -- \
+  --root \
   --comfy-json http://127.0.0.1:8188/object_info
 ```
 
-Diff mode for extensions (emit every node and IComfyType marker that isn't
-already in core's assembly):
+### Generating from another project (extension)
+
+Diff mode emits every node and IComfyType marker that isn't already in the
+core assembly. All paths absolute, run from anywhere:
 
 ```
-dotnet run --project tools/ComfyTyped.CodeGen -- \
+dotnet run --project /path/to/ComfyTyped/tools/ComfyTyped.CodeGen -- \
   --comfy-json http://127.0.0.1:8188/object_info \
-  --output Generated \
-  --namespace MyExt.Generated \
-  --core-assembly path/to/ComfyTyped.dll
+  --output /path/to/your-extension/src/Generated \
+  --namespace YourExt.Generated \
+  --core-assembly /path/to/your-extension/lib/ComfyTyped.dll
 ```
 
 The codegen scans `ComfyTyped.dll` for every `class_type` and every
@@ -38,24 +47,22 @@ IO type names encountered in the comfy-json (e.g. an extension's custom
 `SOME_CUSTOM_TYPE`) get a marker class generated automatically — mechanical
 PascalCase + `Type` suffix, so `SOME_CUSTOM_TYPE` → `SomeCustomTypeType`.
 
-Prune (remove generated files no longer referenced anywhere in source):
+### Pruning unused generated files
+
+Delete generated files whose class name isn't referenced anywhere under
+`--source`. Run after writing the consumer code that uses the typed bindings,
+before committing:
 
 ```
-dotnet run --project tools/ComfyTyped.CodeGen -- prune \
-  --generated-dir src/Generated \
-  --source src \
+dotnet run --project /path/to/ComfyTyped/tools/ComfyTyped.CodeGen -- prune \
+  --generated-dir /path/to/your-extension/src/Generated \
+  --source /path/to/your-extension/src \
   [--dry-run]
 ```
 
-To generate only native ComfyUI + SwarmUI nodes:
+`NodeRegistrations.g.cs` is always preserved.
 
-```
-dotnet run --project tools/ComfyTyped.CodeGen -- \
-  --comfy-json object_info.json \
-  --root
-```
-
-See all flags: `dotnet run --project tools/ComfyTyped.CodeGen -- --help`.
+See all flags: `dotnet run --project /path/to/ComfyTyped/tools/ComfyTyped.CodeGen -- --help`.
 
 ## Usage
 
