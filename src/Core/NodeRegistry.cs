@@ -43,9 +43,24 @@ public static class NodeRegistry
                 return;
             }
 
-            foreach (Type t in asm.GetTypes())
+            // Tolerate ReflectionTypeLoadException so the registry still works when the
+            // assembly is reflected over without all of its referenced assemblies present
+            // (e.g. the codegen tool loading ComfyTyped.dll without SwarmUI.dll alongside).
+            // Generated nodes never reference SwarmUI; only the SwarmUI-coupled types do,
+            // and they are not ComfyNode subclasses, so dropping them is harmless here.
+            Type?[] types;
+            try
             {
-                if (!t.IsClass || t.IsAbstract || !typeof(ComfyNode).IsAssignableFrom(t)
+                types = asm.GetTypes();
+            }
+            catch (ReflectionTypeLoadException ex)
+            {
+                types = ex.Types;
+            }
+
+            foreach (Type? t in types)
+            {
+                if (t is null || !t.IsClass || t.IsAbstract || !typeof(ComfyNode).IsAssignableFrom(t)
                     || t.GetConstructor(Type.EmptyTypes) is null)
                 {
                     continue;

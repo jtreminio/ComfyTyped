@@ -13,6 +13,7 @@ public static partial class Program
     private const string CoreNodeRegistrationsTypeName = "ComfyTyped.Generated.NodeRegistrations";
     private const string CoreNodeRegistryTypeName = "ComfyTyped.Core.NodeRegistry";
     private const string CoreIComfyTypeName = "ComfyTyped.Types.IComfyType";
+    private const string CoreComfyNodeTypeName = "ComfyTyped.Core.ComfyNode";
 
     // Defaults applied by --root for generating ComfyTyped's own nodes.
     private const string RootOutputDir = "src/Generated";
@@ -119,10 +120,11 @@ public static partial class Program
         }
 
         HashSet<string> classTypeSkipSet = new(StringComparer.Ordinal);
+        HashSet<string> classNameSkipSet = new(StringComparer.Ordinal);
         if (opts.CoreAssemblyPath is not null)
         {
             int markersBefore = typeMapping.Count;
-            LoadCoreSkipSets(opts.CoreAssemblyPath, classTypeSkipSet, typeMapping);
+            LoadCoreSkipSets(opts.CoreAssemblyPath, classTypeSkipSet, classNameSkipSet, typeMapping);
             int extraMarkers = typeMapping.Count - markersBefore;
             Console.WriteLine(
                 $"Diff mode: skipping {classTypeSkipSet.Count} class_types, "
@@ -164,6 +166,12 @@ public static partial class Program
             {
                 Console.Error.WriteLine($"  SKIP: {classType} (could not parse)");
                 skippedParse++;
+                continue;
+            }
+
+            if (classNameSkipSet.Contains(nodeDef.ClassName))
+            {
+                skippedDiff++;
                 continue;
             }
 
@@ -346,6 +354,7 @@ public static partial class Program
     private static void LoadCoreSkipSets(
         string coreAssemblyPath,
         HashSet<string> classTypes,
+        HashSet<string> classNames,
         Dictionary<string, MarkerInfo> typeMapping)
     {
         Assembly asm = Assembly.LoadFrom(Path.GetFullPath(coreAssemblyPath));
@@ -356,6 +365,7 @@ public static partial class Program
         Type registrations = GetTypeOrThrow(CoreNodeRegistrationsTypeName);
         Type registry = GetTypeOrThrow(CoreNodeRegistryTypeName);
         Type iComfyType = GetTypeOrThrow(CoreIComfyTypeName);
+        Type comfyNode = GetTypeOrThrow(CoreComfyNodeTypeName);
 
         registrations
             .GetMethod("EnsureRegistered", BindingFlags.Public | BindingFlags.Static)!
@@ -369,16 +379,39 @@ public static partial class Program
             classTypes.Add(s);
         }
 
-        foreach (Type t in asm.GetTypes())
+        // Same ReflectionTypeLoadException tolerance as NodeRegistry — the codegen reflects
+        // over the consumer's vendored ComfyTyped.dll without SwarmUI.dll on its load path.
+        Type?[] candidates;
+        try
         {
-            if (!t.IsClass || t.IsAbstract || !iComfyType.IsAssignableFrom(t))
+            candidates = asm.GetTypes();
+        }
+        catch (ReflectionTypeLoadException ex)
+        {
+            candidates = ex.Types;
+        }
+
+        foreach (Type? t in candidates)
+        {
+            if (t is null || !t.IsClass || t.IsAbstract)
             {
                 continue;
             }
-            PropertyInfo? prop = t.GetProperty("TypeName", BindingFlags.Public | BindingFlags.Static);
-            if (prop?.GetValue(null) is string typeName && t.Namespace is { Length: > 0 } markerNs)
+            if (iComfyType.IsAssignableFrom(t))
             {
-                typeMapping[typeName] = new MarkerInfo(t.Name, markerNs);
+                PropertyInfo? prop = t.GetProperty("TypeName", BindingFlags.Public | BindingFlags.Static);
+                if (prop?.GetValue(null) is string typeName && t.Namespace is { Length: > 0 } markerNs)
+                {
+                    typeMapping[typeName] = new MarkerInfo(t.Name, markerNs);
+                }
+            }
+            else if (comfyNode.IsAssignableFrom(t))
+            {
+                // C# class name (== output filename). Two ComfyUI class_types can sanitize
+                // to the same C# name (e.g. "ImageCrop" vs "ImageCrop+"); skip the diff
+                // node if its name would collide with a core node, since the core typed
+                // class is what the consumer ends up using anyway.
+                classNames.Add(t.Name);
             }
         }
     }
