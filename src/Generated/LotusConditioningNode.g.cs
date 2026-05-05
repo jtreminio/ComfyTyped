@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: conditioning/lotus</remarks>
 public sealed class LotusConditioningNode : ComfyNode
 {
-    public override string ClassType => "LotusConditioning";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "LotusConditioning";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ConditioningType> Conditioning { get; }

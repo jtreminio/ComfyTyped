@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: image</remarks>
 public sealed class ImageInvertNode : ComfyNode
 {
-    public override string ClassType => "ImageInvert";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "ImageInvert";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ImageType> IMAGE { get; }

@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: ipadapter/utils</remarks>
 public sealed class IPAdapterCombineWeightsNode : ComfyNode
 {
-    public override string ClassType => "IPAdapterCombineWeights";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "IPAdapterCombineWeights";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<FloatType> Weights { get; }

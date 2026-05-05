@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: _for_testing/attention_experiments</remarks>
 public sealed class UNetCrossAttentionMultiplyNode : ComfyNode
 {
-    public override string ClassType => "UNetCrossAttentionMultiply";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "UNetCrossAttentionMultiply";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ModelType> MODEL { get; }

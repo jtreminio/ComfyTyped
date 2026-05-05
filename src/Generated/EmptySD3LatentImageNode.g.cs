@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: latent/sd3</remarks>
 public sealed class EmptySD3LatentImageNode : ComfyNode
 {
-    public override string ClassType => "EmptySD3LatentImage";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "EmptySD3LatentImage";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<LatentType> LATENT { get; }

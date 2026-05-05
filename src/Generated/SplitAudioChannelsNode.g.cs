@@ -8,7 +8,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: audio</remarks>
 public sealed class SplitAudioChannelsNode : ComfyNode
 {
-    public override string ClassType => "SplitAudioChannels";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SplitAudioChannels";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<AudioType> Left { get; }

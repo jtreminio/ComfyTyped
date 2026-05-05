@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: ControlNet Preprocessors/Line Extractors</remarks>
 public sealed class MLSDPreprocessorNode : ComfyNode
 {
-    public override string ClassType => "M-LSDPreprocessor";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "M-LSDPreprocessor";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ImageType> IMAGE { get; }

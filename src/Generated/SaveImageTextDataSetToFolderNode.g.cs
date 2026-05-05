@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: dataset</remarks>
 public sealed class SaveImageTextDataSetToFolderNode : ComfyNode
 {
-    public override string ClassType => "SaveImageTextDataSetToFolder";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SaveImageTextDataSetToFolder";
+    public override string ClassTypeName => ClassType;
 
     // ── Inputs ──
     public NodeInput<ImageType> Images { get; }

@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: advanced/conditioning</remarks>
 public sealed class TextEncodeQwenImageEditPlusNode : ComfyNode
 {
-    public override string ClassType => "TextEncodeQwenImageEditPlus";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "TextEncodeQwenImageEditPlus";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ConditioningType> CONDITIONING { get; }

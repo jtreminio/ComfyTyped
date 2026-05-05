@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: ControlNet Preprocessors</remarks>
 public sealed class ImageGenResolutionFromImageNode : ComfyNode
 {
-    public override string ClassType => "ImageGenResolutionFromImage";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "ImageGenResolutionFromImage";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<IntType> IMAGEGENWIDTHINT { get; }

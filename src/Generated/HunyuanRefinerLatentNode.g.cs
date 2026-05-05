@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: sd</remarks>
 public sealed class HunyuanRefinerLatentNode : ComfyNode
 {
-    public override string ClassType => "HunyuanRefinerLatent";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "HunyuanRefinerLatent";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ConditioningType> Positive { get; }

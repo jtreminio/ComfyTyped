@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: utils/primitive</remarks>
 public sealed class PrimitiveStringNode : ComfyNode
 {
-    public override string ClassType => "PrimitiveString";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "PrimitiveString";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<StringType> STRING { get; }

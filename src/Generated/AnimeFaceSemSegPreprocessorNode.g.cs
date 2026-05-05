@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: ControlNet Preprocessors/Semantic Segmentation</remarks>
 public sealed class AnimeFaceSemSegPreprocessorNode : ComfyNode
 {
-    public override string ClassType => "AnimeFace_SemSegPreprocessor";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "AnimeFace_SemSegPreprocessor";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ImageType> IMAGE { get; }

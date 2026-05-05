@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: advanced/hooks/scheduling</remarks>
 public sealed class SetHookKeyframesNode : ComfyNode
 {
-    public override string ClassType => "SetHookKeyframes";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SetHookKeyframes";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<HooksType> HOOKS { get; }

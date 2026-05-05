@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: ipadapter/embeds</remarks>
 public sealed class IPAdapterSaveEmbedsNode : ComfyNode
 {
-    public override string ClassType => "IPAdapterSaveEmbeds";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "IPAdapterSaveEmbeds";
+    public override string ClassTypeName => ClassType;
 
     // ── Inputs ──
     public NodeInput<EmbedsType> Embeds { get; }

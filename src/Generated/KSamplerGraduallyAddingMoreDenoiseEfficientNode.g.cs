@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: ComfyUI-Frame-Interpolation/others</remarks>
 public sealed class KSamplerGraduallyAddingMoreDenoiseEfficientNode : ComfyNode
 {
-    public override string ClassType => "KSampler Gradually Adding More Denoise (efficient)";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "KSampler Gradually Adding More Denoise (efficient)";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ModelType> MODEL { get; }

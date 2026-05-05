@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: SAM2</remarks>
 public sealed class SwarmSam2BBoxFromJsonNode : ComfyNode
 {
-    public override string ClassType => "SwarmSam2BBoxFromJson";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SwarmSam2BBoxFromJson";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<BboxType> Bboxes { get; }

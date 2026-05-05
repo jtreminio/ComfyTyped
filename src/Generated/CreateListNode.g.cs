@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: logic</remarks>
 public sealed class CreateListNode : ComfyNode
 {
-    public override string ClassType => "CreateList";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "CreateList";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ComfyMatchTypeV3> List { get; }

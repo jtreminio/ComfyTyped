@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: detection/</remarks>
 public sealed class SAM3VideoTrackNode : ComfyNode
 {
-    public override string ClassType => "SAM3_VideoTrack";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SAM3_VideoTrack";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<Sam3TrackDataType> TrackData { get; }

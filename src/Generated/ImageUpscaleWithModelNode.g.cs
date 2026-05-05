@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: image/upscaling</remarks>
 public sealed class ImageUpscaleWithModelNode : ComfyNode
 {
-    public override string ClassType => "ImageUpscaleWithModel";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "ImageUpscaleWithModel";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ImageType> IMAGE { get; }

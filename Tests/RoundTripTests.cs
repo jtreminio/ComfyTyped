@@ -204,7 +204,7 @@ public class RoundTripTests
         var node2 = graph.GetNode("2");
         Assert.IsType<UnknownNode>(node1);
         Assert.IsType<UnknownNode>(node2);
-        Assert.Equal("SomeCustomNodeThatDoesNotExist", node1!.ClassType);
+        Assert.Equal("SomeCustomNodeThatDoesNotExist", node1!.ClassTypeName);
 
         // Round-trip should preserve raw data
         JObject rt = graph.ToWorkflow();

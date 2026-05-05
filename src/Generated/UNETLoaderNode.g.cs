@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: advanced/loaders</remarks>
 public sealed class UNETLoaderNode : ComfyNode
 {
-    public override string ClassType => "UNETLoader";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "UNETLoader";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ModelType> MODEL { get; }

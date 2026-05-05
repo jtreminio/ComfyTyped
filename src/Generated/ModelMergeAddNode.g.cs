@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: advanced/model_merging</remarks>
 public sealed class ModelMergeAddNode : ComfyNode
 {
-    public override string ClassType => "ModelMergeAdd";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "ModelMergeAdd";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ModelType> MODEL { get; }

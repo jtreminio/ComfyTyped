@@ -8,7 +8,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: SwarmUI/inputs</remarks>
 public sealed class SwarmInputFloatNode : ComfyNode
 {
-    public override string ClassType => "SwarmInputFloat";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SwarmInputFloat";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<FloatType> FLOAT { get; }

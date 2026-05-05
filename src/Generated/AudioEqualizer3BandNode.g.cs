@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: audio</remarks>
 public sealed class AudioEqualizer3BandNode : ComfyNode
 {
-    public override string ClassType => "AudioEqualizer3Band";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "AudioEqualizer3Band";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<AudioType> AUDIO { get; }

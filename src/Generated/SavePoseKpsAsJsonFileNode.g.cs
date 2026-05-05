@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: ControlNet Preprocessors/Pose Keypoint Postprocess</remarks>
 public sealed class SavePoseKpsAsJsonFileNode : ComfyNode
 {
-    public override string ClassType => "SavePoseKpsAsJsonFile";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SavePoseKpsAsJsonFile";
+    public override string ClassTypeName => ClassType;
 
     // ── Inputs ──
     public NodeInput<PoseKeypointType> PoseKps { get; }

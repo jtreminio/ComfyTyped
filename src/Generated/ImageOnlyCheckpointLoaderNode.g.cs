@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: loaders/video_models</remarks>
 public sealed class ImageOnlyCheckpointLoaderNode : ComfyNode
 {
-    public override string ClassType => "ImageOnlyCheckpointLoader";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "ImageOnlyCheckpointLoader";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ModelType> MODEL { get; }

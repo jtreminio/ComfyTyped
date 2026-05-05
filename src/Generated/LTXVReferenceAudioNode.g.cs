@@ -8,7 +8,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: conditioning/audio</remarks>
 public sealed class LTXVReferenceAudioNode : ComfyNode
 {
-    public override string ClassType => "LTXVReferenceAudio";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "LTXVReferenceAudio";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ModelType> MODEL { get; }

@@ -8,7 +8,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: SwarmUI/sampling</remarks>
 public sealed class SwarmReferenceOnlyNode : ComfyNode
 {
-    public override string ClassType => "SwarmReferenceOnly";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SwarmReferenceOnly";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ModelType> MODEL { get; }

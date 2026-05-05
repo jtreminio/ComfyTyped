@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: model_patches/unet</remarks>
 public sealed class FreeUV2Node : ComfyNode
 {
-    public override string ClassType => "FreeU_V2";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "FreeU_V2";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ModelType> MODEL { get; }

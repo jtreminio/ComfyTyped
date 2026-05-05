@@ -8,7 +8,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: utils</remarks>
 public sealed class ColorToRGBIntNode : ComfyNode
 {
-    public override string ClassType => "ColorToRGBInt";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "ColorToRGBInt";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<IntType> RgbInt { get; }

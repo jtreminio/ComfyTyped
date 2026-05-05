@@ -8,7 +8,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: SwarmUI/sampling</remarks>
 public sealed class SwarmKSamplerNode : ComfyNode
 {
-    public override string ClassType => "SwarmKSampler";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SwarmKSampler";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<LatentType> LATENT { get; }

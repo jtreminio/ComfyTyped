@@ -8,7 +8,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: _for_testing</remarks>
 public sealed class MahiroNode : ComfyNode
 {
-    public override string ClassType => "Mahiro";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "Mahiro";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ModelType> PatchedModel { get; }

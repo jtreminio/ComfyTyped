@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: sampling/custom_sampling/samplers</remarks>
 public sealed class SamplerEulerAncestralNode : ComfyNode
 {
-    public override string ClassType => "SamplerEulerAncestral";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SamplerEulerAncestral";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<SamplerType> SAMPLER { get; }

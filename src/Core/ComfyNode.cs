@@ -9,7 +9,7 @@ namespace ComfyTyped.Core;
 public abstract class ComfyNode
 {
     /// <summary>The ComfyUI class_type string (e.g. "KSampler", "VAEDecode").</summary>
-    public abstract string ClassType { get; }
+    public abstract string ClassTypeName { get; }
 
     /// <summary>Unique node ID within a <see cref="ComfyGraph"/>. Set when the node is added to a graph.</summary>
     public string Id { get; internal set; } = "";
@@ -104,7 +104,7 @@ public abstract class ComfyNode
 
         return new JObject
         {
-            ["class_type"] = ClassType,
+            ["class_type"] = ClassTypeName,
             ["inputs"] = inputs
         };
     }

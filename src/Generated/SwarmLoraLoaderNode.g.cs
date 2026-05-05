@@ -8,7 +8,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: SwarmUI/models</remarks>
 public sealed class SwarmLoraLoaderNode : ComfyNode
 {
-    public override string ClassType => "SwarmLoraLoader";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SwarmLoraLoader";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ModelType> MODEL { get; }

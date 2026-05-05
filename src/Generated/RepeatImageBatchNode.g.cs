@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: image/batch</remarks>
 public sealed class RepeatImageBatchNode : ComfyNode
 {
-    public override string ClassType => "RepeatImageBatch";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "RepeatImageBatch";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ImageType> IMAGE { get; }

@@ -8,7 +8,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: </remarks>
 public sealed class FluxKVCacheNode : ComfyNode
 {
-    public override string ClassType => "FluxKVCache";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "FluxKVCache";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ModelType> MODEL { get; }

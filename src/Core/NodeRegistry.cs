@@ -30,7 +30,7 @@ public static class NodeRegistry
     /// Discover and register every concrete <see cref="ComfyNode"/> subclass in
     /// <paramref name="asm"/>. Candidates must be non-abstract classes with a
     /// parameterless constructor; the constructor is invoked once on a probe
-    /// instance to read <see cref="ComfyNode.ClassType"/> as the registry key.
+    /// instance to read <see cref="ComfyNode.ClassTypeName"/> as the registry key.
     /// Idempotent per assembly. Safe to call concurrently — readers (Create,
     /// IsKnown) block until the scan finishes the first time.
     /// </summary>
@@ -53,7 +53,7 @@ public static class NodeRegistry
 
                 ComfyNode probe = (ComfyNode)Activator.CreateInstance(t)!;
                 Type captured = t;
-                Factories[probe.ClassType] = () => (ComfyNode)Activator.CreateInstance(captured)!;
+                Factories[probe.ClassTypeName] = () => (ComfyNode)Activator.CreateInstance(captured)!;
             }
         }
     }

@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: sampling/custom_sampling/guiders</remarks>
 public sealed class DualCFGGuiderNode : ComfyNode
 {
-    public override string ClassType => "DualCFGGuider";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "DualCFGGuider";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<GuiderType> GUIDER { get; }

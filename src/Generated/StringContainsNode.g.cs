@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: utils/string</remarks>
 public sealed class StringContainsNode : ComfyNode
 {
-    public override string ClassType => "StringContains";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "StringContains";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<BooleanType> Contains { get; }

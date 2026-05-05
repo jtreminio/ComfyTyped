@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: audio</remarks>
 public sealed class SaveAudioMP3Node : ComfyNode
 {
-    public override string ClassType => "SaveAudioMP3";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SaveAudioMP3";
+    public override string ClassTypeName => ClassType;
 
     // ── Inputs ──
     public NodeInput<AudioType> Audio { get; }

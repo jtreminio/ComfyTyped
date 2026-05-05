@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: advanced/hooks/create</remarks>
 public sealed class CreateHookLoraModelOnlyNode : ComfyNode
 {
-    public override string ClassType => "CreateHookLoraModelOnly";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "CreateHookLoraModelOnly";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<HooksType> HOOKS { get; }

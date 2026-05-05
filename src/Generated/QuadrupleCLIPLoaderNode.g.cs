@@ -12,7 +12,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: advanced/loaders</remarks>
 public sealed class QuadrupleCLIPLoaderNode : ComfyNode
 {
-    public override string ClassType => "QuadrupleCLIPLoader";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "QuadrupleCLIPLoader";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ClipType> CLIP { get; }

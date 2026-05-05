@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: sampling/custom_sampling/sigmas</remarks>
 public sealed class SetFirstSigmaNode : ComfyNode
 {
-    public override string ClassType => "SetFirstSigma";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SetFirstSigma";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<SigmasType> SIGMAS { get; }

@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: loaders</remarks>
 public sealed class SaveLoRANode : ComfyNode
 {
-    public override string ClassType => "SaveLoRA";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SaveLoRA";
+    public override string ClassTypeName => ClassType;
 
     // ── Inputs ──
     public NodeInput<LoraModelType> Lora { get; }

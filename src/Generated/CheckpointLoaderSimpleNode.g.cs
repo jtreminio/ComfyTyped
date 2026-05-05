@@ -8,7 +8,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: loaders</remarks>
 public sealed class CheckpointLoaderSimpleNode : ComfyNode
 {
-    public override string ClassType => "CheckpointLoaderSimple";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "CheckpointLoaderSimple";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ModelType> MODEL { get; }

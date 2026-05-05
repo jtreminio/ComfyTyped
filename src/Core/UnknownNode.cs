@@ -10,7 +10,7 @@ namespace ComfyTyped.Core;
 /// </summary>
 public sealed class UnknownNode(string classType) : ComfyNode
 {
-    public override string ClassType => classType;
+    public override string ClassTypeName => classType;
 
     /// <summary>Raw input data from the workflow JSON, preserved for lossless round-trip.</summary>
     public JObject? RawInputs { get; internal set; }
@@ -58,7 +58,7 @@ public sealed class UnknownNode(string classType) : ComfyNode
         {
             return new JObject
             {
-                ["class_type"] = ClassType,
+                ["class_type"] = ClassTypeName,
                 ["inputs"] = RawInputs.DeepClone()
             };
         }

@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: conditioning/inpaint</remarks>
 public sealed class CosmosImageToVideoLatentNode : ComfyNode
 {
-    public override string ClassType => "CosmosImageToVideoLatent";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "CosmosImageToVideoLatent";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<LatentType> LATENT { get; }

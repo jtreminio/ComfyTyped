@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: latent/video</remarks>
 public sealed class LTXVLatentUpsamplerNode : ComfyNode
 {
-    public override string ClassType => "LTXVLatentUpsampler";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "LTXVLatentUpsampler";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<LatentType> LATENT { get; }

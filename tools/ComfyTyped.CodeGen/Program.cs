@@ -579,7 +579,9 @@ public static partial class Program
 
         sb.AppendLine($"public sealed class {node.ClassName} : ComfyNode");
         sb.AppendLine("{");
-        sb.AppendLine($"    public override string ClassType => \"{node.ClassType}\";");
+        sb.AppendLine($"    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>");
+        sb.AppendLine($"    public const string ClassType = \"{node.ClassType}\";");
+        sb.AppendLine($"    public override string ClassTypeName => ClassType;");
         sb.AppendLine();
 
         if (node.Outputs.Count > 0)
@@ -688,9 +690,9 @@ public static partial class Program
             name = "Input";
         }
         name = EnsureValidIdentifier(name);
-        if (name == "ClassType")
+        if (name is "ClassType" or "ClassTypeName")
         {
-            name = "ClassTypeInput";
+            name += "Input";
         }
 
         string baseName = name;
@@ -874,7 +876,7 @@ public static partial class Program
     [GeneratedRegex(@"public\s+sealed\s+class\s+([A-Za-z_][A-Za-z0-9_]*)\s*:\s*(ComfyNode|IComfyType)")]
     private static partial Regex GeneratedDeclRegex();
 
-    [GeneratedRegex(@"public\s+override\s+string\s+ClassType\s*=>\s*""([^""]+)""")]
+    [GeneratedRegex(@"public\s+const\s+string\s+ClassType\s*=\s*""([^""]+)""")]
     private static partial Regex GeneratedClassTypeRegex();
 
     // Prune

@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: utils/primitive</remarks>
 public sealed class PrimitiveBoundingBoxNode : ComfyNode
 {
-    public override string ClassType => "PrimitiveBoundingBox";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "PrimitiveBoundingBox";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<BoundingBoxType> BOUNDINGBOX { get; }

@@ -8,7 +8,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: advanced/guidance</remarks>
 public sealed class SkipLayerGuidanceSD3Node : ComfyNode
 {
-    public override string ClassType => "SkipLayerGuidanceSD3";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SkipLayerGuidanceSD3";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ModelType> MODEL { get; }

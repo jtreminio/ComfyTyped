@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: latent/inpaint</remarks>
 public sealed class SetLatentNoiseMaskNode : ComfyNode
 {
-    public override string ClassType => "SetLatentNoiseMask";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SetLatentNoiseMask";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<LatentType> LATENT { get; }

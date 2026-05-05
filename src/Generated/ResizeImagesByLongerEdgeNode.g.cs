@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: dataset/image</remarks>
 public sealed class ResizeImagesByLongerEdgeNode : ComfyNode
 {
-    public override string ClassType => "ResizeImagesByLongerEdge";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "ResizeImagesByLongerEdge";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ImageType> Images { get; }

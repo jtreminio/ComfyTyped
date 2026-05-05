@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: sd</remarks>
 public sealed class HunyuanVideo15SuperResolutionNode : ComfyNode
 {
-    public override string ClassType => "HunyuanVideo15SuperResolution";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "HunyuanVideo15SuperResolution";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ConditioningType> Positive { get; }

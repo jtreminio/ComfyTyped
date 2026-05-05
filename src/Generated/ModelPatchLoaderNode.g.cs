@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: advanced/loaders</remarks>
 public sealed class ModelPatchLoaderNode : ComfyNode
 {
-    public override string ClassType => "ModelPatchLoader";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "ModelPatchLoader";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ModelPatchType> MODELPATCH { get; }

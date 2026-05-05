@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: latent/advanced/operations</remarks>
 public sealed class LatentOperationSharpenNode : ComfyNode
 {
-    public override string ClassType => "LatentOperationSharpen";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "LatentOperationSharpen";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<LatentOperationType> LATENTOPERATION { get; }

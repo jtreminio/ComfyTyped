@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: conditioning/controlnet</remarks>
 public sealed class ControlNetInpaintingAliMamaApplyNode : ComfyNode
 {
-    public override string ClassType => "ControlNetInpaintingAliMamaApply";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "ControlNetInpaintingAliMamaApply";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ConditioningType> Positive { get; }

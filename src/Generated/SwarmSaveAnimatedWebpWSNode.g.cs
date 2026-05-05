@@ -8,7 +8,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: SwarmUI/video</remarks>
 public sealed class SwarmSaveAnimatedWebpWSNode : ComfyNode
 {
-    public override string ClassType => "SwarmSaveAnimatedWebpWS";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SwarmSaveAnimatedWebpWS";
+    public override string ClassTypeName => ClassType;
 
     // ── Inputs ──
     public NodeInput<ImageType> Images { get; }

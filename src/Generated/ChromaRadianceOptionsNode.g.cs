@@ -8,7 +8,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: model_patches/chroma_radiance</remarks>
 public sealed class ChromaRadianceOptionsNode : ComfyNode
 {
-    public override string ClassType => "ChromaRadianceOptions";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "ChromaRadianceOptions";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ModelType> MODEL { get; }

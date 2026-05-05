@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: sampling/custom_sampling/noise</remarks>
 public sealed class RandomNoiseNode : ComfyNode
 {
-    public override string ClassType => "RandomNoise";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "RandomNoise";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<NoiseType> NOISE { get; }

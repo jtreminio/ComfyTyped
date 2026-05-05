@@ -8,7 +8,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: SwarmUI/clip</remarks>
 public sealed class SwarmClipTextEncodeAdvancedNode : ComfyNode
 {
-    public override string ClassType => "SwarmClipTextEncodeAdvanced";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SwarmClipTextEncodeAdvanced";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ConditioningType> CONDITIONING { get; }

@@ -26,7 +26,7 @@ public class WorkflowFixtureTests
         Assert.Equal(31, graph.Nodes.Count);
         List<string> unknown = graph.Nodes
             .Where(kv => kv.Value is UnknownNode)
-            .Select(kv => $"{kv.Key} = {kv.Value.ClassType}")
+            .Select(kv => $"{kv.Key} = {kv.Value.ClassTypeName}")
             .ToList();
         Assert.Empty(unknown);
     }

@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: ControlNet Preprocessors/Normal and Depth Estimators</remarks>
 public sealed class Metric3DDepthMapPreprocessorNode : ComfyNode
 {
-    public override string ClassType => "Metric3D-DepthMapPreprocessor";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "Metric3D-DepthMapPreprocessor";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ImageType> IMAGE { get; }

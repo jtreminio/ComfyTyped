@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: _for_testing/conditioning</remarks>
 public sealed class CLIPTextEncodeControlnetNode : ComfyNode
 {
-    public override string ClassType => "CLIPTextEncodeControlnet";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "CLIPTextEncodeControlnet";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ConditioningType> CONDITIONING { get; }

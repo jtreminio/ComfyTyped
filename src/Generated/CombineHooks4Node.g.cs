@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: advanced/hooks/combine</remarks>
 public sealed class CombineHooks4Node : ComfyNode
 {
-    public override string ClassType => "CombineHooks4";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "CombineHooks4";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<HooksType> HOOKS { get; }

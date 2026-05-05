@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: ControlNet Preprocessors/Optical Flow</remarks>
 public sealed class UnimatchOptFlowPreprocessorNode : ComfyNode
 {
-    public override string ClassType => "Unimatch_OptFlowPreprocessor";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "Unimatch_OptFlowPreprocessor";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<OpticalFlowType> OPTICALFLOW { get; }

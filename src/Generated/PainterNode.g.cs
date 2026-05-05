@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: image</remarks>
 public sealed class PainterNode : ComfyNode
 {
-    public override string ClassType => "Painter";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "Painter";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ImageType> IMAGE { get; }

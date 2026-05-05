@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: ipadapter/weights</remarks>
 public sealed class IPAdapterPromptScheduleFromWeightsStrategyNode : ComfyNode
 {
-    public override string ClassType => "IPAdapterPromptScheduleFromWeightsStrategy";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "IPAdapterPromptScheduleFromWeightsStrategy";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<StringType> PromptSchedule { get; }

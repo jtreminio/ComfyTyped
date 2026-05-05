@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: _for_testing</remarks>
 public sealed class SaveLatentNode : ComfyNode
 {
-    public override string ClassType => "SaveLatent";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SaveLatent";
+    public override string ClassTypeName => ClassType;
 
     // ── Inputs ──
     public NodeInput<LatentType> Samples { get; }

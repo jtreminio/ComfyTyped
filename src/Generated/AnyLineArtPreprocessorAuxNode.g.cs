@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: ControlNet Preprocessors/Line Extractors</remarks>
 public sealed class AnyLineArtPreprocessorAuxNode : ComfyNode
 {
-    public override string ClassType => "AnyLineArtPreprocessor_aux";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "AnyLineArtPreprocessor_aux";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ImageType> Image { get; }

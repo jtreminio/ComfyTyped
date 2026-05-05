@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: camera</remarks>
 public sealed class WanCameraEmbeddingNode : ComfyNode
 {
-    public override string ClassType => "WanCameraEmbedding";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "WanCameraEmbedding";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<WanCameraEmbeddingType> CameraEmbedding { get; }

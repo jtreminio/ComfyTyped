@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: ControlNet Preprocessors</remarks>
 public sealed class ExecuteAllControlNetPreprocessorsNode : ComfyNode
 {
-    public override string ClassType => "ExecuteAllControlNetPreprocessors";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "ExecuteAllControlNetPreprocessors";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ImageType> IMAGE { get; }

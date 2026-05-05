@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: image/preprocessors</remarks>
 public sealed class SDPoseFaceBBoxesNode : ComfyNode
 {
-    public override string ClassType => "SDPoseFaceBBoxes";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SDPoseFaceBBoxes";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<BoundingBoxType> Bboxes { get; }

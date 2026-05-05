@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: ipadapter/dev</remarks>
 public sealed class IPAdapterClipVisionEnhancerBatchNode : ComfyNode
 {
-    public override string ClassType => "IPAdapterClipVisionEnhancerBatch";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "IPAdapterClipVisionEnhancerBatch";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ModelType> MODEL { get; }

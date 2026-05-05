@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: conditioning/video_models</remarks>
 public sealed class Kandinsky5ImageToVideoNode : ComfyNode
 {
-    public override string ClassType => "Kandinsky5ImageToVideo";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "Kandinsky5ImageToVideo";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ConditioningType> Positive { get; }

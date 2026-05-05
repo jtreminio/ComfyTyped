@@ -8,7 +8,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: advanced/conditioning/flux</remarks>
 public sealed class FluxDisableGuidanceNode : ComfyNode
 {
-    public override string ClassType => "FluxDisableGuidance";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "FluxDisableGuidance";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ConditioningType> CONDITIONING { get; }

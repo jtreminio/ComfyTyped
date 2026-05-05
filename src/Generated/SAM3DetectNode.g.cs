@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: detection/</remarks>
 public sealed class SAM3DetectNode : ComfyNode
 {
-    public override string ClassType => "SAM3_Detect";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SAM3_Detect";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<MaskType> Masks { get; }

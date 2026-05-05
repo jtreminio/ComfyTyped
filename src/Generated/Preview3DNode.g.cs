@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: 3d</remarks>
 public sealed class Preview3DNode : ComfyNode
 {
-    public override string ClassType => "Preview3D";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "Preview3D";
+    public override string ClassTypeName => ClassType;
 
     // ── Inputs ──
     public NodeInput<StringType> ModelFile { get; }

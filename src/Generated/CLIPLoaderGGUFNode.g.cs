@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: bootleg</remarks>
 public sealed class CLIPLoaderGGUFNode : ComfyNode
 {
-    public override string ClassType => "CLIPLoaderGGUF";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "CLIPLoaderGGUF";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ClipType> CLIP { get; }

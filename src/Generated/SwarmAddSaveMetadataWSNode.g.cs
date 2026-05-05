@@ -8,7 +8,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: SwarmUI/images</remarks>
 public sealed class SwarmAddSaveMetadataWSNode : ComfyNode
 {
-    public override string ClassType => "SwarmAddSaveMetadataWS";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SwarmAddSaveMetadataWS";
+    public override string ClassTypeName => ClassType;
 
     // ── Inputs ──
     public NodeInput<StringType> Key { get; }

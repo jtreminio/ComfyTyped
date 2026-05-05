@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: conditioning/instructpix2pix</remarks>
 public sealed class InstructPixToPixConditioningNode : ComfyNode
 {
-    public override string ClassType => "InstructPixToPixConditioning";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "InstructPixToPixConditioning";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ConditioningType> Positive { get; }

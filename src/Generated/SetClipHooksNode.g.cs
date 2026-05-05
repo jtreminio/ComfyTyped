@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: advanced/hooks/clip</remarks>
 public sealed class SetClipHooksNode : ComfyNode
 {
-    public override string ClassType => "SetClipHooks";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SetClipHooks";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ClipType> CLIP { get; }

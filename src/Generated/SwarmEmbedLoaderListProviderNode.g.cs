@@ -8,7 +8,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: SwarmUI/internal</remarks>
 public sealed class SwarmEmbedLoaderListProviderNode : ComfyNode
 {
-    public override string ClassType => "SwarmEmbedLoaderListProvider";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SwarmEmbedLoaderListProvider";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<EmbeddingType> EMBEDDING { get; }

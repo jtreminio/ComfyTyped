@@ -130,7 +130,7 @@ public class WorkflowBridgeTests
         var node = bridge.Graph.GetNode("1");
         Assert.NotNull(node);
         Assert.IsType<UnknownNode>(node);
-        Assert.Equal("MyCustomNode", node.ClassType);
+        Assert.Equal("MyCustomNode", node.ClassTypeName);
     }
 
     [Fact]

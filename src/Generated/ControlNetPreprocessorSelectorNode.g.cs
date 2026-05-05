@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: ControlNet Preprocessors</remarks>
 public sealed class ControlNetPreprocessorSelectorNode : ComfyNode
 {
-    public override string ClassType => "ControlNetPreprocessorSelector";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "ControlNetPreprocessorSelector";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<AnyType> Preprocessor { get; }

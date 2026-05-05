@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: advanced/loaders/qwen</remarks>
 public sealed class QwenImageDiffsynthControlnetNode : ComfyNode
 {
-    public override string ClassType => "QwenImageDiffsynthControlnet";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "QwenImageDiffsynthControlnet";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ModelType> MODEL { get; }

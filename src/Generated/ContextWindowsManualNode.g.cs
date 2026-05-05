@@ -8,7 +8,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: context</remarks>
 public sealed class ContextWindowsManualNode : ComfyNode
 {
-    public override string ClassType => "ContextWindowsManual";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "ContextWindowsManual";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ModelType> MODEL { get; }

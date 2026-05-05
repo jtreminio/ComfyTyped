@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: latent/stable_cascade</remarks>
 public sealed class StableCascadeEmptyLatentImageNode : ComfyNode
 {
-    public override string ClassType => "StableCascade_EmptyLatentImage";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "StableCascade_EmptyLatentImage";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<LatentType> StageC { get; }

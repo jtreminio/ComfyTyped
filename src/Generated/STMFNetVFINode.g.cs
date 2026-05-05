@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: ComfyUI-Frame-Interpolation/VFI</remarks>
 public sealed class STMFNetVFINode : ComfyNode
 {
-    public override string ClassType => "STMFNet VFI";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "STMFNet VFI";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ImageType> IMAGE { get; }

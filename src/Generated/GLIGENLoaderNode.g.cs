@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: loaders</remarks>
 public sealed class GLIGENLoaderNode : ComfyNode
 {
-    public override string ClassType => "GLIGENLoader";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "GLIGENLoader";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<GligenType> GLIGEN { get; }

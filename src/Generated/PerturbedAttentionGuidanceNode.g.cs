@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: model_patches/unet</remarks>
 public sealed class PerturbedAttentionGuidanceNode : ComfyNode
 {
-    public override string ClassType => "PerturbedAttentionGuidance";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "PerturbedAttentionGuidance";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ModelType> MODEL { get; }

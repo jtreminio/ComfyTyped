@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: 3d</remarks>
 public sealed class VoxelToMeshNode : ComfyNode
 {
-    public override string ClassType => "VoxelToMesh";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "VoxelToMesh";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<MeshType> MESH { get; }

@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: utils/string</remarks>
 public sealed class StringTrimNode : ComfyNode
 {
-    public override string ClassType => "StringTrim";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "StringTrim";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<StringType> STRING { get; }

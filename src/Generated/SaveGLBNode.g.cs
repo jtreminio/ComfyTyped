@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: 3d</remarks>
 public sealed class SaveGLBNode : ComfyNode
 {
-    public override string ClassType => "SaveGLB";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SaveGLB";
+    public override string ClassTypeName => ClassType;
 
     // ── Inputs ──
     public NodeInput<StringType> Mesh { get; }

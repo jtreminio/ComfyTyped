@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: advanced/hooks</remarks>
 public sealed class ConditioningTimestepsRangeNode : ComfyNode
 {
-    public override string ClassType => "ConditioningTimestepsRange";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "ConditioningTimestepsRange";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<TimestepsRangeType> TIMESTEPSRANGE { get; }

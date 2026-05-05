@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: advanced/hooks/cond pair</remarks>
 public sealed class PairConditioningSetDefaultCombineNode : ComfyNode
 {
-    public override string ClassType => "PairConditioningSetDefaultCombine";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "PairConditioningSetDefaultCombine";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ConditioningType> Positive { get; }

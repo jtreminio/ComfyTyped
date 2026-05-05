@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: ipadapter/params</remarks>
 public sealed class IPAdapterRegionalConditioningNode : ComfyNode
 {
-    public override string ClassType => "IPAdapterRegionalConditioning";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "IPAdapterRegionalConditioning";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<IpadapterParamsType> IPADAPTERPARAMS { get; }

@@ -8,7 +8,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: transform</remarks>
 public sealed class ResizeImageMaskNodeNode : ComfyNode
 {
-    public override string ClassType => "ResizeImageMaskNode";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "ResizeImageMaskNode";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ComfyMatchTypeV3> Resized { get; }

@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: mask/compositing</remarks>
 public sealed class SplitImageWithAlphaNode : ComfyNode
 {
-    public override string ClassType => "SplitImageWithAlpha";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SplitImageWithAlpha";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ImageType> IMAGE { get; }

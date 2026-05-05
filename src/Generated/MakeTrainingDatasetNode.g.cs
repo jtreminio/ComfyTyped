@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: dataset</remarks>
 public sealed class MakeTrainingDatasetNode : ComfyNode
 {
-    public override string ClassType => "MakeTrainingDataset";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "MakeTrainingDataset";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<LatentType> Latents { get; }

@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: image/video</remarks>
 public sealed class SaveWEBMNode : ComfyNode
 {
-    public override string ClassType => "SaveWEBM";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "SaveWEBM";
+    public override string ClassTypeName => ClassType;
 
     // ── Inputs ──
     public NodeInput<ImageType> Images { get; }

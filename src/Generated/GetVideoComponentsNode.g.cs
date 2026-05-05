@@ -8,7 +8,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: image/video</remarks>
 public sealed class GetVideoComponentsNode : ComfyNode
 {
-    public override string ClassType => "GetVideoComponents";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "GetVideoComponents";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ImageType> Images { get; }

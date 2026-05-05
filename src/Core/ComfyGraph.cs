@@ -48,7 +48,7 @@ public sealed class ComfyGraph
     public IReadOnlyList<T> NodesOfType<T>() where T : ComfyNode => [.. _nodes.Values.OfType<T>()];
 
     /// <summary>Find all nodes with a specific ComfyUI class_type string.</summary>
-    public IReadOnlyList<ComfyNode> NodesOfType(string classType) => [.. _nodes.Values.Where(n => n.ClassType == classType)];
+    public IReadOnlyList<ComfyNode> NodesOfType(string classType) => [.. _nodes.Values.Where(n => n.ClassTypeName == classType)];
 
     /// <summary>Remove a node from the graph. Does NOT disconnect it — callers should handle that.</summary>
     public bool RemoveNode(string id) => _nodes.Remove(id);

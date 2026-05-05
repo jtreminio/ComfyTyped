@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: mask</remarks>
 public sealed class BatchMasksNodeNode : ComfyNode
 {
-    public override string ClassType => "BatchMasksNode";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "BatchMasksNode";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<MaskType> MASK { get; }

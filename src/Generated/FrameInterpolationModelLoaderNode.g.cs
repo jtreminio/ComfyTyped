@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: loaders</remarks>
 public sealed class FrameInterpolationModelLoaderNode : ComfyNode
 {
-    public override string ClassType => "FrameInterpolationModelLoader";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "FrameInterpolationModelLoader";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<InterpModelType> INTERPMODEL { get; }

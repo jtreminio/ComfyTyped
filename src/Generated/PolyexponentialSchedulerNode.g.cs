@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: sampling/custom_sampling/schedulers</remarks>
 public sealed class PolyexponentialSchedulerNode : ComfyNode
 {
-    public override string ClassType => "PolyexponentialScheduler";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "PolyexponentialScheduler";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<SigmasType> SIGMAS { get; }

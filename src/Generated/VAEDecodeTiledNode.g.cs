@@ -7,7 +7,9 @@ namespace ComfyTyped.Generated;
 /// <remarks>Category: _for_testing</remarks>
 public sealed class VAEDecodeTiledNode : ComfyNode
 {
-    public override string ClassType => "VAEDecodeTiled";
+    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
+    public const string ClassType = "VAEDecodeTiled";
+    public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ImageType> IMAGE { get; }
