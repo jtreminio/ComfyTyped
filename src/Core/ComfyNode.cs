@@ -20,6 +20,33 @@ public abstract class ComfyNode
     /// <summary>All output slots on this node, in declaration order.</summary>
     public IReadOnlyList<INodeOutput> Outputs => _outputs;
 
+    /// <summary>
+    /// Escape hatch for input keys the codegen does not model as typed slots — e.g. dynamic
+    /// list-style inputs (<c>images.image0</c>, <c>images.image1</c>, …) on
+    /// <c>BatchImagesNode</c>, or variant-shaped keys (<c>resize_type.multiple</c>,
+    /// <c>resize_type.shorter_size</c>, …) on <c>ResizeImageMaskNode</c>.
+    ///
+    /// <para>
+    /// Populated automatically by <see cref="ComfyGraph.FromWorkflow"/> for any input key
+    /// on a typed node that does not match a declared <see cref="NodeInput{T}"/>. Consumers
+    /// can also assign or mutate this directly to inject extra keys when building nodes.
+    /// </para>
+    ///
+    /// <para>
+    /// On serialization (<see cref="ToWorkflowNode"/>), typed inputs are emitted first; any
+    /// keys in <c>ExtraInputs</c> not already present are then merged in. Typed inputs win
+    /// on collision.
+    /// </para>
+    ///
+    /// <para>
+    /// Limitation: tokens stored here are passed through verbatim. Connection references
+    /// (<c>[nodeId, slotIndex]</c> JArrays) are <em>not</em> graph-aware — removing or
+    /// retargeting the referenced node will not update extras. Use this only for inputs
+    /// the typed graph cannot represent.
+    /// </para>
+    /// </summary>
+    public JObject? ExtraInputs { get; set; }
+
     private readonly List<INodeInput> _inputs = [];
     private readonly List<INodeOutput> _outputs = [];
 
@@ -64,6 +91,17 @@ public abstract class ComfyNode
                 inputs[input.Name] = value;
             }
         }
+        if (ExtraInputs is not null)
+        {
+            foreach (JProperty extra in ExtraInputs.Properties())
+            {
+                if (inputs[extra.Name] is null)
+                {
+                    inputs[extra.Name] = extra.Value.DeepClone();
+                }
+            }
+        }
+
         return new JObject
         {
             ["class_type"] = ClassType,

@@ -107,18 +107,28 @@ public sealed class NodeInput<T> : INodeInput where T : IComfyType
             ConnectTo(typed);
             return;
         }
-        // Allow AnyType connections (from UnknownNode outputs)
-        if (output is NodeOutput<AnyType> || typeof(T) == typeof(AnyType))
+        // Allow wildcard connections (AnyType from UnknownNode outputs, ComfyMatchTypeV3 from V3 wildcard slots).
+        if (IsWildcard(typeof(T)) || IsWildcard(OutputMarkerType(output)))
         {
             _connection = null;
             _literal = null;
-            // Store as untyped connection — we need a different storage path
             _untypedConnection = output;
             return;
         }
 
         throw new InvalidOperationException(
             $"Cannot connect output of type '{output.TypeName}' to input '{Name}' of type '{T.TypeName}'.");
+    }
+
+    private static bool IsWildcard(Type? markerType) =>
+        markerType == typeof(AnyType) || markerType == typeof(ComfyMatchTypeV3);
+
+    private static Type? OutputMarkerType(INodeOutput output)
+    {
+        Type t = output.GetType();
+        return t.IsGenericType && t.GetGenericTypeDefinition() == typeof(NodeOutput<>)
+            ? t.GetGenericArguments()[0]
+            : null;
     }
 
     /// <summary>The effective connection, typed or untyped.</summary>

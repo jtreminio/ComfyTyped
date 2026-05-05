@@ -53,6 +53,15 @@ public sealed class ComfyGraph
     /// <summary>Remove a node from the graph. Does NOT disconnect it — callers should handle that.</summary>
     public bool RemoveNode(string id) => _nodes.Remove(id);
 
+    /// <summary>Remove every node from the graph. Returns the number removed. Does NOT reset the next auto-assigned ID.</summary>
+    public int RemoveAllNodes()
+    {
+        int count = _nodes.Count;
+        _nodes.Clear();
+
+        return count;
+    }
+
     /// <summary>Ensure the next auto-assigned ID is at least this value.</summary>
     internal void EnsureMinNextId(int minNextId)
     {
@@ -156,6 +165,11 @@ public sealed class ComfyGraph
                 : node.FindInput(inputProp.Name);
             if (input is null)
             {
+                // Typed node received an input key that the codegen does not model
+                // (e.g. dotted/list-style keys like images.image0). Stash on the node's
+                // ExtraInputs escape hatch so it round-trips losslessly.
+                node.ExtraInputs ??= [];
+                node.ExtraInputs[inputProp.Name] = inputProp.Value.DeepClone();
                 continue;
             }
             if (IsConnectionRef(inputProp.Value, out string? sourceId, out int slotIndex)

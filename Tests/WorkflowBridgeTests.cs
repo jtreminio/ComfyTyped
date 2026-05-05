@@ -260,6 +260,49 @@ public class WorkflowBridgeTests
     }
 
     [Fact]
+    public void ConnectToUntyped_AllowsConcreteOutputIntoMatchTypeV3Input()
+    {
+        // ComfyMatchTypeV3 is a wildcard slot type — concrete outputs (IMAGE, MASK, etc.)
+        // must be connectable to it, mirroring AnyType wildcard behavior.
+        var bridge = WorkflowBridge.Create(new JObject());
+        var ckpt = bridge.AddNode(new CheckpointLoaderSimpleNode());
+        var latent = bridge.AddNode(new EmptyLatentImageNode());
+        var decode = bridge.AddNode(new VAEDecodeNode());
+        decode.Vae.ConnectTo(ckpt.VAE);
+        decode.Samples.ConnectTo(latent.LATENT);
+
+        var resize = bridge.AddNode(new ResizeImageMaskNodeNode());
+        resize.ResizeType.Set("pixels");
+        ((INodeInput)resize.Input).ConnectToUntyped(decode.IMAGE);
+
+        bridge.SyncAll();
+
+        JArray inputRef = (JArray)bridge.Workflow[resize.Id]!["inputs"]!["input"]!;
+        Assert.Equal(decode.Id, (string)inputRef[0]!);
+        Assert.Equal(0, (int)inputRef[1]!);
+    }
+
+    [Fact]
+    public void ConnectToUntyped_AllowsMatchTypeV3OutputIntoConcreteInput()
+    {
+        // The reverse direction: ComfyMatchTypeV3 output (e.g., ResizeImageMaskNode.Resized)
+        // feeding a concrete-typed input must also be allowed.
+        var bridge = WorkflowBridge.Create(new JObject());
+        var ckpt = bridge.AddNode(new CheckpointLoaderSimpleNode());
+        var resize = bridge.AddNode(new ResizeImageMaskNodeNode());
+        resize.ResizeType.Set("pixels");
+
+        var encode = bridge.AddNode(new VAEEncodeNode());
+        encode.Vae.ConnectTo(ckpt.VAE);
+        ((INodeInput)encode.Pixels).ConnectToUntyped(resize.Resized);
+
+        bridge.SyncAll();
+
+        JArray pixelsRef = (JArray)bridge.Workflow[encode.Id]!["inputs"]!["pixels"]!;
+        Assert.Equal(resize.Id, (string)pixelsRef[0]!);
+    }
+
+    [Fact]
     public void AddNode_WithLiterals_SerializesCorrectly()
     {
         var bridge = WorkflowBridge.Create(new JObject());
@@ -332,6 +375,40 @@ public class WorkflowBridgeTests
         Assert.True(removed);
         Assert.Null(bridge.Graph.GetNode("4"));
         Assert.Null(bridge.Workflow["4"]);
+    }
+
+    [Fact]
+    public void RemoveAllNodes_RemovesEveryNodeFromBoth()
+    {
+        JObject workflow = BuildSimpleWorkflow();
+        var bridge = WorkflowBridge.Create(workflow);
+
+        int removed = bridge.RemoveAllNodes();
+
+        Assert.Equal(4, removed);
+        Assert.Empty(bridge.Graph.Nodes);
+        Assert.Null(bridge.Workflow["1"]);
+        Assert.Null(bridge.Workflow["4"]);
+    }
+
+    [Fact]
+    public void RemoveAllNodes_PreservesNonNodeProperties()
+    {
+        JObject workflow = BuildSimpleWorkflow();
+        workflow["_meta"] = new JObject { ["version"] = "1.0" };
+        var bridge = WorkflowBridge.Create(workflow);
+
+        bridge.RemoveAllNodes();
+
+        Assert.NotNull(bridge.Workflow["_meta"]);
+        Assert.Equal("1.0", bridge.Workflow["_meta"]!.Value<string>("version"));
+    }
+
+    [Fact]
+    public void RemoveAllNodes_OnEmptyBridge_ReturnsZero()
+    {
+        var bridge = WorkflowBridge.Create(new JObject());
+        Assert.Equal(0, bridge.RemoveAllNodes());
     }
 
     [Fact]
@@ -625,6 +702,31 @@ public class WorkflowBridgeTests
         Assert.Null(bridge.ResolvePath(new JArray("only_one")));
         Assert.Null(bridge.ResolvePath(new JArray("a", "b", "c")));
         Assert.Null(bridge.ResolvePath(new JArray("node", "not_a_number")));
+    }
+
+    [Fact]
+    public void ResolvePath_UnknownNodeUnregisteredSlot_SynthesizesOutput()
+    {
+        // ComfyGraph.FromWorkflow only registers UnknownNode outputs that some other
+        // node references. A freshly seeded stub with no consumers has zero outputs —
+        // ResolvePath must materialize the slot on demand instead of returning null.
+        JObject workflow = new()
+        {
+            ["50"] = new JObject
+            {
+                ["class_type"] = "SomeUnregisteredCustomNode",
+                ["inputs"] = new JObject(),
+            },
+        };
+        var bridge = WorkflowBridge.Create(workflow);
+
+        Assert.IsType<UnknownNode>(bridge.Graph.GetNode("50"));
+
+        INodeOutput? output = bridge.ResolvePath(new JArray("50", 0));
+
+        Assert.NotNull(output);
+        Assert.Equal("50", output.Node.Id);
+        Assert.Equal(0, output.SlotIndex);
     }
 
     [Fact]

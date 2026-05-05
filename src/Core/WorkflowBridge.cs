@@ -76,6 +76,29 @@ public sealed class WorkflowBridge(ComfyGraph graph, JObject workflow)
     /// <summary>Remove a node from both the typed graph and the JObject workflow.</summary>
     public bool RemoveNode(ComfyNode node) => RemoveNode(node.Id);
 
+    /// <summary>
+    /// Remove every node from both the typed graph and the JObject workflow.
+    /// Non-node JObject properties (those without <c>class_type</c>, e.g. <c>_meta</c>) are preserved.
+    /// Returns the number of nodes removed.
+    /// </summary>
+    public int RemoveAllNodes()
+    {
+        List<string> toRemove = [];
+        foreach (JProperty prop in Workflow.Properties())
+        {
+            if (prop.Value is JObject obj && obj["class_type"] is not null)
+            {
+                toRemove.Add(prop.Name);
+            }
+        }
+        foreach (string key in toRemove)
+        {
+            Workflow.Remove(key);
+        }
+
+        return Graph.RemoveAllNodes();
+    }
+
     // ── Sync ────────────────────────────────────────────────────────
 
     /// <summary>
@@ -154,7 +177,14 @@ public sealed class WorkflowBridge(ComfyGraph graph, JObject workflow)
 
     /// <summary>
     /// Resolve a JArray path [nodeId, slotIndex] to a typed output in the graph.
-    /// Returns null if the path is malformed or the node/slot is not found.
+    /// Returns null if the path is malformed or the node is not found.
+    /// <para>
+    /// For <see cref="UnknownNode"/> targets, the slot is materialized on demand if it
+    /// has not been registered yet — <see cref="ComfyGraph.FromWorkflow"/> only registers
+    /// UnknownNode outputs for slots that some other node references, so a freshly seeded
+    /// node with no consumers would otherwise resolve to null even though the slot exists
+    /// logically. The synthesized slot is typed as <see cref="Types.AnyType"/>.
+    /// </para>
     /// </summary>
     public INodeOutput? ResolvePath(JArray? path)
     {
@@ -168,8 +198,18 @@ public sealed class WorkflowBridge(ComfyGraph graph, JObject workflow)
             return null;
         }
         int slotIndex = Convert.ToInt32(slotVal.Value!);
+        ComfyNode? node = Graph.GetNode(nodeId);
+        if (node is null)
+        {
+            return null;
+        }
+        INodeOutput? output = node.FindOutput(slotIndex);
+        if (output is null && node is UnknownNode unknown)
+        {
+            output = unknown.GetOutput(slotIndex);
+        }
 
-        return Graph.GetNode(nodeId)?.FindOutput(slotIndex);
+        return output;
     }
 
     // ── Internal ────────────────────────────────────────────────────
