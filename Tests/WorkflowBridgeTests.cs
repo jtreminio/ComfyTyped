@@ -449,6 +449,172 @@ public class WorkflowBridgeTests
     }
 
     // ═════════════════════════════════════════════════════════════════
+    //  3.5 Auto-sync (typed mutations propagate without explicit SyncNode)
+    // ═════════════════════════════════════════════════════════════════
+
+    [Fact]
+    public void AutoSync_LiteralMutationOnAddedNode_FlushesImmediately()
+    {
+        var bridge = WorkflowBridge.Create(new JObject());
+        var ksampler = bridge.AddNode(new KSamplerNode());
+
+        ksampler.Seed.Set(123L);
+
+        Assert.Equal(123L, (long)bridge.Workflow[ksampler.Id]!["inputs"]!["seed"]!);
+    }
+
+    [Fact]
+    public void AutoSync_LiteralMutationOnLoadedNode_FlushesImmediately()
+    {
+        JObject workflow = BuildSimpleWorkflow();
+        var bridge = WorkflowBridge.Create(workflow);
+
+        var ksampler = bridge.Graph.GetNode<KSamplerNode>("3")!;
+        ksampler.Seed.Set(555L);
+
+        Assert.Equal(555L, (long)bridge.Workflow["3"]!["inputs"]!["seed"]!);
+    }
+
+    [Fact]
+    public void AutoSync_ConnectionRetarget_FlushesImmediately()
+    {
+        JObject workflow = BuildSimpleWorkflow();
+        var bridge = WorkflowBridge.Create(workflow);
+
+        var ksampler = bridge.Graph.GetNode<KSamplerNode>("3")!;
+        var newLatent = bridge.AddNode(new EmptyLatentImageNode());
+        ksampler.LatentImage.ConnectTo(newLatent.LATENT);
+
+        JArray ref_ = (JArray)bridge.Workflow["3"]!["inputs"]!["latent_image"]!;
+        Assert.Equal(newLatent.Id, (string)ref_[0]!);
+    }
+
+    [Fact]
+    public void AutoSync_Clear_RemovesPropertyFromInputs()
+    {
+        JObject workflow = BuildSimpleWorkflow();
+        var bridge = WorkflowBridge.Create(workflow);
+
+        var ksampler = bridge.Graph.GetNode<KSamplerNode>("3")!;
+        Assert.NotNull(bridge.Workflow["3"]!["inputs"]!["seed"]);
+
+        ksampler.Seed.Clear();
+
+        Assert.Null(bridge.Workflow["3"]!["inputs"]!["seed"]);
+    }
+
+    [Fact]
+    public void AutoSync_PreservesOuterNodeJObjectReference()
+    {
+        // Holders of Workflow[id] before a mutation should still see the post-mutation state.
+        var bridge = WorkflowBridge.Create(new JObject());
+        var ksampler = bridge.AddNode(new KSamplerNode());
+        JObject heldRef = (JObject)bridge.Workflow[ksampler.Id]!;
+
+        ksampler.Seed.Set(777L);
+
+        Assert.Same(heldRef, bridge.Workflow[ksampler.Id]);
+        Assert.Equal(777L, (long)heldRef["inputs"]!["seed"]!);
+    }
+
+    [Fact]
+    public void AutoSync_AfterRemoveNode_StopsTracking()
+    {
+        var bridge = WorkflowBridge.Create(new JObject());
+        var ksampler = bridge.AddNode(new KSamplerNode());
+        bridge.RemoveNode(ksampler);
+
+        // Mutating a removed node must not throw and must not resurrect it in the JObject.
+        ksampler.Seed.Set(42L);
+
+        Assert.Null(bridge.Workflow[ksampler.Id]);
+    }
+
+    [Fact]
+    public void AutoSync_UnknownNodeFirstMutation_RebuildsInputsFromTypedSlots()
+    {
+        // RawInputs initially wins over typed slots in ToWorkflowNode. The first typed mutation
+        // must clear RawInputs and rebuild Workflow[id]["inputs"] so the new value is visible.
+        JObject workflow = new()
+        {
+            ["50"] = new JObject
+            {
+                ["class_type"] = "SomeCustomWidget",
+                ["inputs"] = new JObject { ["text"] = "old", ["count"] = 1 }
+            }
+        };
+        var bridge = WorkflowBridge.Create(workflow);
+        var unknown = (UnknownNode)bridge.Graph.GetNode("50")!;
+
+        unknown.GetInput("text").Set("new");
+
+        Assert.Equal("new", bridge.Workflow["50"]!["inputs"]!.Value<string>("text"));
+        // Untouched input survives the rebuild because FromWorkflow seeded a typed slot for it.
+        Assert.Equal(1L, (long)bridge.Workflow["50"]!["inputs"]!["count"]!);
+        Assert.Null(unknown.RawInputs);
+    }
+
+    [Fact]
+    public void AutoSync_LiteralAfterWildcardConnection_ReplacesConnection()
+    {
+        // Regression: ConnectToUntyped(wildcardOut) sets _untypedConnection; a subsequent Set must
+        // clear _untypedConnection, otherwise EffectiveConnection masks the literal and the JObject
+        // ends up with the stale [nodeId, slot] JArray instead of the new literal value.
+        JObject workflow = new()
+        {
+            ["50"] = new JObject
+            {
+                ["class_type"] = "SomeWildcardSource",
+                ["inputs"] = new JObject(),
+            },
+        };
+        var bridge = WorkflowBridge.Create(workflow);
+        var unknown = (UnknownNode)bridge.Graph.GetNode("50")!;
+        NodeOutput<ComfyTyped.Types.AnyType> wildcard = unknown.GetOutput(0);
+
+        var ksampler = bridge.AddNode(new KSamplerNode());
+        ksampler.Seed.ConnectToUntyped(wildcard);
+        Assert.True(ksampler.Seed.IsConnected);
+
+        ksampler.Seed.Set(7L);
+
+        Assert.False(ksampler.Seed.IsConnected);
+        Assert.Equal(7L, (long)bridge.Workflow[ksampler.Id]!["inputs"]!["seed"]!);
+    }
+
+    [Fact]
+    public void Dispose_StopsAutoSync_AndIsIdempotent()
+    {
+        JObject workflow = BuildSimpleWorkflow();
+        var bridge = WorkflowBridge.Create(workflow);
+        var ksampler = bridge.Graph.GetNode<KSamplerNode>("3")!;
+
+        bridge.Dispose();
+        bridge.Dispose(); // idempotent
+
+        ksampler.Seed.Set(999L);
+
+        // The JObject still has the original seed because the bridge is no longer subscribed.
+        Assert.Equal(42L, (long)bridge.Workflow["3"]!["inputs"]!["seed"]!);
+    }
+
+    [Fact]
+    public void AutoSync_ConnectionFromAddedNodeUsesAssignedId()
+    {
+        // Regression: the upstream node must be in the bridge before downstream's input
+        // connects to it, so the auto-synced JArray carries the right ID.
+        var bridge = WorkflowBridge.Create(new JObject());
+        var ckpt = bridge.AddNode(new CheckpointLoaderSimpleNode());
+        var sampler = bridge.AddNode(new KSamplerNode());
+
+        sampler.Model.ConnectTo(ckpt.MODEL);
+
+        JArray modelRef = (JArray)bridge.Workflow[sampler.Id]!["inputs"]!["model"]!;
+        Assert.Equal(ckpt.Id, (string)modelRef[0]!);
+        Assert.Equal(0, (int)modelRef[1]!);
+    }
+
+    // ═════════════════════════════════════════════════════════════════
     //  4. SyncNode
     // ═════════════════════════════════════════════════════════════════
 
@@ -459,21 +625,19 @@ public class WorkflowBridgeTests
         var bridge = WorkflowBridge.Create(workflow);
 
         var ksampler = bridge.Graph.GetNode<KSamplerNode>("3")!;
-        var emptyLatent = bridge.Graph.GetNode<EmptyLatentImageNode>("4")!;
 
         // Verify initial connection: latent_image → node 4
         JArray initialRef = (JArray)bridge.Workflow["3"]!["inputs"]!["latent_image"]!;
         Assert.Equal("4", (string)initialRef[0]!);
 
-        // Change connection: point latent_image somewhere else (e.g., itself for testing)
         var newLatent = bridge.AddNode(new EmptyLatentImageNode());
         ksampler.LatentImage.ConnectTo(newLatent.LATENT);
 
-        // Before sync, JObject still has old connection
-        JArray beforeSync = (JArray)bridge.Workflow["3"]!["inputs"]!["latent_image"]!;
-        Assert.Equal("4", (string)beforeSync[0]!);
+        // Auto-sync flushed the change without an explicit SyncNode call.
+        JArray autoSynced = (JArray)bridge.Workflow["3"]!["inputs"]!["latent_image"]!;
+        Assert.Equal(newLatent.Id, (string)autoSynced[0]!);
 
-        // After sync, JObject reflects the change
+        // SyncNode is still idempotent — calling it doesn't break the value.
         bridge.SyncNode(ksampler);
         JArray afterSync = (JArray)bridge.Workflow["3"]!["inputs"]!["latent_image"]!;
         Assert.Equal(newLatent.Id, (string)afterSync[0]!);

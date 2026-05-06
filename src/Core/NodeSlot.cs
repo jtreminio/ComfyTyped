@@ -80,17 +80,23 @@ public sealed class NodeInput<T> : INodeInput where T : IComfyType
     public bool IsConnected => _connection is not null || _untypedConnection is not null;
     public bool HasValue => IsConnected || _literal is not null;
 
-    internal NodeInput(string name, bool required)
+    /// <summary>The node that owns this input slot. Used to bubble change events for auto-sync.</summary>
+    internal ComfyNode Owner { get; }
+
+    internal NodeInput(string name, bool required, ComfyNode owner)
     {
         Name = name;
         IsRequired = required;
+        Owner = owner;
     }
 
     /// <summary>Connect this input to a typed output.</summary>
     public void ConnectTo(NodeOutput<T> output)
     {
         _connection = output;
+        _untypedConnection = null;
         _literal = null;
+        Owner.RaiseInputChanged(this);
     }
 
     /// <summary>Set a literal value (for primitive/combo inputs).</summary>
@@ -98,6 +104,8 @@ public sealed class NodeInput<T> : INodeInput where T : IComfyType
     {
         _literal = value;
         _connection = null;
+        _untypedConnection = null;
+        Owner.RaiseInputChanged(this);
     }
 
     public void ConnectToUntyped(INodeOutput output)
@@ -113,6 +121,7 @@ public sealed class NodeInput<T> : INodeInput where T : IComfyType
             _connection = null;
             _literal = null;
             _untypedConnection = output;
+            Owner.RaiseInputChanged(this);
             return;
         }
 
@@ -141,6 +150,7 @@ public sealed class NodeInput<T> : INodeInput where T : IComfyType
         _connection = null;
         _untypedConnection = null;
         _literal = null;
+        Owner.RaiseInputChanged(this);
     }
 
     public JToken? Serialize()

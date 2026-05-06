@@ -50,10 +50,19 @@ public abstract class ComfyNode
     private readonly List<INodeInput> _inputs = [];
     private readonly List<INodeOutput> _outputs = [];
 
+    /// <summary>
+    /// Fires when any <see cref="NodeInput{T}"/> on this node changes (literal set, connection
+    /// (re)wired, or cleared). <see cref="WorkflowBridge"/> subscribes to keep its JObject in sync.
+    /// </summary>
+    internal event Action<ComfyNode, INodeInput>? InputChanged;
+
+    /// <summary>Invoked by <see cref="NodeInput{T}"/> mutators to bubble a change event up to subscribers.</summary>
+    internal void RaiseInputChanged(INodeInput input) => InputChanged?.Invoke(this, input);
+
     /// <summary>Register a typed input slot. Called by generated node constructors.</summary>
     protected NodeInput<T> AddInput<T>(string name, bool required = true) where T : Types.IComfyType
     {
-        NodeInput<T> input = new(name, required);
+        NodeInput<T> input = new(name, required, this);
         _inputs.Add(input);
 
         return input;
