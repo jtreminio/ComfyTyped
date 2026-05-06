@@ -39,6 +39,33 @@ namespace ComfyTyped.Core;
 /// </para>
 ///
 /// <para>
+/// <b>Removing a node with consumers.</b> <see cref="RemoveNode(string)"/> is a "dumb delete": it
+/// removes the node from the graph and the JObject but does <em>not</em> disconnect downstream inputs
+/// that referenced its outputs — those <c>NodeInput&lt;T&gt;</c> retain a reference to the removed
+/// node, and the corresponding <c>[id, slot]</c> JArrays in their serialized inputs still point at
+/// the now-deleted ID. Before deleting a node with consumers, rewire each output:
+/// <code>
+/// foreach (var output in old.Outputs)
+/// {
+///     var to = replacement.FindOutput(output.SlotIndex);
+///     if (to is not null) bridge.Graph.RetargetConnections(output, to);
+/// }
+/// bridge.RemoveNode(old);
+/// </code>
+/// Auto-sync flushes the rewires; the <c>RemoveNode</c> then has no surviving references to clean up.
+/// The <c>FindOutput</c> null-guard matters when the replacement is a different node class —
+/// slot indices that don't exist on the replacement leave consumers dangling and you'll need to
+/// handle them explicitly (rewire elsewhere, or <c>Clear()</c>).
+/// To drop a node without a replacement, iterate its outputs and clear every consumer:
+/// <code>
+/// foreach (var output in old.Outputs)
+///     foreach (var (_, input) in bridge.Graph.FindInputsConnectedTo(output))
+///         input.Clear();
+/// bridge.RemoveNode(old);
+/// </code>
+/// </para>
+///
+/// <para>
 /// <b>Lifetime.</b> The bridge subscribes to every node it tracks; while those subscriptions exist, a
 /// reference to any tracked node keeps the bridge (and the entire workflow JObject and graph) reachable.
 /// Call <see cref="Dispose"/> when done to drop the subscriptions, or use a <c>using</c> block.

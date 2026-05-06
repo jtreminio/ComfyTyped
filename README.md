@@ -173,6 +173,44 @@ int count = graph.RetargetConnections(
     (node, input) => node is SwarmSaveImageWSNode && input.Name == "images");
 ```
 
+### Removing a node that has consumers
+
+`bridge.RemoveNode(node)` is a "dumb delete" — it drops the node from the graph and JObject but
+does **not** clean up downstream inputs that pointed at its outputs. Those inputs keep a reference
+to the now-removed node, and the `[id, slot]` JArrays in their serialized inputs still name the
+deleted ID. Before deleting a middle node, rewire each output to its replacement and let auto-sync
+flush the changes:
+
+```csharp
+var replacement = bridge.AddNode(new VAEDecodeNode());
+// (copy any literal/connection inputs you want to carry over from `old` to `replacement`)
+
+foreach (INodeOutput output in old.Outputs)
+{
+    INodeOutput? to = replacement.FindOutput(output.SlotIndex);
+    if (to is not null) bridge.Graph.RetargetConnections(output, to);
+}
+bridge.RemoveNode(old);
+```
+
+The null guard matters when the replacement is a different class than the original — slot
+indices that don't exist on the replacement leave those consumers dangling, and you'll need
+to handle them yourself (rewire to a different output, or `Clear()` them). When the
+replacement is the same class as `old`, every slot index lines up and the guard never trips.
+
+To drop a node without a replacement, walk every output's consumers and `Clear()` them:
+
+```csharp
+foreach (INodeOutput output in old.Outputs)
+{
+    foreach (var (_, input) in bridge.Graph.FindInputsConnectedTo(output))
+    {
+        input.Clear();
+    }
+}
+bridge.RemoveNode(old);
+```
+
 ### Extending: registering nodes from another assembly
 
 Once an extension generates its own `*.g.cs` files into its own assembly, it

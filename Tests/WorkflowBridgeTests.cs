@@ -615,6 +615,111 @@ public class WorkflowBridgeTests
     }
 
     // ═════════════════════════════════════════════════════════════════
+    //  3.6 Middle-node deletion (rewire-then-delete contract)
+    // ═════════════════════════════════════════════════════════════════
+
+    /// <summary>Build a workflow with a true middle node: ckpt → ksampler → vaeDecode, vae also feeds vaeDecode.</summary>
+    private static (WorkflowBridge bridge, CheckpointLoaderSimpleNode ckpt, KSamplerNode sampler, VAEDecodeNode decode) BuildLinearChain()
+    {
+        var bridge = WorkflowBridge.Create(new JObject());
+        var ckpt = bridge.AddNode(new CheckpointLoaderSimpleNode());
+        var emptyLatent = bridge.AddNode(new EmptyLatentImageNode());
+        var sampler = bridge.AddNode(new KSamplerNode());
+        sampler.Model.ConnectTo(ckpt.MODEL);
+        sampler.LatentImage.ConnectTo(emptyLatent.LATENT);
+        var decode = bridge.AddNode(new VAEDecodeNode());
+        decode.Samples.ConnectTo(sampler.LATENT);
+        decode.Vae.ConnectTo(ckpt.VAE);
+
+        return (bridge, ckpt, sampler, decode);
+    }
+
+    private static bool WorkflowReferencesId(JObject workflow, string id)
+    {
+        foreach (JProperty prop in workflow.Properties())
+        {
+            if (prop.Value is not JObject node || node["inputs"] is not JObject inputs)
+            {
+                continue;
+            }
+            foreach (JProperty input in inputs.Properties())
+            {
+                if (input.Value is JArray arr && arr.Count == 2 && (string?)arr[0] == id)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    [Fact]
+    public void RewireThenDelete_LeavesNoDanglingReferences()
+    {
+        var (bridge, _, sampler, decode) = BuildLinearChain();
+        string oldId = sampler.Id;
+
+        var replacement = bridge.AddNode(new KSamplerNode());
+
+        // Rewire each output of `sampler` to its counterpart on `replacement`.
+        // Same-class swap: every slot index lines up, so the FindOutput null-guard never trips.
+        foreach (INodeOutput output in sampler.Outputs)
+        {
+            INodeOutput? to = replacement.FindOutput(output.SlotIndex);
+            if (to is not null) bridge.Graph.RetargetConnections(output, to);
+        }
+        bridge.RemoveNode(sampler);
+
+        // JObject side: no entry, no dangling refs anywhere.
+        Assert.Null(bridge.Workflow[oldId]);
+        Assert.False(WorkflowReferencesId(bridge.Workflow, oldId),
+            "JObject still has dangling JArray refs to the removed node ID.");
+
+        // Typed-graph side: the old node is gone from the graph.
+        Assert.Null(bridge.Graph.GetNode(oldId));
+
+        // Downstream consumer now points at the replacement, both in the JObject and the typed graph.
+        JArray samplesRef = (JArray)bridge.Workflow[decode.Id]!["inputs"]!["samples"]!;
+        Assert.Equal(replacement.Id, (string)samplesRef[0]!);
+        Assert.Equal(0, (int)samplesRef[1]!);
+        Assert.Same(replacement, decode.Samples.Connection!.Node);
+
+        // Auto-sync still tracks the replacement after the swap (catches subscription leaks/double-removes).
+        replacement.Seed.Set(12345L);
+        Assert.Equal(12345L, (long)bridge.Workflow[replacement.Id]!["inputs"]!["seed"]!);
+    }
+
+    [Fact]
+    public void NaiveDelete_OfMiddleNode_LeavesDanglingJArrayInConsumers()
+    {
+        // Pins the "dumb delete" contract documented at ComfyGraph.RemoveNode and on WorkflowBridge
+        // ("Removing a node with consumers" section). The contract is intentional:
+        //   (a) callers can stage retargets in any order without RemoveNode silently undoing them,
+        //   (b) RemoveNode stays O(1) instead of O(nodes × inputs),
+        //   (c) WorkflowBridge.RemoveNode stays a thin wrapper over ComfyGraph.RemoveNode — same semantics.
+        // If you grow cascade-cleanup, update this test deliberately AND update README + the XML doc on
+        // ComfyGraph.RemoveNode + the class doc on WorkflowBridge in the same change.
+        var (bridge, _, sampler, decode) = BuildLinearChain();
+        string oldId = sampler.Id;
+
+        bridge.RemoveNode(sampler);
+
+        Assert.Null(bridge.Workflow[oldId]);
+
+        // JObject side: downstream consumer still has the dangling [oldId, 0] JArray.
+        JArray samplesRef = (JArray)bridge.Workflow[decode.Id]!["inputs"]!["samples"]!;
+        Assert.Equal(oldId, (string)samplesRef[0]!);
+        Assert.Equal(0, (int)samplesRef[1]!);
+        Assert.True(WorkflowReferencesId(bridge.Workflow, oldId),
+            "Expected naive RemoveNode to leave a dangling JArray ref in consumers.");
+
+        // Typed-graph side: the consumer's NodeInput<T> still holds the stranded reference to the
+        // removed node. Pinning both sides ensures a future cascade-fix that scrubs only one is caught.
+        Assert.True(decode.Samples.IsConnected);
+        Assert.Same(sampler, decode.Samples.Connection!.Node);
+    }
+
+    // ═════════════════════════════════════════════════════════════════
     //  4. SyncNode
     // ═════════════════════════════════════════════════════════════════
 
