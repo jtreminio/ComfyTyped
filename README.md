@@ -211,6 +211,31 @@ foreach (INodeOutput output in old.Outputs)
 bridge.RemoveNode(old);
 ```
 
+### SwarmUI integration: typed output → `WGNodeData`
+
+`WorkflowGenerator.Current*` slots (`CurrentModel`, `CurrentVae`,
+`CurrentMedia`, etc.) hold `WGNodeData`, a SwarmUI type that wraps a JArray
+path plus media metadata. When the path is in your hands as a typed
+`INodeOutput`, the `ToWGNodeData` extension on `ComfyTyped.SwarmUI`
+projects it across the boundary without the manual path-and-fields spell:
+
+```csharp
+using ComfyTyped.SwarmUI;
+
+var sampler = bridge.AddNode(new KSamplerNode());
+
+// With explicit compat:
+g.CurrentMedia = sampler.LATENT.ToWGNodeData(
+    g, WGNodeData.DT_LATENT_IMAGE, g.CurrentCompat());
+
+// Defaulted to g.CurrentCompat() — most call sites use this:
+g.CurrentMedia = sampler.LATENT.ToWGNodeData(g, WGNodeData.DT_LATENT_IMAGE);
+```
+
+This is the peer of `MediaRef.ToWGNodeData(g)` — that converts a typed
+`MediaRef` (which carries dimensions / FPS / `AttachedAudio`); this one is
+the lightweight path for callers that just need the `[id, slot]` projection.
+
 ### Extending: registering nodes from another assembly
 
 Once an extension generates its own `*.g.cs` files into its own assembly, it
