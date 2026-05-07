@@ -283,6 +283,36 @@ public class WorkflowBridgeTests
     }
 
     [Fact]
+    public void TryConnectToUntyped_NullOutputReturnsFalseAndIsNoOp()
+    {
+        // Resolver-style sources (e.g. WorkflowBridge.ResolvePath) may legitimately return
+        // null when the requested path does not resolve. TryConnectToUntyped lets callers
+        // forward that null without a guard: returns false (no-op, slot state preserved)
+        // on null, true on a successful connect.
+        var bridge = WorkflowBridge.Create(new JObject());
+        var resize = bridge.AddNode(new ResizeImageMaskNodeNode());
+        resize.ResizeType.Set("pixels");
+
+        Assert.False(((INodeInput)resize.Input).TryConnectToUntyped(null));
+        Assert.False(resize.Input.IsConnected);
+        bridge.SyncAll();
+        Assert.Null(bridge.Workflow[resize.Id]!["inputs"]!["input"]);
+
+        // Real output: returns true and connects.
+        var ckpt = bridge.AddNode(new CheckpointLoaderSimpleNode());
+        var latent = bridge.AddNode(new EmptyLatentImageNode());
+        var decode = bridge.AddNode(new VAEDecodeNode());
+        decode.Vae.ConnectTo(ckpt.VAE);
+        decode.Samples.ConnectTo(latent.LATENT);
+        Assert.True(((INodeInput)resize.Input).TryConnectToUntyped(decode.IMAGE));
+        Assert.True(resize.Input.IsConnected);
+
+        // Subsequent null call is a no-op — must not clear the existing connection.
+        Assert.False(((INodeInput)resize.Input).TryConnectToUntyped(null));
+        Assert.True(resize.Input.IsConnected);
+    }
+
+    [Fact]
     public void ConnectToUntyped_AllowsMatchTypeV3OutputIntoConcreteInput()
     {
         // The reverse direction: ComfyMatchTypeV3 output (e.g., ResizeImageMaskNode.Resized)

@@ -33,6 +33,17 @@ public interface INodeInput
     /// <summary>Connect to a non-generic output. Throws if types are incompatible at runtime.</summary>
     void ConnectToUntyped(INodeOutput output);
 
+    /// <summary>
+    /// Connect to a non-generic output if <paramref name="output"/> is non-null. Returns
+    /// <c>true</c> on success; returns <c>false</c> (no-op, leaves the slot's existing
+    /// state unchanged) when <paramref name="output"/> is null. Intended for resolver-style
+    /// sources (e.g. <see cref="WorkflowBridge.ResolvePath"/>) that legitimately return
+    /// null when a path does not resolve. Type mismatches still throw — null tolerance
+    /// is the only soft failure.
+    /// </summary>
+    /// <returns><c>true</c> if connected; <c>false</c> if <paramref name="output"/> was null.</returns>
+    bool TryConnectToUntyped(INodeOutput? output);
+
     /// <summary>Set a literal value. Throws if this input only accepts connections.</summary>
     void SetUntyped(object? value);
 
@@ -136,6 +147,16 @@ public sealed class NodeInput<T> : INodeInput where T : IComfyType
 
         throw new InvalidOperationException(
             $"Cannot connect output of type '{output.TypeName}' to input '{Name}' of type '{T.TypeName}'.");
+    }
+
+    public bool TryConnectToUntyped(INodeOutput? output)
+    {
+        if (output is null)
+        {
+            return false;
+        }
+        ConnectToUntyped(output);
+        return true;
     }
 
     private static bool IsWildcard(Type? markerType) =>
