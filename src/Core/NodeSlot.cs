@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using ComfyTyped.Types;
 using Newtonsoft.Json.Linq;
 
@@ -30,8 +31,12 @@ public interface INodeInput
     bool IsConnected { get; }
     bool HasValue { get; }
 
-    /// <summary>Connect to a non-generic output. Throws if types are incompatible at runtime.</summary>
-    void ConnectToUntyped(INodeOutput output);
+    /// <summary>
+    /// Connect to a non-generic output. Throws <see cref="ArgumentNullException"/> on null
+    /// (use <see cref="TryConnectToUntyped"/> for resolver-style sources that may legitimately
+    /// return null) and <see cref="InvalidOperationException"/> if types are incompatible at runtime.
+    /// </summary>
+    void ConnectToUntyped(INodeOutput output, [CallerArgumentExpression(nameof(output))] string? sourceExpr = null);
 
     /// <summary>
     /// Connect to a non-generic output if <paramref name="output"/> is non-null. Returns
@@ -128,8 +133,13 @@ public sealed class NodeInput<T> : INodeInput where T : IComfyType
         Owner.RaiseInputChanged(this);
     }
 
-    public void ConnectToUntyped(INodeOutput output)
+    public void ConnectToUntyped(INodeOutput output, [CallerArgumentExpression(nameof(output))] string? sourceExpr = null)
     {
+        if (output is null)
+        {
+            throw new ArgumentNullException(nameof(output),
+                $"Cannot connect null ({sourceExpr}) to input '{Name}' on {Owner.GetType().Name}#{Owner.Id}.");
+        }
         if (output is NodeOutput<T> typed)
         {
             ConnectTo(typed);
