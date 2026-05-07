@@ -230,11 +230,60 @@ g.CurrentMedia = sampler.LATENT.ToWGNodeData(
 
 // Defaulted to g.CurrentCompat() — most call sites use this:
 g.CurrentMedia = sampler.LATENT.ToWGNodeData(g, WGNodeData.DT_LATENT_IMAGE);
+
+// With media metadata (Width/Height/Frames/FPS) inline — replaces the
+// `new WGNodeData(...) { Width = 512, Height = 512, ... }` initializer block:
+g.CurrentMedia = decode.IMAGE.ToWGMedia(
+    g, WGNodeData.DT_VIDEO,
+    width: 512, height: 512, frames: 16, fps: 24);
+
+// Audio attachments — uses g.CurrentAudioVae?.Compat (g.CurrentCompat() is
+// the wrong compat for audio output paths):
+g.CurrentMedia.AttachedAudio = audioDecode.Audio.ToWGAttachedAudio(g);
 ```
 
-This is the peer of `MediaRef.ToWGNodeData(g)` — that converts a typed
-`MediaRef` (which carries dimensions / FPS / `AttachedAudio`); this one is
-the lightweight path for callers that just need the `[id, slot]` projection.
+`ToWGNodeData` / `ToWGMedia` are the typed-output peer of
+`MediaRef.ToWGNodeData(g)` — the latter projects a typed `MediaRef` that
+already carries dimensions / FPS / `AttachedAudio`; the former two are the
+lightweight path for callers that just need the `[id, slot]` projection or
+inline media metadata.
+
+### SwarmUI integration: stub fixtures and auto-`SyncLastId`
+
+For tests and round-tripping workflows whose `class_type` strings have no
+typed bindings, `WorkflowBridge.AddStub(classType, id)` is shorthand for
+`AddNode(new UnknownNode(classType), id)`. Pair with `WithOutputs(...)` to
+declare the slot names at construction:
+
+```csharp
+var model = bridge.AddStub("UnitTest_Model", "4")
+                  .WithOutputs("MODEL", "CLIP", "VAE");
+
+g.CurrentModel = model.GetOutput(0).ToWGNodeData(g, WGNodeData.DT_MODEL);
+g.CurrentTextEnc = model.GetOutput(1).ToWGNodeData(g, WGNodeData.DT_TEXTENC);
+g.CurrentVae = model.GetOutput(2).ToWGNodeData(g, WGNodeData.DT_VAE);
+```
+
+`BridgeSync.For(g)` returns a disposable wrapper that calls `SyncLastId(g)`
+on dispose, removing the trailing manual call from seed-step closures:
+
+```csharp
+new(g =>
+{
+    using var bridge = BridgeSync.For(g);
+
+    var model = bridge.AddStub("UnitTest_Model", "4")
+                      .WithOutputs("MODEL", "CLIP", "VAE");
+    g.CurrentModel = model.GetOutput(0).ToWGNodeData(g, WGNodeData.DT_MODEL);
+
+    // BridgeSync.SyncLastId(g) fires on dispose — no manual call.
+}, priority);
+```
+
+The wrapper is intentionally a separate type so `WorkflowBridge.Dispose`
+stays pure (subscription teardown only) — no surprise side-effects on
+production-shaped bridges. Reach for `For(g)` when you want the
+auto-sync; reach for `WorkflowBridge.Create(g.Workflow)` when you don't.
 
 ### Extending: registering nodes from another assembly
 

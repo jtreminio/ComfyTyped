@@ -142,6 +142,21 @@ public sealed class WorkflowBridge : IDisposable
         return node;
     }
 
+    /// <summary>
+    /// Add an <see cref="UnknownNode"/> for the given <paramref name="classType"/>
+    /// at a specific <paramref name="id"/>. Convenience shorthand for
+    /// <c>AddNode(new UnknownNode(classType), id)</c>. Use for stub fixtures and
+    /// round-tripping classes without typed bindings.
+    /// </summary>
+    public UnknownNode AddStub(string classType, string id) =>
+        AddNode(new UnknownNode(classType), id);
+
+    /// <summary>
+    /// Add an <see cref="UnknownNode"/> with an auto-assigned ID.
+    /// </summary>
+    public UnknownNode AddStub(string classType) =>
+        AddNode(new UnknownNode(classType));
+
     // ── Remove ──────────────────────────────────────────────────────
 
     /// <summary>Remove a node by ID from both the typed graph and the JObject workflow.</summary>

@@ -50,7 +50,7 @@ public sealed class NodeOutput<T> : INodeOutput where T : IComfyType
 {
     public ComfyNode Node { get; }
     public int SlotIndex { get; }
-    public string SlotName { get; }
+    public string SlotName { get; private set; }
     public string TypeName => T.TypeName;
 
     internal NodeOutput(ComfyNode node, int slotIndex, string slotName)
@@ -59,6 +59,15 @@ public sealed class NodeOutput<T> : INodeOutput where T : IComfyType
         SlotIndex = slotIndex;
         SlotName = slotName;
     }
+
+    /// <summary>
+    /// Rename this slot in place. Used by <see cref="UnknownNode.WithOutputs"/>
+    /// to apply declarative slot-name updates to existing slots without forcing
+    /// re-allocation. Internal because typed (generated) nodes set their slot
+    /// names at construction and shouldn't be renamed; the rename path is only
+    /// meaningful for <see cref="UnknownNode"/>.
+    /// </summary>
+    internal void RenameSlot(string newName) => SlotName = newName;
 }
 
 // ── Typed input slot (union: connection OR literal value) ───────────

@@ -48,16 +48,50 @@ public sealed class UnknownNode(string classType) : ComfyNode
     /// </summary>
     public override INodeOutput FindOutput(int slotIndex) => GetOutput(slotIndex);
 
-    /// <summary>Ensure outputs exist up to the given slot index.</summary>
+    /// <summary>Ensure outputs exist up to the given slot index. Prefer
+    /// <see cref="WithOutputs"/> when you know the slot names.</summary>
     public void EnsureOutputSlots(int count)
     {
         for (int i = 0; i < count; i++)
         {
-            if (FindOutput(i) is null)
+            if (base.FindOutput(i) is null)
             {
                 AddOutput<AnyType>(i, $"output_{i}");
             }
         }
+    }
+
+    /// <summary>
+    /// Declare AnyType output slots in one chained call, named in slot-index order.
+    /// Slot 0 takes <c>slotNames[0]</c>, slot 1 takes <c>slotNames[1]</c>, etc.
+    /// If a slot already exists at that index, its <see cref="INodeOutput.SlotName"/>
+    /// is renamed in place; otherwise the slot is materialized.
+    ///
+    /// <para>Strict superset of <see cref="EnsureOutputSlots"/> — prefer this when
+    /// you know the slot names. Mostly used for stub fixtures and round-tripping
+    /// custom-class nodes where downstream code (e.g. SwarmUI projection) inspects
+    /// <see cref="INodeOutput.SlotName"/>. Returns this node for chaining.</para>
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// var model = bridge.AddStub("UnitTest_Model", "4").WithOutputs("MODEL", "CLIP", "VAE");
+    /// </code>
+    /// </example>
+    public UnknownNode WithOutputs(params string[] slotNames)
+    {
+        ArgumentNullException.ThrowIfNull(slotNames);
+        for (int i = 0; i < slotNames.Length; i++)
+        {
+            if (base.FindOutput(i) is NodeOutput<AnyType> existing)
+            {
+                existing.RenameSlot(slotNames[i]);
+            }
+            else
+            {
+                AddOutput<AnyType>(i, slotNames[i]);
+            }
+        }
+        return this;
     }
 
     public override JObject ToWorkflowNode()
