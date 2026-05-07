@@ -271,11 +271,10 @@ public sealed class WorkflowBridge : IDisposable
     /// Resolve a JArray path [nodeId, slotIndex] to a typed output in the graph.
     /// Returns null if the path is malformed or the node is not found.
     /// <para>
-    /// For <see cref="UnknownNode"/> targets, the slot is materialized on demand if it
-    /// has not been registered yet — <see cref="ComfyGraph.FromWorkflow"/> only registers
-    /// UnknownNode outputs for slots that some other node references, so a freshly seeded
-    /// node with no consumers would otherwise resolve to null even though the slot exists
-    /// logically. The synthesized slot is typed as <see cref="Types.AnyType"/>.
+    /// For <see cref="UnknownNode"/> targets, <see cref="UnknownNode.FindOutput(int)"/> materializes
+    /// the slot on demand (typed as <see cref="Types.AnyType"/>) — every slot index is logically valid
+    /// on an UnknownNode, so this resolves cleanly even when <see cref="ComfyGraph.FromWorkflow"/>'s
+    /// output-discovery scan didn't see the slot referenced by any in-JObject input.
     /// </para>
     /// </summary>
     public INodeOutput? ResolvePath(JArray? path)
@@ -291,17 +290,8 @@ public sealed class WorkflowBridge : IDisposable
         }
         int slotIndex = Convert.ToInt32(slotVal.Value!);
         ComfyNode? node = Graph.GetNode(nodeId);
-        if (node is null)
-        {
-            return null;
-        }
-        INodeOutput? output = node.FindOutput(slotIndex);
-        if (output is null && node is UnknownNode unknown)
-        {
-            output = unknown.GetOutput(slotIndex);
-        }
 
-        return output;
+        return node?.FindOutput(slotIndex);
     }
 
     // ── Disposal ────────────────────────────────────────────────────

@@ -30,7 +30,7 @@ public sealed class UnknownNode(string classType) : ComfyNode
     /// <summary>Get or create an AnyType output by slot index.</summary>
     public NodeOutput<AnyType> GetOutput(int slotIndex, string? slotName = null)
     {
-        INodeOutput? existing = FindOutput(slotIndex);
+        INodeOutput? existing = base.FindOutput(slotIndex);
         if (existing is NodeOutput<AnyType> typed)
         {
             return typed;
@@ -38,6 +38,15 @@ public sealed class UnknownNode(string classType) : ComfyNode
 
         return AddOutput<AnyType>(slotIndex, slotName ?? $"output_{slotIndex}");
     }
+
+    /// <summary>
+    /// Materialize-on-miss override: every slot index is logically valid on an UnknownNode (its output
+    /// shape is open-ended), so a null return for an "unknown" slot is a leaky abstraction. Matches
+    /// <see cref="WorkflowBridge.ResolvePath"/>'s existing behavior and removes a sharp edge for callers
+    /// that hold paths to UnknownNode outputs out-of-band (e.g. SwarmUI user-data) — paths the
+    /// <see cref="ComfyGraph.FromWorkflow"/> output-discovery scan doesn't see.
+    /// </summary>
+    public override INodeOutput FindOutput(int slotIndex) => GetOutput(slotIndex);
 
     /// <summary>Ensure outputs exist up to the given slot index.</summary>
     public void EnsureOutputSlots(int count)

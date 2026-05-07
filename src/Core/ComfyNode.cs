@@ -81,8 +81,8 @@ public abstract class ComfyNode
     public INodeInput? FindInput(string name) =>
         _inputs.FirstOrDefault(i => string.Equals(i.Name, name, StringComparison.OrdinalIgnoreCase));
 
-    /// <summary>Find an output slot by index.</summary>
-    public INodeOutput? FindOutput(int slotIndex) => _outputs.FirstOrDefault(o => o.SlotIndex == slotIndex);
+    /// <summary>Find an output slot by index. May be overridden by subclasses (e.g. <see cref="UnknownNode"/> materializes on miss).</summary>
+    public virtual INodeOutput? FindOutput(int slotIndex) => _outputs.FirstOrDefault(o => o.SlotIndex == slotIndex);
 
     /// <summary>Find an output slot by name.</summary>
     public INodeOutput? FindOutput(string slotName) =>

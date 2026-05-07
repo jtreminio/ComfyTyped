@@ -999,6 +999,40 @@ public class WorkflowBridgeTests
     }
 
     [Fact]
+    public void FindOutput_OnUnknownNodeUnregisteredSlot_MaterializesOnDemand()
+    {
+        // Regression: callers that hold paths to UnknownNode outputs out-of-band (e.g. SwarmUI
+        // user-data) reach the slot via Graph.GetNode(id).FindOutput(slot). FromWorkflow's
+        // output-discovery scan only registers slots referenced by some other node's input in
+        // the JObject, so externally-held paths previously returned null. UnknownNode now
+        // overrides FindOutput to materialize on miss, matching ResolvePath's semantics.
+        JObject workflow = new()
+        {
+            ["50"] = new JObject
+            {
+                ["class_type"] = "SomeUnregisteredCustomNode",
+                ["inputs"] = new JObject(),
+            },
+        };
+        var bridge = WorkflowBridge.Create(workflow);
+        ComfyNode node = bridge.Graph.GetNode("50")!;
+        Assert.IsType<UnknownNode>(node);
+
+        // Static type is ComfyNode — exercises the virtual dispatch, not the new-shadowed override.
+        INodeOutput? output = node.FindOutput(7);
+
+        Assert.NotNull(output);
+        Assert.Equal("50", output.Node.Id);
+        Assert.Equal(7, output.SlotIndex);
+
+        // Idempotent: a second FindOutput at the same slot returns the same instance.
+        Assert.Same(output, node.FindOutput(7));
+
+        // The materialized slot is now visible through Outputs (proves AddOutput ran, not a synthetic).
+        Assert.Contains(output, node.Outputs);
+    }
+
+    [Fact]
     public void ToPath_ResolvePath_RoundTrip()
     {
         JObject workflow = BuildSimpleWorkflow();
