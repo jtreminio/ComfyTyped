@@ -21,4 +21,15 @@ public sealed class VAESaveNode : ComfyNode
         FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
         FilenamePrefix.Set("vae/ComfyUI_vae");
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public VAESaveNode With(
+        string? FilenamePrefix = null
+    )
+    {
+        if (FilenamePrefix is { } v_FilenamePrefix) this.FilenamePrefix.Set(v_FilenamePrefix);
+        return this;
+    }
 }

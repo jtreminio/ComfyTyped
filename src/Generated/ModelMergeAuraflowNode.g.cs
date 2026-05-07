@@ -153,4 +153,99 @@ public sealed class ModelMergeAuraflowNode : ComfyNode
         FinalLinear = AddInput<FloatType>("final_linear.", required: true);
         FinalLinear.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ModelMergeAuraflowNode With(
+        double? InitXLinear = null,
+        double? PositionalEncoding = null,
+        double? CondSeqLinear = null,
+        double? RegisterTokens = null,
+        double? TEmbedder = null,
+        double? DoubleLayers0 = null,
+        double? DoubleLayers1 = null,
+        double? DoubleLayers2 = null,
+        double? DoubleLayers3 = null,
+        double? SingleLayers0 = null,
+        double? SingleLayers1 = null,
+        double? SingleLayers2 = null,
+        double? SingleLayers3 = null,
+        double? SingleLayers4 = null,
+        double? SingleLayers5 = null,
+        double? SingleLayers6 = null,
+        double? SingleLayers7 = null,
+        double? SingleLayers8 = null,
+        double? SingleLayers9 = null,
+        double? SingleLayers10 = null,
+        double? SingleLayers11 = null,
+        double? SingleLayers12 = null,
+        double? SingleLayers13 = null,
+        double? SingleLayers14 = null,
+        double? SingleLayers15 = null,
+        double? SingleLayers16 = null,
+        double? SingleLayers17 = null,
+        double? SingleLayers18 = null,
+        double? SingleLayers19 = null,
+        double? SingleLayers20 = null,
+        double? SingleLayers21 = null,
+        double? SingleLayers22 = null,
+        double? SingleLayers23 = null,
+        double? SingleLayers24 = null,
+        double? SingleLayers25 = null,
+        double? SingleLayers26 = null,
+        double? SingleLayers27 = null,
+        double? SingleLayers28 = null,
+        double? SingleLayers29 = null,
+        double? SingleLayers30 = null,
+        double? SingleLayers31 = null,
+        double? ModF = null,
+        double? FinalLinear = null
+    )
+    {
+        if (InitXLinear is { } v_InitXLinear) this.InitXLinear.Set(v_InitXLinear);
+        if (PositionalEncoding is { } v_PositionalEncoding) this.PositionalEncoding.Set(v_PositionalEncoding);
+        if (CondSeqLinear is { } v_CondSeqLinear) this.CondSeqLinear.Set(v_CondSeqLinear);
+        if (RegisterTokens is { } v_RegisterTokens) this.RegisterTokens.Set(v_RegisterTokens);
+        if (TEmbedder is { } v_TEmbedder) this.TEmbedder.Set(v_TEmbedder);
+        if (DoubleLayers0 is { } v_DoubleLayers0) this.DoubleLayers0.Set(v_DoubleLayers0);
+        if (DoubleLayers1 is { } v_DoubleLayers1) this.DoubleLayers1.Set(v_DoubleLayers1);
+        if (DoubleLayers2 is { } v_DoubleLayers2) this.DoubleLayers2.Set(v_DoubleLayers2);
+        if (DoubleLayers3 is { } v_DoubleLayers3) this.DoubleLayers3.Set(v_DoubleLayers3);
+        if (SingleLayers0 is { } v_SingleLayers0) this.SingleLayers0.Set(v_SingleLayers0);
+        if (SingleLayers1 is { } v_SingleLayers1) this.SingleLayers1.Set(v_SingleLayers1);
+        if (SingleLayers2 is { } v_SingleLayers2) this.SingleLayers2.Set(v_SingleLayers2);
+        if (SingleLayers3 is { } v_SingleLayers3) this.SingleLayers3.Set(v_SingleLayers3);
+        if (SingleLayers4 is { } v_SingleLayers4) this.SingleLayers4.Set(v_SingleLayers4);
+        if (SingleLayers5 is { } v_SingleLayers5) this.SingleLayers5.Set(v_SingleLayers5);
+        if (SingleLayers6 is { } v_SingleLayers6) this.SingleLayers6.Set(v_SingleLayers6);
+        if (SingleLayers7 is { } v_SingleLayers7) this.SingleLayers7.Set(v_SingleLayers7);
+        if (SingleLayers8 is { } v_SingleLayers8) this.SingleLayers8.Set(v_SingleLayers8);
+        if (SingleLayers9 is { } v_SingleLayers9) this.SingleLayers9.Set(v_SingleLayers9);
+        if (SingleLayers10 is { } v_SingleLayers10) this.SingleLayers10.Set(v_SingleLayers10);
+        if (SingleLayers11 is { } v_SingleLayers11) this.SingleLayers11.Set(v_SingleLayers11);
+        if (SingleLayers12 is { } v_SingleLayers12) this.SingleLayers12.Set(v_SingleLayers12);
+        if (SingleLayers13 is { } v_SingleLayers13) this.SingleLayers13.Set(v_SingleLayers13);
+        if (SingleLayers14 is { } v_SingleLayers14) this.SingleLayers14.Set(v_SingleLayers14);
+        if (SingleLayers15 is { } v_SingleLayers15) this.SingleLayers15.Set(v_SingleLayers15);
+        if (SingleLayers16 is { } v_SingleLayers16) this.SingleLayers16.Set(v_SingleLayers16);
+        if (SingleLayers17 is { } v_SingleLayers17) this.SingleLayers17.Set(v_SingleLayers17);
+        if (SingleLayers18 is { } v_SingleLayers18) this.SingleLayers18.Set(v_SingleLayers18);
+        if (SingleLayers19 is { } v_SingleLayers19) this.SingleLayers19.Set(v_SingleLayers19);
+        if (SingleLayers20 is { } v_SingleLayers20) this.SingleLayers20.Set(v_SingleLayers20);
+        if (SingleLayers21 is { } v_SingleLayers21) this.SingleLayers21.Set(v_SingleLayers21);
+        if (SingleLayers22 is { } v_SingleLayers22) this.SingleLayers22.Set(v_SingleLayers22);
+        if (SingleLayers23 is { } v_SingleLayers23) this.SingleLayers23.Set(v_SingleLayers23);
+        if (SingleLayers24 is { } v_SingleLayers24) this.SingleLayers24.Set(v_SingleLayers24);
+        if (SingleLayers25 is { } v_SingleLayers25) this.SingleLayers25.Set(v_SingleLayers25);
+        if (SingleLayers26 is { } v_SingleLayers26) this.SingleLayers26.Set(v_SingleLayers26);
+        if (SingleLayers27 is { } v_SingleLayers27) this.SingleLayers27.Set(v_SingleLayers27);
+        if (SingleLayers28 is { } v_SingleLayers28) this.SingleLayers28.Set(v_SingleLayers28);
+        if (SingleLayers29 is { } v_SingleLayers29) this.SingleLayers29.Set(v_SingleLayers29);
+        if (SingleLayers30 is { } v_SingleLayers30) this.SingleLayers30.Set(v_SingleLayers30);
+        if (SingleLayers31 is { } v_SingleLayers31) this.SingleLayers31.Set(v_SingleLayers31);
+        if (ModF is { } v_ModF) this.ModF.Set(v_ModF);
+        if (FinalLinear is { } v_FinalLinear) this.FinalLinear.Set(v_FinalLinear);
+        return this;
+    }
 }

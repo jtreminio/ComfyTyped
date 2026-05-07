@@ -42,4 +42,21 @@ public sealed class SV3DConditioningNode : ComfyNode
         Elevation = AddInput<FloatType>("elevation", required: true);
         Elevation.Set(0.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SV3DConditioningNode With(
+        long? Width = null,
+        long? Height = null,
+        long? VideoFrames = null,
+        double? Elevation = null
+    )
+    {
+        if (Width is { } v_Width) this.Width.Set(v_Width);
+        if (Height is { } v_Height) this.Height.Set(v_Height);
+        if (VideoFrames is { } v_VideoFrames) this.VideoFrames.Set(v_VideoFrames);
+        if (Elevation is { } v_Elevation) this.Elevation.Set(v_Elevation);
+        return this;
+    }
 }

@@ -35,4 +35,21 @@ public sealed class EasyCacheNode : ComfyNode
         Verbose = AddInput<BooleanType>("verbose", required: true);
         Verbose.Set(false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public EasyCacheNode With(
+        double? ReuseThreshold = null,
+        double? StartPercent = null,
+        double? EndPercent = null,
+        bool? Verbose = null
+    )
+    {
+        if (ReuseThreshold is { } v_ReuseThreshold) this.ReuseThreshold.Set(v_ReuseThreshold);
+        if (StartPercent is { } v_StartPercent) this.StartPercent.Set(v_StartPercent);
+        if (EndPercent is { } v_EndPercent) this.EndPercent.Set(v_EndPercent);
+        if (Verbose is { } v_Verbose) this.Verbose.Set(v_Verbose);
+        return this;
+    }
 }

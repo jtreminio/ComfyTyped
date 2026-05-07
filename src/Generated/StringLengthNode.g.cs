@@ -22,4 +22,15 @@ public sealed class StringLengthNode : ComfyNode
         Length = AddOutput<IntType>(0, "length");
         String = AddInput<StringType>("string", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public StringLengthNode With(
+        string? String = null
+    )
+    {
+        if (String is { } v_String) this.String.Set(v_String);
+        return this;
+    }
 }

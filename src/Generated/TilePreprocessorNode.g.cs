@@ -28,4 +28,17 @@ public sealed class TilePreprocessorNode : ComfyNode
         Resolution = AddInput<IntType>("resolution", required: false);
         Resolution.Set(512L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public TilePreprocessorNode With(
+        long? PyrUpIters = null,
+        long? Resolution = null
+    )
+    {
+        if (PyrUpIters is { } v_PyrUpIters) this.PyrUpIters.Set(v_PyrUpIters);
+        if (Resolution is { } v_Resolution) this.Resolution.Set(v_Resolution);
+        return this;
+    }
 }

@@ -156,4 +156,101 @@ public sealed class ModelMergeSD35LargeNode : ComfyNode
         FinalLayer = AddInput<FloatType>("final_layer.", required: true);
         FinalLayer.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ModelMergeSD35LargeNode With(
+        double? PosEmbed = null,
+        double? XEmbedder = null,
+        double? ContextEmbedder = null,
+        double? YEmbedder = null,
+        double? TEmbedder = null,
+        double? JointBlocks0 = null,
+        double? JointBlocks1 = null,
+        double? JointBlocks2 = null,
+        double? JointBlocks3 = null,
+        double? JointBlocks4 = null,
+        double? JointBlocks5 = null,
+        double? JointBlocks6 = null,
+        double? JointBlocks7 = null,
+        double? JointBlocks8 = null,
+        double? JointBlocks9 = null,
+        double? JointBlocks10 = null,
+        double? JointBlocks11 = null,
+        double? JointBlocks12 = null,
+        double? JointBlocks13 = null,
+        double? JointBlocks14 = null,
+        double? JointBlocks15 = null,
+        double? JointBlocks16 = null,
+        double? JointBlocks17 = null,
+        double? JointBlocks18 = null,
+        double? JointBlocks19 = null,
+        double? JointBlocks20 = null,
+        double? JointBlocks21 = null,
+        double? JointBlocks22 = null,
+        double? JointBlocks23 = null,
+        double? JointBlocks24 = null,
+        double? JointBlocks25 = null,
+        double? JointBlocks26 = null,
+        double? JointBlocks27 = null,
+        double? JointBlocks28 = null,
+        double? JointBlocks29 = null,
+        double? JointBlocks30 = null,
+        double? JointBlocks31 = null,
+        double? JointBlocks32 = null,
+        double? JointBlocks33 = null,
+        double? JointBlocks34 = null,
+        double? JointBlocks35 = null,
+        double? JointBlocks36 = null,
+        double? JointBlocks37 = null,
+        double? FinalLayer = null
+    )
+    {
+        if (PosEmbed is { } v_PosEmbed) this.PosEmbed.Set(v_PosEmbed);
+        if (XEmbedder is { } v_XEmbedder) this.XEmbedder.Set(v_XEmbedder);
+        if (ContextEmbedder is { } v_ContextEmbedder) this.ContextEmbedder.Set(v_ContextEmbedder);
+        if (YEmbedder is { } v_YEmbedder) this.YEmbedder.Set(v_YEmbedder);
+        if (TEmbedder is { } v_TEmbedder) this.TEmbedder.Set(v_TEmbedder);
+        if (JointBlocks0 is { } v_JointBlocks0) this.JointBlocks0.Set(v_JointBlocks0);
+        if (JointBlocks1 is { } v_JointBlocks1) this.JointBlocks1.Set(v_JointBlocks1);
+        if (JointBlocks2 is { } v_JointBlocks2) this.JointBlocks2.Set(v_JointBlocks2);
+        if (JointBlocks3 is { } v_JointBlocks3) this.JointBlocks3.Set(v_JointBlocks3);
+        if (JointBlocks4 is { } v_JointBlocks4) this.JointBlocks4.Set(v_JointBlocks4);
+        if (JointBlocks5 is { } v_JointBlocks5) this.JointBlocks5.Set(v_JointBlocks5);
+        if (JointBlocks6 is { } v_JointBlocks6) this.JointBlocks6.Set(v_JointBlocks6);
+        if (JointBlocks7 is { } v_JointBlocks7) this.JointBlocks7.Set(v_JointBlocks7);
+        if (JointBlocks8 is { } v_JointBlocks8) this.JointBlocks8.Set(v_JointBlocks8);
+        if (JointBlocks9 is { } v_JointBlocks9) this.JointBlocks9.Set(v_JointBlocks9);
+        if (JointBlocks10 is { } v_JointBlocks10) this.JointBlocks10.Set(v_JointBlocks10);
+        if (JointBlocks11 is { } v_JointBlocks11) this.JointBlocks11.Set(v_JointBlocks11);
+        if (JointBlocks12 is { } v_JointBlocks12) this.JointBlocks12.Set(v_JointBlocks12);
+        if (JointBlocks13 is { } v_JointBlocks13) this.JointBlocks13.Set(v_JointBlocks13);
+        if (JointBlocks14 is { } v_JointBlocks14) this.JointBlocks14.Set(v_JointBlocks14);
+        if (JointBlocks15 is { } v_JointBlocks15) this.JointBlocks15.Set(v_JointBlocks15);
+        if (JointBlocks16 is { } v_JointBlocks16) this.JointBlocks16.Set(v_JointBlocks16);
+        if (JointBlocks17 is { } v_JointBlocks17) this.JointBlocks17.Set(v_JointBlocks17);
+        if (JointBlocks18 is { } v_JointBlocks18) this.JointBlocks18.Set(v_JointBlocks18);
+        if (JointBlocks19 is { } v_JointBlocks19) this.JointBlocks19.Set(v_JointBlocks19);
+        if (JointBlocks20 is { } v_JointBlocks20) this.JointBlocks20.Set(v_JointBlocks20);
+        if (JointBlocks21 is { } v_JointBlocks21) this.JointBlocks21.Set(v_JointBlocks21);
+        if (JointBlocks22 is { } v_JointBlocks22) this.JointBlocks22.Set(v_JointBlocks22);
+        if (JointBlocks23 is { } v_JointBlocks23) this.JointBlocks23.Set(v_JointBlocks23);
+        if (JointBlocks24 is { } v_JointBlocks24) this.JointBlocks24.Set(v_JointBlocks24);
+        if (JointBlocks25 is { } v_JointBlocks25) this.JointBlocks25.Set(v_JointBlocks25);
+        if (JointBlocks26 is { } v_JointBlocks26) this.JointBlocks26.Set(v_JointBlocks26);
+        if (JointBlocks27 is { } v_JointBlocks27) this.JointBlocks27.Set(v_JointBlocks27);
+        if (JointBlocks28 is { } v_JointBlocks28) this.JointBlocks28.Set(v_JointBlocks28);
+        if (JointBlocks29 is { } v_JointBlocks29) this.JointBlocks29.Set(v_JointBlocks29);
+        if (JointBlocks30 is { } v_JointBlocks30) this.JointBlocks30.Set(v_JointBlocks30);
+        if (JointBlocks31 is { } v_JointBlocks31) this.JointBlocks31.Set(v_JointBlocks31);
+        if (JointBlocks32 is { } v_JointBlocks32) this.JointBlocks32.Set(v_JointBlocks32);
+        if (JointBlocks33 is { } v_JointBlocks33) this.JointBlocks33.Set(v_JointBlocks33);
+        if (JointBlocks34 is { } v_JointBlocks34) this.JointBlocks34.Set(v_JointBlocks34);
+        if (JointBlocks35 is { } v_JointBlocks35) this.JointBlocks35.Set(v_JointBlocks35);
+        if (JointBlocks36 is { } v_JointBlocks36) this.JointBlocks36.Set(v_JointBlocks36);
+        if (JointBlocks37 is { } v_JointBlocks37) this.JointBlocks37.Set(v_JointBlocks37);
+        if (FinalLayer is { } v_FinalLayer) this.FinalLayer.Set(v_FinalLayer);
+        return this;
+    }
 }

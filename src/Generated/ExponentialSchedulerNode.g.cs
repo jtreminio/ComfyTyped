@@ -29,4 +29,19 @@ public sealed class ExponentialSchedulerNode : ComfyNode
         SigmaMin = AddInput<FloatType>("sigma_min", required: true);
         SigmaMin.Set(0.0291675);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ExponentialSchedulerNode With(
+        long? Steps = null,
+        double? SigmaMax = null,
+        double? SigmaMin = null
+    )
+    {
+        if (Steps is { } v_Steps) this.Steps.Set(v_Steps);
+        if (SigmaMax is { } v_SigmaMax) this.SigmaMax.Set(v_SigmaMax);
+        if (SigmaMin is { } v_SigmaMin) this.SigmaMin.Set(v_SigmaMin);
+        return this;
+    }
 }

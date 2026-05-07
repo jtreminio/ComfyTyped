@@ -22,4 +22,15 @@ public sealed class IPAdapterModelLoaderNode : ComfyNode
         IPADAPTER = AddOutput<IpAdapterType>(0, "IPADAPTER");
         IpadapterFile = AddInput<StringType>("ipadapter_file", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public IPAdapterModelLoaderNode With(
+        string? IpadapterFile = null
+    )
+    {
+        if (IpadapterFile is { } v_IpadapterFile) this.IpadapterFile.Set(v_IpadapterFile);
+        return this;
+    }
 }

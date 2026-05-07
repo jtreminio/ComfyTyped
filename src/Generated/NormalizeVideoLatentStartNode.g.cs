@@ -29,4 +29,17 @@ public sealed class NormalizeVideoLatentStartNode : ComfyNode
         ReferenceFrameCount = AddInput<IntType>("reference_frame_count", required: true);
         ReferenceFrameCount.Set(5L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public NormalizeVideoLatentStartNode With(
+        long? StartFrameCount = null,
+        long? ReferenceFrameCount = null
+    )
+    {
+        if (StartFrameCount is { } v_StartFrameCount) this.StartFrameCount.Set(v_StartFrameCount);
+        if (ReferenceFrameCount is { } v_ReferenceFrameCount) this.ReferenceFrameCount.Set(v_ReferenceFrameCount);
+        return this;
+    }
 }

@@ -22,4 +22,15 @@ public sealed class BatchImagesNodeNode : ComfyNode
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
         Images = AddInput<StringType>("images", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public BatchImagesNodeNode With(
+        string? Images = null
+    )
+    {
+        if (Images is { } v_Images) this.Images.Set(v_Images);
+        return this;
+    }
 }

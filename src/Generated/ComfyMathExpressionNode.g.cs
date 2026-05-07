@@ -27,4 +27,17 @@ public sealed class ComfyMathExpressionNode : ComfyNode
         Expression.Set("a + b");
         Values = AddInput<StringType>("values", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ComfyMathExpressionNode With(
+        string? Expression = null,
+        string? Values = null
+    )
+    {
+        if (Expression is { } v_Expression) this.Expression.Set(v_Expression);
+        if (Values is { } v_Values) this.Values.Set(v_Values);
+        return this;
+    }
 }

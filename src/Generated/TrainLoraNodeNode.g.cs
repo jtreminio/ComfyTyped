@@ -84,4 +84,49 @@ public sealed class TrainLoraNodeNode : ComfyNode
         BypassMode = AddInput<BooleanType>("bypass_mode", required: true);
         BypassMode.Set(false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public TrainLoraNodeNode With(
+        long? BatchSize = null,
+        long? GradAccumulationSteps = null,
+        long? StepsInput = null,
+        double? LearningRate = null,
+        long? Rank = null,
+        string? Optimizer = null,
+        string? LossFunction = null,
+        long? Seed = null,
+        string? TrainingDtype = null,
+        string? LoraDtype = null,
+        bool? QuantizedBackward = null,
+        string? Algorithm = null,
+        bool? GradientCheckpointing = null,
+        long? CheckpointDepth = null,
+        bool? Offloading = null,
+        string? ExistingLora = null,
+        bool? BucketMode = null,
+        bool? BypassMode = null
+    )
+    {
+        if (BatchSize is { } v_BatchSize) this.BatchSize.Set(v_BatchSize);
+        if (GradAccumulationSteps is { } v_GradAccumulationSteps) this.GradAccumulationSteps.Set(v_GradAccumulationSteps);
+        if (StepsInput is { } v_StepsInput) this.StepsInput.Set(v_StepsInput);
+        if (LearningRate is { } v_LearningRate) this.LearningRate.Set(v_LearningRate);
+        if (Rank is { } v_Rank) this.Rank.Set(v_Rank);
+        if (Optimizer is { } v_Optimizer) this.Optimizer.Set(v_Optimizer);
+        if (LossFunction is { } v_LossFunction) this.LossFunction.Set(v_LossFunction);
+        if (Seed is { } v_Seed) this.Seed.Set(v_Seed);
+        if (TrainingDtype is { } v_TrainingDtype) this.TrainingDtype.Set(v_TrainingDtype);
+        if (LoraDtype is { } v_LoraDtype) this.LoraDtype.Set(v_LoraDtype);
+        if (QuantizedBackward is { } v_QuantizedBackward) this.QuantizedBackward.Set(v_QuantizedBackward);
+        if (Algorithm is { } v_Algorithm) this.Algorithm.Set(v_Algorithm);
+        if (GradientCheckpointing is { } v_GradientCheckpointing) this.GradientCheckpointing.Set(v_GradientCheckpointing);
+        if (CheckpointDepth is { } v_CheckpointDepth) this.CheckpointDepth.Set(v_CheckpointDepth);
+        if (Offloading is { } v_Offloading) this.Offloading.Set(v_Offloading);
+        if (ExistingLora is { } v_ExistingLora) this.ExistingLora.Set(v_ExistingLora);
+        if (BucketMode is { } v_BucketMode) this.BucketMode.Set(v_BucketMode);
+        if (BypassMode is { } v_BypassMode) this.BypassMode.Set(v_BypassMode);
+        return this;
+    }
 }

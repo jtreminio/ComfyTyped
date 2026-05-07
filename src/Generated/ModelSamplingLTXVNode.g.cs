@@ -30,4 +30,17 @@ public sealed class ModelSamplingLTXVNode : ComfyNode
         BaseShift.Set(0.95);
         Latent = AddInput<LatentType>("latent", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ModelSamplingLTXVNode With(
+        double? MaxShift = null,
+        double? BaseShift = null
+    )
+    {
+        if (MaxShift is { } v_MaxShift) this.MaxShift.Set(v_MaxShift);
+        if (BaseShift is { } v_BaseShift) this.BaseShift.Set(v_BaseShift);
+        return this;
+    }
 }

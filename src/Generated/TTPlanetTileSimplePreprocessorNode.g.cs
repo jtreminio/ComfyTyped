@@ -28,4 +28,17 @@ public sealed class TTPlanetTileSimplePreprocessorNode : ComfyNode
         BlurStrength = AddInput<FloatType>("blur_strength", required: false);
         BlurStrength.Set(2.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public TTPlanetTileSimplePreprocessorNode With(
+        double? ScaleFactor = null,
+        double? BlurStrength = null
+    )
+    {
+        if (ScaleFactor is { } v_ScaleFactor) this.ScaleFactor.Set(v_ScaleFactor);
+        if (BlurStrength is { } v_BlurStrength) this.BlurStrength.Set(v_BlurStrength);
+        return this;
+    }
 }

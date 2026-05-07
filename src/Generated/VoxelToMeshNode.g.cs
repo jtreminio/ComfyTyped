@@ -27,4 +27,17 @@ public sealed class VoxelToMeshNode : ComfyNode
         Threshold = AddInput<FloatType>("threshold", required: true);
         Threshold.Set(0.6);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public VoxelToMeshNode With(
+        string? Algorithm = null,
+        double? Threshold = null
+    )
+    {
+        if (Algorithm is { } v_Algorithm) this.Algorithm.Set(v_Algorithm);
+        if (Threshold is { } v_Threshold) this.Threshold.Set(v_Threshold);
+        return this;
+    }
 }

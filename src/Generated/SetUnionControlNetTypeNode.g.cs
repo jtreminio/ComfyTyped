@@ -24,4 +24,15 @@ public sealed class SetUnionControlNetTypeNode : ComfyNode
         ControlNet = AddInput<ControlNetType>("control_net", required: true);
         Type = AddInput<StringType>("type", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SetUnionControlNetTypeNode With(
+        string? Type = null
+    )
+    {
+        if (Type is { } v_Type) this.Type.Set(v_Type);
+        return this;
+    }
 }

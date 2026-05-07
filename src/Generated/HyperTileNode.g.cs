@@ -34,4 +34,21 @@ public sealed class HyperTileNode : ComfyNode
         ScaleDepth = AddInput<BooleanType>("scale_depth", required: true);
         ScaleDepth.Set(false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public HyperTileNode With(
+        long? TileSize = null,
+        long? SwapSize = null,
+        long? MaxDepth = null,
+        bool? ScaleDepth = null
+    )
+    {
+        if (TileSize is { } v_TileSize) this.TileSize.Set(v_TileSize);
+        if (SwapSize is { } v_SwapSize) this.SwapSize.Set(v_SwapSize);
+        if (MaxDepth is { } v_MaxDepth) this.MaxDepth.Set(v_MaxDepth);
+        if (ScaleDepth is { } v_ScaleDepth) this.ScaleDepth.Set(v_ScaleDepth);
+        return this;
+    }
 }

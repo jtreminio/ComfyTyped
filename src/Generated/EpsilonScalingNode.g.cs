@@ -25,4 +25,15 @@ public sealed class EpsilonScalingNode : ComfyNode
         ScalingFactor = AddInput<FloatType>("scaling_factor", required: true);
         ScalingFactor.Set(1.005);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public EpsilonScalingNode With(
+        double? ScalingFactor = null
+    )
+    {
+        if (ScalingFactor is { } v_ScalingFactor) this.ScalingFactor.Set(v_ScalingFactor);
+        return this;
+    }
 }

@@ -50,4 +50,21 @@ public sealed class WanFirstLastFrameToVideoNode : ComfyNode
         StartImage = AddInput<ImageType>("start_image", required: false);
         EndImage = AddInput<ImageType>("end_image", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public WanFirstLastFrameToVideoNode With(
+        long? Width = null,
+        long? Height = null,
+        long? Length = null,
+        long? BatchSize = null
+    )
+    {
+        if (Width is { } v_Width) this.Width.Set(v_Width);
+        if (Height is { } v_Height) this.Height.Set(v_Height);
+        if (Length is { } v_Length) this.Length.Set(v_Length);
+        if (BatchSize is { } v_BatchSize) this.BatchSize.Set(v_BatchSize);
+        return this;
+    }
 }

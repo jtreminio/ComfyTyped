@@ -25,4 +25,15 @@ public sealed class RebatchLatentsNode : ComfyNode
         BatchSize = AddInput<IntType>("batch_size", required: true);
         BatchSize.Set(1L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public RebatchLatentsNode With(
+        long? BatchSize = null
+    )
+    {
+        if (BatchSize is { } v_BatchSize) this.BatchSize.Set(v_BatchSize);
+        return this;
+    }
 }

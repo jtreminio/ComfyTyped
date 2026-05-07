@@ -51,4 +51,25 @@ public sealed class IPAdapterStyleCompositionBatchNode : ComfyNode
         AttnMask = AddInput<MaskType>("attn_mask", required: false);
         ClipVision = AddInput<ClipVisionType>("clip_vision", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public IPAdapterStyleCompositionBatchNode With(
+        double? WeightStyle = null,
+        double? WeightComposition = null,
+        bool? ExpandStyle = null,
+        double? StartAt = null,
+        double? EndAt = null,
+        string? EmbedsScaling = null
+    )
+    {
+        if (WeightStyle is { } v_WeightStyle) this.WeightStyle.Set(v_WeightStyle);
+        if (WeightComposition is { } v_WeightComposition) this.WeightComposition.Set(v_WeightComposition);
+        if (ExpandStyle is { } v_ExpandStyle) this.ExpandStyle.Set(v_ExpandStyle);
+        if (StartAt is { } v_StartAt) this.StartAt.Set(v_StartAt);
+        if (EndAt is { } v_EndAt) this.EndAt.Set(v_EndAt);
+        if (EmbedsScaling is { } v_EmbedsScaling) this.EmbedsScaling.Set(v_EmbedsScaling);
+        return this;
+    }
 }

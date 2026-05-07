@@ -28,4 +28,17 @@ public sealed class CannyNode : ComfyNode
         HighThreshold = AddInput<FloatType>("high_threshold", required: true);
         HighThreshold.Set(0.8);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public CannyNode With(
+        double? LowThreshold = null,
+        double? HighThreshold = null
+    )
+    {
+        if (LowThreshold is { } v_LowThreshold) this.LowThreshold.Set(v_LowThreshold);
+        if (HighThreshold is { } v_HighThreshold) this.HighThreshold.Set(v_HighThreshold);
+        return this;
+    }
 }

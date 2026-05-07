@@ -34,4 +34,21 @@ public sealed class FreeUV2Node : ComfyNode
         S2 = AddInput<FloatType>("s2", required: true);
         S2.Set(0.2);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public FreeUV2Node With(
+        double? B1 = null,
+        double? B2 = null,
+        double? S1 = null,
+        double? S2 = null
+    )
+    {
+        if (B1 is { } v_B1) this.B1.Set(v_B1);
+        if (B2 is { } v_B2) this.B2.Set(v_B2);
+        if (S1 is { } v_S1) this.S1.Set(v_S1);
+        if (S2 is { } v_S2) this.S2.Set(v_S2);
+        return this;
+    }
 }

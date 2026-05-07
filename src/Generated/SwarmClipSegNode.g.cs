@@ -28,4 +28,17 @@ public sealed class SwarmClipSegNode : ComfyNode
         Threshold = AddInput<FloatType>("threshold", required: true);
         Threshold.Set(0.5);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SwarmClipSegNode With(
+        string? MatchText = null,
+        double? Threshold = null
+    )
+    {
+        if (MatchText is { } v_MatchText) this.MatchText.Set(v_MatchText);
+        if (Threshold is { } v_Threshold) this.Threshold.Set(v_Threshold);
+        return this;
+    }
 }

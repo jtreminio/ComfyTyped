@@ -25,4 +25,15 @@ public sealed class SwarmTileableVAENode : ComfyNode
         Vae = AddInput<VaeType>("vae", required: true);
         TileAxis = AddInput<StringType>("tile_axis", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SwarmTileableVAENode With(
+        string? TileAxis = null
+    )
+    {
+        if (TileAxis is { } v_TileAxis) this.TileAxis.Set(v_TileAxis);
+        return this;
+    }
 }

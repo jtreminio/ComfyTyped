@@ -24,4 +24,17 @@ public sealed class StringTrimNode : ComfyNode
         String = AddInput<StringType>("string", required: true);
         Mode = AddInput<StringType>("mode", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public StringTrimNode With(
+        string? String = null,
+        string? Mode = null
+    )
+    {
+        if (String is { } v_String) this.String.Set(v_String);
+        if (Mode is { } v_Mode) this.Mode.Set(v_Mode);
+        return this;
+    }
 }

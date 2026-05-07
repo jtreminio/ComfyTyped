@@ -25,4 +25,15 @@ public sealed class LTXVPreprocessNode : ComfyNode
         ImgCompression = AddInput<IntType>("img_compression", required: true);
         ImgCompression.Set(35L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public LTXVPreprocessNode With(
+        long? ImgCompression = null
+    )
+    {
+        if (ImgCompression is { } v_ImgCompression) this.ImgCompression.Set(v_ImgCompression);
+        return this;
+    }
 }

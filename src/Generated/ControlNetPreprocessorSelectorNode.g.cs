@@ -22,4 +22,15 @@ public sealed class ControlNetPreprocessorSelectorNode : ComfyNode
         Preprocessor = AddOutput<AnyType>(0, "preprocessor");
         PreprocessorInput = AddInput<StringType>("preprocessor", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ControlNetPreprocessorSelectorNode With(
+        string? PreprocessorInput = null
+    )
+    {
+        if (PreprocessorInput is { } v_PreprocessorInput) this.PreprocessorInput.Set(v_PreprocessorInput);
+        return this;
+    }
 }

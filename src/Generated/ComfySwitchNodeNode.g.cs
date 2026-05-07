@@ -26,4 +26,15 @@ public sealed class ComfySwitchNodeNode : ComfyNode
         OnFalse = AddInput<ComfyMatchTypeV3>("on_false", required: true);
         OnTrue = AddInput<ComfyMatchTypeV3>("on_true", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ComfySwitchNodeNode With(
+        bool? Switch = null
+    )
+    {
+        if (Switch is { } v_Switch) this.Switch.Set(v_Switch);
+        return this;
+    }
 }

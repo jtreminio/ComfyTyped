@@ -26,4 +26,15 @@ public sealed class DiffusersLoaderNode : ComfyNode
         VAE = AddOutput<VaeType>(2, "VAE");
         ModelPath = AddInput<StringType>("model_path", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public DiffusersLoaderNode With(
+        string? ModelPath = null
+    )
+    {
+        if (ModelPath is { } v_ModelPath) this.ModelPath.Set(v_ModelPath);
+        return this;
+    }
 }

@@ -40,4 +40,19 @@ public sealed class CLIPLoaderNode : ComfyNode
         Type = AddInput<StringType>("type", required: true);
         Device = AddInput<StringType>("device", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public CLIPLoaderNode With(
+        string? ClipName = null,
+        string? Type = null,
+        string? Device = null
+    )
+    {
+        if (ClipName is { } v_ClipName) this.ClipName.Set(v_ClipName);
+        if (Type is { } v_Type) this.Type.Set(v_Type);
+        if (Device is { } v_Device) this.Device.Set(v_Device);
+        return this;
+    }
 }

@@ -32,4 +32,19 @@ public sealed class MaskCompositeNode : ComfyNode
         Y.Set(0L);
         Operation = AddInput<StringType>("operation", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public MaskCompositeNode With(
+        long? X = null,
+        long? Y = null,
+        string? Operation = null
+    )
+    {
+        if (X is { } v_X) this.X.Set(v_X);
+        if (Y is { } v_Y) this.Y.Set(v_Y);
+        if (Operation is { } v_Operation) this.Operation.Set(v_Operation);
+        return this;
+    }
 }

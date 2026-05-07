@@ -29,4 +29,19 @@ public sealed class SolidMaskNode : ComfyNode
         Height = AddInput<IntType>("height", required: true);
         Height.Set(512L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SolidMaskNode With(
+        double? Value = null,
+        long? Width = null,
+        long? Height = null
+    )
+    {
+        if (Value is { } v_Value) this.Value.Set(v_Value);
+        if (Width is { } v_Width) this.Width.Set(v_Width);
+        if (Height is { } v_Height) this.Height.Set(v_Height);
+        return this;
+    }
 }

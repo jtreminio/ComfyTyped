@@ -33,4 +33,23 @@ public sealed class RegexMatchNode : ComfyNode
         Dotall = AddInput<BooleanType>("dotall", required: true);
         Dotall.Set(false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public RegexMatchNode With(
+        string? String = null,
+        string? RegexPattern = null,
+        bool? CaseInsensitive = null,
+        bool? Multiline = null,
+        bool? Dotall = null
+    )
+    {
+        if (String is { } v_String) this.String.Set(v_String);
+        if (RegexPattern is { } v_RegexPattern) this.RegexPattern.Set(v_RegexPattern);
+        if (CaseInsensitive is { } v_CaseInsensitive) this.CaseInsensitive.Set(v_CaseInsensitive);
+        if (Multiline is { } v_Multiline) this.Multiline.Set(v_Multiline);
+        if (Dotall is { } v_Dotall) this.Dotall.Set(v_Dotall);
+        return this;
+    }
 }

@@ -30,4 +30,19 @@ public sealed class IPAdapterNoiseNode : ComfyNode
         Blur.Set(0L);
         ImageOptional = AddInput<ImageType>("image_optional", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public IPAdapterNoiseNode With(
+        string? Type = null,
+        double? Strength = null,
+        long? Blur = null
+    )
+    {
+        if (Type is { } v_Type) this.Type.Set(v_Type);
+        if (Strength is { } v_Strength) this.Strength.Set(v_Strength);
+        if (Blur is { } v_Blur) this.Blur.Set(v_Blur);
+        return this;
+    }
 }

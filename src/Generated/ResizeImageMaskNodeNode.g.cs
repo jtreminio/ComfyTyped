@@ -28,4 +28,17 @@ public sealed class ResizeImageMaskNodeNode : ComfyNode
         ScaleMethod = AddInput<StringType>("scale_method", required: true);
         ScaleMethod.Set("area");
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ResizeImageMaskNodeNode With(
+        string? ResizeType = null,
+        string? ScaleMethod = null
+    )
+    {
+        if (ResizeType is { } v_ResizeType) this.ResizeType.Set(v_ResizeType);
+        if (ScaleMethod is { } v_ScaleMethod) this.ScaleMethod.Set(v_ScaleMethod);
+        return this;
+    }
 }

@@ -32,4 +32,17 @@ public sealed class ConditioningStableAudioNode : ComfyNode
         SecondsTotal = AddInput<FloatType>("seconds_total", required: true);
         SecondsTotal.Set(47.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ConditioningStableAudioNode With(
+        double? SecondsStart = null,
+        double? SecondsTotal = null
+    )
+    {
+        if (SecondsStart is { } v_SecondsStart) this.SecondsStart.Set(v_SecondsStart);
+        if (SecondsTotal is { } v_SecondsTotal) this.SecondsTotal.Set(v_SecondsTotal);
+        return this;
+    }
 }

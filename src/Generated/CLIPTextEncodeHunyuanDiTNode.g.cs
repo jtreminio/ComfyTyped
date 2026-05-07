@@ -26,4 +26,17 @@ public sealed class CLIPTextEncodeHunyuanDiTNode : ComfyNode
         Bert = AddInput<StringType>("bert", required: true);
         Mt5xl = AddInput<StringType>("mt5xl", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public CLIPTextEncodeHunyuanDiTNode With(
+        string? Bert = null,
+        string? Mt5xl = null
+    )
+    {
+        if (Bert is { } v_Bert) this.Bert.Set(v_Bert);
+        if (Mt5xl is { } v_Mt5xl) this.Mt5xl.Set(v_Mt5xl);
+        return this;
+    }
 }

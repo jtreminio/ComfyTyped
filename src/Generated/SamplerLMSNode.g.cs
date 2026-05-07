@@ -23,4 +23,15 @@ public sealed class SamplerLMSNode : ComfyNode
         Order = AddInput<IntType>("order", required: true);
         Order.Set(4L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SamplerLMSNode With(
+        long? Order = null
+    )
+    {
+        if (Order is { } v_Order) this.Order.Set(v_Order);
+        return this;
+    }
 }

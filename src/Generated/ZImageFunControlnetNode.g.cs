@@ -35,4 +35,15 @@ public sealed class ZImageFunControlnetNode : ComfyNode
         InpaintImage = AddInput<ImageType>("inpaint_image", required: false);
         Mask = AddInput<MaskType>("mask", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ZImageFunControlnetNode With(
+        double? Strength = null
+    )
+    {
+        if (Strength is { } v_Strength) this.Strength.Set(v_Strength);
+        return this;
+    }
 }

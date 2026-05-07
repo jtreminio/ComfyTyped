@@ -37,4 +37,23 @@ public sealed class ConditioningSetAreaNode : ComfyNode
         Strength = AddInput<FloatType>("strength", required: true);
         Strength.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ConditioningSetAreaNode With(
+        long? Width = null,
+        long? Height = null,
+        long? X = null,
+        long? Y = null,
+        double? Strength = null
+    )
+    {
+        if (Width is { } v_Width) this.Width.Set(v_Width);
+        if (Height is { } v_Height) this.Height.Set(v_Height);
+        if (X is { } v_X) this.X.Set(v_X);
+        if (Y is { } v_Y) this.Y.Set(v_Y);
+        if (Strength is { } v_Strength) this.Strength.Set(v_Strength);
+        return this;
+    }
 }

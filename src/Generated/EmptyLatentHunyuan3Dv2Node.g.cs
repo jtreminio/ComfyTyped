@@ -26,4 +26,17 @@ public sealed class EmptyLatentHunyuan3Dv2Node : ComfyNode
         BatchSize = AddInput<IntType>("batch_size", required: true);
         BatchSize.Set(1L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public EmptyLatentHunyuan3Dv2Node With(
+        long? Resolution = null,
+        long? BatchSize = null
+    )
+    {
+        if (Resolution is { } v_Resolution) this.Resolution.Set(v_Resolution);
+        if (BatchSize is { } v_BatchSize) this.BatchSize.Set(v_BatchSize);
+        return this;
+    }
 }

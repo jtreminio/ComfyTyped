@@ -30,4 +30,19 @@ public sealed class ModelSamplingContinuousEDMNode : ComfyNode
         SigmaMin = AddInput<FloatType>("sigma_min", required: true);
         SigmaMin.Set(0.002);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ModelSamplingContinuousEDMNode With(
+        string? Sampling = null,
+        double? SigmaMax = null,
+        double? SigmaMin = null
+    )
+    {
+        if (Sampling is { } v_Sampling) this.Sampling.Set(v_Sampling);
+        if (SigmaMax is { } v_SigmaMax) this.SigmaMax.Set(v_SigmaMax);
+        if (SigmaMin is { } v_SigmaMin) this.SigmaMin.Set(v_SigmaMin);
+        return this;
+    }
 }

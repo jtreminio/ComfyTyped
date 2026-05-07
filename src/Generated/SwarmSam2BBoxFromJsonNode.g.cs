@@ -22,4 +22,15 @@ public sealed class SwarmSam2BBoxFromJsonNode : ComfyNode
         Bboxes = AddOutput<BboxType>(0, "bboxes");
         BboxJson = AddInput<StringType>("bbox_json", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SwarmSam2BBoxFromJsonNode With(
+        string? BboxJson = null
+    )
+    {
+        if (BboxJson is { } v_BboxJson) this.BboxJson.Set(v_BboxJson);
+        return this;
+    }
 }

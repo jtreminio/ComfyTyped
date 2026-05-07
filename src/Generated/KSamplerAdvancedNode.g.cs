@@ -51,4 +51,31 @@ public sealed class KSamplerAdvancedNode : ComfyNode
         EndAtStep.Set(10000L);
         ReturnWithLeftoverNoise = AddInput<StringType>("return_with_leftover_noise", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public KSamplerAdvancedNode With(
+        string? AddNoise = null,
+        long? NoiseSeed = null,
+        long? Steps = null,
+        double? Cfg = null,
+        string? SamplerName = null,
+        string? Scheduler = null,
+        long? StartAtStep = null,
+        long? EndAtStep = null,
+        string? ReturnWithLeftoverNoise = null
+    )
+    {
+        if (AddNoise is { } v_AddNoise) this.AddNoise.Set(v_AddNoise);
+        if (NoiseSeed is { } v_NoiseSeed) this.NoiseSeed.Set(v_NoiseSeed);
+        if (Steps is { } v_Steps) this.Steps.Set(v_Steps);
+        if (Cfg is { } v_Cfg) this.Cfg.Set(v_Cfg);
+        if (SamplerName is { } v_SamplerName) this.SamplerName.Set(v_SamplerName);
+        if (Scheduler is { } v_Scheduler) this.Scheduler.Set(v_Scheduler);
+        if (StartAtStep is { } v_StartAtStep) this.StartAtStep.Set(v_StartAtStep);
+        if (EndAtStep is { } v_EndAtStep) this.EndAtStep.Set(v_EndAtStep);
+        if (ReturnWithLeftoverNoise is { } v_ReturnWithLeftoverNoise) this.ReturnWithLeftoverNoise.Set(v_ReturnWithLeftoverNoise);
+        return this;
+    }
 }

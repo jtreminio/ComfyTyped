@@ -22,4 +22,15 @@ public sealed class UnetLoaderGGUFNode : ComfyNode
         MODEL = AddOutput<ModelType>(0, "MODEL");
         UnetName = AddInput<StringType>("unet_name", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public UnetLoaderGGUFNode With(
+        string? UnetName = null
+    )
+    {
+        if (UnetName is { } v_UnetName) this.UnetName.Set(v_UnetName);
+        return this;
+    }
 }

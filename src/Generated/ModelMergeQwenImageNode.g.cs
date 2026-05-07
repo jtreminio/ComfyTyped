@@ -222,4 +222,145 @@ public sealed class ModelMergeQwenImageNode : ComfyNode
         ProjOut = AddInput<FloatType>("proj_out.", required: true);
         ProjOut.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ModelMergeQwenImageNode With(
+        double? PosEmbeds = null,
+        double? ImgIn = null,
+        double? TxtNorm = null,
+        double? TxtIn = null,
+        double? TimeTextEmbed = null,
+        double? TransformerBlocks0 = null,
+        double? TransformerBlocks1 = null,
+        double? TransformerBlocks2 = null,
+        double? TransformerBlocks3 = null,
+        double? TransformerBlocks4 = null,
+        double? TransformerBlocks5 = null,
+        double? TransformerBlocks6 = null,
+        double? TransformerBlocks7 = null,
+        double? TransformerBlocks8 = null,
+        double? TransformerBlocks9 = null,
+        double? TransformerBlocks10 = null,
+        double? TransformerBlocks11 = null,
+        double? TransformerBlocks12 = null,
+        double? TransformerBlocks13 = null,
+        double? TransformerBlocks14 = null,
+        double? TransformerBlocks15 = null,
+        double? TransformerBlocks16 = null,
+        double? TransformerBlocks17 = null,
+        double? TransformerBlocks18 = null,
+        double? TransformerBlocks19 = null,
+        double? TransformerBlocks20 = null,
+        double? TransformerBlocks21 = null,
+        double? TransformerBlocks22 = null,
+        double? TransformerBlocks23 = null,
+        double? TransformerBlocks24 = null,
+        double? TransformerBlocks25 = null,
+        double? TransformerBlocks26 = null,
+        double? TransformerBlocks27 = null,
+        double? TransformerBlocks28 = null,
+        double? TransformerBlocks29 = null,
+        double? TransformerBlocks30 = null,
+        double? TransformerBlocks31 = null,
+        double? TransformerBlocks32 = null,
+        double? TransformerBlocks33 = null,
+        double? TransformerBlocks34 = null,
+        double? TransformerBlocks35 = null,
+        double? TransformerBlocks36 = null,
+        double? TransformerBlocks37 = null,
+        double? TransformerBlocks38 = null,
+        double? TransformerBlocks39 = null,
+        double? TransformerBlocks40 = null,
+        double? TransformerBlocks41 = null,
+        double? TransformerBlocks42 = null,
+        double? TransformerBlocks43 = null,
+        double? TransformerBlocks44 = null,
+        double? TransformerBlocks45 = null,
+        double? TransformerBlocks46 = null,
+        double? TransformerBlocks47 = null,
+        double? TransformerBlocks48 = null,
+        double? TransformerBlocks49 = null,
+        double? TransformerBlocks50 = null,
+        double? TransformerBlocks51 = null,
+        double? TransformerBlocks52 = null,
+        double? TransformerBlocks53 = null,
+        double? TransformerBlocks54 = null,
+        double? TransformerBlocks55 = null,
+        double? TransformerBlocks56 = null,
+        double? TransformerBlocks57 = null,
+        double? TransformerBlocks58 = null,
+        double? TransformerBlocks59 = null,
+        double? ProjOut = null
+    )
+    {
+        if (PosEmbeds is { } v_PosEmbeds) this.PosEmbeds.Set(v_PosEmbeds);
+        if (ImgIn is { } v_ImgIn) this.ImgIn.Set(v_ImgIn);
+        if (TxtNorm is { } v_TxtNorm) this.TxtNorm.Set(v_TxtNorm);
+        if (TxtIn is { } v_TxtIn) this.TxtIn.Set(v_TxtIn);
+        if (TimeTextEmbed is { } v_TimeTextEmbed) this.TimeTextEmbed.Set(v_TimeTextEmbed);
+        if (TransformerBlocks0 is { } v_TransformerBlocks0) this.TransformerBlocks0.Set(v_TransformerBlocks0);
+        if (TransformerBlocks1 is { } v_TransformerBlocks1) this.TransformerBlocks1.Set(v_TransformerBlocks1);
+        if (TransformerBlocks2 is { } v_TransformerBlocks2) this.TransformerBlocks2.Set(v_TransformerBlocks2);
+        if (TransformerBlocks3 is { } v_TransformerBlocks3) this.TransformerBlocks3.Set(v_TransformerBlocks3);
+        if (TransformerBlocks4 is { } v_TransformerBlocks4) this.TransformerBlocks4.Set(v_TransformerBlocks4);
+        if (TransformerBlocks5 is { } v_TransformerBlocks5) this.TransformerBlocks5.Set(v_TransformerBlocks5);
+        if (TransformerBlocks6 is { } v_TransformerBlocks6) this.TransformerBlocks6.Set(v_TransformerBlocks6);
+        if (TransformerBlocks7 is { } v_TransformerBlocks7) this.TransformerBlocks7.Set(v_TransformerBlocks7);
+        if (TransformerBlocks8 is { } v_TransformerBlocks8) this.TransformerBlocks8.Set(v_TransformerBlocks8);
+        if (TransformerBlocks9 is { } v_TransformerBlocks9) this.TransformerBlocks9.Set(v_TransformerBlocks9);
+        if (TransformerBlocks10 is { } v_TransformerBlocks10) this.TransformerBlocks10.Set(v_TransformerBlocks10);
+        if (TransformerBlocks11 is { } v_TransformerBlocks11) this.TransformerBlocks11.Set(v_TransformerBlocks11);
+        if (TransformerBlocks12 is { } v_TransformerBlocks12) this.TransformerBlocks12.Set(v_TransformerBlocks12);
+        if (TransformerBlocks13 is { } v_TransformerBlocks13) this.TransformerBlocks13.Set(v_TransformerBlocks13);
+        if (TransformerBlocks14 is { } v_TransformerBlocks14) this.TransformerBlocks14.Set(v_TransformerBlocks14);
+        if (TransformerBlocks15 is { } v_TransformerBlocks15) this.TransformerBlocks15.Set(v_TransformerBlocks15);
+        if (TransformerBlocks16 is { } v_TransformerBlocks16) this.TransformerBlocks16.Set(v_TransformerBlocks16);
+        if (TransformerBlocks17 is { } v_TransformerBlocks17) this.TransformerBlocks17.Set(v_TransformerBlocks17);
+        if (TransformerBlocks18 is { } v_TransformerBlocks18) this.TransformerBlocks18.Set(v_TransformerBlocks18);
+        if (TransformerBlocks19 is { } v_TransformerBlocks19) this.TransformerBlocks19.Set(v_TransformerBlocks19);
+        if (TransformerBlocks20 is { } v_TransformerBlocks20) this.TransformerBlocks20.Set(v_TransformerBlocks20);
+        if (TransformerBlocks21 is { } v_TransformerBlocks21) this.TransformerBlocks21.Set(v_TransformerBlocks21);
+        if (TransformerBlocks22 is { } v_TransformerBlocks22) this.TransformerBlocks22.Set(v_TransformerBlocks22);
+        if (TransformerBlocks23 is { } v_TransformerBlocks23) this.TransformerBlocks23.Set(v_TransformerBlocks23);
+        if (TransformerBlocks24 is { } v_TransformerBlocks24) this.TransformerBlocks24.Set(v_TransformerBlocks24);
+        if (TransformerBlocks25 is { } v_TransformerBlocks25) this.TransformerBlocks25.Set(v_TransformerBlocks25);
+        if (TransformerBlocks26 is { } v_TransformerBlocks26) this.TransformerBlocks26.Set(v_TransformerBlocks26);
+        if (TransformerBlocks27 is { } v_TransformerBlocks27) this.TransformerBlocks27.Set(v_TransformerBlocks27);
+        if (TransformerBlocks28 is { } v_TransformerBlocks28) this.TransformerBlocks28.Set(v_TransformerBlocks28);
+        if (TransformerBlocks29 is { } v_TransformerBlocks29) this.TransformerBlocks29.Set(v_TransformerBlocks29);
+        if (TransformerBlocks30 is { } v_TransformerBlocks30) this.TransformerBlocks30.Set(v_TransformerBlocks30);
+        if (TransformerBlocks31 is { } v_TransformerBlocks31) this.TransformerBlocks31.Set(v_TransformerBlocks31);
+        if (TransformerBlocks32 is { } v_TransformerBlocks32) this.TransformerBlocks32.Set(v_TransformerBlocks32);
+        if (TransformerBlocks33 is { } v_TransformerBlocks33) this.TransformerBlocks33.Set(v_TransformerBlocks33);
+        if (TransformerBlocks34 is { } v_TransformerBlocks34) this.TransformerBlocks34.Set(v_TransformerBlocks34);
+        if (TransformerBlocks35 is { } v_TransformerBlocks35) this.TransformerBlocks35.Set(v_TransformerBlocks35);
+        if (TransformerBlocks36 is { } v_TransformerBlocks36) this.TransformerBlocks36.Set(v_TransformerBlocks36);
+        if (TransformerBlocks37 is { } v_TransformerBlocks37) this.TransformerBlocks37.Set(v_TransformerBlocks37);
+        if (TransformerBlocks38 is { } v_TransformerBlocks38) this.TransformerBlocks38.Set(v_TransformerBlocks38);
+        if (TransformerBlocks39 is { } v_TransformerBlocks39) this.TransformerBlocks39.Set(v_TransformerBlocks39);
+        if (TransformerBlocks40 is { } v_TransformerBlocks40) this.TransformerBlocks40.Set(v_TransformerBlocks40);
+        if (TransformerBlocks41 is { } v_TransformerBlocks41) this.TransformerBlocks41.Set(v_TransformerBlocks41);
+        if (TransformerBlocks42 is { } v_TransformerBlocks42) this.TransformerBlocks42.Set(v_TransformerBlocks42);
+        if (TransformerBlocks43 is { } v_TransformerBlocks43) this.TransformerBlocks43.Set(v_TransformerBlocks43);
+        if (TransformerBlocks44 is { } v_TransformerBlocks44) this.TransformerBlocks44.Set(v_TransformerBlocks44);
+        if (TransformerBlocks45 is { } v_TransformerBlocks45) this.TransformerBlocks45.Set(v_TransformerBlocks45);
+        if (TransformerBlocks46 is { } v_TransformerBlocks46) this.TransformerBlocks46.Set(v_TransformerBlocks46);
+        if (TransformerBlocks47 is { } v_TransformerBlocks47) this.TransformerBlocks47.Set(v_TransformerBlocks47);
+        if (TransformerBlocks48 is { } v_TransformerBlocks48) this.TransformerBlocks48.Set(v_TransformerBlocks48);
+        if (TransformerBlocks49 is { } v_TransformerBlocks49) this.TransformerBlocks49.Set(v_TransformerBlocks49);
+        if (TransformerBlocks50 is { } v_TransformerBlocks50) this.TransformerBlocks50.Set(v_TransformerBlocks50);
+        if (TransformerBlocks51 is { } v_TransformerBlocks51) this.TransformerBlocks51.Set(v_TransformerBlocks51);
+        if (TransformerBlocks52 is { } v_TransformerBlocks52) this.TransformerBlocks52.Set(v_TransformerBlocks52);
+        if (TransformerBlocks53 is { } v_TransformerBlocks53) this.TransformerBlocks53.Set(v_TransformerBlocks53);
+        if (TransformerBlocks54 is { } v_TransformerBlocks54) this.TransformerBlocks54.Set(v_TransformerBlocks54);
+        if (TransformerBlocks55 is { } v_TransformerBlocks55) this.TransformerBlocks55.Set(v_TransformerBlocks55);
+        if (TransformerBlocks56 is { } v_TransformerBlocks56) this.TransformerBlocks56.Set(v_TransformerBlocks56);
+        if (TransformerBlocks57 is { } v_TransformerBlocks57) this.TransformerBlocks57.Set(v_TransformerBlocks57);
+        if (TransformerBlocks58 is { } v_TransformerBlocks58) this.TransformerBlocks58.Set(v_TransformerBlocks58);
+        if (TransformerBlocks59 is { } v_TransformerBlocks59) this.TransformerBlocks59.Set(v_TransformerBlocks59);
+        if (ProjOut is { } v_ProjOut) this.ProjOut.Set(v_ProjOut);
+        return this;
+    }
 }

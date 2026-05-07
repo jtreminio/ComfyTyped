@@ -56,4 +56,29 @@ public sealed class IPAdapterWeightsNode : ComfyNode
         Method.Set("full batch");
         Image = AddInput<ImageType>("image", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public IPAdapterWeightsNode With(
+        string? WeightsInput = null,
+        string? Timing = null,
+        long? Frames = null,
+        long? StartFrame = null,
+        long? EndFrame = null,
+        long? AddStartingFrames = null,
+        long? AddEndingFrames = null,
+        string? Method = null
+    )
+    {
+        if (WeightsInput is { } v_WeightsInput) this.WeightsInput.Set(v_WeightsInput);
+        if (Timing is { } v_Timing) this.Timing.Set(v_Timing);
+        if (Frames is { } v_Frames) this.Frames.Set(v_Frames);
+        if (StartFrame is { } v_StartFrame) this.StartFrame.Set(v_StartFrame);
+        if (EndFrame is { } v_EndFrame) this.EndFrame.Set(v_EndFrame);
+        if (AddStartingFrames is { } v_AddStartingFrames) this.AddStartingFrames.Set(v_AddStartingFrames);
+        if (AddEndingFrames is { } v_AddEndingFrames) this.AddEndingFrames.Set(v_AddEndingFrames);
+        if (Method is { } v_Method) this.Method.Set(v_Method);
+        return this;
+    }
 }

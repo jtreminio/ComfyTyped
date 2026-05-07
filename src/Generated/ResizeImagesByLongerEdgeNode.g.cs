@@ -25,4 +25,15 @@ public sealed class ResizeImagesByLongerEdgeNode : ComfyNode
         LongerEdge = AddInput<IntType>("longer_edge", required: true);
         LongerEdge.Set(1024L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ResizeImagesByLongerEdgeNode With(
+        long? LongerEdge = null
+    )
+    {
+        if (LongerEdge is { } v_LongerEdge) this.LongerEdge.Set(v_LongerEdge);
+        return this;
+    }
 }

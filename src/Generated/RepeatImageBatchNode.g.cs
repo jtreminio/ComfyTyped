@@ -25,4 +25,15 @@ public sealed class RepeatImageBatchNode : ComfyNode
         Amount = AddInput<IntType>("amount", required: true);
         Amount.Set(1L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public RepeatImageBatchNode With(
+        long? Amount = null
+    )
+    {
+        if (Amount is { } v_Amount) this.Amount.Set(v_Amount);
+        return this;
+    }
 }

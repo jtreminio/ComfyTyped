@@ -33,4 +33,19 @@ public sealed class UnimatchOptFlowPreprocessorNode : ComfyNode
         BidirectionalFlow = AddInput<BooleanType>("bidirectional_flow", required: true);
         BidirectionalFlow.Set(false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public UnimatchOptFlowPreprocessorNode With(
+        string? CkptName = null,
+        bool? BackwardFlow = null,
+        bool? BidirectionalFlow = null
+    )
+    {
+        if (CkptName is { } v_CkptName) this.CkptName.Set(v_CkptName);
+        if (BackwardFlow is { } v_BackwardFlow) this.BackwardFlow.Set(v_BackwardFlow);
+        if (BidirectionalFlow is { } v_BidirectionalFlow) this.BidirectionalFlow.Set(v_BidirectionalFlow);
+        return this;
+    }
 }

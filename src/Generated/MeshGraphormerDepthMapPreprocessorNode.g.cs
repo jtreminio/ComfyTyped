@@ -45,4 +45,27 @@ public sealed class MeshGraphormerDepthMapPreprocessorNode : ComfyNode
         PresenceThr = AddInput<FloatType>("presence_thr", required: false);
         PresenceThr.Set(0.6);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public MeshGraphormerDepthMapPreprocessorNode With(
+        long? MaskBboxPadding = null,
+        long? Resolution = null,
+        string? MaskType = null,
+        long? MaskExpand = null,
+        long? RandSeed = null,
+        double? DetectThr = null,
+        double? PresenceThr = null
+    )
+    {
+        if (MaskBboxPadding is { } v_MaskBboxPadding) this.MaskBboxPadding.Set(v_MaskBboxPadding);
+        if (Resolution is { } v_Resolution) this.Resolution.Set(v_Resolution);
+        if (MaskType is { } v_MaskType) this.MaskType.Set(v_MaskType);
+        if (MaskExpand is { } v_MaskExpand) this.MaskExpand.Set(v_MaskExpand);
+        if (RandSeed is { } v_RandSeed) this.RandSeed.Set(v_RandSeed);
+        if (DetectThr is { } v_DetectThr) this.DetectThr.Set(v_DetectThr);
+        if (PresenceThr is { } v_PresenceThr) this.PresenceThr.Set(v_PresenceThr);
+        return this;
+    }
 }

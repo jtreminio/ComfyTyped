@@ -31,4 +31,19 @@ public sealed class TripleCLIPLoaderNode : ComfyNode
         ClipName2 = AddInput<StringType>("clip_name2", required: true);
         ClipName3 = AddInput<StringType>("clip_name3", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public TripleCLIPLoaderNode With(
+        string? ClipName1 = null,
+        string? ClipName2 = null,
+        string? ClipName3 = null
+    )
+    {
+        if (ClipName1 is { } v_ClipName1) this.ClipName1.Set(v_ClipName1);
+        if (ClipName2 is { } v_ClipName2) this.ClipName2.Set(v_ClipName2);
+        if (ClipName3 is { } v_ClipName3) this.ClipName3.Set(v_ClipName3);
+        return this;
+    }
 }

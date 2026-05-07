@@ -31,4 +31,19 @@ public sealed class WebcamCaptureNode : ComfyNode
         CaptureOnQueue = AddInput<BooleanType>("capture_on_queue", required: true);
         CaptureOnQueue.Set(true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public WebcamCaptureNode With(
+        long? Width = null,
+        long? Height = null,
+        bool? CaptureOnQueue = null
+    )
+    {
+        if (Width is { } v_Width) this.Width.Set(v_Width);
+        if (Height is { } v_Height) this.Height.Set(v_Height);
+        if (CaptureOnQueue is { } v_CaptureOnQueue) this.CaptureOnQueue.Set(v_CaptureOnQueue);
+        return this;
+    }
 }

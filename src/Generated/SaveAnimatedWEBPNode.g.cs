@@ -32,4 +32,23 @@ public sealed class SaveAnimatedWEBPNode : ComfyNode
         Quality.Set(80L);
         Method = AddInput<StringType>("method", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SaveAnimatedWEBPNode With(
+        string? FilenamePrefix = null,
+        double? Fps = null,
+        bool? Lossless = null,
+        long? Quality = null,
+        string? Method = null
+    )
+    {
+        if (FilenamePrefix is { } v_FilenamePrefix) this.FilenamePrefix.Set(v_FilenamePrefix);
+        if (Fps is { } v_Fps) this.Fps.Set(v_Fps);
+        if (Lossless is { } v_Lossless) this.Lossless.Set(v_Lossless);
+        if (Quality is { } v_Quality) this.Quality.Set(v_Quality);
+        if (Method is { } v_Method) this.Method.Set(v_Method);
+        return this;
+    }
 }

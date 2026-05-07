@@ -25,4 +25,15 @@ public sealed class SetFirstSigmaNode : ComfyNode
         Sigma = AddInput<FloatType>("sigma", required: true);
         Sigma.Set(136.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SetFirstSigmaNode With(
+        double? Sigma = null
+    )
+    {
+        if (Sigma is { } v_Sigma) this.Sigma.Set(v_Sigma);
+        return this;
+    }
 }

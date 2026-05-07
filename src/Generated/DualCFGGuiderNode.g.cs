@@ -36,4 +36,19 @@ public sealed class DualCFGGuiderNode : ComfyNode
         CfgCond2Negative.Set(8.0);
         Style = AddInput<StringType>("style", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public DualCFGGuiderNode With(
+        double? CfgConds = null,
+        double? CfgCond2Negative = null,
+        string? Style = null
+    )
+    {
+        if (CfgConds is { } v_CfgConds) this.CfgConds.Set(v_CfgConds);
+        if (CfgCond2Negative is { } v_CfgCond2Negative) this.CfgCond2Negative.Set(v_CfgCond2Negative);
+        if (Style is { } v_Style) this.Style.Set(v_Style);
+        return this;
+    }
 }

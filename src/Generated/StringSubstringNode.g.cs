@@ -26,4 +26,19 @@ public sealed class StringSubstringNode : ComfyNode
         Start = AddInput<IntType>("start", required: true);
         End = AddInput<IntType>("end", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public StringSubstringNode With(
+        string? String = null,
+        long? Start = null,
+        long? End = null
+    )
+    {
+        if (String is { } v_String) this.String.Set(v_String);
+        if (Start is { } v_Start) this.Start.Set(v_Start);
+        if (End is { } v_End) this.End.Set(v_End);
+        return this;
+    }
 }

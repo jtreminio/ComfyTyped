@@ -41,4 +41,23 @@ public sealed class SwarmUnsamplerNode : ComfyNode
         StartAtStep.Set(0L);
         Previews = AddInput<StringType>("previews", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SwarmUnsamplerNode With(
+        long? Steps = null,
+        string? SamplerName = null,
+        string? Scheduler = null,
+        long? StartAtStep = null,
+        string? Previews = null
+    )
+    {
+        if (Steps is { } v_Steps) this.Steps.Set(v_Steps);
+        if (SamplerName is { } v_SamplerName) this.SamplerName.Set(v_SamplerName);
+        if (Scheduler is { } v_Scheduler) this.Scheduler.Set(v_Scheduler);
+        if (StartAtStep is { } v_StartAtStep) this.StartAtStep.Set(v_StartAtStep);
+        if (Previews is { } v_Previews) this.Previews.Set(v_Previews);
+        return this;
+    }
 }

@@ -29,4 +29,19 @@ public sealed class PrepImageForClipVisionNode : ComfyNode
         Sharpening = AddInput<FloatType>("sharpening", required: true);
         Sharpening.Set(0.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public PrepImageForClipVisionNode With(
+        string? Interpolation = null,
+        string? CropPosition = null,
+        double? Sharpening = null
+    )
+    {
+        if (Interpolation is { } v_Interpolation) this.Interpolation.Set(v_Interpolation);
+        if (CropPosition is { } v_CropPosition) this.CropPosition.Set(v_CropPosition);
+        if (Sharpening is { } v_Sharpening) this.Sharpening.Set(v_Sharpening);
+        return this;
+    }
 }

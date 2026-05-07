@@ -43,4 +43,23 @@ public sealed class SAM3DetectNode : ComfyNode
         PositiveCoords = AddInput<StringType>("positive_coords", required: false);
         NegativeCoords = AddInput<StringType>("negative_coords", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SAM3DetectNode With(
+        double? Threshold = null,
+        long? RefineIterations = null,
+        bool? IndividualMasks = null,
+        string? PositiveCoords = null,
+        string? NegativeCoords = null
+    )
+    {
+        if (Threshold is { } v_Threshold) this.Threshold.Set(v_Threshold);
+        if (RefineIterations is { } v_RefineIterations) this.RefineIterations.Set(v_RefineIterations);
+        if (IndividualMasks is { } v_IndividualMasks) this.IndividualMasks.Set(v_IndividualMasks);
+        if (PositiveCoords is { } v_PositiveCoords) this.PositiveCoords.Set(v_PositiveCoords);
+        if (NegativeCoords is { } v_NegativeCoords) this.NegativeCoords.Set(v_NegativeCoords);
+        return this;
+    }
 }

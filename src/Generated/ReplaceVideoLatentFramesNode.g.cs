@@ -27,4 +27,15 @@ public sealed class ReplaceVideoLatentFramesNode : ComfyNode
         Index.Set(0L);
         Source = AddInput<LatentType>("source", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ReplaceVideoLatentFramesNode With(
+        long? Index = null
+    )
+    {
+        if (Index is { } v_Index) this.Index.Set(v_Index);
+        return this;
+    }
 }

@@ -27,4 +27,15 @@ public sealed class InpaintPreprocessorNode : ComfyNode
         BlackPixelForXinsirCn = AddInput<BooleanType>("black_pixel_for_xinsir_cn", required: false);
         BlackPixelForXinsirCn.Set(false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public InpaintPreprocessorNode With(
+        bool? BlackPixelForXinsirCn = null
+    )
+    {
+        if (BlackPixelForXinsirCn is { } v_BlackPixelForXinsirCn) this.BlackPixelForXinsirCn.Set(v_BlackPixelForXinsirCn);
+        return this;
+    }
 }

@@ -29,4 +29,17 @@ public sealed class SwarmMaskThresholdNode : ComfyNode
         Max = AddInput<FloatType>("max", required: true);
         Max.Set(0.8);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SwarmMaskThresholdNode With(
+        double? Min = null,
+        double? Max = null
+    )
+    {
+        if (Min is { } v_Min) this.Min.Set(v_Min);
+        if (Max is { } v_Max) this.Max.Set(v_Max);
+        return this;
+    }
 }

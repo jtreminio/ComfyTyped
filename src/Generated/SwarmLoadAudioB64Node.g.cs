@@ -23,4 +23,15 @@ public sealed class SwarmLoadAudioB64Node : ComfyNode
         AUDIO = AddOutput<AudioType>(0, "AUDIO");
         AudioBase64 = AddInput<StringType>("audio_base64", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SwarmLoadAudioB64Node With(
+        string? AudioBase64 = null
+    )
+    {
+        if (AudioBase64 is { } v_AudioBase64) this.AudioBase64.Set(v_AudioBase64);
+        return this;
+    }
 }

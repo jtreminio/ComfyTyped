@@ -22,4 +22,15 @@ public sealed class CLIPVisionLoaderNode : ComfyNode
         CLIPVISION = AddOutput<ClipVisionType>(0, "CLIP_VISION");
         ClipName = AddInput<StringType>("clip_name", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public CLIPVisionLoaderNode With(
+        string? ClipName = null
+    )
+    {
+        if (ClipName is { } v_ClipName) this.ClipName.Set(v_ClipName);
+        return this;
+    }
 }

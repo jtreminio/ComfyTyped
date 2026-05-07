@@ -25,4 +25,15 @@ public sealed class ModelSamplingStableCascadeNode : ComfyNode
         Shift = AddInput<FloatType>("shift", required: true);
         Shift.Set(2.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ModelSamplingStableCascadeNode With(
+        double? Shift = null
+    )
+    {
+        if (Shift is { } v_Shift) this.Shift.Set(v_Shift);
+        return this;
+    }
 }

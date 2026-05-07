@@ -39,4 +39,15 @@ public sealed class HunyuanVideo15SuperResolutionNode : ComfyNode
         StartImage = AddInput<ImageType>("start_image", required: false);
         ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public HunyuanVideo15SuperResolutionNode With(
+        double? NoiseAugmentation = null
+    )
+    {
+        if (NoiseAugmentation is { } v_NoiseAugmentation) this.NoiseAugmentation.Set(v_NoiseAugmentation);
+        return this;
+    }
 }

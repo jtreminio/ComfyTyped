@@ -37,4 +37,23 @@ public sealed class LTXVSchedulerNode : ComfyNode
         Terminal.Set(0.1);
         Latent = AddInput<LatentType>("latent", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public LTXVSchedulerNode With(
+        long? Steps = null,
+        double? MaxShift = null,
+        double? BaseShift = null,
+        bool? Stretch = null,
+        double? Terminal = null
+    )
+    {
+        if (Steps is { } v_Steps) this.Steps.Set(v_Steps);
+        if (MaxShift is { } v_MaxShift) this.MaxShift.Set(v_MaxShift);
+        if (BaseShift is { } v_BaseShift) this.BaseShift.Set(v_BaseShift);
+        if (Stretch is { } v_Stretch) this.Stretch.Set(v_Stretch);
+        if (Terminal is { } v_Terminal) this.Terminal.Set(v_Terminal);
+        return this;
+    }
 }

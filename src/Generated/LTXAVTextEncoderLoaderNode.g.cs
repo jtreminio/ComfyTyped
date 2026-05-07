@@ -31,4 +31,19 @@ public sealed class LTXAVTextEncoderLoaderNode : ComfyNode
         CkptName = AddInput<StringType>("ckpt_name", required: true);
         Device = AddInput<StringType>("device", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public LTXAVTextEncoderLoaderNode With(
+        string? TextEncoder = null,
+        string? CkptName = null,
+        string? Device = null
+    )
+    {
+        if (TextEncoder is { } v_TextEncoder) this.TextEncoder.Set(v_TextEncoder);
+        if (CkptName is { } v_CkptName) this.CkptName.Set(v_CkptName);
+        if (Device is { } v_Device) this.Device.Set(v_Device);
+        return this;
+    }
 }

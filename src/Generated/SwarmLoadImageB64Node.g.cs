@@ -25,4 +25,15 @@ public sealed class SwarmLoadImageB64Node : ComfyNode
         MASK = AddOutput<MaskType>(1, "MASK");
         ImageBase64 = AddInput<StringType>("image_base64", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SwarmLoadImageB64Node With(
+        string? ImageBase64 = null
+    )
+    {
+        if (ImageBase64 is { } v_ImageBase64) this.ImageBase64.Set(v_ImageBase64);
+        return this;
+    }
 }

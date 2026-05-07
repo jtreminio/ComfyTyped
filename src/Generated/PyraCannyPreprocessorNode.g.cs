@@ -31,4 +31,19 @@ public sealed class PyraCannyPreprocessorNode : ComfyNode
         Resolution = AddInput<IntType>("resolution", required: false);
         Resolution.Set(512L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public PyraCannyPreprocessorNode With(
+        long? LowThreshold = null,
+        long? HighThreshold = null,
+        long? Resolution = null
+    )
+    {
+        if (LowThreshold is { } v_LowThreshold) this.LowThreshold.Set(v_LowThreshold);
+        if (HighThreshold is { } v_HighThreshold) this.HighThreshold.Set(v_HighThreshold);
+        if (Resolution is { } v_Resolution) this.Resolution.Set(v_Resolution);
+        return this;
+    }
 }

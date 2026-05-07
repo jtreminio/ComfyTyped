@@ -59,4 +59,41 @@ public sealed class TextEncodeAceStepAudio15Node : ComfyNode
         MinP = AddInput<FloatType>("min_p", required: true);
         MinP.Set(0.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public TextEncodeAceStepAudio15Node With(
+        string? Tags = null,
+        string? Lyrics = null,
+        long? Seed = null,
+        long? Bpm = null,
+        double? Duration = null,
+        string? Timesignature = null,
+        string? Language = null,
+        string? Keyscale = null,
+        bool? GenerateAudioCodes = null,
+        double? CfgScale = null,
+        double? Temperature = null,
+        double? TopP = null,
+        long? TopK = null,
+        double? MinP = null
+    )
+    {
+        if (Tags is { } v_Tags) this.Tags.Set(v_Tags);
+        if (Lyrics is { } v_Lyrics) this.Lyrics.Set(v_Lyrics);
+        if (Seed is { } v_Seed) this.Seed.Set(v_Seed);
+        if (Bpm is { } v_Bpm) this.Bpm.Set(v_Bpm);
+        if (Duration is { } v_Duration) this.Duration.Set(v_Duration);
+        if (Timesignature is { } v_Timesignature) this.Timesignature.Set(v_Timesignature);
+        if (Language is { } v_Language) this.Language.Set(v_Language);
+        if (Keyscale is { } v_Keyscale) this.Keyscale.Set(v_Keyscale);
+        if (GenerateAudioCodes is { } v_GenerateAudioCodes) this.GenerateAudioCodes.Set(v_GenerateAudioCodes);
+        if (CfgScale is { } v_CfgScale) this.CfgScale.Set(v_CfgScale);
+        if (Temperature is { } v_Temperature) this.Temperature.Set(v_Temperature);
+        if (TopP is { } v_TopP) this.TopP.Set(v_TopP);
+        if (TopK is { } v_TopK) this.TopK.Set(v_TopK);
+        if (MinP is { } v_MinP) this.MinP.Set(v_MinP);
+        return this;
+    }
 }

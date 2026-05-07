@@ -26,4 +26,15 @@ public sealed class LatentConcatNode : ComfyNode
         Samples2 = AddInput<LatentType>("samples2", required: true);
         Dim = AddInput<StringType>("dim", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public LatentConcatNode With(
+        string? Dim = null
+    )
+    {
+        if (Dim is { } v_Dim) this.Dim.Set(v_Dim);
+        return this;
+    }
 }

@@ -35,4 +35,21 @@ public sealed class SkipLayerGuidanceSD3Node : ComfyNode
         EndPercent = AddInput<FloatType>("end_percent", required: true);
         EndPercent.Set(0.15);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SkipLayerGuidanceSD3Node With(
+        string? Layers = null,
+        double? Scale = null,
+        double? StartPercent = null,
+        double? EndPercent = null
+    )
+    {
+        if (Layers is { } v_Layers) this.Layers.Set(v_Layers);
+        if (Scale is { } v_Scale) this.Scale.Set(v_Scale);
+        if (StartPercent is { } v_StartPercent) this.StartPercent.Set(v_StartPercent);
+        if (EndPercent is { } v_EndPercent) this.EndPercent.Set(v_EndPercent);
+        return this;
+    }
 }

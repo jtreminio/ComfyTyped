@@ -33,4 +33,21 @@ public sealed class ExtendIntermediateSigmasNode : ComfyNode
         EndAtSigma.Set(12.0);
         Spacing = AddInput<StringType>("spacing", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ExtendIntermediateSigmasNode With(
+        long? Steps = null,
+        double? StartAtSigma = null,
+        double? EndAtSigma = null,
+        string? Spacing = null
+    )
+    {
+        if (Steps is { } v_Steps) this.Steps.Set(v_Steps);
+        if (StartAtSigma is { } v_StartAtSigma) this.StartAtSigma.Set(v_StartAtSigma);
+        if (EndAtSigma is { } v_EndAtSigma) this.EndAtSigma.Set(v_EndAtSigma);
+        if (Spacing is { } v_Spacing) this.Spacing.Set(v_Spacing);
+        return this;
+    }
 }

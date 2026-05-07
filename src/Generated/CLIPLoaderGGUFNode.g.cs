@@ -24,4 +24,17 @@ public sealed class CLIPLoaderGGUFNode : ComfyNode
         ClipName = AddInput<StringType>("clip_name", required: true);
         Type = AddInput<StringType>("type", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public CLIPLoaderGGUFNode With(
+        string? ClipName = null,
+        string? Type = null
+    )
+    {
+        if (ClipName is { } v_ClipName) this.ClipName.Set(v_ClipName);
+        if (Type is { } v_Type) this.Type.Set(v_Type);
+        return this;
+    }
 }

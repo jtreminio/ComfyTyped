@@ -23,4 +23,15 @@ public sealed class SwarmLoadVideoB64Node : ComfyNode
         VIDEO = AddOutput<VideoType>(0, "VIDEO");
         VideoBase64 = AddInput<StringType>("video_base64", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SwarmLoadVideoB64Node With(
+        string? VideoBase64 = null
+    )
+    {
+        if (VideoBase64 is { } v_VideoBase64) this.VideoBase64.Set(v_VideoBase64);
+        return this;
+    }
 }

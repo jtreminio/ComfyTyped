@@ -38,4 +38,23 @@ public sealed class TextGenerateNode : ComfyNode
         UseDefaultTemplate = AddInput<BooleanType>("use_default_template", required: false);
         UseDefaultTemplate.Set(true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public TextGenerateNode With(
+        string? Prompt = null,
+        long? MaxLength = null,
+        string? SamplingMode = null,
+        bool? Thinking = null,
+        bool? UseDefaultTemplate = null
+    )
+    {
+        if (Prompt is { } v_Prompt) this.Prompt.Set(v_Prompt);
+        if (MaxLength is { } v_MaxLength) this.MaxLength.Set(v_MaxLength);
+        if (SamplingMode is { } v_SamplingMode) this.SamplingMode.Set(v_SamplingMode);
+        if (Thinking is { } v_Thinking) this.Thinking.Set(v_Thinking);
+        if (UseDefaultTemplate is { } v_UseDefaultTemplate) this.UseDefaultTemplate.Set(v_UseDefaultTemplate);
+        return this;
+    }
 }

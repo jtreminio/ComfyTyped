@@ -21,4 +21,17 @@ public sealed class SaveGLBNode : ComfyNode
         FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
         FilenamePrefix.Set("3d/ComfyUI");
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SaveGLBNode With(
+        string? Mesh = null,
+        string? FilenamePrefix = null
+    )
+    {
+        if (Mesh is { } v_Mesh) this.Mesh.Set(v_Mesh);
+        if (FilenamePrefix is { } v_FilenamePrefix) this.FilenamePrefix.Set(v_FilenamePrefix);
+        return this;
+    }
 }

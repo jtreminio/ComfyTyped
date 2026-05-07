@@ -31,4 +31,19 @@ public sealed class DiffusionEdgePreprocessorNode : ComfyNode
         Resolution = AddInput<IntType>("resolution", required: false);
         Resolution.Set(512L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public DiffusionEdgePreprocessorNode With(
+        string? Environment = null,
+        long? PatchBatchSize = null,
+        long? Resolution = null
+    )
+    {
+        if (Environment is { } v_Environment) this.Environment.Set(v_Environment);
+        if (PatchBatchSize is { } v_PatchBatchSize) this.PatchBatchSize.Set(v_PatchBatchSize);
+        if (Resolution is { } v_Resolution) this.Resolution.Set(v_Resolution);
+        return this;
+    }
 }

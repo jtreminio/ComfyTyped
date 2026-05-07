@@ -27,4 +27,15 @@ public sealed class AudioMergeNode : ComfyNode
         Audio2 = AddInput<AudioType>("audio2", required: true);
         MergeMethod = AddInput<StringType>("merge_method", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public AudioMergeNode With(
+        string? MergeMethod = null
+    )
+    {
+        if (MergeMethod is { } v_MergeMethod) this.MergeMethod.Set(v_MergeMethod);
+        return this;
+    }
 }

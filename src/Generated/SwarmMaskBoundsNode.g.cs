@@ -38,4 +38,19 @@ public sealed class SwarmMaskBoundsNode : ComfyNode
         AspectY = AddInput<IntType>("aspect_y", required: false);
         AspectY.Set(0L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SwarmMaskBoundsNode With(
+        long? Grow = null,
+        long? AspectX = null,
+        long? AspectY = null
+    )
+    {
+        if (Grow is { } v_Grow) this.Grow.Set(v_Grow);
+        if (AspectX is { } v_AspectX) this.AspectX.Set(v_AspectX);
+        if (AspectY is { } v_AspectY) this.AspectY.Set(v_AspectY);
+        return this;
+    }
 }

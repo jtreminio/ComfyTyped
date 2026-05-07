@@ -33,4 +33,19 @@ public sealed class LatentCompositeNode : ComfyNode
         Feather = AddInput<IntType>("feather", required: true);
         Feather.Set(0L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public LatentCompositeNode With(
+        long? X = null,
+        long? Y = null,
+        long? Feather = null
+    )
+    {
+        if (X is { } v_X) this.X.Set(v_X);
+        if (Y is { } v_Y) this.Y.Set(v_Y);
+        if (Feather is { } v_Feather) this.Feather.Set(v_Feather);
+        return this;
+    }
 }

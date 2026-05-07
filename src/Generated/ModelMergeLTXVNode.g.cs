@@ -123,4 +123,79 @@ public sealed class ModelMergeLTXVNode : ComfyNode
         ProjOut = AddInput<FloatType>("proj_out.", required: true);
         ProjOut.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ModelMergeLTXVNode With(
+        double? PatchifyProj = null,
+        double? AdalnSingle = null,
+        double? CaptionProjection = null,
+        double? TransformerBlocks0 = null,
+        double? TransformerBlocks1 = null,
+        double? TransformerBlocks2 = null,
+        double? TransformerBlocks3 = null,
+        double? TransformerBlocks4 = null,
+        double? TransformerBlocks5 = null,
+        double? TransformerBlocks6 = null,
+        double? TransformerBlocks7 = null,
+        double? TransformerBlocks8 = null,
+        double? TransformerBlocks9 = null,
+        double? TransformerBlocks10 = null,
+        double? TransformerBlocks11 = null,
+        double? TransformerBlocks12 = null,
+        double? TransformerBlocks13 = null,
+        double? TransformerBlocks14 = null,
+        double? TransformerBlocks15 = null,
+        double? TransformerBlocks16 = null,
+        double? TransformerBlocks17 = null,
+        double? TransformerBlocks18 = null,
+        double? TransformerBlocks19 = null,
+        double? TransformerBlocks20 = null,
+        double? TransformerBlocks21 = null,
+        double? TransformerBlocks22 = null,
+        double? TransformerBlocks23 = null,
+        double? TransformerBlocks24 = null,
+        double? TransformerBlocks25 = null,
+        double? TransformerBlocks26 = null,
+        double? TransformerBlocks27 = null,
+        double? ScaleShiftTable = null,
+        double? ProjOut = null
+    )
+    {
+        if (PatchifyProj is { } v_PatchifyProj) this.PatchifyProj.Set(v_PatchifyProj);
+        if (AdalnSingle is { } v_AdalnSingle) this.AdalnSingle.Set(v_AdalnSingle);
+        if (CaptionProjection is { } v_CaptionProjection) this.CaptionProjection.Set(v_CaptionProjection);
+        if (TransformerBlocks0 is { } v_TransformerBlocks0) this.TransformerBlocks0.Set(v_TransformerBlocks0);
+        if (TransformerBlocks1 is { } v_TransformerBlocks1) this.TransformerBlocks1.Set(v_TransformerBlocks1);
+        if (TransformerBlocks2 is { } v_TransformerBlocks2) this.TransformerBlocks2.Set(v_TransformerBlocks2);
+        if (TransformerBlocks3 is { } v_TransformerBlocks3) this.TransformerBlocks3.Set(v_TransformerBlocks3);
+        if (TransformerBlocks4 is { } v_TransformerBlocks4) this.TransformerBlocks4.Set(v_TransformerBlocks4);
+        if (TransformerBlocks5 is { } v_TransformerBlocks5) this.TransformerBlocks5.Set(v_TransformerBlocks5);
+        if (TransformerBlocks6 is { } v_TransformerBlocks6) this.TransformerBlocks6.Set(v_TransformerBlocks6);
+        if (TransformerBlocks7 is { } v_TransformerBlocks7) this.TransformerBlocks7.Set(v_TransformerBlocks7);
+        if (TransformerBlocks8 is { } v_TransformerBlocks8) this.TransformerBlocks8.Set(v_TransformerBlocks8);
+        if (TransformerBlocks9 is { } v_TransformerBlocks9) this.TransformerBlocks9.Set(v_TransformerBlocks9);
+        if (TransformerBlocks10 is { } v_TransformerBlocks10) this.TransformerBlocks10.Set(v_TransformerBlocks10);
+        if (TransformerBlocks11 is { } v_TransformerBlocks11) this.TransformerBlocks11.Set(v_TransformerBlocks11);
+        if (TransformerBlocks12 is { } v_TransformerBlocks12) this.TransformerBlocks12.Set(v_TransformerBlocks12);
+        if (TransformerBlocks13 is { } v_TransformerBlocks13) this.TransformerBlocks13.Set(v_TransformerBlocks13);
+        if (TransformerBlocks14 is { } v_TransformerBlocks14) this.TransformerBlocks14.Set(v_TransformerBlocks14);
+        if (TransformerBlocks15 is { } v_TransformerBlocks15) this.TransformerBlocks15.Set(v_TransformerBlocks15);
+        if (TransformerBlocks16 is { } v_TransformerBlocks16) this.TransformerBlocks16.Set(v_TransformerBlocks16);
+        if (TransformerBlocks17 is { } v_TransformerBlocks17) this.TransformerBlocks17.Set(v_TransformerBlocks17);
+        if (TransformerBlocks18 is { } v_TransformerBlocks18) this.TransformerBlocks18.Set(v_TransformerBlocks18);
+        if (TransformerBlocks19 is { } v_TransformerBlocks19) this.TransformerBlocks19.Set(v_TransformerBlocks19);
+        if (TransformerBlocks20 is { } v_TransformerBlocks20) this.TransformerBlocks20.Set(v_TransformerBlocks20);
+        if (TransformerBlocks21 is { } v_TransformerBlocks21) this.TransformerBlocks21.Set(v_TransformerBlocks21);
+        if (TransformerBlocks22 is { } v_TransformerBlocks22) this.TransformerBlocks22.Set(v_TransformerBlocks22);
+        if (TransformerBlocks23 is { } v_TransformerBlocks23) this.TransformerBlocks23.Set(v_TransformerBlocks23);
+        if (TransformerBlocks24 is { } v_TransformerBlocks24) this.TransformerBlocks24.Set(v_TransformerBlocks24);
+        if (TransformerBlocks25 is { } v_TransformerBlocks25) this.TransformerBlocks25.Set(v_TransformerBlocks25);
+        if (TransformerBlocks26 is { } v_TransformerBlocks26) this.TransformerBlocks26.Set(v_TransformerBlocks26);
+        if (TransformerBlocks27 is { } v_TransformerBlocks27) this.TransformerBlocks27.Set(v_TransformerBlocks27);
+        if (ScaleShiftTable is { } v_ScaleShiftTable) this.ScaleShiftTable.Set(v_ScaleShiftTable);
+        if (ProjOut is { } v_ProjOut) this.ProjOut.Set(v_ProjOut);
+        return this;
+    }
 }

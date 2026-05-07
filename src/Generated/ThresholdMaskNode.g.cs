@@ -25,4 +25,15 @@ public sealed class ThresholdMaskNode : ComfyNode
         Value = AddInput<FloatType>("value", required: true);
         Value.Set(0.5);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ThresholdMaskNode With(
+        double? Value = null
+    )
+    {
+        if (Value is { } v_Value) this.Value.Set(v_Value);
+        return this;
+    }
 }

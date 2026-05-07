@@ -28,4 +28,17 @@ public sealed class NormalizeImagesNode : ComfyNode
         Std = AddInput<FloatType>("std", required: true);
         Std.Set(0.5);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public NormalizeImagesNode With(
+        double? Mean = null,
+        double? Std = null
+    )
+    {
+        if (Mean is { } v_Mean) this.Mean.Set(v_Mean);
+        if (Std is { } v_Std) this.Std.Set(v_Std);
+        return this;
+    }
 }

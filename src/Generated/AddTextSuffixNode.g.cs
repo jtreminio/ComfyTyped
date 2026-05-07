@@ -25,4 +25,17 @@ public sealed class AddTextSuffixNode : ComfyNode
         Suffix = AddInput<StringType>("suffix", required: true);
         Suffix.Set("");
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public AddTextSuffixNode With(
+        string? TextsInput = null,
+        string? Suffix = null
+    )
+    {
+        if (TextsInput is { } v_TextsInput) this.TextsInput.Set(v_TextsInput);
+        if (Suffix is { } v_Suffix) this.Suffix.Set(v_Suffix);
+        return this;
+    }
 }

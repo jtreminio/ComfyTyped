@@ -34,4 +34,21 @@ public sealed class CLIPAttentionMultiplyNode : ComfyNode
         Out = AddInput<FloatType>("out", required: true);
         Out.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public CLIPAttentionMultiplyNode With(
+        double? Q = null,
+        double? K = null,
+        double? V = null,
+        double? Out = null
+    )
+    {
+        if (Q is { } v_Q) this.Q.Set(v_Q);
+        if (K is { } v_K) this.K.Set(v_K);
+        if (V is { } v_V) this.V.Set(v_V);
+        if (Out is { } v_Out) this.Out.Set(v_Out);
+        return this;
+    }
 }

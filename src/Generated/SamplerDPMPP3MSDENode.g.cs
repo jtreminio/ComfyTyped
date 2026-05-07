@@ -28,4 +28,19 @@ public sealed class SamplerDPMPP3MSDENode : ComfyNode
         SNoise.Set(1.0);
         NoiseDevice = AddInput<StringType>("noise_device", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SamplerDPMPP3MSDENode With(
+        double? Eta = null,
+        double? SNoise = null,
+        string? NoiseDevice = null
+    )
+    {
+        if (Eta is { } v_Eta) this.Eta.Set(v_Eta);
+        if (SNoise is { } v_SNoise) this.SNoise.Set(v_SNoise);
+        if (NoiseDevice is { } v_NoiseDevice) this.NoiseDevice.Set(v_NoiseDevice);
+        return this;
+    }
 }

@@ -44,4 +44,19 @@ public sealed class LTXVReferenceAudioNode : ComfyNode
         EndPercent = AddInput<FloatType>("end_percent", required: true);
         EndPercent.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public LTXVReferenceAudioNode With(
+        double? IdentityGuidanceScale = null,
+        double? StartPercent = null,
+        double? EndPercent = null
+    )
+    {
+        if (IdentityGuidanceScale is { } v_IdentityGuidanceScale) this.IdentityGuidanceScale.Set(v_IdentityGuidanceScale);
+        if (StartPercent is { } v_StartPercent) this.StartPercent.Set(v_StartPercent);
+        if (EndPercent is { } v_EndPercent) this.EndPercent.Set(v_EndPercent);
+        return this;
+    }
 }

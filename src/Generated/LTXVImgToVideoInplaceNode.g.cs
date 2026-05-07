@@ -32,4 +32,17 @@ public sealed class LTXVImgToVideoInplaceNode : ComfyNode
         Bypass = AddInput<BooleanType>("bypass", required: true);
         Bypass.Set(false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public LTXVImgToVideoInplaceNode With(
+        double? Strength = null,
+        bool? Bypass = null
+    )
+    {
+        if (Strength is { } v_Strength) this.Strength.Set(v_Strength);
+        if (Bypass is { } v_Bypass) this.Bypass.Set(v_Bypass);
+        return this;
+    }
 }

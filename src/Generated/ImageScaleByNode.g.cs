@@ -27,4 +27,17 @@ public sealed class ImageScaleByNode : ComfyNode
         ScaleBy = AddInput<FloatType>("scale_by", required: true);
         ScaleBy.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ImageScaleByNode With(
+        string? UpscaleMethod = null,
+        double? ScaleBy = null
+    )
+    {
+        if (UpscaleMethod is { } v_UpscaleMethod) this.UpscaleMethod.Set(v_UpscaleMethod);
+        if (ScaleBy is { } v_ScaleBy) this.ScaleBy.Set(v_ScaleBy);
+        return this;
+    }
 }

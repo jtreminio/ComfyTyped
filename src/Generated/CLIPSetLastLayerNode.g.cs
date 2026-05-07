@@ -25,4 +25,15 @@ public sealed class CLIPSetLastLayerNode : ComfyNode
         StopAtClipLayer = AddInput<IntType>("stop_at_clip_layer", required: true);
         StopAtClipLayer.Set(-1L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public CLIPSetLastLayerNode With(
+        long? StopAtClipLayer = null
+    )
+    {
+        if (StopAtClipLayer is { } v_StopAtClipLayer) this.StopAtClipLayer.Set(v_StopAtClipLayer);
+        return this;
+    }
 }

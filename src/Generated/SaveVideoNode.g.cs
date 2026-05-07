@@ -28,4 +28,19 @@ public sealed class SaveVideoNode : ComfyNode
         Codec = AddInput<StringType>("codec", required: true);
         Codec.Set("auto");
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SaveVideoNode With(
+        string? FilenamePrefix = null,
+        string? Format = null,
+        string? Codec = null
+    )
+    {
+        if (FilenamePrefix is { } v_FilenamePrefix) this.FilenamePrefix.Set(v_FilenamePrefix);
+        if (Format is { } v_Format) this.Format.Set(v_Format);
+        if (Codec is { } v_Codec) this.Codec.Set(v_Codec);
+        return this;
+    }
 }

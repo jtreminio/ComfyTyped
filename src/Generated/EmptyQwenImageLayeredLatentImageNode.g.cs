@@ -32,4 +32,21 @@ public sealed class EmptyQwenImageLayeredLatentImageNode : ComfyNode
         BatchSize = AddInput<IntType>("batch_size", required: true);
         BatchSize.Set(1L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public EmptyQwenImageLayeredLatentImageNode With(
+        long? Width = null,
+        long? Height = null,
+        long? Layers = null,
+        long? BatchSize = null
+    )
+    {
+        if (Width is { } v_Width) this.Width.Set(v_Width);
+        if (Height is { } v_Height) this.Height.Set(v_Height);
+        if (Layers is { } v_Layers) this.Layers.Set(v_Layers);
+        if (BatchSize is { } v_BatchSize) this.BatchSize.Set(v_BatchSize);
+        return this;
+    }
 }

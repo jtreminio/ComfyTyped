@@ -31,4 +31,19 @@ public sealed class CLIPTextEncodePixArtAlphaNode : ComfyNode
         Text = AddInput<StringType>("text", required: true);
         Clip = AddInput<ClipType>("clip", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public CLIPTextEncodePixArtAlphaNode With(
+        long? Width = null,
+        long? Height = null,
+        string? Text = null
+    )
+    {
+        if (Width is { } v_Width) this.Width.Set(v_Width);
+        if (Height is { } v_Height) this.Height.Set(v_Height);
+        if (Text is { } v_Text) this.Text.Set(v_Text);
+        return this;
+    }
 }

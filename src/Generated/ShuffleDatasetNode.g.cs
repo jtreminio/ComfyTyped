@@ -25,4 +25,15 @@ public sealed class ShuffleDatasetNode : ComfyNode
         Seed = AddInput<IntType>("seed", required: true);
         Seed.Set(0L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ShuffleDatasetNode With(
+        long? Seed = null
+    )
+    {
+        if (Seed is { } v_Seed) this.Seed.Set(v_Seed);
+        return this;
+    }
 }

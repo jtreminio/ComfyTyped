@@ -24,4 +24,15 @@ public sealed class ComfyNumberConvertNode : ComfyNode
         INT = AddOutput<IntType>(1, "INT");
         Value = AddInput<StringType>("value", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ComfyNumberConvertNode With(
+        string? Value = null
+    )
+    {
+        if (Value is { } v_Value) this.Value.Set(v_Value);
+        return this;
+    }
 }

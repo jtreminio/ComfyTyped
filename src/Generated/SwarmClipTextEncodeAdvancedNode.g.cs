@@ -50,4 +50,29 @@ public sealed class SwarmClipTextEncodeAdvancedNode : ComfyNode
         ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output", required: false);
         Images = AddInput<ImageType>("images", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SwarmClipTextEncodeAdvancedNode With(
+        long? Steps = null,
+        string? Prompt = null,
+        long? Width = null,
+        long? Height = null,
+        long? TargetWidth = null,
+        long? TargetHeight = null,
+        double? Guidance = null,
+        string? LlamaTemplate = null
+    )
+    {
+        if (Steps is { } v_Steps) this.Steps.Set(v_Steps);
+        if (Prompt is { } v_Prompt) this.Prompt.Set(v_Prompt);
+        if (Width is { } v_Width) this.Width.Set(v_Width);
+        if (Height is { } v_Height) this.Height.Set(v_Height);
+        if (TargetWidth is { } v_TargetWidth) this.TargetWidth.Set(v_TargetWidth);
+        if (TargetHeight is { } v_TargetHeight) this.TargetHeight.Set(v_TargetHeight);
+        if (Guidance is { } v_Guidance) this.Guidance.Set(v_Guidance);
+        if (LlamaTemplate is { } v_LlamaTemplate) this.LlamaTemplate.Set(v_LlamaTemplate);
+        return this;
+    }
 }

@@ -33,4 +33,15 @@ public sealed class HunyuanRefinerLatentNode : ComfyNode
         NoiseAugmentation = AddInput<FloatType>("noise_augmentation", required: true);
         NoiseAugmentation.Set(0.1);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public HunyuanRefinerLatentNode With(
+        double? NoiseAugmentation = null
+    )
+    {
+        if (NoiseAugmentation is { } v_NoiseAugmentation) this.NoiseAugmentation.Set(v_NoiseAugmentation);
+        return this;
+    }
 }

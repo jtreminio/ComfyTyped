@@ -30,4 +30,17 @@ public sealed class VAEDecodeAudioTiledNode : ComfyNode
         Overlap = AddInput<IntType>("overlap", required: true);
         Overlap.Set(64L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public VAEDecodeAudioTiledNode With(
+        long? TileSize = null,
+        long? Overlap = null
+    )
+    {
+        if (TileSize is { } v_TileSize) this.TileSize.Set(v_TileSize);
+        if (Overlap is { } v_Overlap) this.Overlap.Set(v_Overlap);
+        return this;
+    }
 }

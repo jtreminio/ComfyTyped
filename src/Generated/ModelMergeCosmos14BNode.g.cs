@@ -150,4 +150,97 @@ public sealed class ModelMergeCosmos14BNode : ComfyNode
         FinalLayer = AddInput<FloatType>("final_layer.", required: true);
         FinalLayer.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ModelMergeCosmos14BNode With(
+        double? PosEmbedder = null,
+        double? ExtraPosEmbedder = null,
+        double? XEmbedder = null,
+        double? TEmbedder = null,
+        double? AfflineNorm = null,
+        double? BlocksBlock0 = null,
+        double? BlocksBlock1 = null,
+        double? BlocksBlock2 = null,
+        double? BlocksBlock3 = null,
+        double? BlocksBlock4 = null,
+        double? BlocksBlock5 = null,
+        double? BlocksBlock6 = null,
+        double? BlocksBlock7 = null,
+        double? BlocksBlock8 = null,
+        double? BlocksBlock9 = null,
+        double? BlocksBlock10 = null,
+        double? BlocksBlock11 = null,
+        double? BlocksBlock12 = null,
+        double? BlocksBlock13 = null,
+        double? BlocksBlock14 = null,
+        double? BlocksBlock15 = null,
+        double? BlocksBlock16 = null,
+        double? BlocksBlock17 = null,
+        double? BlocksBlock18 = null,
+        double? BlocksBlock19 = null,
+        double? BlocksBlock20 = null,
+        double? BlocksBlock21 = null,
+        double? BlocksBlock22 = null,
+        double? BlocksBlock23 = null,
+        double? BlocksBlock24 = null,
+        double? BlocksBlock25 = null,
+        double? BlocksBlock26 = null,
+        double? BlocksBlock27 = null,
+        double? BlocksBlock28 = null,
+        double? BlocksBlock29 = null,
+        double? BlocksBlock30 = null,
+        double? BlocksBlock31 = null,
+        double? BlocksBlock32 = null,
+        double? BlocksBlock33 = null,
+        double? BlocksBlock34 = null,
+        double? BlocksBlock35 = null,
+        double? FinalLayer = null
+    )
+    {
+        if (PosEmbedder is { } v_PosEmbedder) this.PosEmbedder.Set(v_PosEmbedder);
+        if (ExtraPosEmbedder is { } v_ExtraPosEmbedder) this.ExtraPosEmbedder.Set(v_ExtraPosEmbedder);
+        if (XEmbedder is { } v_XEmbedder) this.XEmbedder.Set(v_XEmbedder);
+        if (TEmbedder is { } v_TEmbedder) this.TEmbedder.Set(v_TEmbedder);
+        if (AfflineNorm is { } v_AfflineNorm) this.AfflineNorm.Set(v_AfflineNorm);
+        if (BlocksBlock0 is { } v_BlocksBlock0) this.BlocksBlock0.Set(v_BlocksBlock0);
+        if (BlocksBlock1 is { } v_BlocksBlock1) this.BlocksBlock1.Set(v_BlocksBlock1);
+        if (BlocksBlock2 is { } v_BlocksBlock2) this.BlocksBlock2.Set(v_BlocksBlock2);
+        if (BlocksBlock3 is { } v_BlocksBlock3) this.BlocksBlock3.Set(v_BlocksBlock3);
+        if (BlocksBlock4 is { } v_BlocksBlock4) this.BlocksBlock4.Set(v_BlocksBlock4);
+        if (BlocksBlock5 is { } v_BlocksBlock5) this.BlocksBlock5.Set(v_BlocksBlock5);
+        if (BlocksBlock6 is { } v_BlocksBlock6) this.BlocksBlock6.Set(v_BlocksBlock6);
+        if (BlocksBlock7 is { } v_BlocksBlock7) this.BlocksBlock7.Set(v_BlocksBlock7);
+        if (BlocksBlock8 is { } v_BlocksBlock8) this.BlocksBlock8.Set(v_BlocksBlock8);
+        if (BlocksBlock9 is { } v_BlocksBlock9) this.BlocksBlock9.Set(v_BlocksBlock9);
+        if (BlocksBlock10 is { } v_BlocksBlock10) this.BlocksBlock10.Set(v_BlocksBlock10);
+        if (BlocksBlock11 is { } v_BlocksBlock11) this.BlocksBlock11.Set(v_BlocksBlock11);
+        if (BlocksBlock12 is { } v_BlocksBlock12) this.BlocksBlock12.Set(v_BlocksBlock12);
+        if (BlocksBlock13 is { } v_BlocksBlock13) this.BlocksBlock13.Set(v_BlocksBlock13);
+        if (BlocksBlock14 is { } v_BlocksBlock14) this.BlocksBlock14.Set(v_BlocksBlock14);
+        if (BlocksBlock15 is { } v_BlocksBlock15) this.BlocksBlock15.Set(v_BlocksBlock15);
+        if (BlocksBlock16 is { } v_BlocksBlock16) this.BlocksBlock16.Set(v_BlocksBlock16);
+        if (BlocksBlock17 is { } v_BlocksBlock17) this.BlocksBlock17.Set(v_BlocksBlock17);
+        if (BlocksBlock18 is { } v_BlocksBlock18) this.BlocksBlock18.Set(v_BlocksBlock18);
+        if (BlocksBlock19 is { } v_BlocksBlock19) this.BlocksBlock19.Set(v_BlocksBlock19);
+        if (BlocksBlock20 is { } v_BlocksBlock20) this.BlocksBlock20.Set(v_BlocksBlock20);
+        if (BlocksBlock21 is { } v_BlocksBlock21) this.BlocksBlock21.Set(v_BlocksBlock21);
+        if (BlocksBlock22 is { } v_BlocksBlock22) this.BlocksBlock22.Set(v_BlocksBlock22);
+        if (BlocksBlock23 is { } v_BlocksBlock23) this.BlocksBlock23.Set(v_BlocksBlock23);
+        if (BlocksBlock24 is { } v_BlocksBlock24) this.BlocksBlock24.Set(v_BlocksBlock24);
+        if (BlocksBlock25 is { } v_BlocksBlock25) this.BlocksBlock25.Set(v_BlocksBlock25);
+        if (BlocksBlock26 is { } v_BlocksBlock26) this.BlocksBlock26.Set(v_BlocksBlock26);
+        if (BlocksBlock27 is { } v_BlocksBlock27) this.BlocksBlock27.Set(v_BlocksBlock27);
+        if (BlocksBlock28 is { } v_BlocksBlock28) this.BlocksBlock28.Set(v_BlocksBlock28);
+        if (BlocksBlock29 is { } v_BlocksBlock29) this.BlocksBlock29.Set(v_BlocksBlock29);
+        if (BlocksBlock30 is { } v_BlocksBlock30) this.BlocksBlock30.Set(v_BlocksBlock30);
+        if (BlocksBlock31 is { } v_BlocksBlock31) this.BlocksBlock31.Set(v_BlocksBlock31);
+        if (BlocksBlock32 is { } v_BlocksBlock32) this.BlocksBlock32.Set(v_BlocksBlock32);
+        if (BlocksBlock33 is { } v_BlocksBlock33) this.BlocksBlock33.Set(v_BlocksBlock33);
+        if (BlocksBlock34 is { } v_BlocksBlock34) this.BlocksBlock34.Set(v_BlocksBlock34);
+        if (BlocksBlock35 is { } v_BlocksBlock35) this.BlocksBlock35.Set(v_BlocksBlock35);
+        if (FinalLayer is { } v_FinalLayer) this.FinalLayer.Set(v_FinalLayer);
+        return this;
+    }
 }

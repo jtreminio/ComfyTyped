@@ -37,4 +37,21 @@ public sealed class CropByBBoxesNode : ComfyNode
         KeepAspect = AddInput<StringType>("keep_aspect", required: true);
         KeepAspect.Set("stretch");
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public CropByBBoxesNode With(
+        long? OutputWidth = null,
+        long? OutputHeight = null,
+        long? Padding = null,
+        string? KeepAspect = null
+    )
+    {
+        if (OutputWidth is { } v_OutputWidth) this.OutputWidth.Set(v_OutputWidth);
+        if (OutputHeight is { } v_OutputHeight) this.OutputHeight.Set(v_OutputHeight);
+        if (Padding is { } v_Padding) this.Padding.Set(v_Padding);
+        if (KeepAspect is { } v_KeepAspect) this.KeepAspect.Set(v_KeepAspect);
+        return this;
+    }
 }

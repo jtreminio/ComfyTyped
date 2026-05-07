@@ -77,23 +77,17 @@ ComfyTyped.Generated.NodeRegistrations.EnsureRegistered();
 ```csharp
 var graph = new ComfyGraph();
 
-var ckpt = graph.AddNode(new CheckpointLoaderSimpleNode());
-ckpt.CkptName.Set("model.safetensors");
+var ckpt = graph.AddNode(new CheckpointLoaderSimpleNode().With(CkptName: "model.safetensors"));
 
-var pos = graph.AddNode(new CLIPTextEncodeNode());
-pos.Text.Set("a beautiful sunset");
+var pos = graph.AddNode(new CLIPTextEncodeNode().With(Text: "a beautiful sunset"));
 pos.Clip.ConnectTo(ckpt.CLIP);
 
-var latent = graph.AddNode(new EmptyLatentImageNode());
-latent.Width.Set(1024L);
-latent.Height.Set(1024L);
+var latent = graph.AddNode(new EmptyLatentImageNode().With(Width: 1024, Height: 1024));
 
-var sampler = graph.AddNode(new KSamplerNode());
+var sampler = graph.AddNode(new KSamplerNode().With(Seed: 42, Steps: 20));
 sampler.Model.ConnectTo(ckpt.MODEL);
 sampler.Positive.ConnectTo(pos.CONDITIONING);
 sampler.LatentImage.ConnectTo(latent.LATENT);
-sampler.Seed.Set(42L);
-sampler.Steps.Set(20L);
 
 var decode = graph.AddNode(new VAEDecodeNode());
 decode.Samples.ConnectTo(sampler.LATENT);
@@ -108,6 +102,11 @@ JObject workflow = graph.ToWorkflow();
 
 The `ConnectTo` calls are statically type-checked — connecting a `LatentType`
 output to a `ModelType` input will not compile.
+
+`With(...)` is a generated fluent setter for primitive inputs (INT/FLOAT/STRING/BOOL).
+Pass only what you want to set; `null` leaves the existing default untouched.
+Connection inputs are intentionally not exposed via `With(...)` — they go through
+`ConnectTo(...)` / `ConnectToUntyped(...)` so type-mismatch stays a compile error.
 
 ### Load and traverse an existing workflow
 

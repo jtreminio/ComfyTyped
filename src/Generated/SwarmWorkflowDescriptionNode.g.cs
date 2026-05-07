@@ -23,4 +23,17 @@ public sealed class SwarmWorkflowDescriptionNode : ComfyNode
         EnableInSimpleTab = AddInput<BooleanType>("enable_in_simple_tab", required: true);
         EnableInSimpleTab.Set(false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SwarmWorkflowDescriptionNode With(
+        string? Description = null,
+        bool? EnableInSimpleTab = null
+    )
+    {
+        if (Description is { } v_Description) this.Description.Set(v_Description);
+        if (EnableInSimpleTab is { } v_EnableInSimpleTab) this.EnableInSimpleTab.Set(v_EnableInSimpleTab);
+        return this;
+    }
 }

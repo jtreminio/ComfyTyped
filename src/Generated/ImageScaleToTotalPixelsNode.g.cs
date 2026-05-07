@@ -30,4 +30,19 @@ public sealed class ImageScaleToTotalPixelsNode : ComfyNode
         ResolutionSteps = AddInput<IntType>("resolution_steps", required: true);
         ResolutionSteps.Set(1L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ImageScaleToTotalPixelsNode With(
+        string? UpscaleMethod = null,
+        double? Megapixels = null,
+        long? ResolutionSteps = null
+    )
+    {
+        if (UpscaleMethod is { } v_UpscaleMethod) this.UpscaleMethod.Set(v_UpscaleMethod);
+        if (Megapixels is { } v_Megapixels) this.Megapixels.Set(v_Megapixels);
+        if (ResolutionSteps is { } v_ResolutionSteps) this.ResolutionSteps.Set(v_ResolutionSteps);
+        return this;
+    }
 }

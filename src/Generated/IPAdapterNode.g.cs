@@ -39,4 +39,21 @@ public sealed class IPAdapterNode : ComfyNode
         WeightType = AddInput<StringType>("weight_type", required: true);
         AttnMask = AddInput<MaskType>("attn_mask", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public IPAdapterNode With(
+        double? Weight = null,
+        double? StartAt = null,
+        double? EndAt = null,
+        string? WeightType = null
+    )
+    {
+        if (Weight is { } v_Weight) this.Weight.Set(v_Weight);
+        if (StartAt is { } v_StartAt) this.StartAt.Set(v_StartAt);
+        if (EndAt is { } v_EndAt) this.EndAt.Set(v_EndAt);
+        if (WeightType is { } v_WeightType) this.WeightType.Set(v_WeightType);
+        return this;
+    }
 }

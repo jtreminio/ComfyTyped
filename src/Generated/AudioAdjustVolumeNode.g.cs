@@ -25,4 +25,15 @@ public sealed class AudioAdjustVolumeNode : ComfyNode
         Volume = AddInput<IntType>("volume", required: true);
         Volume.Set(1L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public AudioAdjustVolumeNode With(
+        long? Volume = null
+    )
+    {
+        if (Volume is { } v_Volume) this.Volume.Set(v_Volume);
+        return this;
+    }
 }

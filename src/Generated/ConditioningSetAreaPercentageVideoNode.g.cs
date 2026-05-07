@@ -43,4 +43,27 @@ public sealed class ConditioningSetAreaPercentageVideoNode : ComfyNode
         Strength = AddInput<FloatType>("strength", required: true);
         Strength.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ConditioningSetAreaPercentageVideoNode With(
+        double? Width = null,
+        double? Height = null,
+        double? Temporal = null,
+        double? X = null,
+        double? Y = null,
+        double? Z = null,
+        double? Strength = null
+    )
+    {
+        if (Width is { } v_Width) this.Width.Set(v_Width);
+        if (Height is { } v_Height) this.Height.Set(v_Height);
+        if (Temporal is { } v_Temporal) this.Temporal.Set(v_Temporal);
+        if (X is { } v_X) this.X.Set(v_X);
+        if (Y is { } v_Y) this.Y.Set(v_Y);
+        if (Z is { } v_Z) this.Z.Set(v_Z);
+        if (Strength is { } v_Strength) this.Strength.Set(v_Strength);
+        return this;
+    }
 }

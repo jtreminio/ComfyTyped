@@ -32,4 +32,19 @@ public sealed class SplitImageToTileListNode : ComfyNode
         Overlap = AddInput<IntType>("overlap", required: true);
         Overlap.Set(128L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SplitImageToTileListNode With(
+        long? TileWidth = null,
+        long? TileHeight = null,
+        long? Overlap = null
+    )
+    {
+        if (TileWidth is { } v_TileWidth) this.TileWidth.Set(v_TileWidth);
+        if (TileHeight is { } v_TileHeight) this.TileHeight.Set(v_TileHeight);
+        if (Overlap is { } v_Overlap) this.Overlap.Set(v_Overlap);
+        return this;
+    }
 }

@@ -29,4 +29,15 @@ public sealed class CFGGuiderNode : ComfyNode
         Cfg = AddInput<FloatType>("cfg", required: true);
         Cfg.Set(8.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public CFGGuiderNode With(
+        double? Cfg = null
+    )
+    {
+        if (Cfg is { } v_Cfg) this.Cfg.Set(v_Cfg);
+        return this;
+    }
 }

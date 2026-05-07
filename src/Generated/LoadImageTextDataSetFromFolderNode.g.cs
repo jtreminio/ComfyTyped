@@ -24,4 +24,15 @@ public sealed class LoadImageTextDataSetFromFolderNode : ComfyNode
         Texts = AddOutput<StringType>(1, "texts");
         Folder = AddInput<StringType>("folder", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public LoadImageTextDataSetFromFolderNode With(
+        string? Folder = null
+    )
+    {
+        if (Folder is { } v_Folder) this.Folder.Set(v_Folder);
+        return this;
+    }
 }

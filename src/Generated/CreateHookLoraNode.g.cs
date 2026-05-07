@@ -30,4 +30,19 @@ public sealed class CreateHookLoraNode : ComfyNode
         StrengthClip.Set(1.0);
         PrevHooks = AddInput<HooksType>("prev_hooks", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public CreateHookLoraNode With(
+        string? LoraName = null,
+        double? StrengthModel = null,
+        double? StrengthClip = null
+    )
+    {
+        if (LoraName is { } v_LoraName) this.LoraName.Set(v_LoraName);
+        if (StrengthModel is { } v_StrengthModel) this.StrengthModel.Set(v_StrengthModel);
+        if (StrengthClip is { } v_StrengthClip) this.StrengthClip.Set(v_StrengthClip);
+        return this;
+    }
 }

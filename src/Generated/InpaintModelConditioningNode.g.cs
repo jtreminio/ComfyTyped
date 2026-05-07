@@ -37,4 +37,15 @@ public sealed class InpaintModelConditioningNode : ComfyNode
         NoiseMask = AddInput<BooleanType>("noise_mask", required: true);
         NoiseMask.Set(true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public InpaintModelConditioningNode With(
+        bool? NoiseMask = null
+    )
+    {
+        if (NoiseMask is { } v_NoiseMask) this.NoiseMask.Set(v_NoiseMask);
+        return this;
+    }
 }

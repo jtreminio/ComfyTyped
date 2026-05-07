@@ -30,4 +30,15 @@ public sealed class SwarmLatentBlendMaskedNode : ComfyNode
         BlendFactor = AddInput<FloatType>("blend_factor", required: true);
         BlendFactor.Set(0.5);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SwarmLatentBlendMaskedNode With(
+        double? BlendFactor = null
+    )
+    {
+        if (BlendFactor is { } v_BlendFactor) this.BlendFactor.Set(v_BlendFactor);
+        return this;
+    }
 }

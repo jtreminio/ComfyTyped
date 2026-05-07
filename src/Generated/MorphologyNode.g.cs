@@ -27,4 +27,17 @@ public sealed class MorphologyNode : ComfyNode
         KernelSize = AddInput<IntType>("kernel_size", required: true);
         KernelSize.Set(3L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public MorphologyNode With(
+        string? Operation = null,
+        long? KernelSize = null
+    )
+    {
+        if (Operation is { } v_Operation) this.Operation.Set(v_Operation);
+        if (KernelSize is { } v_KernelSize) this.KernelSize.Set(v_KernelSize);
+        return this;
+    }
 }

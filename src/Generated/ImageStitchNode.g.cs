@@ -41,4 +41,21 @@ public sealed class ImageStitchNode : ComfyNode
         SpacingColor.Set("white");
         Image2 = AddInput<ImageType>("image2", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ImageStitchNode With(
+        string? Direction = null,
+        bool? MatchImageSize = null,
+        long? SpacingWidth = null,
+        string? SpacingColor = null
+    )
+    {
+        if (Direction is { } v_Direction) this.Direction.Set(v_Direction);
+        if (MatchImageSize is { } v_MatchImageSize) this.MatchImageSize.Set(v_MatchImageSize);
+        if (SpacingWidth is { } v_SpacingWidth) this.SpacingWidth.Set(v_SpacingWidth);
+        if (SpacingColor is { } v_SpacingColor) this.SpacingColor.Set(v_SpacingColor);
+        return this;
+    }
 }

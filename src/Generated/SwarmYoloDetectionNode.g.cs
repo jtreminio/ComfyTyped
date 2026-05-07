@@ -35,4 +35,23 @@ public sealed class SwarmYoloDetectionNode : ComfyNode
         Threshold = AddInput<FloatType>("threshold", required: false);
         Threshold.Set(0.25);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SwarmYoloDetectionNode With(
+        string? ModelName = null,
+        long? Index = null,
+        string? ClassFilter = null,
+        string? SortOrder = null,
+        double? Threshold = null
+    )
+    {
+        if (ModelName is { } v_ModelName) this.ModelName.Set(v_ModelName);
+        if (Index is { } v_Index) this.Index.Set(v_Index);
+        if (ClassFilter is { } v_ClassFilter) this.ClassFilter.Set(v_ClassFilter);
+        if (SortOrder is { } v_SortOrder) this.SortOrder.Set(v_SortOrder);
+        if (Threshold is { } v_Threshold) this.Threshold.Set(v_Threshold);
+        return this;
+    }
 }

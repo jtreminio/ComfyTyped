@@ -22,4 +22,15 @@ public sealed class StyleModelLoaderNode : ComfyNode
         STYLEMODEL = AddOutput<StyleModelType>(0, "STYLE_MODEL");
         StyleModelName = AddInput<StringType>("style_model_name", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public StyleModelLoaderNode With(
+        string? StyleModelName = null
+    )
+    {
+        if (StyleModelName is { } v_StyleModelName) this.StyleModelName.Set(v_StyleModelName);
+        return this;
+    }
 }

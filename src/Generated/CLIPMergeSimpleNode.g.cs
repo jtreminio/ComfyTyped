@@ -27,4 +27,15 @@ public sealed class CLIPMergeSimpleNode : ComfyNode
         Ratio = AddInput<FloatType>("ratio", required: true);
         Ratio.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public CLIPMergeSimpleNode With(
+        double? Ratio = null
+    )
+    {
+        if (Ratio is { } v_Ratio) this.Ratio.Set(v_Ratio);
+        return this;
+    }
 }

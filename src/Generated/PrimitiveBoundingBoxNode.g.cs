@@ -32,4 +32,21 @@ public sealed class PrimitiveBoundingBoxNode : ComfyNode
         Height = AddInput<IntType>("height", required: true);
         Height.Set(512L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public PrimitiveBoundingBoxNode With(
+        long? X = null,
+        long? Y = null,
+        long? Width = null,
+        long? Height = null
+    )
+    {
+        if (X is { } v_X) this.X.Set(v_X);
+        if (Y is { } v_Y) this.Y.Set(v_Y);
+        if (Width is { } v_Width) this.Width.Set(v_Width);
+        if (Height is { } v_Height) this.Height.Set(v_Height);
+        return this;
+    }
 }

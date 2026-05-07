@@ -43,4 +43,19 @@ public sealed class SamplerCustomNode : ComfyNode
         Sigmas = AddInput<SigmasType>("sigmas", required: true);
         LatentImage = AddInput<LatentType>("latent_image", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SamplerCustomNode With(
+        bool? AddNoise = null,
+        long? NoiseSeed = null,
+        double? Cfg = null
+    )
+    {
+        if (AddNoise is { } v_AddNoise) this.AddNoise.Set(v_AddNoise);
+        if (NoiseSeed is { } v_NoiseSeed) this.NoiseSeed.Set(v_NoiseSeed);
+        if (Cfg is { } v_Cfg) this.Cfg.Set(v_Cfg);
+        return this;
+    }
 }

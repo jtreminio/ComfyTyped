@@ -38,4 +38,23 @@ public sealed class IFUnetVFINode : ComfyNode
         Ensemble.Set(true);
         OptionalInterpolationStates = AddInput<InterpolationStatesType>("optional_interpolation_states", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public IFUnetVFINode With(
+        string? CkptName = null,
+        long? ClearCacheAfterNFrames = null,
+        long? Multiplier = null,
+        double? ScaleFactor = null,
+        bool? Ensemble = null
+    )
+    {
+        if (CkptName is { } v_CkptName) this.CkptName.Set(v_CkptName);
+        if (ClearCacheAfterNFrames is { } v_ClearCacheAfterNFrames) this.ClearCacheAfterNFrames.Set(v_ClearCacheAfterNFrames);
+        if (Multiplier is { } v_Multiplier) this.Multiplier.Set(v_Multiplier);
+        if (ScaleFactor is { } v_ScaleFactor) this.ScaleFactor.Set(v_ScaleFactor);
+        if (Ensemble is { } v_Ensemble) this.Ensemble.Set(v_Ensemble);
+        return this;
+    }
 }

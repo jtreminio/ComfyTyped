@@ -25,4 +25,15 @@ public sealed class LatentBatchSeedBehaviorNode : ComfyNode
         SeedBehavior = AddInput<StringType>("seed_behavior", required: true);
         SeedBehavior.Set("fixed");
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public LatentBatchSeedBehaviorNode With(
+        string? SeedBehavior = null
+    )
+    {
+        if (SeedBehavior is { } v_SeedBehavior) this.SeedBehavior.Set(v_SeedBehavior);
+        return this;
+    }
 }

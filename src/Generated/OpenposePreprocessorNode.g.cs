@@ -39,4 +39,23 @@ public sealed class OpenposePreprocessorNode : ComfyNode
         ScaleStickForXinsrCn = AddInput<StringType>("scale_stick_for_xinsr_cn", required: false);
         ScaleStickForXinsrCn.Set("disable");
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public OpenposePreprocessorNode With(
+        string? DetectHand = null,
+        string? DetectBody = null,
+        string? DetectFace = null,
+        long? Resolution = null,
+        string? ScaleStickForXinsrCn = null
+    )
+    {
+        if (DetectHand is { } v_DetectHand) this.DetectHand.Set(v_DetectHand);
+        if (DetectBody is { } v_DetectBody) this.DetectBody.Set(v_DetectBody);
+        if (DetectFace is { } v_DetectFace) this.DetectFace.Set(v_DetectFace);
+        if (Resolution is { } v_Resolution) this.Resolution.Set(v_Resolution);
+        if (ScaleStickForXinsrCn is { } v_ScaleStickForXinsrCn) this.ScaleStickForXinsrCn.Set(v_ScaleStickForXinsrCn);
+        return this;
+    }
 }

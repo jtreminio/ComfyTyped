@@ -46,4 +46,23 @@ public sealed class IPAdapterRegionalConditioningNode : ComfyNode
         Positive = AddInput<ConditioningType>("positive", required: false);
         Negative = AddInput<ConditioningType>("negative", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public IPAdapterRegionalConditioningNode With(
+        double? ImageWeight = null,
+        double? PromptWeight = null,
+        string? WeightType = null,
+        double? StartAt = null,
+        double? EndAt = null
+    )
+    {
+        if (ImageWeight is { } v_ImageWeight) this.ImageWeight.Set(v_ImageWeight);
+        if (PromptWeight is { } v_PromptWeight) this.PromptWeight.Set(v_PromptWeight);
+        if (WeightType is { } v_WeightType) this.WeightType.Set(v_WeightType);
+        if (StartAt is { } v_StartAt) this.StartAt.Set(v_StartAt);
+        if (EndAt is { } v_EndAt) this.EndAt.Set(v_EndAt);
+        return this;
+    }
 }

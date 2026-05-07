@@ -75,4 +75,47 @@ public sealed class SwarmKSamplerNode : ComfyNode
         TileSize = AddInput<IntType>("tile_size", required: true);
         TileSize.Set(1024L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SwarmKSamplerNode With(
+        long? NoiseSeed = null,
+        long? Steps = null,
+        double? Cfg = null,
+        string? SamplerName = null,
+        string? Scheduler = null,
+        long? StartAtStep = null,
+        long? EndAtStep = null,
+        long? VarSeed = null,
+        double? VarSeedStrength = null,
+        double? SigmaMax = null,
+        double? SigmaMin = null,
+        double? Rho = null,
+        string? AddNoise = null,
+        string? ReturnWithLeftoverNoise = null,
+        string? Previews = null,
+        bool? TileSample = null,
+        long? TileSize = null
+    )
+    {
+        if (NoiseSeed is { } v_NoiseSeed) this.NoiseSeed.Set(v_NoiseSeed);
+        if (Steps is { } v_Steps) this.Steps.Set(v_Steps);
+        if (Cfg is { } v_Cfg) this.Cfg.Set(v_Cfg);
+        if (SamplerName is { } v_SamplerName) this.SamplerName.Set(v_SamplerName);
+        if (Scheduler is { } v_Scheduler) this.Scheduler.Set(v_Scheduler);
+        if (StartAtStep is { } v_StartAtStep) this.StartAtStep.Set(v_StartAtStep);
+        if (EndAtStep is { } v_EndAtStep) this.EndAtStep.Set(v_EndAtStep);
+        if (VarSeed is { } v_VarSeed) this.VarSeed.Set(v_VarSeed);
+        if (VarSeedStrength is { } v_VarSeedStrength) this.VarSeedStrength.Set(v_VarSeedStrength);
+        if (SigmaMax is { } v_SigmaMax) this.SigmaMax.Set(v_SigmaMax);
+        if (SigmaMin is { } v_SigmaMin) this.SigmaMin.Set(v_SigmaMin);
+        if (Rho is { } v_Rho) this.Rho.Set(v_Rho);
+        if (AddNoise is { } v_AddNoise) this.AddNoise.Set(v_AddNoise);
+        if (ReturnWithLeftoverNoise is { } v_ReturnWithLeftoverNoise) this.ReturnWithLeftoverNoise.Set(v_ReturnWithLeftoverNoise);
+        if (Previews is { } v_Previews) this.Previews.Set(v_Previews);
+        if (TileSample is { } v_TileSample) this.TileSample.Set(v_TileSample);
+        if (TileSize is { } v_TileSize) this.TileSize.Set(v_TileSize);
+        return this;
+    }
 }

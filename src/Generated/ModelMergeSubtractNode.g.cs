@@ -27,4 +27,15 @@ public sealed class ModelMergeSubtractNode : ComfyNode
         Multiplier = AddInput<FloatType>("multiplier", required: true);
         Multiplier.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ModelMergeSubtractNode With(
+        double? Multiplier = null
+    )
+    {
+        if (Multiplier is { } v_Multiplier) this.Multiplier.Set(v_Multiplier);
+        return this;
+    }
 }

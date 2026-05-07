@@ -28,4 +28,15 @@ public sealed class AudioConcatNode : ComfyNode
         Direction = AddInput<StringType>("direction", required: true);
         Direction.Set("after");
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public AudioConcatNode With(
+        string? Direction = null
+    )
+    {
+        if (Direction is { } v_Direction) this.Direction.Set(v_Direction);
+        return this;
+    }
 }

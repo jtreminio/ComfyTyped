@@ -24,4 +24,15 @@ public sealed class LoadImageNode : ComfyNode
         MASK = AddOutput<MaskType>(1, "MASK");
         Image = AddInput<StringType>("image", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public LoadImageNode With(
+        string? Image = null
+    )
+    {
+        if (Image is { } v_Image) this.Image.Set(v_Image);
+        return this;
+    }
 }

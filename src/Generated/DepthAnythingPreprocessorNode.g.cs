@@ -28,4 +28,17 @@ public sealed class DepthAnythingPreprocessorNode : ComfyNode
         Resolution = AddInput<IntType>("resolution", required: false);
         Resolution.Set(512L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public DepthAnythingPreprocessorNode With(
+        string? CkptName = null,
+        long? Resolution = null
+    )
+    {
+        if (CkptName is { } v_CkptName) this.CkptName.Set(v_CkptName);
+        if (Resolution is { } v_Resolution) this.Resolution.Set(v_Resolution);
+        return this;
+    }
 }

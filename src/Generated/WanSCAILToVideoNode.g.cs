@@ -57,4 +57,27 @@ public sealed class WanSCAILToVideoNode : ComfyNode
         ReferenceImage = AddInput<ImageType>("reference_image", required: false);
         PoseVideo = AddInput<ImageType>("pose_video", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public WanSCAILToVideoNode With(
+        long? Width = null,
+        long? Height = null,
+        long? Length = null,
+        long? BatchSize = null,
+        double? PoseStrength = null,
+        double? PoseStart = null,
+        double? PoseEnd = null
+    )
+    {
+        if (Width is { } v_Width) this.Width.Set(v_Width);
+        if (Height is { } v_Height) this.Height.Set(v_Height);
+        if (Length is { } v_Length) this.Length.Set(v_Length);
+        if (BatchSize is { } v_BatchSize) this.BatchSize.Set(v_BatchSize);
+        if (PoseStrength is { } v_PoseStrength) this.PoseStrength.Set(v_PoseStrength);
+        if (PoseStart is { } v_PoseStart) this.PoseStart.Set(v_PoseStart);
+        if (PoseEnd is { } v_PoseEnd) this.PoseEnd.Set(v_PoseEnd);
+        return this;
+    }
 }

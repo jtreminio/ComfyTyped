@@ -28,4 +28,17 @@ public sealed class ImageBlurNode : ComfyNode
         Sigma = AddInput<FloatType>("sigma", required: true);
         Sigma.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ImageBlurNode With(
+        long? BlurRadius = null,
+        double? Sigma = null
+    )
+    {
+        if (BlurRadius is { } v_BlurRadius) this.BlurRadius.Set(v_BlurRadius);
+        if (Sigma is { } v_Sigma) this.Sigma.Set(v_Sigma);
+        return this;
+    }
 }

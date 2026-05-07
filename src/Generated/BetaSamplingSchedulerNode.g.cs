@@ -31,4 +31,19 @@ public sealed class BetaSamplingSchedulerNode : ComfyNode
         Beta = AddInput<FloatType>("beta", required: true);
         Beta.Set(0.6);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public BetaSamplingSchedulerNode With(
+        long? Steps = null,
+        double? Alpha = null,
+        double? Beta = null
+    )
+    {
+        if (Steps is { } v_Steps) this.Steps.Set(v_Steps);
+        if (Alpha is { } v_Alpha) this.Alpha.Set(v_Alpha);
+        if (Beta is { } v_Beta) this.Beta.Set(v_Beta);
+        return this;
+    }
 }

@@ -46,4 +46,29 @@ public sealed class FacialPartColoringFromPoseKpsNode : ComfyNode
         LowerLip = AddInput<StringType>("lower_lip", required: true);
         LowerLip.Set("rgb(255, 0, 102)");
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public FacialPartColoringFromPoseKpsNode With(
+        string? Mode = null,
+        string? Skin = null,
+        string? LeftEye = null,
+        string? RightEye = null,
+        string? Nose = null,
+        string? UpperLip = null,
+        string? InnerMouth = null,
+        string? LowerLip = null
+    )
+    {
+        if (Mode is { } v_Mode) this.Mode.Set(v_Mode);
+        if (Skin is { } v_Skin) this.Skin.Set(v_Skin);
+        if (LeftEye is { } v_LeftEye) this.LeftEye.Set(v_LeftEye);
+        if (RightEye is { } v_RightEye) this.RightEye.Set(v_RightEye);
+        if (Nose is { } v_Nose) this.Nose.Set(v_Nose);
+        if (UpperLip is { } v_UpperLip) this.UpperLip.Set(v_UpperLip);
+        if (InnerMouth is { } v_InnerMouth) this.InnerMouth.Set(v_InnerMouth);
+        if (LowerLip is { } v_LowerLip) this.LowerLip.Set(v_LowerLip);
+        return this;
+    }
 }

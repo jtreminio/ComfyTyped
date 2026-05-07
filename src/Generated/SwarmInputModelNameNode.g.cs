@@ -43,4 +43,27 @@ public sealed class SwarmInputModelNameNode : ComfyNode
         RawId.Set("");
         Group = AddInput<GroupType>("group", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SwarmInputModelNameNode With(
+        string? Title = null,
+        string? Value = null,
+        string? Subtype = null,
+        string? Description = null,
+        double? OrderPriority = null,
+        bool? IsAdvanced = null,
+        string? RawId = null
+    )
+    {
+        if (Title is { } v_Title) this.Title.Set(v_Title);
+        if (Value is { } v_Value) this.Value.Set(v_Value);
+        if (Subtype is { } v_Subtype) this.Subtype.Set(v_Subtype);
+        if (Description is { } v_Description) this.Description.Set(v_Description);
+        if (OrderPriority is { } v_OrderPriority) this.OrderPriority.Set(v_OrderPriority);
+        if (IsAdvanced is { } v_IsAdvanced) this.IsAdvanced.Set(v_IsAdvanced);
+        if (RawId is { } v_RawId) this.RawId.Set(v_RawId);
+        return this;
+    }
 }

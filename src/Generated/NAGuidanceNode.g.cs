@@ -32,4 +32,19 @@ public sealed class NAGuidanceNode : ComfyNode
         NagTau = AddInput<FloatType>("nag_tau", required: true);
         NagTau.Set(1.5);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public NAGuidanceNode With(
+        double? NagScale = null,
+        double? NagAlpha = null,
+        double? NagTau = null
+    )
+    {
+        if (NagScale is { } v_NagScale) this.NagScale.Set(v_NagScale);
+        if (NagAlpha is { } v_NagAlpha) this.NagAlpha.Set(v_NagAlpha);
+        if (NagTau is { } v_NagTau) this.NagTau.Set(v_NagTau);
+        return this;
+    }
 }

@@ -28,4 +28,15 @@ public sealed class CreateVideoNode : ComfyNode
         Fps.Set(30.0);
         Audio = AddInput<AudioType>("audio", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public CreateVideoNode With(
+        double? Fps = null
+    )
+    {
+        if (Fps is { } v_Fps) this.Fps.Set(v_Fps);
+        return this;
+    }
 }

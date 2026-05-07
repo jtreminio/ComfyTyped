@@ -28,4 +28,17 @@ public sealed class T5TokenizerOptionsNode : ComfyNode
         MinLength = AddInput<IntType>("min_length", required: true);
         MinLength.Set(0L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public T5TokenizerOptionsNode With(
+        long? MinPadding = null,
+        long? MinLength = null
+    )
+    {
+        if (MinPadding is { } v_MinPadding) this.MinPadding.Set(v_MinPadding);
+        if (MinLength is { } v_MinLength) this.MinLength.Set(v_MinLength);
+        return this;
+    }
 }

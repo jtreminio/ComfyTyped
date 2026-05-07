@@ -31,4 +31,19 @@ public sealed class LineartStandardPreprocessorNode : ComfyNode
         Resolution = AddInput<IntType>("resolution", required: false);
         Resolution.Set(512L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public LineartStandardPreprocessorNode With(
+        double? GuassianSigma = null,
+        long? IntensityThreshold = null,
+        long? Resolution = null
+    )
+    {
+        if (GuassianSigma is { } v_GuassianSigma) this.GuassianSigma.Set(v_GuassianSigma);
+        if (IntensityThreshold is { } v_IntensityThreshold) this.IntensityThreshold.Set(v_IntensityThreshold);
+        if (Resolution is { } v_Resolution) this.Resolution.Set(v_Resolution);
+        return this;
+    }
 }

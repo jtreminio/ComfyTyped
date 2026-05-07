@@ -24,4 +24,17 @@ public sealed class UNETLoaderNode : ComfyNode
         UnetName = AddInput<StringType>("unet_name", required: true);
         WeightDtype = AddInput<StringType>("weight_dtype", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public UNETLoaderNode With(
+        string? UnetName = null,
+        string? WeightDtype = null
+    )
+    {
+        if (UnetName is { } v_UnetName) this.UnetName.Set(v_UnetName);
+        if (WeightDtype is { } v_WeightDtype) this.WeightDtype.Set(v_WeightDtype);
+        return this;
+    }
 }

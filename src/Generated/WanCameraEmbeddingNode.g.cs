@@ -53,4 +53,31 @@ public sealed class WanCameraEmbeddingNode : ComfyNode
         Cy = AddInput<FloatType>("cy", required: false);
         Cy.Set(0.5);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public WanCameraEmbeddingNode With(
+        string? CameraPose = null,
+        long? WidthInput = null,
+        long? HeightInput = null,
+        long? LengthInput = null,
+        double? Speed = null,
+        double? Fx = null,
+        double? Fy = null,
+        double? Cx = null,
+        double? Cy = null
+    )
+    {
+        if (CameraPose is { } v_CameraPose) this.CameraPose.Set(v_CameraPose);
+        if (WidthInput is { } v_WidthInput) this.WidthInput.Set(v_WidthInput);
+        if (HeightInput is { } v_HeightInput) this.HeightInput.Set(v_HeightInput);
+        if (LengthInput is { } v_LengthInput) this.LengthInput.Set(v_LengthInput);
+        if (Speed is { } v_Speed) this.Speed.Set(v_Speed);
+        if (Fx is { } v_Fx) this.Fx.Set(v_Fx);
+        if (Fy is { } v_Fy) this.Fy.Set(v_Fy);
+        if (Cx is { } v_Cx) this.Cx.Set(v_Cx);
+        if (Cy is { } v_Cy) this.Cy.Set(v_Cy);
+        return this;
+    }
 }

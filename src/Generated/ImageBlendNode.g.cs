@@ -29,4 +29,17 @@ public sealed class ImageBlendNode : ComfyNode
         BlendFactor.Set(0.5);
         BlendMode = AddInput<StringType>("blend_mode", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ImageBlendNode With(
+        double? BlendFactor = null,
+        string? BlendMode = null
+    )
+    {
+        if (BlendFactor is { } v_BlendFactor) this.BlendFactor.Set(v_BlendFactor);
+        if (BlendMode is { } v_BlendMode) this.BlendMode.Set(v_BlendMode);
+        return this;
+    }
 }

@@ -44,4 +44,29 @@ public sealed class SamplerSASolverNode : ComfyNode
         UsePece = AddInput<BooleanType>("use_pece", required: true);
         SimpleOrder2 = AddInput<BooleanType>("simple_order_2", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SamplerSASolverNode With(
+        double? Eta = null,
+        double? SdeStartPercent = null,
+        double? SdeEndPercent = null,
+        double? SNoise = null,
+        long? PredictorOrder = null,
+        long? CorrectorOrder = null,
+        bool? UsePece = null,
+        bool? SimpleOrder2 = null
+    )
+    {
+        if (Eta is { } v_Eta) this.Eta.Set(v_Eta);
+        if (SdeStartPercent is { } v_SdeStartPercent) this.SdeStartPercent.Set(v_SdeStartPercent);
+        if (SdeEndPercent is { } v_SdeEndPercent) this.SdeEndPercent.Set(v_SdeEndPercent);
+        if (SNoise is { } v_SNoise) this.SNoise.Set(v_SNoise);
+        if (PredictorOrder is { } v_PredictorOrder) this.PredictorOrder.Set(v_PredictorOrder);
+        if (CorrectorOrder is { } v_CorrectorOrder) this.CorrectorOrder.Set(v_CorrectorOrder);
+        if (UsePece is { } v_UsePece) this.UsePece.Set(v_UsePece);
+        if (SimpleOrder2 is { } v_SimpleOrder2) this.SimpleOrder2.Set(v_SimpleOrder2);
+        return this;
+    }
 }

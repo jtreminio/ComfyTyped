@@ -53,4 +53,31 @@ public sealed class MeshGraphormerImpactDetectorDepthMapPreprocessorNode : Comfy
         Resolution = AddInput<IntType>("resolution", required: false);
         Resolution.Set(512L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public MeshGraphormerImpactDetectorDepthMapPreprocessorNode With(
+        double? BboxThreshold = null,
+        long? BboxDilation = null,
+        double? BboxCropFactor = null,
+        long? DropSize = null,
+        long? MaskBboxPadding = null,
+        string? MaskType = null,
+        long? MaskExpand = null,
+        long? RandSeed = null,
+        long? Resolution = null
+    )
+    {
+        if (BboxThreshold is { } v_BboxThreshold) this.BboxThreshold.Set(v_BboxThreshold);
+        if (BboxDilation is { } v_BboxDilation) this.BboxDilation.Set(v_BboxDilation);
+        if (BboxCropFactor is { } v_BboxCropFactor) this.BboxCropFactor.Set(v_BboxCropFactor);
+        if (DropSize is { } v_DropSize) this.DropSize.Set(v_DropSize);
+        if (MaskBboxPadding is { } v_MaskBboxPadding) this.MaskBboxPadding.Set(v_MaskBboxPadding);
+        if (MaskType is { } v_MaskType) this.MaskType.Set(v_MaskType);
+        if (MaskExpand is { } v_MaskExpand) this.MaskExpand.Set(v_MaskExpand);
+        if (RandSeed is { } v_RandSeed) this.RandSeed.Set(v_RandSeed);
+        if (Resolution is { } v_Resolution) this.Resolution.Set(v_Resolution);
+        return this;
+    }
 }

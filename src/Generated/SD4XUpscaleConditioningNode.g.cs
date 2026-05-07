@@ -36,4 +36,17 @@ public sealed class SD4XUpscaleConditioningNode : ComfyNode
         NoiseAugmentation = AddInput<FloatType>("noise_augmentation", required: true);
         NoiseAugmentation.Set(0.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SD4XUpscaleConditioningNode With(
+        double? ScaleRatio = null,
+        double? NoiseAugmentation = null
+    )
+    {
+        if (ScaleRatio is { } v_ScaleRatio) this.ScaleRatio.Set(v_ScaleRatio);
+        if (NoiseAugmentation is { } v_NoiseAugmentation) this.NoiseAugmentation.Set(v_NoiseAugmentation);
+        return this;
+    }
 }

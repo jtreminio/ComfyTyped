@@ -29,4 +29,17 @@ public sealed class ShuffleImageTextDatasetNode : ComfyNode
         Seed = AddInput<IntType>("seed", required: true);
         Seed.Set(0L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ShuffleImageTextDatasetNode With(
+        string? TextsInput = null,
+        long? Seed = null
+    )
+    {
+        if (TextsInput is { } v_TextsInput) this.TextsInput.Set(v_TextsInput);
+        if (Seed is { } v_Seed) this.Seed.Set(v_Seed);
+        return this;
+    }
 }

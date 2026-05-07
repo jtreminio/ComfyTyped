@@ -27,4 +27,17 @@ public sealed class LatentCutToBatchNode : ComfyNode
         SliceSize = AddInput<IntType>("slice_size", required: true);
         SliceSize.Set(1L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public LatentCutToBatchNode With(
+        string? Dim = null,
+        long? SliceSize = null
+    )
+    {
+        if (Dim is { } v_Dim) this.Dim.Set(v_Dim);
+        if (SliceSize is { } v_SliceSize) this.SliceSize.Set(v_SliceSize);
+        return this;
+    }
 }

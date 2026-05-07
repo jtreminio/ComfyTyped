@@ -23,4 +23,15 @@ public sealed class VFIFloatToIntNode : ComfyNode
         Float = AddInput<FloatType>("float", required: true);
         Float.Set(0.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public VFIFloatToIntNode With(
+        double? Float = null
+    )
+    {
+        if (Float is { } v_Float) this.Float.Set(v_Float);
+        return this;
+    }
 }

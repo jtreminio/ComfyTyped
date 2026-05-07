@@ -26,4 +26,15 @@ public sealed class CLIPVisionEncodeNode : ComfyNode
         Image = AddInput<ImageType>("image", required: true);
         Crop = AddInput<StringType>("crop", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public CLIPVisionEncodeNode With(
+        string? Crop = null
+    )
+    {
+        if (Crop is { } v_Crop) this.Crop.Set(v_Crop);
+        return this;
+    }
 }

@@ -29,4 +29,19 @@ public sealed class TextEncodeAceStepAudioNode : ComfyNode
         LyricsStrength = AddInput<FloatType>("lyrics_strength", required: true);
         LyricsStrength.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public TextEncodeAceStepAudioNode With(
+        string? Tags = null,
+        string? Lyrics = null,
+        double? LyricsStrength = null
+    )
+    {
+        if (Tags is { } v_Tags) this.Tags.Set(v_Tags);
+        if (Lyrics is { } v_Lyrics) this.Lyrics.Set(v_Lyrics);
+        if (LyricsStrength is { } v_LyricsStrength) this.LyricsStrength.Set(v_LyricsStrength);
+        return this;
+    }
 }

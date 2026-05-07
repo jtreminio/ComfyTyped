@@ -34,4 +34,21 @@ public sealed class Metric3DNormalMapPreprocessorNode : ComfyNode
         Resolution = AddInput<IntType>("resolution", required: false);
         Resolution.Set(512L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public Metric3DNormalMapPreprocessorNode With(
+        string? Backbone = null,
+        long? Fx = null,
+        long? Fy = null,
+        long? Resolution = null
+    )
+    {
+        if (Backbone is { } v_Backbone) this.Backbone.Set(v_Backbone);
+        if (Fx is { } v_Fx) this.Fx.Set(v_Fx);
+        if (Fy is { } v_Fy) this.Fy.Set(v_Fy);
+        if (Resolution is { } v_Resolution) this.Resolution.Set(v_Resolution);
+        return this;
+    }
 }

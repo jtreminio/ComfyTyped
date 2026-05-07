@@ -44,4 +44,29 @@ public sealed class CLIPTextEncodeSDXLNode : ComfyNode
         TextG = AddInput<StringType>("text_g", required: true);
         TextL = AddInput<StringType>("text_l", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public CLIPTextEncodeSDXLNode With(
+        long? Width = null,
+        long? Height = null,
+        long? CropW = null,
+        long? CropH = null,
+        long? TargetWidth = null,
+        long? TargetHeight = null,
+        string? TextG = null,
+        string? TextL = null
+    )
+    {
+        if (Width is { } v_Width) this.Width.Set(v_Width);
+        if (Height is { } v_Height) this.Height.Set(v_Height);
+        if (CropW is { } v_CropW) this.CropW.Set(v_CropW);
+        if (CropH is { } v_CropH) this.CropH.Set(v_CropH);
+        if (TargetWidth is { } v_TargetWidth) this.TargetWidth.Set(v_TargetWidth);
+        if (TargetHeight is { } v_TargetHeight) this.TargetHeight.Set(v_TargetHeight);
+        if (TextG is { } v_TextG) this.TextG.Set(v_TextG);
+        if (TextL is { } v_TextL) this.TextL.Set(v_TextL);
+        return this;
+    }
 }

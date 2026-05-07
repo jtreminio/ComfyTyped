@@ -30,4 +30,21 @@ public sealed class CLIPTextEncodeHiDreamNode : ComfyNode
         T5xxl = AddInput<StringType>("t5xxl", required: true);
         Llama = AddInput<StringType>("llama", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public CLIPTextEncodeHiDreamNode With(
+        string? ClipL = null,
+        string? ClipG = null,
+        string? T5xxl = null,
+        string? Llama = null
+    )
+    {
+        if (ClipL is { } v_ClipL) this.ClipL.Set(v_ClipL);
+        if (ClipG is { } v_ClipG) this.ClipG.Set(v_ClipG);
+        if (T5xxl is { } v_T5xxl) this.T5xxl.Set(v_T5xxl);
+        if (Llama is { } v_Llama) this.Llama.Set(v_Llama);
+        return this;
+    }
 }

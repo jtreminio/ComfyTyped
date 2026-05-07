@@ -28,4 +28,15 @@ public sealed class TextEncodeQwenImageEditNode : ComfyNode
         Vae = AddInput<VaeType>("vae", required: false);
         Image = AddInput<ImageType>("image", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public TextEncodeQwenImageEditNode With(
+        string? Prompt = null
+    )
+    {
+        if (Prompt is { } v_Prompt) this.Prompt.Set(v_Prompt);
+        return this;
+    }
 }

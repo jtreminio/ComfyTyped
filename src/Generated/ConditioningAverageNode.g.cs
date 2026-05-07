@@ -27,4 +27,15 @@ public sealed class ConditioningAverageNode : ComfyNode
         ConditioningToStrength = AddInput<FloatType>("conditioning_to_strength", required: true);
         ConditioningToStrength.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ConditioningAverageNode With(
+        double? ConditioningToStrength = null
+    )
+    {
+        if (ConditioningToStrength is { } v_ConditioningToStrength) this.ConditioningToStrength.Set(v_ConditioningToStrength);
+        return this;
+    }
 }

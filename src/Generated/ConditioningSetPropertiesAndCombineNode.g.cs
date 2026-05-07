@@ -35,4 +35,17 @@ public sealed class ConditioningSetPropertiesAndCombineNode : ComfyNode
         Hooks = AddInput<HooksType>("hooks", required: false);
         Timesteps = AddInput<TimestepsRangeType>("timesteps", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ConditioningSetPropertiesAndCombineNode With(
+        double? Strength = null,
+        string? SetCondArea = null
+    )
+    {
+        if (Strength is { } v_Strength) this.Strength.Set(v_Strength);
+        if (SetCondArea is { } v_SetCondArea) this.SetCondArea.Set(v_SetCondArea);
+        return this;
+    }
 }

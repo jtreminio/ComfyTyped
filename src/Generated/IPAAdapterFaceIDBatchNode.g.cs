@@ -54,4 +54,27 @@ public sealed class IPAAdapterFaceIDBatchNode : ComfyNode
         ClipVision = AddInput<ClipVisionType>("clip_vision", required: false);
         Insightface = AddInput<InsightfaceType>("insightface", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public IPAAdapterFaceIDBatchNode With(
+        double? Weight = null,
+        double? WeightFaceidv2 = null,
+        string? WeightType = null,
+        string? CombineEmbeds = null,
+        double? StartAt = null,
+        double? EndAt = null,
+        string? EmbedsScaling = null
+    )
+    {
+        if (Weight is { } v_Weight) this.Weight.Set(v_Weight);
+        if (WeightFaceidv2 is { } v_WeightFaceidv2) this.WeightFaceidv2.Set(v_WeightFaceidv2);
+        if (WeightType is { } v_WeightType) this.WeightType.Set(v_WeightType);
+        if (CombineEmbeds is { } v_CombineEmbeds) this.CombineEmbeds.Set(v_CombineEmbeds);
+        if (StartAt is { } v_StartAt) this.StartAt.Set(v_StartAt);
+        if (EndAt is { } v_EndAt) this.EndAt.Set(v_EndAt);
+        if (EmbedsScaling is { } v_EmbedsScaling) this.EmbedsScaling.Set(v_EmbedsScaling);
+        return this;
+    }
 }

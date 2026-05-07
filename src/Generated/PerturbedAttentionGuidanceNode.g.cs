@@ -25,4 +25,15 @@ public sealed class PerturbedAttentionGuidanceNode : ComfyNode
         Scale = AddInput<FloatType>("scale", required: true);
         Scale.Set(3.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public PerturbedAttentionGuidanceNode With(
+        double? Scale = null
+    )
+    {
+        if (Scale is { } v_Scale) this.Scale.Set(v_Scale);
+        return this;
+    }
 }

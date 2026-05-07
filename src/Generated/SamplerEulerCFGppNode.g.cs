@@ -22,4 +22,15 @@ public sealed class SamplerEulerCFGppNode : ComfyNode
         SAMPLER = AddOutput<SamplerType>(0, "SAMPLER");
         Version = AddInput<StringType>("version", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SamplerEulerCFGppNode With(
+        string? Version = null
+    )
+    {
+        if (Version is { } v_Version) this.Version.Set(v_Version);
+        return this;
+    }
 }

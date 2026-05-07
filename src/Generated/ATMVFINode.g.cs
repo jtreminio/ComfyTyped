@@ -34,4 +34,21 @@ public sealed class ATMVFINode : ComfyNode
         GlobalMotion = AddInput<StringType>("global_motion", required: true);
         OptionalInterpolationStates = AddInput<InterpolationStatesType>("optional_interpolation_states", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ATMVFINode With(
+        string? CkptName = null,
+        long? ClearCacheAfterNFrames = null,
+        long? Multiplier = null,
+        string? GlobalMotion = null
+    )
+    {
+        if (CkptName is { } v_CkptName) this.CkptName.Set(v_CkptName);
+        if (ClearCacheAfterNFrames is { } v_ClearCacheAfterNFrames) this.ClearCacheAfterNFrames.Set(v_ClearCacheAfterNFrames);
+        if (Multiplier is { } v_Multiplier) this.Multiplier.Set(v_Multiplier);
+        if (GlobalMotion is { } v_GlobalMotion) this.GlobalMotion.Set(v_GlobalMotion);
+        return this;
+    }
 }

@@ -24,4 +24,17 @@ public sealed class IPAdapterInsightFaceLoaderNode : ComfyNode
         Provider = AddInput<StringType>("provider", required: true);
         ModelName = AddInput<StringType>("model_name", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public IPAdapterInsightFaceLoaderNode With(
+        string? Provider = null,
+        string? ModelName = null
+    )
+    {
+        if (Provider is { } v_Provider) this.Provider.Set(v_Provider);
+        if (ModelName is { } v_ModelName) this.ModelName.Set(v_ModelName);
+        return this;
+    }
 }

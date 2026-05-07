@@ -33,4 +33,19 @@ public sealed class CreateHookKeyframesFromFloatsNode : ComfyNode
         PrintKeyframes.Set(false);
         PrevHookKf = AddInput<HookKeyframesType>("prev_hook_kf", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public CreateHookKeyframesFromFloatsNode With(
+        double? StartPercent = null,
+        double? EndPercent = null,
+        bool? PrintKeyframes = null
+    )
+    {
+        if (StartPercent is { } v_StartPercent) this.StartPercent.Set(v_StartPercent);
+        if (EndPercent is { } v_EndPercent) this.EndPercent.Set(v_EndPercent);
+        if (PrintKeyframes is { } v_PrintKeyframes) this.PrintKeyframes.Set(v_PrintKeyframes);
+        return this;
+    }
 }

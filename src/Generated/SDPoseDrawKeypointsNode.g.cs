@@ -43,4 +43,27 @@ public sealed class SDPoseDrawKeypointsNode : ComfyNode
         ScoreThreshold = AddInput<FloatType>("score_threshold", required: true);
         ScoreThreshold.Set(0.3);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SDPoseDrawKeypointsNode With(
+        bool? DrawBody = null,
+        bool? DrawHands = null,
+        bool? DrawFace = null,
+        bool? DrawFeet = null,
+        long? StickWidth = null,
+        long? FacePointSize = null,
+        double? ScoreThreshold = null
+    )
+    {
+        if (DrawBody is { } v_DrawBody) this.DrawBody.Set(v_DrawBody);
+        if (DrawHands is { } v_DrawHands) this.DrawHands.Set(v_DrawHands);
+        if (DrawFace is { } v_DrawFace) this.DrawFace.Set(v_DrawFace);
+        if (DrawFeet is { } v_DrawFeet) this.DrawFeet.Set(v_DrawFeet);
+        if (StickWidth is { } v_StickWidth) this.StickWidth.Set(v_StickWidth);
+        if (FacePointSize is { } v_FacePointSize) this.FacePointSize.Set(v_FacePointSize);
+        if (ScoreThreshold is { } v_ScoreThreshold) this.ScoreThreshold.Set(v_ScoreThreshold);
+        return this;
+    }
 }

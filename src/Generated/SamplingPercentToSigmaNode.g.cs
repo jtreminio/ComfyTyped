@@ -28,4 +28,17 @@ public sealed class SamplingPercentToSigmaNode : ComfyNode
         ReturnActualSigma = AddInput<BooleanType>("return_actual_sigma", required: true);
         ReturnActualSigma.Set(false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SamplingPercentToSigmaNode With(
+        double? SamplingPercent = null,
+        bool? ReturnActualSigma = null
+    )
+    {
+        if (SamplingPercent is { } v_SamplingPercent) this.SamplingPercent.Set(v_SamplingPercent);
+        if (ReturnActualSigma is { } v_ReturnActualSigma) this.ReturnActualSigma.Set(v_ReturnActualSigma);
+        return this;
+    }
 }

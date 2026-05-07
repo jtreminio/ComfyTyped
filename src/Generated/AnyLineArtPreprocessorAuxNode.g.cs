@@ -40,4 +40,25 @@ public sealed class AnyLineArtPreprocessorAuxNode : ComfyNode
         ObjectConnectivity = AddInput<IntType>("object_connectivity", required: false);
         ObjectConnectivity.Set(1L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public AnyLineArtPreprocessorAuxNode With(
+        string? MergeWithLineart = null,
+        long? Resolution = null,
+        double? LineartLowerBound = null,
+        double? LineartUpperBound = null,
+        long? ObjectMinSize = null,
+        long? ObjectConnectivity = null
+    )
+    {
+        if (MergeWithLineart is { } v_MergeWithLineart) this.MergeWithLineart.Set(v_MergeWithLineart);
+        if (Resolution is { } v_Resolution) this.Resolution.Set(v_Resolution);
+        if (LineartLowerBound is { } v_LineartLowerBound) this.LineartLowerBound.Set(v_LineartLowerBound);
+        if (LineartUpperBound is { } v_LineartUpperBound) this.LineartUpperBound.Set(v_LineartUpperBound);
+        if (ObjectMinSize is { } v_ObjectMinSize) this.ObjectMinSize.Set(v_ObjectMinSize);
+        if (ObjectConnectivity is { } v_ObjectConnectivity) this.ObjectConnectivity.Set(v_ObjectConnectivity);
+        return this;
+    }
 }

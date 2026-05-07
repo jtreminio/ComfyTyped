@@ -25,4 +25,17 @@ public sealed class TruncateTextNode : ComfyNode
         MaxLength = AddInput<IntType>("max_length", required: true);
         MaxLength.Set(77L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public TruncateTextNode With(
+        string? TextsInput = null,
+        long? MaxLength = null
+    )
+    {
+        if (TextsInput is { } v_TextsInput) this.TextsInput.Set(v_TextsInput);
+        if (MaxLength is { } v_MaxLength) this.MaxLength.Set(v_MaxLength);
+        return this;
+    }
 }

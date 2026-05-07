@@ -31,4 +31,19 @@ public sealed class LTXVEmptyLatentAudioNode : ComfyNode
         BatchSize.Set(1L);
         AudioVae = AddInput<VaeType>("audio_vae", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public LTXVEmptyLatentAudioNode With(
+        long? FramesNumber = null,
+        long? FrameRate = null,
+        long? BatchSize = null
+    )
+    {
+        if (FramesNumber is { } v_FramesNumber) this.FramesNumber.Set(v_FramesNumber);
+        if (FrameRate is { } v_FrameRate) this.FrameRate.Set(v_FrameRate);
+        if (BatchSize is { } v_BatchSize) this.BatchSize.Set(v_BatchSize);
+        return this;
+    }
 }

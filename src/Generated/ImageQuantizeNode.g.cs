@@ -27,4 +27,17 @@ public sealed class ImageQuantizeNode : ComfyNode
         Colors.Set(256L);
         Dither = AddInput<StringType>("dither", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ImageQuantizeNode With(
+        long? Colors = null,
+        string? Dither = null
+    )
+    {
+        if (Colors is { } v_Colors) this.Colors.Set(v_Colors);
+        if (Dither is { } v_Dither) this.Dither.Set(v_Dither);
+        return this;
+    }
 }

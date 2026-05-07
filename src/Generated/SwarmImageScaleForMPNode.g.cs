@@ -32,4 +32,19 @@ public sealed class SwarmImageScaleForMPNode : ComfyNode
         CanShrink = AddInput<BooleanType>("can_shrink", required: true);
         CanShrink.Set(true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SwarmImageScaleForMPNode With(
+        long? Width = null,
+        long? Height = null,
+        bool? CanShrink = null
+    )
+    {
+        if (Width is { } v_Width) this.Width.Set(v_Width);
+        if (Height is { } v_Height) this.Height.Set(v_Height);
+        if (CanShrink is { } v_CanShrink) this.CanShrink.Set(v_CanShrink);
+        return this;
+    }
 }

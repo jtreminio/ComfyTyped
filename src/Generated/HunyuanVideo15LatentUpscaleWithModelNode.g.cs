@@ -35,4 +35,21 @@ public sealed class HunyuanVideo15LatentUpscaleWithModelNode : ComfyNode
         Height.Set(720L);
         Crop = AddInput<StringType>("crop", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public HunyuanVideo15LatentUpscaleWithModelNode With(
+        string? UpscaleMethod = null,
+        long? Width = null,
+        long? Height = null,
+        string? Crop = null
+    )
+    {
+        if (UpscaleMethod is { } v_UpscaleMethod) this.UpscaleMethod.Set(v_UpscaleMethod);
+        if (Width is { } v_Width) this.Width.Set(v_Width);
+        if (Height is { } v_Height) this.Height.Set(v_Height);
+        if (Crop is { } v_Crop) this.Crop.Set(v_Crop);
+        return this;
+    }
 }

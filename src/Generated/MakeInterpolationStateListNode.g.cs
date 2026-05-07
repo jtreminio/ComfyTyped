@@ -26,4 +26,17 @@ public sealed class MakeInterpolationStateListNode : ComfyNode
         IsSkipList = AddInput<BooleanType>("is_skip_list", required: true);
         IsSkipList.Set(true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public MakeInterpolationStateListNode With(
+        string? FrameIndices = null,
+        bool? IsSkipList = null
+    )
+    {
+        if (FrameIndices is { } v_FrameIndices) this.FrameIndices.Set(v_FrameIndices);
+        if (IsSkipList is { } v_IsSkipList) this.IsSkipList.Set(v_IsSkipList);
+        return this;
+    }
 }

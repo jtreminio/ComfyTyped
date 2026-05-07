@@ -22,4 +22,15 @@ public sealed class LTXVAudioVAELoaderNode : ComfyNode
         AudioVAE = AddOutput<VaeType>(0, "Audio VAE");
         CkptName = AddInput<StringType>("ckpt_name", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public LTXVAudioVAELoaderNode With(
+        string? CkptName = null
+    )
+    {
+        if (CkptName is { } v_CkptName) this.CkptName.Set(v_CkptName);
+        return this;
+    }
 }

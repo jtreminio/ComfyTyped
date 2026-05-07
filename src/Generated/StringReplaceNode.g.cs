@@ -26,4 +26,19 @@ public sealed class StringReplaceNode : ComfyNode
         Find = AddInput<StringType>("find", required: true);
         Replace = AddInput<StringType>("replace", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public StringReplaceNode With(
+        string? String = null,
+        string? Find = null,
+        string? Replace = null
+    )
+    {
+        if (String is { } v_String) this.String.Set(v_String);
+        if (Find is { } v_Find) this.Find.Set(v_Find);
+        if (Replace is { } v_Replace) this.Replace.Set(v_Replace);
+        return this;
+    }
 }

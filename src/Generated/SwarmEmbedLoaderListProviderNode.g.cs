@@ -23,4 +23,15 @@ public sealed class SwarmEmbedLoaderListProviderNode : ComfyNode
         EMBEDDING = AddOutput<EmbeddingType>(0, "EMBEDDING");
         EmbedName = AddInput<StringType>("embed_name", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SwarmEmbedLoaderListProviderNode With(
+        string? EmbedName = null
+    )
+    {
+        if (EmbedName is { } v_EmbedName) this.EmbedName.Set(v_EmbedName);
+        return this;
+    }
 }

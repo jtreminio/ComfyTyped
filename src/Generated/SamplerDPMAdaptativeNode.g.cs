@@ -50,4 +50,33 @@ public sealed class SamplerDPMAdaptativeNode : ComfyNode
         SNoise = AddInput<FloatType>("s_noise", required: true);
         SNoise.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SamplerDPMAdaptativeNode With(
+        long? Order = null,
+        double? Rtol = null,
+        double? Atol = null,
+        double? HInit = null,
+        double? Pcoeff = null,
+        double? Icoeff = null,
+        double? Dcoeff = null,
+        double? AcceptSafety = null,
+        double? Eta = null,
+        double? SNoise = null
+    )
+    {
+        if (Order is { } v_Order) this.Order.Set(v_Order);
+        if (Rtol is { } v_Rtol) this.Rtol.Set(v_Rtol);
+        if (Atol is { } v_Atol) this.Atol.Set(v_Atol);
+        if (HInit is { } v_HInit) this.HInit.Set(v_HInit);
+        if (Pcoeff is { } v_Pcoeff) this.Pcoeff.Set(v_Pcoeff);
+        if (Icoeff is { } v_Icoeff) this.Icoeff.Set(v_Icoeff);
+        if (Dcoeff is { } v_Dcoeff) this.Dcoeff.Set(v_Dcoeff);
+        if (AcceptSafety is { } v_AcceptSafety) this.AcceptSafety.Set(v_AcceptSafety);
+        if (Eta is { } v_Eta) this.Eta.Set(v_Eta);
+        if (SNoise is { } v_SNoise) this.SNoise.Set(v_SNoise);
+        return this;
+    }
 }

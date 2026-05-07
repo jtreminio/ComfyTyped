@@ -31,4 +31,19 @@ public sealed class PixelPerfectResolutionNode : ComfyNode
         ResizeMode = AddInput<StringType>("resize_mode", required: true);
         ResizeMode.Set("Just Resize");
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public PixelPerfectResolutionNode With(
+        long? ImageGenWidth = null,
+        long? ImageGenHeight = null,
+        string? ResizeMode = null
+    )
+    {
+        if (ImageGenWidth is { } v_ImageGenWidth) this.ImageGenWidth.Set(v_ImageGenWidth);
+        if (ImageGenHeight is { } v_ImageGenHeight) this.ImageGenHeight.Set(v_ImageGenHeight);
+        if (ResizeMode is { } v_ResizeMode) this.ResizeMode.Set(v_ResizeMode);
+        return this;
+    }
 }

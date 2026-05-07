@@ -31,4 +31,17 @@ public sealed class SwarmLoraLoaderNode : ComfyNode
         LoraNames = AddInput<StringType>("lora_names", required: true);
         LoraWeights = AddInput<StringType>("lora_weights", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SwarmLoraLoaderNode With(
+        string? LoraNames = null,
+        string? LoraWeights = null
+    )
+    {
+        if (LoraNames is { } v_LoraNames) this.LoraNames.Set(v_LoraNames);
+        if (LoraWeights is { } v_LoraWeights) this.LoraWeights.Set(v_LoraWeights);
+        return this;
+    }
 }

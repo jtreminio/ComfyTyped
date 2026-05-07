@@ -32,4 +32,21 @@ public sealed class VPSchedulerNode : ComfyNode
         EpsS = AddInput<FloatType>("eps_s", required: true);
         EpsS.Set(0.001);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public VPSchedulerNode With(
+        long? Steps = null,
+        double? BetaD = null,
+        double? BetaMin = null,
+        double? EpsS = null
+    )
+    {
+        if (Steps is { } v_Steps) this.Steps.Set(v_Steps);
+        if (BetaD is { } v_BetaD) this.BetaD.Set(v_BetaD);
+        if (BetaMin is { } v_BetaMin) this.BetaMin.Set(v_BetaMin);
+        if (EpsS is { } v_EpsS) this.EpsS.Set(v_EpsS);
+        return this;
+    }
 }

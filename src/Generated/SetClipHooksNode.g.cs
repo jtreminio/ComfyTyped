@@ -30,4 +30,17 @@ public sealed class SetClipHooksNode : ComfyNode
         ScheduleClip.Set(false);
         Hooks = AddInput<HooksType>("hooks", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SetClipHooksNode With(
+        bool? ApplyToConds = null,
+        bool? ScheduleClip = null
+    )
+    {
+        if (ApplyToConds is { } v_ApplyToConds) this.ApplyToConds.Set(v_ApplyToConds);
+        if (ScheduleClip is { } v_ScheduleClip) this.ScheduleClip.Set(v_ScheduleClip);
+        return this;
+    }
 }

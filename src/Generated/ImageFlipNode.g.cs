@@ -24,4 +24,15 @@ public sealed class ImageFlipNode : ComfyNode
         Image = AddInput<ImageType>("image", required: true);
         FlipMethod = AddInput<StringType>("flip_method", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ImageFlipNode With(
+        string? FlipMethod = null
+    )
+    {
+        if (FlipMethod is { } v_FlipMethod) this.FlipMethod.Set(v_FlipMethod);
+        return this;
+    }
 }

@@ -52,4 +52,33 @@ public sealed class ContextWindowsManualNode : ComfyNode
         SplitCondsToWindows = AddInput<BooleanType>("split_conds_to_windows", required: true);
         SplitCondsToWindows.Set(false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ContextWindowsManualNode With(
+        long? ContextLength = null,
+        long? ContextOverlap = null,
+        string? ContextSchedule = null,
+        long? ContextStride = null,
+        bool? ClosedLoop = null,
+        string? FuseMethod = null,
+        long? Dim = null,
+        bool? Freenoise = null,
+        string? CondRetainIndexList = null,
+        bool? SplitCondsToWindows = null
+    )
+    {
+        if (ContextLength is { } v_ContextLength) this.ContextLength.Set(v_ContextLength);
+        if (ContextOverlap is { } v_ContextOverlap) this.ContextOverlap.Set(v_ContextOverlap);
+        if (ContextSchedule is { } v_ContextSchedule) this.ContextSchedule.Set(v_ContextSchedule);
+        if (ContextStride is { } v_ContextStride) this.ContextStride.Set(v_ContextStride);
+        if (ClosedLoop is { } v_ClosedLoop) this.ClosedLoop.Set(v_ClosedLoop);
+        if (FuseMethod is { } v_FuseMethod) this.FuseMethod.Set(v_FuseMethod);
+        if (Dim is { } v_Dim) this.Dim.Set(v_Dim);
+        if (Freenoise is { } v_Freenoise) this.Freenoise.Set(v_Freenoise);
+        if (CondRetainIndexList is { } v_CondRetainIndexList) this.CondRetainIndexList.Set(v_CondRetainIndexList);
+        if (SplitCondsToWindows is { } v_SplitCondsToWindows) this.SplitCondsToWindows.Set(v_SplitCondsToWindows);
+        return this;
+    }
 }

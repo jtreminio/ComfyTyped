@@ -33,4 +33,19 @@ public sealed class IPAdapterUnifiedLoaderFaceIDNode : ComfyNode
         Provider = AddInput<StringType>("provider", required: true);
         IpadapterInput = AddInput<IpAdapterType>("ipadapter", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public IPAdapterUnifiedLoaderFaceIDNode With(
+        string? Preset = null,
+        double? LoraStrength = null,
+        string? Provider = null
+    )
+    {
+        if (Preset is { } v_Preset) this.Preset.Set(v_Preset);
+        if (LoraStrength is { } v_LoraStrength) this.LoraStrength.Set(v_LoraStrength);
+        if (Provider is { } v_Provider) this.Provider.Set(v_Provider);
+        return this;
+    }
 }

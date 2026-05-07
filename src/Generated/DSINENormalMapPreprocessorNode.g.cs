@@ -31,4 +31,19 @@ public sealed class DSINENormalMapPreprocessorNode : ComfyNode
         Resolution = AddInput<IntType>("resolution", required: false);
         Resolution.Set(512L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public DSINENormalMapPreprocessorNode With(
+        double? Fov = null,
+        long? Iterations = null,
+        long? Resolution = null
+    )
+    {
+        if (Fov is { } v_Fov) this.Fov.Set(v_Fov);
+        if (Iterations is { } v_Iterations) this.Iterations.Set(v_Iterations);
+        if (Resolution is { } v_Resolution) this.Resolution.Set(v_Resolution);
+        return this;
+    }
 }

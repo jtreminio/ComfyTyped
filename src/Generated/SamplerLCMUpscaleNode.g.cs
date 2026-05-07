@@ -28,4 +28,19 @@ public sealed class SamplerLCMUpscaleNode : ComfyNode
         ScaleSteps.Set(-1L);
         UpscaleMethod = AddInput<StringType>("upscale_method", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SamplerLCMUpscaleNode With(
+        double? ScaleRatio = null,
+        long? ScaleSteps = null,
+        string? UpscaleMethod = null
+    )
+    {
+        if (ScaleRatio is { } v_ScaleRatio) this.ScaleRatio.Set(v_ScaleRatio);
+        if (ScaleSteps is { } v_ScaleSteps) this.ScaleSteps.Set(v_ScaleSteps);
+        if (UpscaleMethod is { } v_UpscaleMethod) this.UpscaleMethod.Set(v_UpscaleMethod);
+        return this;
+    }
 }

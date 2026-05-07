@@ -657,6 +657,31 @@ public static partial class Program
             }
         }
         sb.AppendLine("    }");
+
+        List<InputDef> primitiveInputs = node.Inputs.Where(i => i.IsPrimitive).ToList();
+        if (primitiveInputs.Count > 0)
+        {
+            sb.AppendLine();
+            sb.AppendLine("    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.");
+            sb.AppendLine("    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.");
+            sb.AppendLine("    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>");
+            sb.AppendLine($"    public {node.ClassName} With(");
+            for (int i = 0; i < primitiveInputs.Count; i++)
+            {
+                InputDef p = primitiveInputs[i];
+                string sep = i == primitiveInputs.Count - 1 ? "" : ",";
+                sb.AppendLine($"        {p.CSharpType}? {p.PropertyName} = null{sep}");
+            }
+            sb.AppendLine("    )");
+            sb.AppendLine("    {");
+            foreach (InputDef p in primitiveInputs)
+            {
+                sb.AppendLine($"        if ({p.PropertyName} is {{ }} v_{p.PropertyName}) this.{p.PropertyName}.Set(v_{p.PropertyName});");
+            }
+            sb.AppendLine("        return this;");
+            sb.AppendLine("    }");
+        }
+
         sb.AppendLine("}");
 
         return sb.ToString();

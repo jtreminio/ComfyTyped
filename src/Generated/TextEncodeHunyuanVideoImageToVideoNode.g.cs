@@ -29,4 +29,17 @@ public sealed class TextEncodeHunyuanVideoImageToVideoNode : ComfyNode
         ImageInterleave = AddInput<IntType>("image_interleave", required: true);
         ImageInterleave.Set(2L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public TextEncodeHunyuanVideoImageToVideoNode With(
+        string? Prompt = null,
+        long? ImageInterleave = null
+    )
+    {
+        if (Prompt is { } v_Prompt) this.Prompt.Set(v_Prompt);
+        if (ImageInterleave is { } v_ImageInterleave) this.ImageInterleave.Set(v_ImageInterleave);
+        return this;
+    }
 }

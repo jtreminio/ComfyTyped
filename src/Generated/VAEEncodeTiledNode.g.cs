@@ -36,4 +36,21 @@ public sealed class VAEEncodeTiledNode : ComfyNode
         TemporalOverlap = AddInput<IntType>("temporal_overlap", required: true);
         TemporalOverlap.Set(8L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public VAEEncodeTiledNode With(
+        long? TileSize = null,
+        long? Overlap = null,
+        long? TemporalSize = null,
+        long? TemporalOverlap = null
+    )
+    {
+        if (TileSize is { } v_TileSize) this.TileSize.Set(v_TileSize);
+        if (Overlap is { } v_Overlap) this.Overlap.Set(v_Overlap);
+        if (TemporalSize is { } v_TemporalSize) this.TemporalSize.Set(v_TemporalSize);
+        if (TemporalOverlap is { } v_TemporalOverlap) this.TemporalOverlap.Set(v_TemporalOverlap);
+        return this;
+    }
 }

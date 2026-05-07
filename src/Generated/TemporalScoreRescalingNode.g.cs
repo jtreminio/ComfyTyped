@@ -35,4 +35,17 @@ public sealed class TemporalScoreRescalingNode : ComfyNode
         TsrSigma = AddInput<FloatType>("tsr_sigma", required: true);
         TsrSigma.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public TemporalScoreRescalingNode With(
+        double? TsrK = null,
+        double? TsrSigma = null
+    )
+    {
+        if (TsrK is { } v_TsrK) this.TsrK.Set(v_TsrK);
+        if (TsrSigma is { } v_TsrSigma) this.TsrSigma.Set(v_TsrSigma);
+        return this;
+    }
 }

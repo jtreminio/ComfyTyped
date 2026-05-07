@@ -29,4 +29,15 @@ public sealed class VAEEncodeForInpaintNode : ComfyNode
         GrowMaskBy = AddInput<IntType>("grow_mask_by", required: true);
         GrowMaskBy.Set(6L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public VAEEncodeForInpaintNode With(
+        long? GrowMaskBy = null
+    )
+    {
+        if (GrowMaskBy is { } v_GrowMaskBy) this.GrowMaskBy.Set(v_GrowMaskBy);
+        return this;
+    }
 }

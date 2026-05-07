@@ -22,4 +22,15 @@ public sealed class TextToLowercaseNode : ComfyNode
         Texts = AddOutput<StringType>(0, "texts");
         TextsInput = AddInput<StringType>("texts", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public TextToLowercaseNode With(
+        string? TextsInput = null
+    )
+    {
+        if (TextsInput is { } v_TextsInput) this.TextsInput.Set(v_TextsInput);
+        return this;
+    }
 }

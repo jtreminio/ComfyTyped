@@ -31,4 +31,21 @@ public sealed class LoraSaveNode : ComfyNode
         ModelDiff = AddInput<ModelType>("model_diff", required: false);
         TextEncoderDiff = AddInput<ClipType>("text_encoder_diff", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public LoraSaveNode With(
+        string? FilenamePrefix = null,
+        long? Rank = null,
+        string? LoraType = null,
+        bool? BiasDiff = null
+    )
+    {
+        if (FilenamePrefix is { } v_FilenamePrefix) this.FilenamePrefix.Set(v_FilenamePrefix);
+        if (Rank is { } v_Rank) this.Rank.Set(v_Rank);
+        if (LoraType is { } v_LoraType) this.LoraType.Set(v_LoraType);
+        if (BiasDiff is { } v_BiasDiff) this.BiasDiff.Set(v_BiasDiff);
+        return this;
+    }
 }

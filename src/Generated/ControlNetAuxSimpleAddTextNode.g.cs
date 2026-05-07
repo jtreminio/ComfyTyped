@@ -25,4 +25,15 @@ public sealed class ControlNetAuxSimpleAddTextNode : ComfyNode
         Text = AddInput<StringType>("text", required: true);
         Text.Set("");
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ControlNetAuxSimpleAddTextNode With(
+        string? Text = null
+    )
+    {
+        if (Text is { } v_Text) this.Text.Set(v_Text);
+        return this;
+    }
 }

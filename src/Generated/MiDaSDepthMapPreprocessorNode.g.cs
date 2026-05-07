@@ -31,4 +31,19 @@ public sealed class MiDaSDepthMapPreprocessorNode : ComfyNode
         Resolution = AddInput<IntType>("resolution", required: false);
         Resolution.Set(512L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public MiDaSDepthMapPreprocessorNode With(
+        double? A = null,
+        double? BgThreshold = null,
+        long? Resolution = null
+    )
+    {
+        if (A is { } v_A) this.A.Set(v_A);
+        if (BgThreshold is { } v_BgThreshold) this.BgThreshold.Set(v_BgThreshold);
+        if (Resolution is { } v_Resolution) this.Resolution.Set(v_Resolution);
+        return this;
+    }
 }

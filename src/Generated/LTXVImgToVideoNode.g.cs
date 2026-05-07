@@ -47,4 +47,23 @@ public sealed class LTXVImgToVideoNode : ComfyNode
         Strength = AddInput<FloatType>("strength", required: true);
         Strength.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public LTXVImgToVideoNode With(
+        long? Width = null,
+        long? Height = null,
+        long? Length = null,
+        long? BatchSize = null,
+        double? Strength = null
+    )
+    {
+        if (Width is { } v_Width) this.Width.Set(v_Width);
+        if (Height is { } v_Height) this.Height.Set(v_Height);
+        if (Length is { } v_Length) this.Length.Set(v_Length);
+        if (BatchSize is { } v_BatchSize) this.BatchSize.Set(v_BatchSize);
+        if (Strength is { } v_Strength) this.Strength.Set(v_Strength);
+        return this;
+    }
 }

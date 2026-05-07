@@ -37,4 +37,23 @@ public sealed class SwarmExtractLoraNode : ComfyNode
         SaveClip.Set(true);
         Metadata = AddInput<StringType>("metadata", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SwarmExtractLoraNode With(
+        long? Rank = null,
+        string? SaveRawpath = null,
+        string? SaveFilename = null,
+        bool? SaveClip = null,
+        string? Metadata = null
+    )
+    {
+        if (Rank is { } v_Rank) this.Rank.Set(v_Rank);
+        if (SaveRawpath is { } v_SaveRawpath) this.SaveRawpath.Set(v_SaveRawpath);
+        if (SaveFilename is { } v_SaveFilename) this.SaveFilename.Set(v_SaveFilename);
+        if (SaveClip is { } v_SaveClip) this.SaveClip.Set(v_SaveClip);
+        if (Metadata is { } v_Metadata) this.Metadata.Set(v_Metadata);
+        return this;
+    }
 }

@@ -35,4 +35,23 @@ public sealed class LaplaceSchedulerNode : ComfyNode
         Beta = AddInput<FloatType>("beta", required: true);
         Beta.Set(0.5);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public LaplaceSchedulerNode With(
+        long? Steps = null,
+        double? SigmaMax = null,
+        double? SigmaMin = null,
+        double? Mu = null,
+        double? Beta = null
+    )
+    {
+        if (Steps is { } v_Steps) this.Steps.Set(v_Steps);
+        if (SigmaMax is { } v_SigmaMax) this.SigmaMax.Set(v_SigmaMax);
+        if (SigmaMin is { } v_SigmaMin) this.SigmaMin.Set(v_SigmaMin);
+        if (Mu is { } v_Mu) this.Mu.Set(v_Mu);
+        if (Beta is { } v_Beta) this.Beta.Set(v_Beta);
+        return this;
+    }
 }

@@ -26,4 +26,17 @@ public sealed class SAM3TrackPreviewNode : ComfyNode
         Fps.Set(24.0);
         Images = AddInput<ImageType>("images", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SAM3TrackPreviewNode With(
+        double? Opacity = null,
+        double? Fps = null
+    )
+    {
+        if (Opacity is { } v_Opacity) this.Opacity.Set(v_Opacity);
+        if (Fps is { } v_Fps) this.Fps.Set(v_Fps);
+        return this;
+    }
 }

@@ -29,4 +29,17 @@ public sealed class SwarmTrimFramesNode : ComfyNode
         TrimEnd = AddInput<IntType>("trim_end", required: true);
         TrimEnd.Set(0L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SwarmTrimFramesNode With(
+        long? TrimStart = null,
+        long? TrimEnd = null
+    )
+    {
+        if (TrimStart is { } v_TrimStart) this.TrimStart.Set(v_TrimStart);
+        if (TrimEnd is { } v_TrimEnd) this.TrimEnd.Set(v_TrimEnd);
+        return this;
+    }
 }

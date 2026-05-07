@@ -22,4 +22,15 @@ public sealed class KSamplerSelectNode : ComfyNode
         SAMPLER = AddOutput<SamplerType>(0, "SAMPLER");
         SamplerName = AddInput<StringType>("sampler_name", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public KSamplerSelectNode With(
+        string? SamplerName = null
+    )
+    {
+        if (SamplerName is { } v_SamplerName) this.SamplerName.Set(v_SamplerName);
+        return this;
+    }
 }

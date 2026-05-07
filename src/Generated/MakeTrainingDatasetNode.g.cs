@@ -30,4 +30,15 @@ public sealed class MakeTrainingDatasetNode : ComfyNode
         Clip = AddInput<ClipType>("clip", required: true);
         Texts = AddInput<StringType>("texts", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public MakeTrainingDatasetNode With(
+        string? Texts = null
+    )
+    {
+        if (Texts is { } v_Texts) this.Texts.Set(v_Texts);
+        return this;
+    }
 }

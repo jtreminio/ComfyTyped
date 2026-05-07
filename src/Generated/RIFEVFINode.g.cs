@@ -51,4 +51,31 @@ public sealed class RIFEVFINode : ComfyNode
         BatchSize.Set(1L);
         OptionalInterpolationStates = AddInput<InterpolationStatesType>("optional_interpolation_states", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public RIFEVFINode With(
+        string? CkptName = null,
+        long? ClearCacheAfterNFrames = null,
+        long? Multiplier = null,
+        bool? FastMode = null,
+        bool? Ensemble = null,
+        string? ScaleFactor = null,
+        string? Dtype = null,
+        bool? TorchCompile = null,
+        long? BatchSize = null
+    )
+    {
+        if (CkptName is { } v_CkptName) this.CkptName.Set(v_CkptName);
+        if (ClearCacheAfterNFrames is { } v_ClearCacheAfterNFrames) this.ClearCacheAfterNFrames.Set(v_ClearCacheAfterNFrames);
+        if (Multiplier is { } v_Multiplier) this.Multiplier.Set(v_Multiplier);
+        if (FastMode is { } v_FastMode) this.FastMode.Set(v_FastMode);
+        if (Ensemble is { } v_Ensemble) this.Ensemble.Set(v_Ensemble);
+        if (ScaleFactor is { } v_ScaleFactor) this.ScaleFactor.Set(v_ScaleFactor);
+        if (Dtype is { } v_Dtype) this.Dtype.Set(v_Dtype);
+        if (TorchCompile is { } v_TorchCompile) this.TorchCompile.Set(v_TorchCompile);
+        if (BatchSize is { } v_BatchSize) this.BatchSize.Set(v_BatchSize);
+        return this;
+    }
 }

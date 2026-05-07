@@ -30,4 +30,19 @@ public sealed class LatentCutNode : ComfyNode
         Amount = AddInput<IntType>("amount", required: true);
         Amount.Set(1L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public LatentCutNode With(
+        string? Dim = null,
+        long? Index = null,
+        long? Amount = null
+    )
+    {
+        if (Dim is { } v_Dim) this.Dim.Set(v_Dim);
+        if (Index is { } v_Index) this.Index.Set(v_Index);
+        if (Amount is { } v_Amount) this.Amount.Set(v_Amount);
+        return this;
+    }
 }

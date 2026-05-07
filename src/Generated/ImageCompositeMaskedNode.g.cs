@@ -35,4 +35,19 @@ public sealed class ImageCompositeMaskedNode : ComfyNode
         ResizeSource.Set(false);
         Mask = AddInput<MaskType>("mask", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ImageCompositeMaskedNode With(
+        long? X = null,
+        long? Y = null,
+        bool? ResizeSource = null
+    )
+    {
+        if (X is { } v_X) this.X.Set(v_X);
+        if (Y is { } v_Y) this.Y.Set(v_Y);
+        if (ResizeSource is { } v_ResizeSource) this.ResizeSource.Set(v_ResizeSource);
+        return this;
+    }
 }

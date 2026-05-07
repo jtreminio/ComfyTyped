@@ -27,4 +27,15 @@ public sealed class FrameInterpolateNode : ComfyNode
         Multiplier = AddInput<IntType>("multiplier", required: true);
         Multiplier.Set(2L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public FrameInterpolateNode With(
+        long? Multiplier = null
+    )
+    {
+        if (Multiplier is { } v_Multiplier) this.Multiplier.Set(v_Multiplier);
+        return this;
+    }
 }

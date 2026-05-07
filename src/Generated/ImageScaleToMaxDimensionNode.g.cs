@@ -27,4 +27,17 @@ public sealed class ImageScaleToMaxDimensionNode : ComfyNode
         LargestSize = AddInput<IntType>("largest_size", required: true);
         LargestSize.Set(512L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ImageScaleToMaxDimensionNode With(
+        string? UpscaleMethod = null,
+        long? LargestSize = null
+    )
+    {
+        if (UpscaleMethod is { } v_UpscaleMethod) this.UpscaleMethod.Set(v_UpscaleMethod);
+        if (LargestSize is { } v_LargestSize) this.LargestSize.Set(v_LargestSize);
+        return this;
+    }
 }

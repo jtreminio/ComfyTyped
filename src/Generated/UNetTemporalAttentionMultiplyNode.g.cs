@@ -34,4 +34,21 @@ public sealed class UNetTemporalAttentionMultiplyNode : ComfyNode
         CrossTemporal = AddInput<FloatType>("cross_temporal", required: true);
         CrossTemporal.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public UNetTemporalAttentionMultiplyNode With(
+        double? SelfStructural = null,
+        double? SelfTemporal = null,
+        double? CrossStructural = null,
+        double? CrossTemporal = null
+    )
+    {
+        if (SelfStructural is { } v_SelfStructural) this.SelfStructural.Set(v_SelfStructural);
+        if (SelfTemporal is { } v_SelfTemporal) this.SelfTemporal.Set(v_SelfTemporal);
+        if (CrossStructural is { } v_CrossStructural) this.CrossStructural.Set(v_CrossStructural);
+        if (CrossTemporal is { } v_CrossTemporal) this.CrossTemporal.Set(v_CrossTemporal);
+        return this;
+    }
 }

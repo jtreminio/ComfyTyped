@@ -30,4 +30,17 @@ public sealed class VAEDecodeHunyuan3DNode : ComfyNode
         OctreeResolution = AddInput<IntType>("octree_resolution", required: true);
         OctreeResolution.Set(256L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public VAEDecodeHunyuan3DNode With(
+        long? NumChunks = null,
+        long? OctreeResolution = null
+    )
+    {
+        if (NumChunks is { } v_NumChunks) this.NumChunks.Set(v_NumChunks);
+        if (OctreeResolution is { } v_OctreeResolution) this.OctreeResolution.Set(v_OctreeResolution);
+        return this;
+    }
 }

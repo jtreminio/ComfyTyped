@@ -37,4 +37,19 @@ public sealed class SAM3VideoTrackNode : ComfyNode
         InitialMask = AddInput<MaskType>("initial_mask", required: false);
         Conditioning = AddInput<ConditioningType>("conditioning", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SAM3VideoTrackNode With(
+        double? DetectionThreshold = null,
+        long? MaxObjects = null,
+        long? DetectInterval = null
+    )
+    {
+        if (DetectionThreshold is { } v_DetectionThreshold) this.DetectionThreshold.Set(v_DetectionThreshold);
+        if (MaxObjects is { } v_MaxObjects) this.MaxObjects.Set(v_MaxObjects);
+        if (DetectInterval is { } v_DetectInterval) this.DetectInterval.Set(v_DetectInterval);
+        return this;
+    }
 }

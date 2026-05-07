@@ -35,4 +35,21 @@ public sealed class ChromaRadianceOptionsNode : ComfyNode
         NerfTileSize = AddInput<IntType>("nerf_tile_size", required: true);
         NerfTileSize.Set(-1L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ChromaRadianceOptionsNode With(
+        bool? PreserveWrapper = null,
+        double? StartSigma = null,
+        double? EndSigma = null,
+        long? NerfTileSize = null
+    )
+    {
+        if (PreserveWrapper is { } v_PreserveWrapper) this.PreserveWrapper.Set(v_PreserveWrapper);
+        if (StartSigma is { } v_StartSigma) this.StartSigma.Set(v_StartSigma);
+        if (EndSigma is { } v_EndSigma) this.EndSigma.Set(v_EndSigma);
+        if (NerfTileSize is { } v_NerfTileSize) this.NerfTileSize.Set(v_NerfTileSize);
+        return this;
+    }
 }

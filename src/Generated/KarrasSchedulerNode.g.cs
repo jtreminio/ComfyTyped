@@ -32,4 +32,21 @@ public sealed class KarrasSchedulerNode : ComfyNode
         Rho = AddInput<FloatType>("rho", required: true);
         Rho.Set(7.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public KarrasSchedulerNode With(
+        long? Steps = null,
+        double? SigmaMax = null,
+        double? SigmaMin = null,
+        double? Rho = null
+    )
+    {
+        if (Steps is { } v_Steps) this.Steps.Set(v_Steps);
+        if (SigmaMax is { } v_SigmaMax) this.SigmaMax.Set(v_SigmaMax);
+        if (SigmaMin is { } v_SigmaMin) this.SigmaMin.Set(v_SigmaMin);
+        if (Rho is { } v_Rho) this.Rho.Set(v_Rho);
+        return this;
+    }
 }

@@ -41,4 +41,25 @@ public sealed class ScaleROPENode : ComfyNode
         ShiftT = AddInput<FloatType>("shift_t", required: true);
         ShiftT.Set(0.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ScaleROPENode With(
+        double? ScaleX = null,
+        double? ShiftX = null,
+        double? ScaleY = null,
+        double? ShiftY = null,
+        double? ScaleT = null,
+        double? ShiftT = null
+    )
+    {
+        if (ScaleX is { } v_ScaleX) this.ScaleX.Set(v_ScaleX);
+        if (ShiftX is { } v_ShiftX) this.ShiftX.Set(v_ShiftX);
+        if (ScaleY is { } v_ScaleY) this.ScaleY.Set(v_ScaleY);
+        if (ShiftY is { } v_ShiftY) this.ShiftY.Set(v_ShiftY);
+        if (ScaleT is { } v_ScaleT) this.ScaleT.Set(v_ScaleT);
+        if (ShiftT is { } v_ShiftT) this.ShiftT.Set(v_ShiftT);
+        return this;
+    }
 }

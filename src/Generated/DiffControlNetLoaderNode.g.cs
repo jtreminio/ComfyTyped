@@ -24,4 +24,15 @@ public sealed class DiffControlNetLoaderNode : ComfyNode
         Model = AddInput<ModelType>("model", required: true);
         ControlNetName = AddInput<StringType>("control_net_name", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public DiffControlNetLoaderNode With(
+        string? ControlNetName = null
+    )
+    {
+        if (ControlNetName is { } v_ControlNetName) this.ControlNetName.Set(v_ControlNetName);
+        return this;
+    }
 }

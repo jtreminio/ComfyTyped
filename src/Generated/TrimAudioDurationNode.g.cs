@@ -29,4 +29,17 @@ public sealed class TrimAudioDurationNode : ComfyNode
         Duration = AddInput<FloatType>("duration", required: true);
         Duration.Set(60.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public TrimAudioDurationNode With(
+        double? StartIndex = null,
+        double? Duration = null
+    )
+    {
+        if (StartIndex is { } v_StartIndex) this.StartIndex.Set(v_StartIndex);
+        if (Duration is { } v_Duration) this.Duration.Set(v_Duration);
+        return this;
+    }
 }

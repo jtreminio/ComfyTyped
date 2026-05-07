@@ -25,4 +25,17 @@ public sealed class AddTextPrefixNode : ComfyNode
         Prefix = AddInput<StringType>("prefix", required: true);
         Prefix.Set("");
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public AddTextPrefixNode With(
+        string? TextsInput = null,
+        string? Prefix = null
+    )
+    {
+        if (TextsInput is { } v_TextsInput) this.TextsInput.Set(v_TextsInput);
+        if (Prefix is { } v_Prefix) this.Prefix.Set(v_Prefix);
+        return this;
+    }
 }

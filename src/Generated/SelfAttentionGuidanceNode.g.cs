@@ -28,4 +28,17 @@ public sealed class SelfAttentionGuidanceNode : ComfyNode
         BlurSigma = AddInput<FloatType>("blur_sigma", required: true);
         BlurSigma.Set(2.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SelfAttentionGuidanceNode With(
+        double? Scale = null,
+        double? BlurSigma = null
+    )
+    {
+        if (Scale is { } v_Scale) this.Scale.Set(v_Scale);
+        if (BlurSigma is { } v_BlurSigma) this.BlurSigma.Set(v_BlurSigma);
+        return this;
+    }
 }

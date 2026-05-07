@@ -28,4 +28,21 @@ public sealed class QuadrupleCLIPLoaderGGUFNode : ComfyNode
         ClipName3 = AddInput<StringType>("clip_name3", required: true);
         ClipName4 = AddInput<StringType>("clip_name4", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public QuadrupleCLIPLoaderGGUFNode With(
+        string? ClipName1 = null,
+        string? ClipName2 = null,
+        string? ClipName3 = null,
+        string? ClipName4 = null
+    )
+    {
+        if (ClipName1 is { } v_ClipName1) this.ClipName1.Set(v_ClipName1);
+        if (ClipName2 is { } v_ClipName2) this.ClipName2.Set(v_ClipName2);
+        if (ClipName3 is { } v_ClipName3) this.ClipName3.Set(v_ClipName3);
+        if (ClipName4 is { } v_ClipName4) this.ClipName4.Set(v_ClipName4);
+        return this;
+    }
 }

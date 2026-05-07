@@ -48,4 +48,25 @@ public sealed class SVDImg2vidConditioningNode : ComfyNode
         AugmentationLevel = AddInput<FloatType>("augmentation_level", required: true);
         AugmentationLevel.Set(0.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SVDImg2vidConditioningNode With(
+        long? Width = null,
+        long? Height = null,
+        long? VideoFrames = null,
+        long? MotionBucketId = null,
+        long? Fps = null,
+        double? AugmentationLevel = null
+    )
+    {
+        if (Width is { } v_Width) this.Width.Set(v_Width);
+        if (Height is { } v_Height) this.Height.Set(v_Height);
+        if (VideoFrames is { } v_VideoFrames) this.VideoFrames.Set(v_VideoFrames);
+        if (MotionBucketId is { } v_MotionBucketId) this.MotionBucketId.Set(v_MotionBucketId);
+        if (Fps is { } v_Fps) this.Fps.Set(v_Fps);
+        if (AugmentationLevel is { } v_AugmentationLevel) this.AugmentationLevel.Set(v_AugmentationLevel);
+        return this;
+    }
 }

@@ -23,4 +23,15 @@ public sealed class Preview3DNode : ComfyNode
         CameraInfo = AddInput<Load3dCameraType>("camera_info", required: false);
         BgImage = AddInput<ImageType>("bg_image", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public Preview3DNode With(
+        string? ModelFile = null
+    )
+    {
+        if (ModelFile is { } v_ModelFile) this.ModelFile.Set(v_ModelFile);
+        return this;
+    }
 }

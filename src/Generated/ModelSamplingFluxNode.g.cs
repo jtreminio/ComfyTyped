@@ -34,4 +34,21 @@ public sealed class ModelSamplingFluxNode : ComfyNode
         Height = AddInput<IntType>("height", required: true);
         Height.Set(1024L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ModelSamplingFluxNode With(
+        double? MaxShift = null,
+        double? BaseShift = null,
+        long? Width = null,
+        long? Height = null
+    )
+    {
+        if (MaxShift is { } v_MaxShift) this.MaxShift.Set(v_MaxShift);
+        if (BaseShift is { } v_BaseShift) this.BaseShift.Set(v_BaseShift);
+        if (Width is { } v_Width) this.Width.Set(v_Width);
+        if (Height is { } v_Height) this.Height.Set(v_Height);
+        return this;
+    }
 }

@@ -22,4 +22,15 @@ public sealed class CreateListNode : ComfyNode
         List = AddOutput<ComfyMatchTypeV3>(0, "list");
         Inputs = AddInput<StringType>("inputs", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public CreateListNode With(
+        string? Inputs = null
+    )
+    {
+        if (Inputs is { } v_Inputs) this.Inputs.Set(v_Inputs);
+        return this;
+    }
 }

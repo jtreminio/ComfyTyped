@@ -28,4 +28,17 @@ public sealed class RenormCFGNode : ComfyNode
         RenormCfg = AddInput<FloatType>("renorm_cfg", required: true);
         RenormCfg.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public RenormCFGNode With(
+        double? CfgTrunc = null,
+        double? RenormCfg = null
+    )
+    {
+        if (CfgTrunc is { } v_CfgTrunc) this.CfgTrunc.Set(v_CfgTrunc);
+        if (RenormCfg is { } v_RenormCfg) this.RenormCfg.Set(v_RenormCfg);
+        return this;
+    }
 }

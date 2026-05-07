@@ -27,4 +27,15 @@ public sealed class SplitSigmasDenoiseNode : ComfyNode
         Denoise = AddInput<FloatType>("denoise", required: true);
         Denoise.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SplitSigmasDenoiseNode With(
+        double? Denoise = null
+    )
+    {
+        if (Denoise is { } v_Denoise) this.Denoise.Set(v_Denoise);
+        return this;
+    }
 }

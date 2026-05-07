@@ -43,4 +43,27 @@ public sealed class WanContextWindowsManualNode : ComfyNode
         Freenoise = AddInput<BooleanType>("freenoise", required: true);
         Freenoise.Set(false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public WanContextWindowsManualNode With(
+        long? ContextLength = null,
+        long? ContextOverlap = null,
+        string? ContextSchedule = null,
+        long? ContextStride = null,
+        bool? ClosedLoop = null,
+        string? FuseMethod = null,
+        bool? Freenoise = null
+    )
+    {
+        if (ContextLength is { } v_ContextLength) this.ContextLength.Set(v_ContextLength);
+        if (ContextOverlap is { } v_ContextOverlap) this.ContextOverlap.Set(v_ContextOverlap);
+        if (ContextSchedule is { } v_ContextSchedule) this.ContextSchedule.Set(v_ContextSchedule);
+        if (ContextStride is { } v_ContextStride) this.ContextStride.Set(v_ContextStride);
+        if (ClosedLoop is { } v_ClosedLoop) this.ClosedLoop.Set(v_ClosedLoop);
+        if (FuseMethod is { } v_FuseMethod) this.FuseMethod.Set(v_FuseMethod);
+        if (Freenoise is { } v_Freenoise) this.Freenoise.Set(v_Freenoise);
+        return this;
+    }
 }

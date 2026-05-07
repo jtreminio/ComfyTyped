@@ -40,4 +40,21 @@ public sealed class SUPIRApplyNode : ComfyNode
         RestoreCfgSTmin = AddInput<FloatType>("restore_cfg_s_tmin", required: true);
         RestoreCfgSTmin.Set(0.05);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SUPIRApplyNode With(
+        double? StrengthStart = null,
+        double? StrengthEnd = null,
+        double? RestoreCfg = null,
+        double? RestoreCfgSTmin = null
+    )
+    {
+        if (StrengthStart is { } v_StrengthStart) this.StrengthStart.Set(v_StrengthStart);
+        if (StrengthEnd is { } v_StrengthEnd) this.StrengthEnd.Set(v_StrengthEnd);
+        if (RestoreCfg is { } v_RestoreCfg) this.RestoreCfg.Set(v_RestoreCfg);
+        if (RestoreCfgSTmin is { } v_RestoreCfgSTmin) this.RestoreCfgSTmin.Set(v_RestoreCfgSTmin);
+        return this;
+    }
 }

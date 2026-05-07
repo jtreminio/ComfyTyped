@@ -55,4 +55,27 @@ public sealed class WanTrackToVideoNode : ComfyNode
         StartImage = AddInput<ImageType>("start_image", required: true);
         ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public WanTrackToVideoNode With(
+        string? Tracks = null,
+        long? Width = null,
+        long? Height = null,
+        long? Length = null,
+        long? BatchSize = null,
+        double? Temperature = null,
+        long? Topk = null
+    )
+    {
+        if (Tracks is { } v_Tracks) this.Tracks.Set(v_Tracks);
+        if (Width is { } v_Width) this.Width.Set(v_Width);
+        if (Height is { } v_Height) this.Height.Set(v_Height);
+        if (Length is { } v_Length) this.Length.Set(v_Length);
+        if (BatchSize is { } v_BatchSize) this.BatchSize.Set(v_BatchSize);
+        if (Temperature is { } v_Temperature) this.Temperature.Set(v_Temperature);
+        if (Topk is { } v_Topk) this.Topk.Set(v_Topk);
+        return this;
+    }
 }

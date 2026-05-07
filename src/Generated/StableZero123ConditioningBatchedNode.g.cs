@@ -51,4 +51,27 @@ public sealed class StableZero123ConditioningBatchedNode : ComfyNode
         AzimuthBatchIncrement = AddInput<FloatType>("azimuth_batch_increment", required: true);
         AzimuthBatchIncrement.Set(0.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public StableZero123ConditioningBatchedNode With(
+        long? Width = null,
+        long? Height = null,
+        long? BatchSize = null,
+        double? Elevation = null,
+        double? Azimuth = null,
+        double? ElevationBatchIncrement = null,
+        double? AzimuthBatchIncrement = null
+    )
+    {
+        if (Width is { } v_Width) this.Width.Set(v_Width);
+        if (Height is { } v_Height) this.Height.Set(v_Height);
+        if (BatchSize is { } v_BatchSize) this.BatchSize.Set(v_BatchSize);
+        if (Elevation is { } v_Elevation) this.Elevation.Set(v_Elevation);
+        if (Azimuth is { } v_Azimuth) this.Azimuth.Set(v_Azimuth);
+        if (ElevationBatchIncrement is { } v_ElevationBatchIncrement) this.ElevationBatchIncrement.Set(v_ElevationBatchIncrement);
+        if (AzimuthBatchIncrement is { } v_AzimuthBatchIncrement) this.AzimuthBatchIncrement.Set(v_AzimuthBatchIncrement);
+        return this;
+    }
 }

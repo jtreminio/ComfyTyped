@@ -26,4 +26,15 @@ public sealed class SwarmEnsureAudioNode : ComfyNode
         TargetDuration = AddInput<FloatType>("target_duration", required: true);
         TargetDuration.Set(0.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SwarmEnsureAudioNode With(
+        double? TargetDuration = null
+    )
+    {
+        if (TargetDuration is { } v_TargetDuration) this.TargetDuration.Set(v_TargetDuration);
+        return this;
+    }
 }

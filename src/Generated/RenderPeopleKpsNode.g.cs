@@ -31,4 +31,19 @@ public sealed class RenderPeopleKpsNode : ComfyNode
         RenderFace = AddInput<BooleanType>("render_face", required: true);
         RenderFace.Set(true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public RenderPeopleKpsNode With(
+        bool? RenderBody = null,
+        bool? RenderHand = null,
+        bool? RenderFace = null
+    )
+    {
+        if (RenderBody is { } v_RenderBody) this.RenderBody.Set(v_RenderBody);
+        if (RenderHand is { } v_RenderHand) this.RenderHand.Set(v_RenderHand);
+        if (RenderFace is { } v_RenderFace) this.RenderFace.Set(v_RenderFace);
+        return this;
+    }
 }

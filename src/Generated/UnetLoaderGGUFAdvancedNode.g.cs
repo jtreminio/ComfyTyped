@@ -31,4 +31,21 @@ public sealed class UnetLoaderGGUFAdvancedNode : ComfyNode
         PatchOnDevice = AddInput<BooleanType>("patch_on_device", required: true);
         PatchOnDevice.Set(false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public UnetLoaderGGUFAdvancedNode With(
+        string? UnetName = null,
+        string? DequantDtype = null,
+        string? PatchDtype = null,
+        bool? PatchOnDevice = null
+    )
+    {
+        if (UnetName is { } v_UnetName) this.UnetName.Set(v_UnetName);
+        if (DequantDtype is { } v_DequantDtype) this.DequantDtype.Set(v_DequantDtype);
+        if (PatchDtype is { } v_PatchDtype) this.PatchDtype.Set(v_PatchDtype);
+        if (PatchOnDevice is { } v_PatchOnDevice) this.PatchOnDevice.Set(v_PatchOnDevice);
+        return this;
+    }
 }

@@ -28,4 +28,17 @@ public sealed class IPAdapterCombineWeightsNode : ComfyNode
         Weights2 = AddInput<FloatType>("weights_2", required: true);
         Weights2.Set(0.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public IPAdapterCombineWeightsNode With(
+        double? Weights1 = null,
+        double? Weights2 = null
+    )
+    {
+        if (Weights1 is { } v_Weights1) this.Weights1.Set(v_Weights1);
+        if (Weights2 is { } v_Weights2) this.Weights2.Set(v_Weights2);
+        return this;
+    }
 }

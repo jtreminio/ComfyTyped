@@ -41,4 +41,27 @@ public sealed class PatchModelAddDownscaleNode : ComfyNode
         DownscaleMethod = AddInput<StringType>("downscale_method", required: true);
         UpscaleMethod = AddInput<StringType>("upscale_method", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public PatchModelAddDownscaleNode With(
+        long? BlockNumber = null,
+        double? DownscaleFactor = null,
+        double? StartPercent = null,
+        double? EndPercent = null,
+        bool? DownscaleAfterSkip = null,
+        string? DownscaleMethod = null,
+        string? UpscaleMethod = null
+    )
+    {
+        if (BlockNumber is { } v_BlockNumber) this.BlockNumber.Set(v_BlockNumber);
+        if (DownscaleFactor is { } v_DownscaleFactor) this.DownscaleFactor.Set(v_DownscaleFactor);
+        if (StartPercent is { } v_StartPercent) this.StartPercent.Set(v_StartPercent);
+        if (EndPercent is { } v_EndPercent) this.EndPercent.Set(v_EndPercent);
+        if (DownscaleAfterSkip is { } v_DownscaleAfterSkip) this.DownscaleAfterSkip.Set(v_DownscaleAfterSkip);
+        if (DownscaleMethod is { } v_DownscaleMethod) this.DownscaleMethod.Set(v_DownscaleMethod);
+        if (UpscaleMethod is { } v_UpscaleMethod) this.UpscaleMethod.Set(v_UpscaleMethod);
+        return this;
+    }
 }

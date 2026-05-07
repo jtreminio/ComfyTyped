@@ -26,4 +26,17 @@ public sealed class SaveTrainingDatasetNode : ComfyNode
         ShardSize = AddInput<IntType>("shard_size", required: true);
         ShardSize.Set(1000L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SaveTrainingDatasetNode With(
+        string? FolderName = null,
+        long? ShardSize = null
+    )
+    {
+        if (FolderName is { } v_FolderName) this.FolderName.Set(v_FolderName);
+        if (ShardSize is { } v_ShardSize) this.ShardSize.Set(v_ShardSize);
+        return this;
+    }
 }

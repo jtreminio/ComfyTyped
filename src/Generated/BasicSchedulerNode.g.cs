@@ -30,4 +30,19 @@ public sealed class BasicSchedulerNode : ComfyNode
         Denoise = AddInput<FloatType>("denoise", required: true);
         Denoise.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public BasicSchedulerNode With(
+        string? Scheduler = null,
+        long? Steps = null,
+        double? Denoise = null
+    )
+    {
+        if (Scheduler is { } v_Scheduler) this.Scheduler.Set(v_Scheduler);
+        if (Steps is { } v_Steps) this.Steps.Set(v_Steps);
+        if (Denoise is { } v_Denoise) this.Denoise.Set(v_Denoise);
+        return this;
+    }
 }

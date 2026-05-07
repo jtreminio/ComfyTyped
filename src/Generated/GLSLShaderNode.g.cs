@@ -42,4 +42,27 @@ public sealed class GLSLShaderNode : ComfyNode
         Bools = AddInput<StringType>("bools", required: true);
         Curves = AddInput<StringType>("curves", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public GLSLShaderNode With(
+        string? FragmentShader = null,
+        string? SizeMode = null,
+        string? Images = null,
+        string? Floats = null,
+        string? Ints = null,
+        string? Bools = null,
+        string? Curves = null
+    )
+    {
+        if (FragmentShader is { } v_FragmentShader) this.FragmentShader.Set(v_FragmentShader);
+        if (SizeMode is { } v_SizeMode) this.SizeMode.Set(v_SizeMode);
+        if (Images is { } v_Images) this.Images.Set(v_Images);
+        if (Floats is { } v_Floats) this.Floats.Set(v_Floats);
+        if (Ints is { } v_Ints) this.Ints.Set(v_Ints);
+        if (Bools is { } v_Bools) this.Bools.Set(v_Bools);
+        if (Curves is { } v_Curves) this.Curves.Set(v_Curves);
+        return this;
+    }
 }

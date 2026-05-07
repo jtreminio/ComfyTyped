@@ -31,4 +31,19 @@ public sealed class MediaPipeFaceMeshPreprocessorNode : ComfyNode
         Resolution = AddInput<IntType>("resolution", required: false);
         Resolution.Set(512L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public MediaPipeFaceMeshPreprocessorNode With(
+        long? MaxFaces = null,
+        double? MinConfidence = null,
+        long? Resolution = null
+    )
+    {
+        if (MaxFaces is { } v_MaxFaces) this.MaxFaces.Set(v_MaxFaces);
+        if (MinConfidence is { } v_MinConfidence) this.MinConfidence.Set(v_MinConfidence);
+        if (Resolution is { } v_Resolution) this.Resolution.Set(v_Resolution);
+        return this;
+    }
 }

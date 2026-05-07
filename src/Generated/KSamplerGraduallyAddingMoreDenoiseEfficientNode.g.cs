@@ -60,4 +60,29 @@ public sealed class KSamplerGraduallyAddingMoreDenoiseEfficientNode : ComfyNode
         DenoiseIncrementSteps.Set(20L);
         OptionalVae = AddInput<VaeType>("optional_vae", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public KSamplerGraduallyAddingMoreDenoiseEfficientNode With(
+        long? Seed = null,
+        long? Steps = null,
+        double? Cfg = null,
+        string? SamplerName = null,
+        string? Scheduler = null,
+        double? StartDenoise = null,
+        double? DenoiseIncrement = null,
+        long? DenoiseIncrementSteps = null
+    )
+    {
+        if (Seed is { } v_Seed) this.Seed.Set(v_Seed);
+        if (Steps is { } v_Steps) this.Steps.Set(v_Steps);
+        if (Cfg is { } v_Cfg) this.Cfg.Set(v_Cfg);
+        if (SamplerName is { } v_SamplerName) this.SamplerName.Set(v_SamplerName);
+        if (Scheduler is { } v_Scheduler) this.Scheduler.Set(v_Scheduler);
+        if (StartDenoise is { } v_StartDenoise) this.StartDenoise.Set(v_StartDenoise);
+        if (DenoiseIncrement is { } v_DenoiseIncrement) this.DenoiseIncrement.Set(v_DenoiseIncrement);
+        if (DenoiseIncrementSteps is { } v_DenoiseIncrementSteps) this.DenoiseIncrementSteps.Set(v_DenoiseIncrementSteps);
+        return this;
+    }
 }

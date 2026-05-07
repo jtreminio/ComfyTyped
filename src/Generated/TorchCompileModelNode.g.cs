@@ -24,4 +24,15 @@ public sealed class TorchCompileModelNode : ComfyNode
         Model = AddInput<ModelType>("model", required: true);
         Backend = AddInput<StringType>("backend", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public TorchCompileModelNode With(
+        string? Backend = null
+    )
+    {
+        if (Backend is { } v_Backend) this.Backend.Set(v_Backend);
+        return this;
+    }
 }

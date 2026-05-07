@@ -34,4 +34,21 @@ public sealed class ImageGridNode : ComfyNode
         Padding = AddInput<IntType>("padding", required: true);
         Padding.Set(4L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ImageGridNode With(
+        long? Columns = null,
+        long? CellWidth = null,
+        long? CellHeight = null,
+        long? Padding = null
+    )
+    {
+        if (Columns is { } v_Columns) this.Columns.Set(v_Columns);
+        if (CellWidth is { } v_CellWidth) this.CellWidth.Set(v_CellWidth);
+        if (CellHeight is { } v_CellHeight) this.CellHeight.Set(v_CellHeight);
+        if (Padding is { } v_Padding) this.Padding.Set(v_Padding);
+        return this;
+    }
 }

@@ -29,4 +29,19 @@ public sealed class Flux2SchedulerNode : ComfyNode
         Height = AddInput<IntType>("height", required: true);
         Height.Set(1024L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public Flux2SchedulerNode With(
+        long? Steps = null,
+        long? Width = null,
+        long? Height = null
+    )
+    {
+        if (Steps is { } v_Steps) this.Steps.Set(v_Steps);
+        if (Width is { } v_Width) this.Width.Set(v_Width);
+        if (Height is { } v_Height) this.Height.Set(v_Height);
+        return this;
+    }
 }

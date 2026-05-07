@@ -41,4 +41,25 @@ public sealed class SkipLayerGuidanceDiTNode : ComfyNode
         RescalingScale = AddInput<FloatType>("rescaling_scale", required: true);
         RescalingScale.Set(0.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SkipLayerGuidanceDiTNode With(
+        string? DoubleLayers = null,
+        string? SingleLayers = null,
+        double? Scale = null,
+        double? StartPercent = null,
+        double? EndPercent = null,
+        double? RescalingScale = null
+    )
+    {
+        if (DoubleLayers is { } v_DoubleLayers) this.DoubleLayers.Set(v_DoubleLayers);
+        if (SingleLayers is { } v_SingleLayers) this.SingleLayers.Set(v_SingleLayers);
+        if (Scale is { } v_Scale) this.Scale.Set(v_Scale);
+        if (StartPercent is { } v_StartPercent) this.StartPercent.Set(v_StartPercent);
+        if (EndPercent is { } v_EndPercent) this.EndPercent.Set(v_EndPercent);
+        if (RescalingScale is { } v_RescalingScale) this.RescalingScale.Set(v_RescalingScale);
+        return this;
+    }
 }

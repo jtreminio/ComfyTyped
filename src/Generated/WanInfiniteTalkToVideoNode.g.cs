@@ -63,4 +63,25 @@ public sealed class WanInfiniteTalkToVideoNode : ComfyNode
         StartImage = AddInput<ImageType>("start_image", required: false);
         PreviousFrames = AddInput<ImageType>("previous_frames", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public WanInfiniteTalkToVideoNode With(
+        string? Mode = null,
+        long? Width = null,
+        long? Height = null,
+        long? Length = null,
+        long? MotionFrameCount = null,
+        double? AudioScale = null
+    )
+    {
+        if (Mode is { } v_Mode) this.Mode.Set(v_Mode);
+        if (Width is { } v_Width) this.Width.Set(v_Width);
+        if (Height is { } v_Height) this.Height.Set(v_Height);
+        if (Length is { } v_Length) this.Length.Set(v_Length);
+        if (MotionFrameCount is { } v_MotionFrameCount) this.MotionFrameCount.Set(v_MotionFrameCount);
+        if (AudioScale is { } v_AudioScale) this.AudioScale.Set(v_AudioScale);
+        return this;
+    }
 }

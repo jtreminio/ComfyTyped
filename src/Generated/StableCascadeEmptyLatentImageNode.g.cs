@@ -34,4 +34,21 @@ public sealed class StableCascadeEmptyLatentImageNode : ComfyNode
         BatchSize = AddInput<IntType>("batch_size", required: true);
         BatchSize.Set(1L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public StableCascadeEmptyLatentImageNode With(
+        long? Width = null,
+        long? Height = null,
+        long? Compression = null,
+        long? BatchSize = null
+    )
+    {
+        if (Width is { } v_Width) this.Width.Set(v_Width);
+        if (Height is { } v_Height) this.Height.Set(v_Height);
+        if (Compression is { } v_Compression) this.Compression.Set(v_Compression);
+        if (BatchSize is { } v_BatchSize) this.BatchSize.Set(v_BatchSize);
+        return this;
+    }
 }

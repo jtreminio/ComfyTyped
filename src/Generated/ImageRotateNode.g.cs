@@ -24,4 +24,15 @@ public sealed class ImageRotateNode : ComfyNode
         Image = AddInput<ImageType>("image", required: true);
         Rotation = AddInput<StringType>("rotation", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ImageRotateNode With(
+        string? Rotation = null
+    )
+    {
+        if (Rotation is { } v_Rotation) this.Rotation.Set(v_Rotation);
+        return this;
+    }
 }

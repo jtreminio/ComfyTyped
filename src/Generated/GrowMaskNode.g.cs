@@ -28,4 +28,17 @@ public sealed class GrowMaskNode : ComfyNode
         TaperedCorners = AddInput<BooleanType>("tapered_corners", required: true);
         TaperedCorners.Set(true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public GrowMaskNode With(
+        long? Expand = null,
+        bool? TaperedCorners = null
+    )
+    {
+        if (Expand is { } v_Expand) this.Expand.Set(v_Expand);
+        if (TaperedCorners is { } v_TaperedCorners) this.TaperedCorners.Set(v_TaperedCorners);
+        return this;
+    }
 }

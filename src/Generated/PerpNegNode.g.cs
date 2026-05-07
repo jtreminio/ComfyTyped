@@ -27,4 +27,15 @@ public sealed class PerpNegNode : ComfyNode
         NegScale = AddInput<FloatType>("neg_scale", required: true);
         NegScale.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public PerpNegNode With(
+        double? NegScale = null
+    )
+    {
+        if (NegScale is { } v_NegScale) this.NegScale.Set(v_NegScale);
+        return this;
+    }
 }

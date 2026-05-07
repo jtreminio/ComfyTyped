@@ -28,4 +28,17 @@ public sealed class ConditioningSetTimestepRangeNode : ComfyNode
         End = AddInput<FloatType>("end", required: true);
         End.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ConditioningSetTimestepRangeNode With(
+        double? Start = null,
+        double? End = null
+    )
+    {
+        if (Start is { } v_Start) this.Start.Set(v_Start);
+        if (End is { } v_End) this.End.Set(v_End);
+        return this;
+    }
 }

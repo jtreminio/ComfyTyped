@@ -33,4 +33,19 @@ public sealed class RTDETRDetectNode : ComfyNode
         MaxDetections = AddInput<IntType>("max_detections", required: true);
         MaxDetections.Set(100L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public RTDETRDetectNode With(
+        double? Threshold = null,
+        string? ClassName = null,
+        long? MaxDetections = null
+    )
+    {
+        if (Threshold is { } v_Threshold) this.Threshold.Set(v_Threshold);
+        if (ClassName is { } v_ClassName) this.ClassName.Set(v_ClassName);
+        if (MaxDetections is { } v_MaxDetections) this.MaxDetections.Set(v_MaxDetections);
+        return this;
+    }
 }

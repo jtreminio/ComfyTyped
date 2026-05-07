@@ -27,4 +27,19 @@ public sealed class SaveAnimatedPNGNode : ComfyNode
         CompressLevel = AddInput<IntType>("compress_level", required: true);
         CompressLevel.Set(4L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SaveAnimatedPNGNode With(
+        string? FilenamePrefix = null,
+        double? Fps = null,
+        long? CompressLevel = null
+    )
+    {
+        if (FilenamePrefix is { } v_FilenamePrefix) this.FilenamePrefix.Set(v_FilenamePrefix);
+        if (Fps is { } v_Fps) this.Fps.Set(v_Fps);
+        if (CompressLevel is { } v_CompressLevel) this.CompressLevel.Set(v_CompressLevel);
+        return this;
+    }
 }

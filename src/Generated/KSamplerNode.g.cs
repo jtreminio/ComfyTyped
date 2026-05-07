@@ -45,4 +45,25 @@ public sealed class KSamplerNode : ComfyNode
         Denoise = AddInput<FloatType>("denoise", required: true);
         Denoise.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public KSamplerNode With(
+        long? Seed = null,
+        long? Steps = null,
+        double? Cfg = null,
+        string? SamplerName = null,
+        string? Scheduler = null,
+        double? Denoise = null
+    )
+    {
+        if (Seed is { } v_Seed) this.Seed.Set(v_Seed);
+        if (Steps is { } v_Steps) this.Steps.Set(v_Steps);
+        if (Cfg is { } v_Cfg) this.Cfg.Set(v_Cfg);
+        if (SamplerName is { } v_SamplerName) this.SamplerName.Set(v_SamplerName);
+        if (Scheduler is { } v_Scheduler) this.Scheduler.Set(v_Scheduler);
+        if (Denoise is { } v_Denoise) this.Denoise.Set(v_Denoise);
+        return this;
+    }
 }

@@ -27,4 +27,17 @@ public sealed class ModelSamplingDiscreteNode : ComfyNode
         Zsnr = AddInput<BooleanType>("zsnr", required: true);
         Zsnr.Set(false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ModelSamplingDiscreteNode With(
+        string? Sampling = null,
+        bool? Zsnr = null
+    )
+    {
+        if (Sampling is { } v_Sampling) this.Sampling.Set(v_Sampling);
+        if (Zsnr is { } v_Zsnr) this.Zsnr.Set(v_Zsnr);
+        return this;
+    }
 }

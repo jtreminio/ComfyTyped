@@ -31,4 +31,19 @@ public sealed class ImageMergeTileListNode : ComfyNode
         Overlap = AddInput<IntType>("overlap", required: true);
         Overlap.Set(128L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ImageMergeTileListNode With(
+        long? FinalWidth = null,
+        long? FinalHeight = null,
+        long? Overlap = null
+    )
+    {
+        if (FinalWidth is { } v_FinalWidth) this.FinalWidth.Set(v_FinalWidth);
+        if (FinalHeight is { } v_FinalHeight) this.FinalHeight.Set(v_FinalHeight);
+        if (Overlap is { } v_Overlap) this.Overlap.Set(v_Overlap);
+        return this;
+    }
 }

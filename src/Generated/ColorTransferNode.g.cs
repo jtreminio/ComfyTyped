@@ -32,4 +32,19 @@ public sealed class ColorTransferNode : ComfyNode
         Strength.Set(1.0);
         ImageRef = AddInput<ImageType>("image_ref", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ColorTransferNode With(
+        string? Method = null,
+        string? SourceStats = null,
+        double? Strength = null
+    )
+    {
+        if (Method is { } v_Method) this.Method.Set(v_Method);
+        if (SourceStats is { } v_SourceStats) this.SourceStats.Set(v_SourceStats);
+        if (Strength is { } v_Strength) this.Strength.Set(v_Strength);
+        return this;
+    }
 }

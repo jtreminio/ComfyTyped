@@ -25,4 +25,15 @@ public sealed class VideoLinearCFGGuidanceNode : ComfyNode
         MinCfg = AddInput<FloatType>("min_cfg", required: true);
         MinCfg.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public VideoLinearCFGGuidanceNode With(
+        double? MinCfg = null
+    )
+    {
+        if (MinCfg is { } v_MinCfg) this.MinCfg.Set(v_MinCfg);
+        return this;
+    }
 }

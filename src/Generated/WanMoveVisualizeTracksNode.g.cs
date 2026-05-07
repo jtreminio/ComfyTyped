@@ -36,4 +36,21 @@ public sealed class WanMoveVisualizeTracksNode : ComfyNode
         LineWidth.Set(16L);
         Tracks = AddInput<TracksType>("tracks", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public WanMoveVisualizeTracksNode With(
+        long? LineResolution = null,
+        long? CircleSize = null,
+        double? Opacity = null,
+        long? LineWidth = null
+    )
+    {
+        if (LineResolution is { } v_LineResolution) this.LineResolution.Set(v_LineResolution);
+        if (CircleSize is { } v_CircleSize) this.CircleSize.Set(v_CircleSize);
+        if (Opacity is { } v_Opacity) this.Opacity.Set(v_Opacity);
+        if (LineWidth is { } v_LineWidth) this.LineWidth.Set(v_LineWidth);
+        return this;
+    }
 }

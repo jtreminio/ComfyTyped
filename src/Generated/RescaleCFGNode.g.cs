@@ -25,4 +25,15 @@ public sealed class RescaleCFGNode : ComfyNode
         Multiplier = AddInput<FloatType>("multiplier", required: true);
         Multiplier.Set(0.7);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public RescaleCFGNode With(
+        double? Multiplier = null
+    )
+    {
+        if (Multiplier is { } v_Multiplier) this.Multiplier.Set(v_Multiplier);
+        return this;
+    }
 }

@@ -28,4 +28,15 @@ public sealed class IPAdapterUnifiedLoaderCommunityNode : ComfyNode
         Preset = AddInput<StringType>("preset", required: true);
         IpadapterInput = AddInput<IpAdapterType>("ipadapter", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public IPAdapterUnifiedLoaderCommunityNode With(
+        string? Preset = null
+    )
+    {
+        if (Preset is { } v_Preset) this.Preset.Set(v_Preset);
+        return this;
+    }
 }

@@ -29,4 +29,17 @@ public sealed class ResolutionSelectorNode : ComfyNode
         Megapixels = AddInput<FloatType>("megapixels", required: true);
         Megapixels.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ResolutionSelectorNode With(
+        string? AspectRatio = null,
+        double? Megapixels = null
+    )
+    {
+        if (AspectRatio is { } v_AspectRatio) this.AspectRatio.Set(v_AspectRatio);
+        if (Megapixels is { } v_Megapixels) this.Megapixels.Set(v_Megapixels);
+        return this;
+    }
 }

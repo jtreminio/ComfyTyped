@@ -25,4 +25,15 @@ public sealed class ImageDeduplicationNode : ComfyNode
         SimilarityThreshold = AddInput<FloatType>("similarity_threshold", required: true);
         SimilarityThreshold.Set(0.95);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ImageDeduplicationNode With(
+        double? SimilarityThreshold = null
+    )
+    {
+        if (SimilarityThreshold is { } v_SimilarityThreshold) this.SimilarityThreshold.Set(v_SimilarityThreshold);
+        return this;
+    }
 }

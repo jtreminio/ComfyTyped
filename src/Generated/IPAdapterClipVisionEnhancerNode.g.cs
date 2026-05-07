@@ -53,4 +53,29 @@ public sealed class IPAdapterClipVisionEnhancerNode : ComfyNode
         AttnMask = AddInput<MaskType>("attn_mask", required: false);
         ClipVision = AddInput<ClipVisionType>("clip_vision", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public IPAdapterClipVisionEnhancerNode With(
+        double? Weight = null,
+        string? WeightType = null,
+        string? CombineEmbeds = null,
+        double? StartAt = null,
+        double? EndAt = null,
+        string? EmbedsScaling = null,
+        long? EnhanceTiles = null,
+        double? EnhanceRatio = null
+    )
+    {
+        if (Weight is { } v_Weight) this.Weight.Set(v_Weight);
+        if (WeightType is { } v_WeightType) this.WeightType.Set(v_WeightType);
+        if (CombineEmbeds is { } v_CombineEmbeds) this.CombineEmbeds.Set(v_CombineEmbeds);
+        if (StartAt is { } v_StartAt) this.StartAt.Set(v_StartAt);
+        if (EndAt is { } v_EndAt) this.EndAt.Set(v_EndAt);
+        if (EmbedsScaling is { } v_EmbedsScaling) this.EmbedsScaling.Set(v_EmbedsScaling);
+        if (EnhanceTiles is { } v_EnhanceTiles) this.EnhanceTiles.Set(v_EnhanceTiles);
+        if (EnhanceRatio is { } v_EnhanceRatio) this.EnhanceRatio.Set(v_EnhanceRatio);
+        return this;
+    }
 }

@@ -25,4 +25,15 @@ public sealed class TrimVideoLatentNode : ComfyNode
         TrimAmount = AddInput<IntType>("trim_amount", required: true);
         TrimAmount.Set(0L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public TrimVideoLatentNode With(
+        long? TrimAmount = null
+    )
+    {
+        if (TrimAmount is { } v_TrimAmount) this.TrimAmount.Set(v_TrimAmount);
+        return this;
+    }
 }

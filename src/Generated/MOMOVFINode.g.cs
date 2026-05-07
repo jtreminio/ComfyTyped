@@ -35,4 +35,21 @@ public sealed class MOMOVFINode : ComfyNode
         NumInferenceSteps.Set(8L);
         OptionalInterpolationStates = AddInput<InterpolationStatesType>("optional_interpolation_states", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public MOMOVFINode With(
+        string? CkptName = null,
+        long? ClearCacheAfterNFrames = null,
+        long? Multiplier = null,
+        long? NumInferenceSteps = null
+    )
+    {
+        if (CkptName is { } v_CkptName) this.CkptName.Set(v_CkptName);
+        if (ClearCacheAfterNFrames is { } v_ClearCacheAfterNFrames) this.ClearCacheAfterNFrames.Set(v_ClearCacheAfterNFrames);
+        if (Multiplier is { } v_Multiplier) this.Multiplier.Set(v_Multiplier);
+        if (NumInferenceSteps is { } v_NumInferenceSteps) this.NumInferenceSteps.Set(v_NumInferenceSteps);
+        return this;
+    }
 }

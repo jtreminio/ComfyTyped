@@ -29,4 +29,15 @@ public sealed class LTXVConditioningNode : ComfyNode
         FrameRate = AddInput<FloatType>("frame_rate", required: true);
         FrameRate.Set(25.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public LTXVConditioningNode With(
+        double? FrameRate = null
+    )
+    {
+        if (FrameRate is { } v_FrameRate) this.FrameRate.Set(v_FrameRate);
+        return this;
+    }
 }

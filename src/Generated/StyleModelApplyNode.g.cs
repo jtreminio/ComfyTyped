@@ -31,4 +31,17 @@ public sealed class StyleModelApplyNode : ComfyNode
         Strength.Set(1.0);
         StrengthType = AddInput<StringType>("strength_type", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public StyleModelApplyNode With(
+        double? Strength = null,
+        string? StrengthType = null
+    )
+    {
+        if (Strength is { } v_Strength) this.Strength.Set(v_Strength);
+        if (StrengthType is { } v_StrengthType) this.StrengthType.Set(v_StrengthType);
+        return this;
+    }
 }

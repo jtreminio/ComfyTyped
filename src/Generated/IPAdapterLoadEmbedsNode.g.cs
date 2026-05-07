@@ -22,4 +22,15 @@ public sealed class IPAdapterLoadEmbedsNode : ComfyNode
         EMBEDS = AddOutput<EmbedsType>(0, "EMBEDS");
         Embeds = AddInput<StringType>("embeds", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public IPAdapterLoadEmbedsNode With(
+        string? Embeds = null
+    )
+    {
+        if (Embeds is { } v_Embeds) this.Embeds.Set(v_Embeds);
+        return this;
+    }
 }

@@ -30,4 +30,17 @@ public sealed class LoraModelLoaderNode : ComfyNode
         Bypass = AddInput<BooleanType>("bypass", required: true);
         Bypass.Set(false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public LoraModelLoaderNode With(
+        double? StrengthModel = null,
+        bool? Bypass = null
+    )
+    {
+        if (StrengthModel is { } v_StrengthModel) this.StrengthModel.Set(v_StrengthModel);
+        if (Bypass is { } v_Bypass) this.Bypass.Set(v_Bypass);
+        return this;
+    }
 }

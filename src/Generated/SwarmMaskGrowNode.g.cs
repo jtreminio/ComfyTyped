@@ -26,4 +26,15 @@ public sealed class SwarmMaskGrowNode : ComfyNode
         Grow = AddInput<IntType>("grow", required: true);
         Grow.Set(0L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SwarmMaskGrowNode With(
+        long? Grow = null
+    )
+    {
+        if (Grow is { } v_Grow) this.Grow.Set(v_Grow);
+        return this;
+    }
 }

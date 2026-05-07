@@ -29,4 +29,21 @@ public sealed class StringCompareNode : ComfyNode
         CaseSensitive = AddInput<BooleanType>("case_sensitive", required: true);
         CaseSensitive.Set(true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public StringCompareNode With(
+        string? StringA = null,
+        string? StringB = null,
+        string? Mode = null,
+        bool? CaseSensitive = null
+    )
+    {
+        if (StringA is { } v_StringA) this.StringA.Set(v_StringA);
+        if (StringB is { } v_StringB) this.StringB.Set(v_StringB);
+        if (Mode is { } v_Mode) this.Mode.Set(v_Mode);
+        if (CaseSensitive is { } v_CaseSensitive) this.CaseSensitive.Set(v_CaseSensitive);
+        return this;
+    }
 }

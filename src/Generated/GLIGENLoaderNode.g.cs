@@ -22,4 +22,15 @@ public sealed class GLIGENLoaderNode : ComfyNode
         GLIGEN = AddOutput<GligenType>(0, "GLIGEN");
         GligenName = AddInput<StringType>("gligen_name", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public GLIGENLoaderNode With(
+        string? GligenName = null
+    )
+    {
+        if (GligenName is { } v_GligenName) this.GligenName.Set(v_GligenName);
+        return this;
+    }
 }

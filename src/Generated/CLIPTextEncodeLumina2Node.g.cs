@@ -27,4 +27,17 @@ public sealed class CLIPTextEncodeLumina2Node : ComfyNode
         UserPrompt = AddInput<StringType>("user_prompt", required: true);
         Clip = AddInput<ClipType>("clip", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public CLIPTextEncodeLumina2Node With(
+        string? SystemPrompt = null,
+        string? UserPrompt = null
+    )
+    {
+        if (SystemPrompt is { } v_SystemPrompt) this.SystemPrompt.Set(v_SystemPrompt);
+        if (UserPrompt is { } v_UserPrompt) this.UserPrompt.Set(v_UserPrompt);
+        return this;
+    }
 }

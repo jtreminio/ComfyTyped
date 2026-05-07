@@ -24,4 +24,15 @@ public sealed class CustomComboNode : ComfyNode
         INDEX = AddOutput<IntType>(1, "INDEX");
         Choice = AddInput<StringType>("choice", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public CustomComboNode With(
+        string? Choice = null
+    )
+    {
+        if (Choice is { } v_Choice) this.Choice.Set(v_Choice);
+        return this;
+    }
 }

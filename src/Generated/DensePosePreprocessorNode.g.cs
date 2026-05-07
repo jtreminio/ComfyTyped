@@ -31,4 +31,19 @@ public sealed class DensePosePreprocessorNode : ComfyNode
         Resolution = AddInput<IntType>("resolution", required: false);
         Resolution.Set(512L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public DensePosePreprocessorNode With(
+        string? Model = null,
+        string? Cmap = null,
+        long? Resolution = null
+    )
+    {
+        if (Model is { } v_Model) this.Model.Set(v_Model);
+        if (Cmap is { } v_Cmap) this.Cmap.Set(v_Cmap);
+        if (Resolution is { } v_Resolution) this.Resolution.Set(v_Resolution);
+        return this;
+    }
 }

@@ -28,4 +28,17 @@ public sealed class ImageAddNoiseNode : ComfyNode
         Strength = AddInput<FloatType>("strength", required: true);
         Strength.Set(0.5);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ImageAddNoiseNode With(
+        long? Seed = null,
+        double? Strength = null
+    )
+    {
+        if (Seed is { } v_Seed) this.Seed.Set(v_Seed);
+        if (Strength is { } v_Strength) this.Strength.Set(v_Strength);
+        return this;
+    }
 }

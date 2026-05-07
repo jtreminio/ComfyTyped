@@ -23,4 +23,17 @@ public sealed class SaveLoRANode : ComfyNode
         Prefix.Set("loras/ComfyUI_trained_lora");
         Steps = AddInput<IntType>("steps", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SaveLoRANode With(
+        string? Prefix = null,
+        long? Steps = null
+    )
+    {
+        if (Prefix is { } v_Prefix) this.Prefix.Set(v_Prefix);
+        if (Steps is { } v_Steps) this.Steps.Set(v_Steps);
+        return this;
+    }
 }

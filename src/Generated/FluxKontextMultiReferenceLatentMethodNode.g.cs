@@ -24,4 +24,15 @@ public sealed class FluxKontextMultiReferenceLatentMethodNode : ComfyNode
         Conditioning = AddInput<ConditioningType>("conditioning", required: true);
         ReferenceLatentsMethod = AddInput<StringType>("reference_latents_method", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public FluxKontextMultiReferenceLatentMethodNode With(
+        string? ReferenceLatentsMethod = null
+    )
+    {
+        if (ReferenceLatentsMethod is { } v_ReferenceLatentsMethod) this.ReferenceLatentsMethod.Set(v_ReferenceLatentsMethod);
+        return this;
+    }
 }

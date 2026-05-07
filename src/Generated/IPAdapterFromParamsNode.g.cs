@@ -34,4 +34,17 @@ public sealed class IPAdapterFromParamsNode : ComfyNode
         ImageNegative = AddInput<ImageType>("image_negative", required: false);
         ClipVision = AddInput<ClipVisionType>("clip_vision", required: false);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public IPAdapterFromParamsNode With(
+        string? CombineEmbeds = null,
+        string? EmbedsScaling = null
+    )
+    {
+        if (CombineEmbeds is { } v_CombineEmbeds) this.CombineEmbeds.Set(v_CombineEmbeds);
+        if (EmbedsScaling is { } v_EmbedsScaling) this.EmbedsScaling.Set(v_EmbedsScaling);
+        return this;
+    }
 }

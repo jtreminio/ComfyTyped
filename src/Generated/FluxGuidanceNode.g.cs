@@ -25,4 +25,15 @@ public sealed class FluxGuidanceNode : ComfyNode
         Guidance = AddInput<FloatType>("guidance", required: true);
         Guidance.Set(3.5);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public FluxGuidanceNode With(
+        double? Guidance = null
+    )
+    {
+        if (Guidance is { } v_Guidance) this.Guidance.Set(v_Guidance);
+        return this;
+    }
 }

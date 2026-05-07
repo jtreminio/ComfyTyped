@@ -26,4 +26,19 @@ public sealed class SaveImageTextDataSetToFolderNode : ComfyNode
         FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
         FilenamePrefix.Set("image");
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SaveImageTextDataSetToFolderNode With(
+        string? Texts = null,
+        string? FolderName = null,
+        string? FilenamePrefix = null
+    )
+    {
+        if (Texts is { } v_Texts) this.Texts.Set(v_Texts);
+        if (FolderName is { } v_FolderName) this.FolderName.Set(v_FolderName);
+        if (FilenamePrefix is { } v_FilenamePrefix) this.FilenamePrefix.Set(v_FilenamePrefix);
+        return this;
+    }
 }

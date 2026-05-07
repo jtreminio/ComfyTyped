@@ -33,4 +33,19 @@ public sealed class ModelMergeBlocksNode : ComfyNode
         Out = AddInput<FloatType>("out", required: true);
         Out.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public ModelMergeBlocksNode With(
+        double? Input = null,
+        double? Middle = null,
+        double? Out = null
+    )
+    {
+        if (Input is { } v_Input) this.Input.Set(v_Input);
+        if (Middle is { } v_Middle) this.Middle.Set(v_Middle);
+        if (Out is { } v_Out) this.Out.Set(v_Out);
+        return this;
+    }
 }

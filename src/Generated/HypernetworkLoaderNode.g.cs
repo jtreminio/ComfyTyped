@@ -27,4 +27,17 @@ public sealed class HypernetworkLoaderNode : ComfyNode
         Strength = AddInput<FloatType>("strength", required: true);
         Strength.Set(1.0);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public HypernetworkLoaderNode With(
+        string? HypernetworkName = null,
+        double? Strength = null
+    )
+    {
+        if (HypernetworkName is { } v_HypernetworkName) this.HypernetworkName.Set(v_HypernetworkName);
+        if (Strength is { } v_Strength) this.Strength.Set(v_Strength);
+        return this;
+    }
 }

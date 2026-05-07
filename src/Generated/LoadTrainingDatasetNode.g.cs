@@ -25,4 +25,15 @@ public sealed class LoadTrainingDatasetNode : ComfyNode
         FolderName = AddInput<StringType>("folder_name", required: true);
         FolderName.Set("training_dataset");
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public LoadTrainingDatasetNode With(
+        string? FolderName = null
+    )
+    {
+        if (FolderName is { } v_FolderName) this.FolderName.Set(v_FolderName);
+        return this;
+    }
 }

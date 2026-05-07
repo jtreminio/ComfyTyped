@@ -22,4 +22,15 @@ public sealed class LoadLatentNode : ComfyNode
         LATENT = AddOutput<LatentType>(0, "LATENT");
         Latent = AddInput<StringType>("latent", required: true);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public LoadLatentNode With(
+        string? Latent = null
+    )
+    {
+        if (Latent is { } v_Latent) this.Latent.Set(v_Latent);
+        return this;
+    }
 }

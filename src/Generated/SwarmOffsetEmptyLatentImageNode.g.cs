@@ -42,4 +42,27 @@ public sealed class SwarmOffsetEmptyLatentImageNode : ComfyNode
         BatchSize = AddInput<IntType>("batch_size", required: true);
         BatchSize.Set(1L);
     }
+
+    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
+    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    public SwarmOffsetEmptyLatentImageNode With(
+        long? Width = null,
+        long? Height = null,
+        long? OffA = null,
+        long? OffB = null,
+        long? OffC = null,
+        long? OffD = null,
+        long? BatchSize = null
+    )
+    {
+        if (Width is { } v_Width) this.Width.Set(v_Width);
+        if (Height is { } v_Height) this.Height.Set(v_Height);
+        if (OffA is { } v_OffA) this.OffA.Set(v_OffA);
+        if (OffB is { } v_OffB) this.OffB.Set(v_OffB);
+        if (OffC is { } v_OffC) this.OffC.Set(v_OffC);
+        if (OffD is { } v_OffD) this.OffD.Set(v_OffD);
+        if (BatchSize is { } v_BatchSize) this.BatchSize.Set(v_BatchSize);
+        return this;
+    }
 }
