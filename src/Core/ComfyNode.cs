@@ -27,9 +27,12 @@ public abstract class ComfyNode
     /// <c>resize_type.shorter_size</c>, …) on <c>ResizeImageMaskNode</c>.
     ///
     /// <para>
-    /// Populated automatically by <see cref="ComfyGraph.FromWorkflow"/> for any input key
-    /// on a typed node that does not match a declared <see cref="NodeInput{T}"/>. Consumers
-    /// can also assign or mutate this directly to inject extra keys when building nodes.
+    /// Initialized to an empty <see cref="JObject"/> so callers can mutate directly:
+    /// <c>node.ExtraInputs["key"] = value;</c>. Do not assign <c>null</c> — the serializer
+    /// expects a non-null instance. Assigning an existing <see cref="JObject"/> shares its
+    /// reference (standard C# semantics); pass <c>(JObject)source.DeepClone()</c> if you
+    /// need an independent copy. Populated automatically by <see cref="ComfyGraph.FromWorkflow"/>
+    /// for any input key on a typed node that does not match a declared <see cref="NodeInput{T}"/>.
     /// </para>
     ///
     /// <para>
@@ -45,7 +48,7 @@ public abstract class ComfyNode
     /// the typed graph cannot represent.
     /// </para>
     /// </summary>
-    public JObject? ExtraInputs { get; set; }
+    public JObject ExtraInputs { get; set; } = [];
 
     private readonly List<INodeInput> _inputs = [];
     private readonly List<INodeOutput> _outputs = [];
@@ -100,14 +103,11 @@ public abstract class ComfyNode
                 inputs[input.Name] = value;
             }
         }
-        if (ExtraInputs is not null)
+        foreach (JProperty extra in ExtraInputs.Properties())
         {
-            foreach (JProperty extra in ExtraInputs.Properties())
+            if (inputs[extra.Name] is null)
             {
-                if (inputs[extra.Name] is null)
-                {
-                    inputs[extra.Name] = extra.Value.DeepClone();
-                }
+                inputs[extra.Name] = extra.Value.DeepClone();
             }
         }
 

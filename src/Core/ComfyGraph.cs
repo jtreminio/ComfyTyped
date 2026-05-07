@@ -168,7 +168,6 @@ public sealed class ComfyGraph
                 // Typed node received an input key that the codegen does not model
                 // (e.g. dotted/list-style keys like images.image0). Stash on the node's
                 // ExtraInputs escape hatch so it round-trips losslessly.
-                node.ExtraInputs ??= [];
                 node.ExtraInputs[inputProp.Name] = inputProp.Value.DeepClone();
                 continue;
             }

@@ -36,9 +36,8 @@ public class ExtraInputsTests
         var graph = ComfyGraph.FromWorkflow(workflow);
         var node = graph.GetNode<ResizeImageMaskNodeNode>("10")!;
 
-        Assert.NotNull(node.ExtraInputs);
-        Assert.Equal(16, (int)node.ExtraInputs!["resize_type.multiple"]!);
-        Assert.Equal(512, (int)node.ExtraInputs!["resize_type.shorter_size"]!);
+        Assert.Equal(16, (int)node.ExtraInputs["resize_type.multiple"]!);
+        Assert.Equal(512, (int)node.ExtraInputs["resize_type.shorter_size"]!);
 
         JObject roundTripped = graph.ToWorkflow();
         JObject inputs = (JObject)roundTripped["10"]!["inputs"]!;
@@ -113,7 +112,7 @@ public class ExtraInputsTests
         var graph = ComfyGraph.FromWorkflow(workflow);
         var node = graph.GetNode<EmptyLatentImageNode>("1")!;
 
-        Assert.Null(node.ExtraInputs);
+        Assert.Empty(node.ExtraInputs.Properties());
     }
 
     [Fact]
