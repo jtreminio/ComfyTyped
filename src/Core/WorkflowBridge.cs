@@ -1,3 +1,4 @@
+using ComfyTyped.Types;
 using Newtonsoft.Json.Linq;
 
 namespace ComfyTyped.Core;
@@ -307,6 +308,39 @@ public sealed class WorkflowBridge : IDisposable
         ComfyNode? node = Graph.GetNode(nodeId);
 
         return node?.FindOutput(slotIndex);
+    }
+
+    /// <summary>
+    /// Typed sibling of <see cref="ResolvePath(JArray?)"/>. Returns the resolved output as
+    /// <see cref="NodeOutput{T}"/> when the type matches, <c>null</c> when the path does not
+    /// resolve (malformed, unknown node, or — for typed nodes only — unregistered slot index).
+    /// Throws <see cref="InvalidOperationException"/> on type mismatch.
+    /// <para>
+    /// Wildcard outputs (<see cref="AnyType"/> from <see cref="UnknownNode"/>,
+    /// <see cref="ComfyMatchTypeV3"/> from V3 wildcard slots) do <em>not</em> auto-coerce to a
+    /// concrete <typeparamref name="T"/> here — they would require returning a wrapper that
+    /// pretends to be <c>NodeOutput&lt;T&gt;</c>. Use the non-generic
+    /// <see cref="ResolvePath(JArray?)"/> + <see cref="NodeInput{T}.ConnectToUntyped"/> when the
+    /// source may be a wildcard, or use
+    /// <see cref="NodeInputExtensions.ConnectFromPath{T}(NodeInput{T}, WorkflowBridge, JArray?, string?)"/>
+    /// — both routes preserve wildcard compatibility through the connection layer.
+    /// </para>
+    /// </summary>
+    public NodeOutput<T>? ResolvePath<T>(JArray? path) where T : IComfyType
+    {
+        INodeOutput? output = ResolvePath(path);
+        if (output is null)
+        {
+            return null;
+        }
+        if (output is NodeOutput<T> typed)
+        {
+            return typed;
+        }
+
+        throw new InvalidOperationException(
+            $"Path [{path![0]}, {path[1]}] resolves to output of type '{output.TypeName}', "
+            + $"expected '{T.TypeName}'.");
     }
 
     // ── Disposal ────────────────────────────────────────────────────

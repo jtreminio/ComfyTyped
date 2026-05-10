@@ -160,6 +160,75 @@ JArray path = WorkflowBridge.ToPath(decode.IMAGE);
 INodeOutput? output = bridge.ResolvePath(legacyJArrayPath);
 ```
 
+### Wire inputs from a `JArray` path
+
+When the source side of a connection is held as a JArray path (e.g. SwarmUI
+`WorkflowGenerator` slots like `genInfo.PosCond` or `WGNodeData.Path`), reach
+for one of the path-aware helpers instead of resolving by hand:
+
+| You have…                      | You want…                          | Use                                       |
+| ------------------------------ | ---------------------------------- | ----------------------------------------- |
+| `NodeOutput<T>` reference      | wire it into `NodeInput<T>`        | `input.ConnectTo(output)`                 |
+| `INodeOutput` (untyped)        | wire it into `NodeInput<T>`        | `input.ConnectToUntyped(output)`          |
+| `JArray` path                  | wire it into `NodeInput<T>`        | `input.ConnectFromPath(bridge, path)`     |
+| `JArray` path (may be missing) | wire if it resolves, else no-op    | `input.TryConnectFromPath(bridge, path)`  |
+| `JArray` path                  | the typed output, for further use  | `bridge.ResolvePath<T>(path)`             |
+
+```csharp
+// Before:
+cond.PositiveInput.ConnectToUntyped(bridge.ResolvePath(genInfo.PosCond));
+
+// After — T inferred from the receiver, no manual <ConditioningType>:
+cond.PositiveInput.ConnectFromPath(bridge, genInfo.PosCond);
+```
+
+`ConnectFromPath` throws `ArgumentException` on a null or unresolved path,
+with diagnostics that name the source expression, slot, owning node, and
+expected type:
+
+```
+Path 'genInfo.PosCond' did not resolve to an output for input 'positive'
+on LTXVConditioningNode#5 (expected 'CONDITIONING').
+```
+
+`TryConnectFromPath` mirrors the existing `TryConnectToUntyped` contract:
+returns `false` (no-op, slot state preserved) when the path is null or
+doesn't resolve; type mismatches still throw — null tolerance is the only
+soft failure.
+
+#### Wildcard caveat
+
+`ResolvePath<T>` is strict — it will not auto-coerce `AnyType` (UnknownNode
+outputs) or `ComfyMatchTypeV3` (V3 wildcard outputs) into a concrete `T`,
+because there's no honest way to return a `NodeOutput<T>` for a wildcard.
+When the source may be a wildcard, route through the connection layer
+instead — `ConnectFromPath` and `ConnectToUntyped` both accept wildcards
+through their existing acceptance path:
+
+```csharp
+// Wildcard-tolerant: succeeds whether the resolved output is a concrete
+// ImageType or a NodeOutput<AnyType> from an UnknownNode.
+decode.Image.ConnectFromPath(bridge, somePath);
+
+// Strict typed handle: throws InvalidOperationException if resolved
+// output isn't NodeOutput<ImageType>. Use when you intend to hand the
+// handle to typed `ConnectTo` or read its node for further work.
+NodeOutput<ImageType>? typed = bridge.ResolvePath<ImageType>(somePath);
+```
+
+For cases that need to inspect the resolved node (graph navigation, type
+checks, conditional rewiring), keep using the non-generic
+`bridge.ResolvePath(path)` — it returns `INodeOutput?` and never throws on
+type mismatch:
+
+```csharp
+if (bridge.ResolvePath(controlImage) is INodeOutput consumer
+    && consumer.Node is ImageFromBatchNode batch)
+{
+    // …rewire / inspect / decide
+}
+```
+
 ### Rewire many connections at once
 
 Replace every input that points at one output with a connection to another:

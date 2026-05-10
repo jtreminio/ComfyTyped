@@ -1,5 +1,6 @@
 using ComfyTyped.Core;
 using ComfyTyped.Generated;
+using ComfyTyped.Types;
 using Newtonsoft.Json.Linq;
 using Xunit;
 
@@ -1077,6 +1078,75 @@ public class WorkflowBridgeTests
         Assert.NotNull(resolved);
         Assert.Same(ckpt, resolved.Node);
         Assert.Equal(2, resolved.SlotIndex); // VAE is slot 2
+    }
+
+    [Fact]
+    public void ResolvePathT_MatchingType_ReturnsTypedOutput()
+    {
+        JObject workflow = BuildSimpleWorkflow();
+        var bridge = WorkflowBridge.Create(workflow);
+
+        // CheckpointLoaderSimple slot 2 is VAE.
+        NodeOutput<VaeType>? vae = bridge.ResolvePath<VaeType>(new JArray("1", 2));
+
+        Assert.NotNull(vae);
+        Assert.Equal("1", vae.Node.Id);
+        Assert.Equal(2, vae.SlotIndex);
+        // Compile-time proof: vae has type NodeOutput<VaeType>, can be passed to a typed input.
+        var decode = bridge.AddNode(new VAEDecodeNode());
+        decode.Vae.ConnectTo(vae);
+        Assert.Same(vae, decode.Vae.TypedConnection);
+    }
+
+    [Fact]
+    public void ResolvePathT_TypeMismatch_Throws()
+    {
+        JObject workflow = BuildSimpleWorkflow();
+        var bridge = WorkflowBridge.Create(workflow);
+
+        // Slot 0 of CheckpointLoaderSimple is MODEL, not VAE.
+        InvalidOperationException ex = Assert.Throws<InvalidOperationException>(
+            () => bridge.ResolvePath<VaeType>(new JArray("1", 0)));
+
+        Assert.Contains("MODEL", ex.Message);
+        Assert.Contains("VAE", ex.Message);
+    }
+
+    [Fact]
+    public void ResolvePathT_NullOrUnresolvedPath_ReturnsNull()
+    {
+        var bridge = WorkflowBridge.Create(BuildSimpleWorkflow());
+
+        Assert.Null(bridge.ResolvePath<VaeType>(null));
+        Assert.Null(bridge.ResolvePath<VaeType>(new JArray()));
+        Assert.Null(bridge.ResolvePath<VaeType>(new JArray("nonexistent", 0)));
+        Assert.Null(bridge.ResolvePath<VaeType>(new JArray("1", 99)));
+    }
+
+    [Fact]
+    public void ResolvePathT_UnknownNodeOutput_ThrowsForConcreteT()
+    {
+        // UnknownNode synthesizes outputs as NodeOutput<AnyType>; ResolvePath<T> is strict
+        // and will not auto-coerce wildcards into a concrete T. Callers who need wildcard
+        // tolerance should use the non-generic ResolvePath + ConnectToUntyped (or the
+        // ConnectFromPath extension), both of which preserve wildcard semantics.
+        JObject workflow = new()
+        {
+            ["50"] = new JObject
+            {
+                ["class_type"] = "SomeUnregisteredCustomNode",
+                ["inputs"] = new JObject(),
+            },
+        };
+        var bridge = WorkflowBridge.Create(workflow);
+
+        Assert.Throws<InvalidOperationException>(
+            () => bridge.ResolvePath<ImageType>(new JArray("50", 0)));
+
+        // The non-generic resolver still works.
+        INodeOutput? wildcard = bridge.ResolvePath(new JArray("50", 0));
+        Assert.NotNull(wildcard);
+        Assert.Equal("*", wildcard.TypeName);
     }
 
     // ═════════════════════════════════════════════════════════════════
