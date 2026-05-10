@@ -15,14 +15,14 @@ namespace ComfyTyped.SwarmUI;
 /// </summary>
 public sealed class MediaRef
 {
-    public INodeOutput Output { get; set; }
-    public string DataType { get; set; }
-    public T2IModelCompatClass Compat { get; set; }
+    public required INodeOutput Output { get; set; }
+    public required string DataType { get; set; }
+    public T2IModelCompatClass? Compat { get; set; }
     public int? Width { get; set; }
     public int? Height { get; set; }
     public int? Frames { get; set; }
     public int? FPS { get; set; }
-    public MediaRef AttachedAudio { get; set; }
+    public MediaRef? AttachedAudio { get; set; }
 
     /// <summary>
     /// Convert this typed reference back to a <see cref="WGNodeData"/> for SwarmUI consumption.
@@ -49,13 +49,13 @@ public sealed class MediaRef
     /// the JArray path against the bridge's typed graph.
     /// Returns null if the path is null, malformed, or unresolvable.
     /// </summary>
-    public static MediaRef FromWGNodeData(WGNodeData data, WorkflowBridge bridge)
+    public static MediaRef? FromWGNodeData(WGNodeData data, WorkflowBridge bridge)
     {
         if (data?.Path is not JArray path || path.Count != 2)
         {
             return null;
         }
-        INodeOutput output = bridge.ResolvePath(path);
+        INodeOutput? output = bridge.ResolvePath(path);
         if (output is null)
         {
             return null;

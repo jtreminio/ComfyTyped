@@ -61,7 +61,7 @@ public static class NodeOutputExtensions
         int? height = null,
         int? frames = null,
         int? fps = null,
-        T2IModelCompatClass compat = null) =>
+        T2IModelCompatClass? compat = null) =>
         new(WorkflowBridge.ToPath(output), g, dataType, compat ?? g.CurrentCompat())
         {
             Width = width,

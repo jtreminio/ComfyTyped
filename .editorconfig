@@ -1,0 +1,7 @@
+root = true
+
+[*.cs]
+# IDE0130: The csproj sits at the extension root so SwarmUI's ExtensionsManager
+# picks it up; source lives under src/, making the physical path src/Core/ etc.
+# The intentional namespace ComfyTyped.Core (not ComfyTyped.src.Core) is correct.
+dotnet_diagnostic.IDE0130.severity = none
