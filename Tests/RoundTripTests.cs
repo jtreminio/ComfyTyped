@@ -15,25 +15,25 @@ public class RoundTripTests
     [Fact]
     public void BuildSimpleWorkflow_SerializesCorrectly()
     {
-        var graph = new ComfyGraph();
+        ComfyGraph graph = new ComfyGraph();
 
-        var ckpt = graph.AddNode(new CheckpointLoaderSimpleNode());
+        CheckpointLoaderSimpleNode ckpt = graph.AddNode(new CheckpointLoaderSimpleNode());
         ckpt.CkptName.Set("model.safetensors");
 
-        var posEncode = graph.AddNode(new CLIPTextEncodeNode());
+        CLIPTextEncodeNode posEncode = graph.AddNode(new CLIPTextEncodeNode());
         posEncode.Text.Set("a beautiful sunset");
         posEncode.Clip.ConnectTo(ckpt.CLIP);
 
-        var negEncode = graph.AddNode(new CLIPTextEncodeNode());
+        CLIPTextEncodeNode negEncode = graph.AddNode(new CLIPTextEncodeNode());
         negEncode.Text.Set("ugly, blurry");
         negEncode.Clip.ConnectTo(ckpt.CLIP);
 
-        var emptyLatent = graph.AddNode(new EmptyLatentImageNode());
+        EmptyLatentImageNode emptyLatent = graph.AddNode(new EmptyLatentImageNode());
         emptyLatent.Width.Set(512L);
         emptyLatent.Height.Set(512L);
         emptyLatent.BatchSize.Set(1L);
 
-        var ksampler = graph.AddNode(new KSamplerNode());
+        KSamplerNode ksampler = graph.AddNode(new KSamplerNode());
         ksampler.Model.ConnectTo(ckpt.MODEL);
         ksampler.Seed.Set(42L);
         ksampler.Steps.Set(20L);
@@ -45,43 +45,38 @@ public class RoundTripTests
         ksampler.LatentImage.ConnectTo(emptyLatent.LATENT);
         ksampler.Denoise.Set(1.0);
 
-        var decode = graph.AddNode(new VAEDecodeNode());
+        VAEDecodeNode decode = graph.AddNode(new VAEDecodeNode());
         decode.Samples.ConnectTo(ksampler.LATENT);
         decode.Vae.ConnectTo(ckpt.VAE);
 
-        var save = graph.AddNode(new SaveImageNode());
+        SaveImageNode save = graph.AddNode(new SaveImageNode());
         save.Images.ConnectTo(decode.IMAGE);
         save.FilenamePrefix.Set("ComfyTyped_");
 
         JObject workflow = graph.ToWorkflow();
 
-        // Verify structure
         Assert.Equal(7, workflow.Count);
 
-        // Verify KSampler connections
         JObject ksNode = (JObject)workflow[ksampler.Id]!;
         Assert.Equal("KSampler", ksNode.Value<string>("class_type"));
         JObject ksInputs = (JObject)ksNode["inputs"]!;
         Assert.Equal(42L, (long)ksInputs["seed"]!);
-        // model input should be a connection [ckpt.Id, 0]
         JArray modelConn = (JArray)ksInputs["model"]!;
         Assert.Equal(ckpt.Id, (string)modelConn[0]!);
         Assert.Equal(0, (int)modelConn[1]!);
 
-        // Verify VAEDecode connections
         JObject decodeNode = (JObject)workflow[decode.Id]!;
         JArray samplesConn = (JArray)decodeNode["inputs"]!["samples"]!;
         Assert.Equal(ksampler.Id, (string)samplesConn[0]!);
         Assert.Equal(0, (int)samplesConn[1]!);
         JArray vaeConn = (JArray)decodeNode["inputs"]!["vae"]!;
         Assert.Equal(ckpt.Id, (string)vaeConn[0]!);
-        Assert.Equal(2, (int)vaeConn[1]!); // VAE is output slot 2
+        Assert.Equal(2, (int)vaeConn[1]!);
     }
 
     [Fact]
     public void Deserialize_RoundTrips_Losslessly()
     {
-        // Build a workflow manually as JObject (simulating what SwarmUI produces)
         JObject original = new()
         {
             ["4"] = new JObject
@@ -129,45 +124,38 @@ public class RoundTripTests
             }
         };
 
-        // Deserialize
         ComfyGraph graph = ComfyGraph.FromWorkflow(original);
 
-        // Verify typed nodes were created
         Assert.IsType<CheckpointLoaderSimpleNode>(graph.GetNode("4"));
         Assert.IsType<CLIPTextEncodeNode>(graph.GetNode("6"));
         Assert.IsType<VAEDecodeNode>(graph.GetNode("8"));
         Assert.IsType<KSamplerNode>(graph.GetNode("10"));
 
-        // Verify connections
-        var ckpt = (CheckpointLoaderSimpleNode)graph.GetNode("4")!;
-        var clip = (CLIPTextEncodeNode)graph.GetNode("6")!;
-        var decode = (VAEDecodeNode)graph.GetNode("8")!;
-        var ksampler = (KSamplerNode)graph.GetNode("10")!;
+        CheckpointLoaderSimpleNode ckpt = (CheckpointLoaderSimpleNode)graph.GetNode("4")!;
+        CLIPTextEncodeNode clip = (CLIPTextEncodeNode)graph.GetNode("6")!;
+        VAEDecodeNode decode = (VAEDecodeNode)graph.GetNode("8")!;
+        KSamplerNode ksampler = (KSamplerNode)graph.GetNode("10")!;
 
         Assert.True(clip.Clip.IsConnected);
         Assert.Same(ckpt, clip.Clip.TypedConnection!.Node);
-        Assert.Equal(1, clip.Clip.TypedConnection!.SlotIndex); // CLIP is slot 1
+        Assert.Equal(1, clip.Clip.TypedConnection!.SlotIndex);
 
         Assert.True(ksampler.Model.IsConnected);
         Assert.Same(ckpt, ksampler.Model.TypedConnection!.Node);
 
         Assert.True(decode.Vae.IsConnected);
         Assert.Same(ckpt, decode.Vae.TypedConnection!.Node);
-        Assert.Equal(2, decode.Vae.TypedConnection!.SlotIndex); // VAE is slot 2
+        Assert.Equal(2, decode.Vae.TypedConnection!.SlotIndex);
 
-        // Verify literal values
         Assert.Equal("a cat", clip.Text.LiteralValue);
         Assert.Equal(42L, ksampler.Seed.LiteralValue);
         Assert.Equal("euler", ksampler.SamplerName.LiteralValue);
 
-        // Serialize back
         JObject roundTripped = graph.ToWorkflow();
 
-        // Verify key fields survived the round-trip
         Assert.Equal("CheckpointLoaderSimple", roundTripped["4"]!.Value<string>("class_type"));
         Assert.Equal("model.safetensors", roundTripped["4"]!["inputs"]!.Value<string>("ckpt_name"));
         Assert.Equal(42L, (long)roundTripped["10"]!["inputs"]!["seed"]!);
-        // KSampler model connection should still point to node 4, slot 0
         JArray modelRef = (JArray)roundTripped["10"]!["inputs"]!["model"]!;
         Assert.Equal("4", (string)modelRef[0]!);
         Assert.Equal(0, (int)modelRef[1]!);
@@ -200,36 +188,33 @@ public class RoundTripTests
 
         ComfyGraph graph = ComfyGraph.FromWorkflow(workflow);
 
-        var node1 = graph.GetNode("1");
-        var node2 = graph.GetNode("2");
+        ComfyNode? node1 = graph.GetNode("1");
+        ComfyNode? node2 = graph.GetNode("2");
         Assert.IsType<UnknownNode>(node1);
         Assert.IsType<UnknownNode>(node2);
         Assert.Equal("SomeCustomNodeThatDoesNotExist", node1!.ClassTypeName);
 
-        // Round-trip should preserve raw data
         JObject rt = graph.ToWorkflow();
         Assert.Equal("hello", rt["1"]!["inputs"]!.Value<string>("param1"));
-        Assert.Equal(3.14, (double)rt["2"]!["inputs"]!["value"]!); // preserves via raw inputs
+        Assert.Equal(3.14, (double)rt["2"]!["inputs"]!["value"]!);
     }
 
     [Fact]
     public void FindNearestUpstream_FindsTypedNode()
     {
-        var graph = new ComfyGraph();
-        var ckpt = graph.AddNode(new CheckpointLoaderSimpleNode());
-        var encode = graph.AddNode(new CLIPTextEncodeNode());
+        ComfyGraph graph = new ComfyGraph();
+        CheckpointLoaderSimpleNode ckpt = graph.AddNode(new CheckpointLoaderSimpleNode());
+        CLIPTextEncodeNode encode = graph.AddNode(new CLIPTextEncodeNode());
         encode.Clip.ConnectTo(ckpt.CLIP);
-        var ksampler = graph.AddNode(new KSamplerNode());
+        KSamplerNode ksampler = graph.AddNode(new KSamplerNode());
         ksampler.Positive.ConnectTo(encode.CONDITIONING);
         ksampler.Model.ConnectTo(ckpt.MODEL);
 
-        // From KSampler, find nearest upstream CheckpointLoaderSimple
-        var found = graph.FindNearestUpstream<CheckpointLoaderSimpleNode>(ksampler);
+        CheckpointLoaderSimpleNode? found = graph.FindNearestUpstream<CheckpointLoaderSimpleNode>(ksampler);
         Assert.NotNull(found);
         Assert.Same(ckpt, found);
 
-        // From CLIPTextEncode, find nearest upstream CheckpointLoaderSimple
-        var found2 = graph.FindNearestUpstream<CheckpointLoaderSimpleNode>(encode);
+        CheckpointLoaderSimpleNode? found2 = graph.FindNearestUpstream<CheckpointLoaderSimpleNode>(encode);
         Assert.NotNull(found2);
         Assert.Same(ckpt, found2);
     }
@@ -237,21 +222,11 @@ public class RoundTripTests
     [Fact]
     public void TypeSafety_CompileTimeCheck()
     {
-        // This test just verifies the API shapes work.
-        // The real type safety is at compile time — you literally can't write:
-        //   decode.Samples.ConnectTo(ckpt.MODEL)  // won't compile: ModelType != LatentType
+        ComfyGraph graph = new ComfyGraph();
+        CheckpointLoaderSimpleNode ckpt = graph.AddNode(new CheckpointLoaderSimpleNode());
+        VAEDecodeNode decode = graph.AddNode(new VAEDecodeNode());
 
-        var graph = new ComfyGraph();
-        var ckpt = graph.AddNode(new CheckpointLoaderSimpleNode());
-        var decode = graph.AddNode(new VAEDecodeNode());
-
-        // This compiles because VAE output -> VAE input
         decode.Vae.ConnectTo(ckpt.VAE);
         Assert.True(decode.Vae.IsConnected);
-
-        // These would NOT compile (uncomment to verify):
-        // decode.Vae.ConnectTo(ckpt.MODEL);   // error: ModelType vs VaeType
-        // decode.Vae.ConnectTo(ckpt.CLIP);    // error: ClipType vs VaeType
-        // decode.Samples.ConnectTo(ckpt.VAE); // error: VaeType vs LatentType
     }
 }

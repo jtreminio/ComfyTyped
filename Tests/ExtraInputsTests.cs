@@ -15,9 +15,6 @@ public class ExtraInputsTests
     [Fact]
     public void RoundTrip_PreservesUnknownInputKeysOnTypedNode()
     {
-        // ResizeImageMaskNode has typed inputs for resize_type/scale_method but the
-        // workflow may also carry variant-shaped keys like resize_type.multiple that
-        // the codegen does not model. They must round-trip via ExtraInputs.
         JObject workflow = new()
         {
             ["10"] = new JObject
@@ -33,8 +30,8 @@ public class ExtraInputsTests
             },
         };
 
-        var graph = ComfyGraph.FromWorkflow(workflow);
-        var node = graph.GetNode<ResizeImageMaskNodeNode>("10")!;
+        ComfyGraph graph = ComfyGraph.FromWorkflow(workflow);
+        ResizeImageMaskNodeNode node = graph.GetNode<ResizeImageMaskNodeNode>("10")!;
 
         Assert.Equal(16, (int)node.ExtraInputs["resize_type.multiple"]!);
         Assert.Equal(512, (int)node.ExtraInputs["resize_type.shorter_size"]!);
@@ -51,8 +48,6 @@ public class ExtraInputsTests
     [Fact]
     public void RoundTrip_PreservesListStyleConnectionKeys()
     {
-        // BatchImagesNode wires its variadic inputs as images.image0, images.image1, …
-        // — connection JArrays under dotted keys. These must pass through verbatim.
         JObject workflow = new()
         {
             ["1"] = new JObject
@@ -71,7 +66,7 @@ public class ExtraInputsTests
             },
         };
 
-        var graph = ComfyGraph.FromWorkflow(workflow);
+        ComfyGraph graph = ComfyGraph.FromWorkflow(workflow);
         JObject roundTripped = graph.ToWorkflow();
         JObject inputs = (JObject)roundTripped["20"]!["inputs"]!;
 
@@ -85,9 +80,7 @@ public class ExtraInputsTests
     [Fact]
     public void TypedInputWinsOverExtraInputOnCollision()
     {
-        // If a consumer puts a key into ExtraInputs that collides with a typed input,
-        // the typed input's serialized value must take precedence.
-        var node = new EmptyLatentImageNode();
+        EmptyLatentImageNode node = new EmptyLatentImageNode();
         node.Width.Set(1024L);
         node.ExtraInputs = new JObject { ["width"] = 999L, ["custom_extra"] = "hello" };
 
@@ -109,8 +102,8 @@ public class ExtraInputsTests
                 ["inputs"] = new JObject { ["width"] = 512, ["height"] = 512, ["batch_size"] = 1 },
             },
         };
-        var graph = ComfyGraph.FromWorkflow(workflow);
-        var node = graph.GetNode<EmptyLatentImageNode>("1")!;
+        ComfyGraph graph = ComfyGraph.FromWorkflow(workflow);
+        EmptyLatentImageNode node = graph.GetNode<EmptyLatentImageNode>("1")!;
 
         Assert.Empty(node.ExtraInputs.Properties());
     }
@@ -132,8 +125,8 @@ public class ExtraInputsTests
                 },
             },
         };
-        var bridge = WorkflowBridge.Create(workflow);
-        var node = bridge.Graph.GetNode<EmptyLatentImageNode>("1")!;
+        WorkflowBridge bridge = WorkflowBridge.Create(workflow);
+        EmptyLatentImageNode node = bridge.Graph.GetNode<EmptyLatentImageNode>("1")!;
 
         node.Width.Set(2048L);
         bridge.SyncNode(node);

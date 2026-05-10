@@ -54,21 +54,17 @@ public class WorkflowFixtureTests
     {
         ComfyGraph graph = ComfyGraph.FromWorkflow(LoadFixture());
 
-        // 3000.model ← 4.MODEL (lora chained on UNET)
         LoraLoaderModelOnlyNode lora = graph.GetNode<LoraLoaderModelOnlyNode>("3000")!;
         Assert.Same(graph.GetNode("4"), lora.Model.TypedConnection!.Node);
         Assert.Equal(0, lora.Model.TypedConnection!.SlotIndex);
 
-        // 8.samples ← 10.LATENT (image VAEDecode of first SwarmKSampler)
         VAEDecodeNode imageDecode = graph.GetNode<VAEDecodeNode>("8")!;
         Assert.Same(graph.GetNode("10"), imageDecode.Samples.TypedConnection!.Node);
 
-        // 121.samples ← 120.video_latent (slot 0 of LTXVSeparateAVLatent)
         VAEDecodeNode videoDecode = graph.GetNode<VAEDecodeNode>("121")!;
         Assert.Same(graph.GetNode("120"), videoDecode.Samples.TypedConnection!.Node);
         Assert.Equal(0, videoDecode.Samples.TypedConnection!.SlotIndex);
 
-        // 122.samples ← 120.audio_latent (slot 1 of LTXVSeparateAVLatent)
         LTXVAudioVAEDecodeNode audioDecode = graph.GetNode<LTXVAudioVAEDecodeNode>("122")!;
         Assert.Same(graph.GetNode("120"), audioDecode.Samples.TypedConnection!.Node);
         Assert.Equal(1, audioDecode.Samples.TypedConnection!.SlotIndex);
@@ -81,7 +77,6 @@ public class WorkflowFixtureTests
 
         SwarmSaveImageWSNode imageSave = graph.GetNode<SwarmSaveImageWSNode>("30")!;
 
-        // 30 → 8 (VAEDecode) → 10 (SwarmKSampler) → 3000 (Lora) → 4 (UNETLoader)
         UNETLoaderNode? unet = graph.FindNearestUpstream<UNETLoaderNode>(imageSave);
         Assert.NotNull(unet);
         Assert.Equal("4", unet!.Id);
@@ -90,8 +85,6 @@ public class WorkflowFixtureTests
         Assert.NotNull(sampler);
         Assert.Equal("10", sampler!.Id);
 
-        // From the video save, the nearest SwarmKSampler is the last in the video chain (119),
-        // not the first image-side one (10).
         SwarmSaveAnimationWSNode videoSave = graph.GetNode<SwarmSaveAnimationWSNode>("53200")!;
         SwarmKSamplerNode? videoSampler = graph.FindNearestUpstream<SwarmKSamplerNode>(videoSave);
         Assert.NotNull(videoSampler);
@@ -116,9 +109,6 @@ public class WorkflowFixtureTests
     {
         ComfyGraph graph = ComfyGraph.FromWorkflow(LoadFixture());
 
-        // 120 LTXVSeparateAVLatent has two consumers — VAEDecode (121.samples ← slot 0)
-        // and LTXVAudioVAEDecode (122.samples ← slot 1). Insert a new separate node
-        // between sampler (119) and the consumers, simulating a splice operation.
         LTXVSeparateAVLatentNode oldSeparate = graph.GetNode<LTXVSeparateAVLatentNode>("120")!;
         SwarmKSamplerNode lastSampler = graph.GetNode<SwarmKSamplerNode>("119")!;
         LTXVSeparateAVLatentNode newSeparate = graph.AddNode(new LTXVSeparateAVLatentNode());
@@ -155,7 +145,10 @@ public class WorkflowFixtureTests
 
             JObject? srcInputs = src["inputs"] as JObject;
             JObject? dstInputs = dst["inputs"] as JObject;
-            if (srcInputs is null) continue;
+            if (srcInputs is null)
+            {
+                continue;
+            }
             Assert.NotNull(dstInputs);
 
             foreach (JProperty p in srcInputs.Properties())
@@ -183,7 +176,6 @@ public class WorkflowFixtureTests
         JObject jInputs = (JObject)jSampler["inputs"]!;
         Assert.Equal(40L, (long)jInputs["steps"]!);
         Assert.Equal(7L, (long)jInputs["noise_seed"]!);
-        // Connections should still be intact
         Assert.Equal("3000", (string)((JArray)jInputs["model"]!)[0]!);
     }
 }
