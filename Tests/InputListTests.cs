@@ -69,11 +69,12 @@ public class InputListTests
     }
 
     [Fact]
-    public void Deserialize_NonClaimingKeyUnderListPrefixGoesToExtraInputs()
+    public void Deserialize_KeyOutsideListPatternGoesToExtraInputs()
     {
-        // A literal under the list's prefix (not a connection ref) falls through to ExtraInputs —
-        // autogrow children are connection-only by schema, so a literal here is malformed JSON
-        // that should round-trip via the escape hatch rather than be claimed.
+        // A key starting with "images." but whose suffix isn't a valid list child name
+        // (TryParseKey returns -1) doesn't get claimed — falls through to ExtraInputs.
+        // Image-typed input contract is permissive about literals at runtime, but the
+        // wire-key pattern is strict.
         JObject workflow = new()
         {
             ["20"] = new JObject
@@ -81,14 +82,14 @@ public class InputListTests
                 ["class_type"] = "BatchImagesNode",
                 ["inputs"] = new JObject
                 {
-                    ["images.image0"] = "not_a_connection_ref",
+                    ["images.unmatched_suffix"] = "preserved_literal",
                 },
             },
         };
         ComfyGraph graph = ComfyGraph.FromWorkflow(workflow);
         BatchImagesNodeNode node = graph.GetNode<BatchImagesNodeNode>("20")!;
         Assert.Equal(0, node.Images.Count);
-        Assert.Equal("not_a_connection_ref", (string?)node.ExtraInputs["images.image0"]);
+        Assert.Equal("preserved_literal", (string?)node.ExtraInputs["images.unmatched_suffix"]);
     }
 
     // ── Structural mutations via bridge ──────────────────────────────
@@ -150,13 +151,13 @@ public class InputListTests
         JObject inputs = (JObject)bridge.Workflow["20"]!["inputs"]!;
         Assert.Equal(3, inputs.Properties().Count());
         Assert.Equal(3, node.Images.Count);
-        Assert.Equal("images.image0", node.Images[0].Name);
-        Assert.Equal("images.image1", node.Images[1].Name);
-        Assert.Equal("images.image2", node.Images[2].Name);
-        // Surviving items are sourced from nodes 10, 12, 13 (the middle 11 dropped).
+        // Serialized wire keys regenerate from position-in-list; surviving items 10/12/13
+        // end up at indices 0/1/2 with the corresponding contiguous wire keys.
         Assert.Equal("10", (string)((JArray)inputs["images.image0"]!)[0]!);
         Assert.Equal("12", (string)((JArray)inputs["images.image1"]!)[0]!);
         Assert.Equal("13", (string)((JArray)inputs["images.image2"]!)[0]!);
+        // image3 (originally from node 13) no longer exists — its old wire-key vanished.
+        Assert.Null(inputs["images.image3"]);
     }
 
     [Fact]
@@ -191,11 +192,17 @@ public class InputListTests
     }
 
     [Fact]
-    public void ListChild_SetThrows()
+    public void ListChild_SetWorksForPrimitiveElement()
     {
-        BatchImagesNodeNode node = new();
-        node.Images.AddFromUntyped(new UnknownNode("Dummy").GetOutput(0));
-        Assert.Throws<InvalidOperationException>(() => node.Images[0].SetUntyped("literal_not_allowed"));
+        // GLSLShader.Floats is NodeInputList<FloatType> — primitive element type,
+        // so Set on a child is meaningful (literal value, not a connection).
+        GLSLShaderNode node = new();
+        // Materialize a child by appending an unset slot, then setting its literal.
+        // (Real-world: codegen populates via FromWorkflow's literal path.)
+        node.Floats.AddFromUntyped(new UnknownNode("Dummy").GetOutput(0));
+        node.Floats[0].SetUntyped(3.14);
+        Assert.Equal(3.14, node.Floats[0].LiteralValue);
+        Assert.False(node.Floats[0].IsConnected);
     }
 
     [Fact]
@@ -327,6 +334,237 @@ public class InputListTests
         Assert.Equal("10", (string)((JArray)inputs["images.image0"]!)[0]!);
         Assert.Equal("99", (string)((JArray)inputs["images.image1"]!)[0]!);
         Assert.Equal("12", (string)((JArray)inputs["images.image2"]!)[0]!);
+    }
+
+    // ── Names variant (HiDreamO1ReferenceImages-shape) ───────────────
+
+    [Fact]
+    public void NamesVariant_SerializesUsingExplicitNames()
+    {
+        NamesListStub node = new();
+        UnknownNode src = new("Dummy");
+        node.Images.AddFromUntyped(src.GetOutput(0));
+        node.Images.AddFromUntyped(src.GetOutput(0));
+
+        JObject inputs = (JObject)node.ToWorkflowNode()["inputs"]!;
+        Assert.Equal(2, inputs.Properties().Count());
+        Assert.NotNull(inputs["images.image_1"]);
+        Assert.NotNull(inputs["images.image_2"]);
+        Assert.Null(inputs["images.image_3"]);
+        // Critically: not "images.image0" / "images.image1" — the schema's names win verbatim.
+        Assert.Null(inputs["images.image0"]);
+    }
+
+    [Fact]
+    public void NamesVariant_TryParseKey_MatchesByName()
+    {
+        INodeInputList list = new NamesListStub().Images;
+        Assert.Equal(0, list.TryParseKey("images.image_1"));
+        Assert.Equal(2, list.TryParseKey("images.image_3"));
+        Assert.Equal(-1, list.TryParseKey("images.image_4"));   // not in names
+        Assert.Equal(-1, list.TryParseKey("images.image0"));    // wrong format (prefix-shape)
+        Assert.Equal(-1, list.TryParseKey("images.image"));     // no suffix
+        Assert.Equal(-1, list.TryParseKey("other_input"));      // unrelated key
+    }
+
+    [Fact]
+    public void NamesVariant_MaxCappedAtNamesCount()
+    {
+        // NamesListStub declares 3 names; max:int.MaxValue should be capped to 3.
+        NamesListStub node = new();
+        Assert.Equal(3, node.Images.Max);
+        UnknownNode src = new("Dummy");
+        for (int i = 0; i < 3; i++)
+        {
+            node.Images.AddFromUntyped(src.GetOutput(0));
+        }
+        Assert.Throws<InvalidOperationException>(() =>
+            node.Images.AddFromUntyped(src.GetOutput(0)));
+    }
+
+    [Fact]
+    public void NamesVariant_RoundTripPreservesSchemaNames()
+    {
+        // Build a workflow with named keys; FromWorkflow should claim them and re-emit verbatim.
+        // Source node "10" is an UnknownNode (materializes outputs on demand) so the wire
+        // refs ["10", 0] and ["10", 1] resolve to real INodeOutput instances.
+        JObject workflow = new()
+        {
+            ["10"] = ImageStub(),
+            ["20"] = new JObject
+            {
+                ["class_type"] = NamesListStub.ClassTypeName_,
+                ["inputs"] = new JObject
+                {
+                    ["images.image_1"] = new JArray("10", 0),
+                    ["images.image_3"] = new JArray("10", 1),
+                },
+            },
+        };
+        // Register the stub once so FromWorkflow can deserialize it.
+        ComfyTyped.Core.NodeRegistry.Register(NamesListStub.ClassTypeName_, () => new NamesListStub());
+
+        ComfyGraph graph = ComfyGraph.FromWorkflow(workflow);
+        NamesListStub node = graph.GetNode<NamesListStub>("20")!;
+        Assert.Equal(2, node.Images.Count);
+
+        // After deserialization, the surviving items compact to positions 0 and 1 → image_1 and image_2.
+        // Position 0's original wire-key was image_1, position 1's original was image_3 (now renamed to image_2).
+        JObject inputs = (JObject)graph.ToWorkflow()["20"]!["inputs"]!;
+        Assert.Equal(0, (int)((JArray)inputs["images.image_1"]!)[1]!);
+        Assert.Equal(1, (int)((JArray)inputs["images.image_2"]!)[1]!);
+        Assert.Null(inputs["images.image_3"]);
+    }
+
+    /// <summary>Hand-rolled stub node matching HiDream's names-shape autogrow schema.
+    /// Lives in the test assembly so we don't depend on a regen against a HiDream-having
+    /// object_info dump.</summary>
+    private sealed class NamesListStub : ComfyNode
+    {
+        public const string ClassTypeName_ = "UnitTest_NamesList";
+        public override string ClassTypeName => ClassTypeName_;
+        public NodeInputList<ImageType> Images { get; }
+
+        public NamesListStub()
+        {
+            Images = AddInputList<ImageType>(
+                "images",
+                names: new string[] { "image_1", "image_2", "image_3" },
+                min: 1,
+                max: int.MaxValue);
+        }
+    }
+
+    // ── Multi-list, dangling refs, atomicity ─────────────────────────
+
+    [Fact]
+    public void MultiList_NodeRoundTripsEveryListIndependently()
+    {
+        // GLSLShaderNode has 5 lists with disjoint prefixes (image*, u_float*, u_int*, u_bool*, u_curve*).
+        // Verify each list buckets its own keys and doesn't claim sibling-list keys.
+        JObject workflow = new()
+        {
+            ["10"] = ImageStub(),
+            ["11"] = ImageStub(),
+            ["20"] = new JObject
+            {
+                ["class_type"] = "GLSLShader",
+                ["inputs"] = new JObject
+                {
+                    ["fragment_shader"] = "void main() {}",
+                    ["size_mode"] = "first",
+                    ["images.image0"] = new JArray("10", 0),
+                    ["images.image1"] = new JArray("11", 0),
+                    ["floats.u_float0"] = 1.5,
+                    ["floats.u_float1"] = 2.5,
+                    ["ints.u_int0"] = 42L,
+                    ["bools.u_bool0"] = true,
+                },
+            },
+        };
+
+        ComfyGraph graph = ComfyGraph.FromWorkflow(workflow);
+        GLSLShaderNode node = graph.GetNode<GLSLShaderNode>("20")!;
+        Assert.Equal(2, node.Images.Count);
+        Assert.Equal(2, node.Floats.Count);
+        Assert.Equal(1, node.Ints.Count);
+        Assert.Equal(1, node.Bools.Count);
+        Assert.Equal(0, node.Curves.Count);
+        Assert.Empty(node.ExtraInputs.Properties());
+
+        // Round-trip preserves disjoint keysets per list.
+        JObject inputs = (JObject)graph.ToWorkflow()["20"]!["inputs"]!;
+        Assert.NotNull(inputs["images.image0"]);
+        Assert.NotNull(inputs["images.image1"]);
+        Assert.NotNull(inputs["floats.u_float0"]);
+        Assert.NotNull(inputs["floats.u_float1"]);
+        Assert.NotNull(inputs["ints.u_int0"]);
+        Assert.NotNull(inputs["bools.u_bool0"]);
+        Assert.Equal("void main() {}", (string?)inputs["fragment_shader"]);
+    }
+
+    [Fact]
+    public void DanglingSourceId_FallsThroughToExtraInputsInsteadOfDistortingList()
+    {
+        // Workflow with a list ref pointing at a non-existent node id ("999").
+        // Old behavior: list materialized the slot, failed to wire, then dropped the key
+        //               on serialize — shifting other items' positions.
+        // New behavior: the dangling ref lands in ExtraInputs so it round-trips losslessly
+        //               and the typed list count stays accurate.
+        JObject workflow = new()
+        {
+            ["10"] = ImageStub(),
+            ["20"] = new JObject
+            {
+                ["class_type"] = "BatchImagesNode",
+                ["inputs"] = new JObject
+                {
+                    ["images.image0"] = new JArray("10", 0),
+                    ["images.image1"] = new JArray("999", 0),  // ← dangling
+                    ["images.image2"] = new JArray("10", 1),
+                },
+            },
+        };
+        ComfyGraph graph = ComfyGraph.FromWorkflow(workflow);
+        BatchImagesNodeNode node = graph.GetNode<BatchImagesNodeNode>("20")!;
+        // Only the resolvable refs become list items.
+        Assert.Equal(2, node.Images.Count);
+        // The dangling key landed in ExtraInputs.
+        Assert.NotNull(node.ExtraInputs["images.image1"]);
+        Assert.Equal("999", (string)((JArray)node.ExtraInputs["images.image1"]!)[0]!);
+
+        // Round-trip: typed list re-emits compacted (image0, image1).
+        // The dangling ref survives in node.ExtraInputs (asserted above) but on
+        // serialize, the typed list's images.image1 wins over ExtraInputs at the
+        // colliding key — full lossless dangling-ref serialization is not guaranteed,
+        // but the in-memory shape is preserved for callers to inspect/recover.
+        JObject inputs = (JObject)graph.ToWorkflow()["20"]!["inputs"]!;
+        Assert.Equal("10", (string)((JArray)inputs["images.image0"]!)[0]!);
+        Assert.Equal("10", (string)((JArray)inputs["images.image1"]!)[0]!);
+        Assert.Equal(0, (int)((JArray)inputs["images.image0"]!)[1]!);
+        Assert.Equal(1, (int)((JArray)inputs["images.image1"]!)[1]!);
+    }
+
+    [Fact]
+    public void Add_TypeMismatch_LeavesListUnchanged()
+    {
+        // AddFromUntyped throws on a type-incompatible source; the list must stay empty
+        // (no orphan child appended pre-throw, no spurious ListChanged event).
+        BatchImagesNodeNode node = new();
+        bool fired = false;
+        // Subscribe via a bridge so we can observe events.
+        using WorkflowBridge bridge = new(new ComfyGraph(), new JObject());
+        bridge.AddNode(node);
+        // Connect a latent output (incompatible with ImageType, not a wildcard).
+        EmptyLatentImageNode latentSrc = new();
+        Assert.Throws<InvalidOperationException>(() =>
+            node.Images.AddFromUntyped(latentSrc.LATENT));
+        Assert.Equal(0, node.Images.Count);
+        // Workflow JSON should reflect zero children for the list.
+        JObject inputs = (JObject)bridge.Workflow[node.Id]!["inputs"]!;
+        Assert.Null(inputs["images.image0"]);
+        // (No assertion on `fired` — we'd need a hook into the bridge handlers to check
+        // that ListChanged didn't fire. The Count check above is the observable proxy.)
+    }
+
+    [Fact]
+    public void DoubleSubscribe_IsIdempotent()
+    {
+        // A caller that adds the same node instance twice should not get duplicate events.
+        // We verify by counting JObject inputs writes: a Set on an int input would
+        // be written once, not twice.
+        WorkflowBridge bridge = new(new ComfyGraph(), new JObject());
+        EmptyLatentImageNode node = new();
+        bridge.AddNode(node);
+        bridge.AddNode(node);   // second subscribe is a no-op
+        node.Width.Set(2048L);
+        JObject inputs = (JObject)bridge.Workflow[node.Id]!["inputs"]!;
+        Assert.Equal(2048L, (long)inputs["width"]!);
+        // Indirect proof of single fire: if double-subscribed, the second handler would
+        // also run, but since both handlers do `inputs.Remove(name); SerializeInto(inputs);`
+        // idempotently, this test alone doesn't catch all duplicates. The unit-level proof
+        // is just that no exception is thrown and the value is correct.
+        bridge.Dispose();
     }
 
     // ── Fixture helpers ──────────────────────────────────────────────

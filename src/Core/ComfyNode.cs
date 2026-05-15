@@ -88,14 +88,30 @@ public abstract class ComfyNode
         return input;
     }
 
-    /// <summary>Register a typed input list (ComfyUI <c>COMFY_AUTOGROW_V3</c>). Children are
-    /// connection-only and fan out to wire keys <c>"{slotName}.{prefix}{i}"</c> on serialize.
-    /// Called by generated node constructors.</summary>
+    /// <summary>Register a prefix-shape typed input list (ComfyUI <c>COMFY_AUTOGROW_V3</c>
+    /// with <c>template.prefix</c>). Children fan out to wire keys
+    /// <c>"{slotName}.{prefix}{i}"</c> (0-indexed, no separator). Called by generated node
+    /// constructors.</summary>
     protected NodeInputList<T> AddInputList<T>(
         string slotName, string prefix, int min, int max, bool required = true)
         where T : Types.IComfyType
     {
         NodeInputList<T> list = new(slotName, prefix, min, max, required, this);
+        _inputLists.Add(list);
+
+        return list;
+    }
+
+    /// <summary>Register a names-shape typed input list (ComfyUI <c>COMFY_AUTOGROW_V3</c>
+    /// with <c>template.names</c>). Children fan out to wire keys
+    /// <c>"{slotName}.{names[i]}"</c> using the schema-provided names verbatim
+    /// (e.g. <c>"images.image_1"</c>, <c>"images.image_2"</c>). <paramref name="max"/> is
+    /// capped at <c>names.Count</c>. Called by generated node constructors.</summary>
+    protected NodeInputList<T> AddInputList<T>(
+        string slotName, IReadOnlyList<string> names, int min, int max, bool required = true)
+        where T : Types.IComfyType
+    {
+        NodeInputList<T> list = new(slotName, names, min, max, required, this);
         _inputLists.Add(list);
 
         return list;

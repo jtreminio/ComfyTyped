@@ -80,6 +80,10 @@ public sealed class WorkflowBridge : IDisposable
     private readonly JObject _workflow;
     private readonly Action<ComfyNode, INodeInput> _onInputChanged;
     private readonly Action<ComfyNode, INodeInputList> _onInputListChanged;
+    /// <summary>Nodes currently subscribed-to by this bridge. Guards against
+    /// double-subscribe when a caller adds the same node instance twice (e.g.
+    /// via <c>bridge.AddNode(graph.GetNode(id))</c>).</summary>
+    private readonly HashSet<ComfyNode> _subscribed = [];
     private bool _disposed;
 
     /// <summary>The typed graph view, deserialized from the workflow at creation time.</summary>
@@ -189,7 +193,7 @@ public sealed class WorkflowBridge : IDisposable
     /// </summary>
     public int RemoveAllNodes()
     {
-        foreach (ComfyNode node in Graph.Nodes.Values)
+        foreach (ComfyNode node in Graph.Nodes.Values.ToList())
         {
             Unsubscribe(node);
         }
@@ -358,18 +362,19 @@ public sealed class WorkflowBridge : IDisposable
             return;
         }
         _disposed = true;
-        foreach (ComfyNode node in _graph.Nodes.Values)
+        foreach (ComfyNode node in _subscribed)
         {
             node.InputChanged -= _onInputChanged;
             node.InputListChanged -= _onInputListChanged;
         }
+        _subscribed.Clear();
     }
 
     // ── Internal ────────────────────────────────────────────────────
 
     private void Subscribe(ComfyNode node)
     {
-        if (_disposed)
+        if (_disposed || !_subscribed.Add(node))
         {
             return;
         }
@@ -379,6 +384,10 @@ public sealed class WorkflowBridge : IDisposable
 
     private void Unsubscribe(ComfyNode node)
     {
+        if (!_subscribed.Remove(node))
+        {
+            return;
+        }
         node.InputChanged -= _onInputChanged;
         node.InputListChanged -= _onInputListChanged;
     }

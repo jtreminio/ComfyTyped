@@ -171,8 +171,17 @@ public sealed class ComfyGraph
                 continue;
             }
 
-            if (node is not UnknownNode
-                && IsConnectionRef(inputProp.Value, out string? _, out int _))
+            // Claim into a list when the value is either a literal (for primitive-element
+            // lists like GLSLShader.Floats) or a connection ref whose source node actually
+            // exists in the graph. A dangling connection ref (source id missing) is
+            // explicitly NOT claimed — it would otherwise materialize a list slot that
+            // fails to wire, then drop from serialization, silently mutating the list's
+            // count/order. Falling through to ExtraInputs preserves the bad ref in-memory
+            // (the serialize side may still drop it on key collision with the compacted
+            // typed list output — full dangling-ref round-trip is not guaranteed).
+            bool isValueClaimable = !IsConnectionRef(inputProp.Value, out string? srcId, out int _)
+                || (srcId is not null && graph.GetNode(srcId) is not null);
+            if (node is not UnknownNode && isValueClaimable)
             {
                 bool claimed = false;
                 foreach (INodeInputList list in node.InputLists)

@@ -443,6 +443,7 @@ public static partial class Program
         object? DefaultValue,
         bool IsList = false,
         string? Prefix = null,
+        IReadOnlyList<string>? Names = null,
         int Min = 0,
         int Max = 0,
         MarkerInfo? ElementMarker = null);
@@ -530,18 +531,20 @@ public static partial class Program
 
             string comfyType = spec[0] is JArray ? "COMBO" : spec[0]?.ToString() ?? "*";
 
-            // COMFY_AUTOGROW_V3: typed list of element type. Children fan out as
-            // "{inputName}.{prefix}{i}" wire keys; modeled as NodeInputList<T>.
+            // COMFY_AUTOGROW_V3: typed list of element type. Two shapes:
+            //   prefix → child wire keys are "{slot}.{prefix}{i}" (BatchImagesNode).
+            //   names  → child wire keys are "{slot}.{names[i]}" (HiDreamO1ReferenceImages).
             if (comfyType == "COMFY_AUTOGROW_V3"
                 && TryParseAutogrow(spec, typeMapping, generatedMarkers, markerNamespace,
-                    out string? listPrefix, out int listMin, out int listMax, out MarkerInfo? elementMarker))
+                    out string? listPrefix, out IReadOnlyList<string>? listNames,
+                    out int listMin, out int listMax, out MarkerInfo? elementMarker))
             {
                 string listPropName = SanitizeInputPropertyName(inputProp.Name, inputs, outputs);
                 inputs.Add(new InputDef(
                     inputProp.Name, listPropName, comfyType, elementMarker!,
                     required, IsPrimitive: false, CSharpType: null, DefaultValue: null,
-                    IsList: true, Prefix: listPrefix, Min: listMin, Max: listMax,
-                    ElementMarker: elementMarker));
+                    IsList: true, Prefix: listPrefix, Names: listNames,
+                    Min: listMin, Max: listMax, ElementMarker: elementMarker));
                 continue;
             }
 
@@ -579,8 +582,15 @@ public static partial class Program
         }
     }
 
-    /// <summary>Parse a COMFY_AUTOGROW_V3 input spec. Schema shape:
-    /// <c>["COMFY_AUTOGROW_V3", { "template": { "input": { "required": { "&lt;key&gt;": ["IMAGE", {}] } }, "prefix": "image", "min": 2, "max": 50 } }]</c>
+    /// <summary>Parse a COMFY_AUTOGROW_V3 input spec. Two shapes are supported:
+    /// <list type="bullet">
+    ///   <item><b>Prefix shape</b> (BatchImagesNode): template has <c>prefix</c>,
+    ///         <c>min</c>, <c>max</c> — children get generated names
+    ///         <c>{prefix}0</c>, <c>{prefix}1</c>, …</item>
+    ///   <item><b>Names shape</b> (HiDreamO1ReferenceImages): template has explicit
+    ///         <c>names</c> array — children use those names verbatim.</item>
+    /// </list>
+    /// On success, exactly one of <paramref name="prefix"/> / <paramref name="names"/> is set.
     /// </summary>
     private static bool TryParseAutogrow(
         JArray spec,
@@ -588,11 +598,13 @@ public static partial class Program
         Dictionary<string, MarkerInfo> generatedMarkers,
         string markerNamespace,
         out string? prefix,
+        out IReadOnlyList<string>? names,
         out int min,
         out int max,
         out MarkerInfo? elementMarker)
     {
         prefix = null;
+        names = null;
         min = 0;
         max = 0;
         elementMarker = null;
@@ -604,17 +616,12 @@ public static partial class Program
         {
             return false;
         }
-        prefix = template.Value<string>("prefix");
-        if (string.IsNullOrEmpty(prefix))
-        {
-            return false;
-        }
-        min = template.Value<int?>("min") ?? 0;
-        max = template.Value<int?>("max") ?? int.MaxValue;
         if (template["input"] is not JObject inputSection
             || inputSection["required"] is not JObject requiredSection
-            || requiredSection.Count == 0)
+            || requiredSection.Count != 1)
         {
+            // Autogrow template should declare exactly one element input. Anything else
+            // is malformed schema we don't know how to model — fall through to STRING.
             return false;
         }
         JProperty first = requiredSection.Properties().First();
@@ -624,8 +631,47 @@ public static partial class Program
         }
         string elemComfyType = elemSpec[0] is JArray ? "COMBO" : elemSpec[0]?.ToString() ?? "*";
         elementMarker = ResolveMarkerType(elemComfyType, typeMapping, generatedMarkers, markerNamespace);
+        min = Math.Max(0, template.Value<int?>("min") ?? 0);
 
-        return true;
+        string? rawPrefix = template.Value<string>("prefix");
+        if (!string.IsNullOrEmpty(rawPrefix))
+        {
+            int rawMax = template.Value<int?>("max") ?? int.MaxValue;
+            if (rawMax < min)
+            {
+                return false;
+            }
+            prefix = rawPrefix;
+            max = rawMax;
+
+            return true;
+        }
+
+        if (template["names"] is JArray namesArr && namesArr.Count > 0)
+        {
+            List<string> parsed = [];
+            foreach (JToken t in namesArr)
+            {
+                // Reject the whole spec on any non-string entry — silently dropping bad
+                // entries would misalign the schema's position-to-name mapping.
+                if (t is not JValue jv || jv.Type != JTokenType.String || jv.Value is not string s)
+                {
+                    return false;
+                }
+                parsed.Add(s);
+            }
+            int rawMax = template.Value<int?>("max") ?? parsed.Count;
+            if (rawMax < min)
+            {
+                return false;
+            }
+            names = parsed;
+            max = rawMax;
+
+            return true;
+        }
+
+        return false;
     }
 
     // Code generation
@@ -750,10 +796,23 @@ public static partial class Program
         {
             string req = inp.Required ? "true" : "false";
             string maxLit = inp.Max == int.MaxValue ? "int.MaxValue" : inp.Max.ToString();
-            sb.AppendLine(
-                $"        {inp.PropertyName} = AddInputList<{inp.ElementMarker!.ShortName}>("
-                + $"\"{inp.Name}\", prefix: \"{EscapeCSharpString(inp.Prefix!)}\", "
-                + $"min: {inp.Min}, max: {maxLit}, required: {req});");
+            if (inp.Names is not null)
+            {
+                string namesLit = string.Join(
+                    ", ",
+                    inp.Names.Select(n => $"\"{EscapeCSharpString(n)}\""));
+                sb.AppendLine(
+                    $"        {inp.PropertyName} = AddInputList<{inp.ElementMarker!.ShortName}>("
+                    + $"\"{inp.Name}\", names: new string[] {{ {namesLit} }}, "
+                    + $"min: {inp.Min}, max: {maxLit}, required: {req});");
+            }
+            else
+            {
+                sb.AppendLine(
+                    $"        {inp.PropertyName} = AddInputList<{inp.ElementMarker!.ShortName}>("
+                    + $"\"{inp.Name}\", prefix: \"{EscapeCSharpString(inp.Prefix!)}\", "
+                    + $"min: {inp.Min}, max: {maxLit}, required: {req});");
+            }
         }
         sb.AppendLine("    }");
 
@@ -849,11 +908,15 @@ public static partial class Program
             name = "Input";
         }
         name = EnsureValidIdentifier(name);
-        // Reserve the ComfyNode base class's public surface so a slot name like "inputs"
-        // doesn't hide ComfyNode.Inputs (CS0108).
+        // Reserve every public member on the ComfyNode base class — properties AND
+        // methods. Generated property names that collide trigger CS0108 ("hides
+        // inherited member"). The codebase treats warnings as load-bearing, so any
+        // collision must produce a distinct property name.
         if (name is "ClassType" or "ClassTypeName"
             or "Inputs" or "InputLists" or "Outputs"
-            or "ExtraInputs" or "Id")
+            or "ExtraInputs" or "Id"
+            or "FindInput" or "FindInputList" or "FindOutput"
+            or "ToWorkflowNode")
         {
             name += "Input";
         }
