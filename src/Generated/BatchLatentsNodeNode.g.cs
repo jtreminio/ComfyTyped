@@ -15,23 +15,12 @@ public sealed class BatchLatentsNodeNode : ComfyNode
     // ── Outputs ──
     public NodeOutput<LatentType> LATENT { get; }
 
-    // ── Inputs ──
-    public NodeInput<StringType> Latents { get; }
+    // ── Input lists (COMFY_AUTOGROW_V3) ──
+    public NodeInputList<LatentType> Latents { get; }
 
     public BatchLatentsNodeNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Latents = AddInput<StringType>("latents", required: true);
-    }
-
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
-    public BatchLatentsNodeNode With(
-        string? Latents = null
-    )
-    {
-        if (Latents is { } v_Latents) this.Latents.Set(v_Latents);
-        return this;
+        Latents = AddInputList<LatentType>("latents", prefix: "latent", min: 2, max: 50, required: true);
     }
 }

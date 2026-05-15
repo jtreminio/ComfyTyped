@@ -22,11 +22,13 @@ public sealed class GLSLShaderNode : ComfyNode
     // ── Inputs ──
     public NodeInput<StringType> FragmentShader { get; }
     public NodeInput<StringType> SizeMode { get; }
-    public NodeInput<StringType> Images { get; }
-    public NodeInput<StringType> Floats { get; }
-    public NodeInput<StringType> Ints { get; }
-    public NodeInput<StringType> Bools { get; }
-    public NodeInput<StringType> Curves { get; }
+
+    // ── Input lists (COMFY_AUTOGROW_V3) ──
+    public NodeInputList<ImageType> Images { get; }
+    public NodeInputList<FloatType> Floats { get; }
+    public NodeInputList<IntType> Ints { get; }
+    public NodeInputList<BooleanType> Bools { get; }
+    public NodeInputList<CurveType> Curves { get; }
 
     public GLSLShaderNode()
     {
@@ -37,11 +39,11 @@ public sealed class GLSLShaderNode : ComfyNode
         FragmentShader = AddInput<StringType>("fragment_shader", required: true);
         FragmentShader.Set("#version 300 es\nprecision highp float;\n\nuniform sampler2D u_image0;\nuniform vec2 u_resolution;\n\nin vec2 v_texCoord;\nlayout(location = 0) out vec4 fragColor0;\n\nvoid main() {\n    fragColor0 = texture(u_image0, v_texCoord);\n}\n");
         SizeMode = AddInput<StringType>("size_mode", required: true);
-        Images = AddInput<StringType>("images", required: true);
-        Floats = AddInput<StringType>("floats", required: true);
-        Ints = AddInput<StringType>("ints", required: true);
-        Bools = AddInput<StringType>("bools", required: true);
-        Curves = AddInput<StringType>("curves", required: true);
+        Images = AddInputList<ImageType>("images", prefix: "image", min: 1, max: 5, required: true);
+        Floats = AddInputList<FloatType>("floats", prefix: "u_float", min: 0, max: 20, required: true);
+        Ints = AddInputList<IntType>("ints", prefix: "u_int", min: 0, max: 20, required: true);
+        Bools = AddInputList<BooleanType>("bools", prefix: "u_bool", min: 0, max: 10, required: true);
+        Curves = AddInputList<CurveType>("curves", prefix: "u_curve", min: 0, max: 4, required: true);
     }
 
     /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
@@ -49,21 +51,11 @@ public sealed class GLSLShaderNode : ComfyNode
     /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
     public GLSLShaderNode With(
         string? FragmentShader = null,
-        string? SizeMode = null,
-        string? Images = null,
-        string? Floats = null,
-        string? Ints = null,
-        string? Bools = null,
-        string? Curves = null
+        string? SizeMode = null
     )
     {
         if (FragmentShader is { } v_FragmentShader) this.FragmentShader.Set(v_FragmentShader);
         if (SizeMode is { } v_SizeMode) this.SizeMode.Set(v_SizeMode);
-        if (Images is { } v_Images) this.Images.Set(v_Images);
-        if (Floats is { } v_Floats) this.Floats.Set(v_Floats);
-        if (Ints is { } v_Ints) this.Ints.Set(v_Ints);
-        if (Bools is { } v_Bools) this.Bools.Set(v_Bools);
-        if (Curves is { } v_Curves) this.Curves.Set(v_Curves);
         return this;
     }
 }

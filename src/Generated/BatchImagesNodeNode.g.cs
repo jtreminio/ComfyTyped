@@ -15,23 +15,12 @@ public sealed class BatchImagesNodeNode : ComfyNode
     // ── Outputs ──
     public NodeOutput<ImageType> IMAGE { get; }
 
-    // ── Inputs ──
-    public NodeInput<StringType> Images { get; }
+    // ── Input lists (COMFY_AUTOGROW_V3) ──
+    public NodeInputList<ImageType> Images { get; }
 
     public BatchImagesNodeNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Images = AddInput<StringType>("images", required: true);
-    }
-
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
-    public BatchImagesNodeNode With(
-        string? Images = null
-    )
-    {
-        if (Images is { } v_Images) this.Images.Set(v_Images);
-        return this;
+        Images = AddInputList<ImageType>("images", prefix: "image", min: 2, max: 50, required: true);
     }
 }

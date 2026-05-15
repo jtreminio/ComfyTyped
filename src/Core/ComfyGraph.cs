@@ -158,33 +158,77 @@ public sealed class ComfyGraph
 
     private static void WireNodeInputs(ComfyGraph graph, ComfyNode node, JObject inputs)
     {
+        Dictionary<INodeInputList, SortedDictionary<int, JToken>>? listBuckets = null;
+
         foreach (JProperty inputProp in inputs.Properties())
         {
             INodeInput? input = node is UnknownNode unknown
                 ? unknown.GetInput(inputProp.Name)
                 : node.FindInput(inputProp.Name);
-            if (input is null)
+            if (input is not null)
             {
-                // Typed node received an input key that the codegen does not model
-                // (e.g. dotted/list-style keys like images.image0). Stash on the node's
-                // ExtraInputs escape hatch so it round-trips losslessly.
-                node.ExtraInputs[inputProp.Name] = inputProp.Value.DeepClone();
+                WireSingleInput(graph, input, inputProp.Value);
                 continue;
             }
-            if (IsConnectionRef(inputProp.Value, out string? sourceId, out int slotIndex)
-                && sourceId is not null)
+
+            if (node is not UnknownNode
+                && IsConnectionRef(inputProp.Value, out string? _, out int _))
             {
-                ComfyNode? sourceNode = graph.GetNode(sourceId);
-                INodeOutput? sourceOutput = sourceNode?.FindOutput(slotIndex);
-                if (sourceOutput is not null)
+                bool claimed = false;
+                foreach (INodeInputList list in node.InputLists)
                 {
-                    input.ConnectToUntyped(sourceOutput);
+                    int idx = list.TryParseKey(inputProp.Name);
+                    if (idx < 0)
+                    {
+                        continue;
+                    }
+                    listBuckets ??= [];
+                    if (!listBuckets.TryGetValue(list, out SortedDictionary<int, JToken>? bucket))
+                    {
+                        bucket = [];
+                        listBuckets[list] = bucket;
+                    }
+                    bucket[idx] = inputProp.Value;
+                    claimed = true;
+                    break;
+                }
+                if (claimed)
+                {
+                    continue;
                 }
             }
-            else
+
+            node.ExtraInputs[inputProp.Name] = inputProp.Value.DeepClone();
+        }
+
+        if (listBuckets is not null)
+        {
+            foreach ((INodeInputList list, SortedDictionary<int, JToken> bucket) in listBuckets)
             {
-                input.SetUntyped(ExtractLiteralValue(inputProp.Value));
+                foreach (JToken token in bucket.Values)
+                {
+                    INodeInput child = list.AppendUnsetSlot();
+                    WireSingleInput(graph, child, token);
+                }
             }
+        }
+    }
+
+    private static void WireSingleInput(ComfyGraph graph, INodeInput input, JToken value)
+    {
+        if (IsConnectionRef(value, out string? sourceId, out int slotIndex)
+            && sourceId is not null)
+        {
+            ComfyNode? sourceNode = graph.GetNode(sourceId);
+            INodeOutput? sourceOutput = sourceNode?.FindOutput(slotIndex);
+            if (sourceOutput is not null)
+            {
+                input.ConnectToUntyped(sourceOutput);
+            }
+        }
+        else
+        {
+            input.SetUntyped(ExtractLiteralValue(value));
         }
     }
 

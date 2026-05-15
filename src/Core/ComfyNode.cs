@@ -14,17 +14,23 @@ public abstract class ComfyNode
     /// <summary>Unique node ID within a <see cref="ComfyGraph"/>. Set when the node is added to a graph.</summary>
     public string Id { get; internal set; } = "";
 
-    /// <summary>All input slots on this node, in declaration order.</summary>
+    /// <summary>All singular input slots on this node, in declaration order.</summary>
     public IReadOnlyList<INodeInput> Inputs => _inputs;
+
+    /// <summary>All input lists on this node, in declaration order. Each list models one
+    /// <c>COMFY_AUTOGROW_V3</c> slot (e.g. <c>BatchImagesNode.images</c>) and expands to
+    /// N wire keys under a shared <see cref="INodeSlot.SlotName"/>.</summary>
+    public IReadOnlyList<INodeInputList> InputLists => _inputLists;
 
     /// <summary>All output slots on this node, in declaration order.</summary>
     public IReadOnlyList<INodeOutput> Outputs => _outputs;
 
     /// <summary>
-    /// Escape hatch for input keys the codegen does not model as typed slots — e.g. dynamic
-    /// list-style inputs (<c>images.image0</c>, <c>images.image1</c>, …) on
-    /// <c>BatchImagesNode</c>, or variant-shaped keys (<c>resize_type.multiple</c>,
-    /// <c>resize_type.shorter_size</c>, …) on <c>ResizeImageMaskNode</c>.
+    /// Escape hatch for input keys the codegen does not model as typed slots — e.g.
+    /// variant-shaped keys (<c>resize_type.multiple</c>, <c>resize_type.shorter_size</c>, …)
+    /// on <c>ResizeImageMaskNode</c> from <c>COMFY_DYNAMICCOMBO_V3</c>. Autogrow lists
+    /// (<c>images.image0</c>, <c>images.image1</c>, …) are now modeled as typed
+    /// <see cref="NodeInputList{T}"/> and do <em>not</em> land here.
     ///
     /// <para>
     /// Initialized to an empty <see cref="JObject"/> so callers can mutate directly:
@@ -51,16 +57,27 @@ public abstract class ComfyNode
     public JObject ExtraInputs { get; set; } = [];
 
     private readonly List<INodeInput> _inputs = [];
+    private readonly List<INodeInputList> _inputLists = [];
     private readonly List<INodeOutput> _outputs = [];
 
     /// <summary>
-    /// Fires when any <see cref="NodeInput{T}"/> on this node changes (literal set, connection
-    /// (re)wired, or cleared). <see cref="WorkflowBridge"/> subscribes to keep its JObject in sync.
+    /// Fires when a singular <see cref="NodeInput{T}"/> on this node changes (literal set, connection
+    /// (re)wired, or cleared). List-child mutations route through <see cref="InputListChanged"/>
+    /// instead so the bridge's two handlers stay disjoint. <see cref="WorkflowBridge"/> subscribes
+    /// to both to keep its JObject in sync.
     /// </summary>
     internal event Action<ComfyNode, INodeInput>? InputChanged;
 
+    /// <summary>Fires when a <see cref="NodeInputList{T}"/> on this node changes structurally
+    /// (Add/Remove/Clear) or any of its children's values change. Handlers should refan the
+    /// list's full keyset since item indices and child wire-keys may renumber.</summary>
+    internal event Action<ComfyNode, INodeInputList>? InputListChanged;
+
     /// <summary>Invoked by <see cref="NodeInput{T}"/> mutators to bubble a change event up to subscribers.</summary>
     internal void RaiseInputChanged(INodeInput input) => InputChanged?.Invoke(this, input);
+
+    /// <summary>Invoked by <see cref="NodeInputList{T}"/> mutators to bubble a list change up to subscribers.</summary>
+    internal void RaiseInputListChanged(INodeInputList list) => InputListChanged?.Invoke(this, list);
 
     /// <summary>Register a typed input slot. Called by generated node constructors.</summary>
     protected NodeInput<T> AddInput<T>(string name, bool required = true) where T : Types.IComfyType
@@ -71,6 +88,19 @@ public abstract class ComfyNode
         return input;
     }
 
+    /// <summary>Register a typed input list (ComfyUI <c>COMFY_AUTOGROW_V3</c>). Children are
+    /// connection-only and fan out to wire keys <c>"{slotName}.{prefix}{i}"</c> on serialize.
+    /// Called by generated node constructors.</summary>
+    protected NodeInputList<T> AddInputList<T>(
+        string slotName, string prefix, int min, int max, bool required = true)
+        where T : Types.IComfyType
+    {
+        NodeInputList<T> list = new(slotName, prefix, min, max, required, this);
+        _inputLists.Add(list);
+
+        return list;
+    }
+
     /// <summary>Register a typed output slot. Called by generated node constructors.</summary>
     protected NodeOutput<T> AddOutput<T>(int slotIndex, string slotName) where T : Types.IComfyType
     {
@@ -79,6 +109,10 @@ public abstract class ComfyNode
 
         return output;
     }
+
+    /// <summary>Find an input list by slot name.</summary>
+    public INodeInputList? FindInputList(string slotName) =>
+        _inputLists.FirstOrDefault(l => string.Equals(l.SlotName, slotName, StringComparison.OrdinalIgnoreCase));
 
     /// <summary>Find an input slot by name.</summary>
     public INodeInput? FindInput(string name) =>
@@ -97,11 +131,11 @@ public abstract class ComfyNode
         JObject inputs = [];
         foreach (INodeInput input in _inputs)
         {
-            JToken? value = input.Serialize();
-            if (value is not null)
-            {
-                inputs[input.Name] = value;
-            }
+            input.SerializeInto(inputs);
+        }
+        foreach (INodeInputList list in _inputLists)
+        {
+            list.SerializeInto(inputs);
         }
         foreach (JProperty extra in ExtraInputs.Properties())
         {

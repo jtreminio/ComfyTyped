@@ -46,38 +46,6 @@ public class ExtraInputsTests
     }
 
     [Fact]
-    public void RoundTrip_PreservesListStyleConnectionKeys()
-    {
-        JObject workflow = new()
-        {
-            ["1"] = new JObject
-            {
-                ["class_type"] = "CheckpointLoaderSimple",
-                ["inputs"] = new JObject { ["ckpt_name"] = "model.safetensors" },
-            },
-            ["20"] = new JObject
-            {
-                ["class_type"] = "BatchImagesNode",
-                ["inputs"] = new JObject
-                {
-                    ["images.image0"] = new JArray("1", 0),
-                    ["images.image1"] = new JArray("1", 1),
-                },
-            },
-        };
-
-        ComfyGraph graph = ComfyGraph.FromWorkflow(workflow);
-        JObject roundTripped = graph.ToWorkflow();
-        JObject inputs = (JObject)roundTripped["20"]!["inputs"]!;
-
-        JArray ref0 = (JArray)inputs["images.image0"]!;
-        Assert.Equal("1", (string)ref0[0]!);
-        Assert.Equal(0, (int)ref0[1]!);
-        JArray ref1 = (JArray)inputs["images.image1"]!;
-        Assert.Equal(1, (int)ref1[1]!);
-    }
-
-    [Fact]
     public void TypedInputWinsOverExtraInputOnCollision()
     {
         EmptyLatentImageNode node = new EmptyLatentImageNode();

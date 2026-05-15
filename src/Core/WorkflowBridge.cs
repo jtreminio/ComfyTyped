@@ -79,6 +79,7 @@ public sealed class WorkflowBridge : IDisposable
     private readonly ComfyGraph _graph;
     private readonly JObject _workflow;
     private readonly Action<ComfyNode, INodeInput> _onInputChanged;
+    private readonly Action<ComfyNode, INodeInputList> _onInputListChanged;
     private bool _disposed;
 
     /// <summary>The typed graph view, deserialized from the workflow at creation time.</summary>
@@ -94,6 +95,7 @@ public sealed class WorkflowBridge : IDisposable
         _graph = graph;
         _workflow = workflow;
         _onInputChanged = OnInputChanged;
+        _onInputListChanged = OnInputListChanged;
         foreach (ComfyNode node in graph.Nodes.Values)
         {
             Subscribe(node);
@@ -359,6 +361,7 @@ public sealed class WorkflowBridge : IDisposable
         foreach (ComfyNode node in _graph.Nodes.Values)
         {
             node.InputChanged -= _onInputChanged;
+            node.InputListChanged -= _onInputListChanged;
         }
     }
 
@@ -371,9 +374,14 @@ public sealed class WorkflowBridge : IDisposable
             return;
         }
         node.InputChanged += _onInputChanged;
+        node.InputListChanged += _onInputListChanged;
     }
 
-    private void Unsubscribe(ComfyNode node) => node.InputChanged -= _onInputChanged;
+    private void Unsubscribe(ComfyNode node)
+    {
+        node.InputChanged -= _onInputChanged;
+        node.InputListChanged -= _onInputListChanged;
+    }
 
     /// <summary>
     /// Auto-sync handler. Mirrors a single typed-input change onto <c>Workflow[id]["inputs"]</c>
@@ -381,11 +389,52 @@ public sealed class WorkflowBridge : IDisposable
     /// </summary>
     private void OnInputChanged(ComfyNode node, INodeInput input)
     {
+        if (!TryGetInPlaceInputs(node, out JObject inputs))
+        {
+            return;
+        }
+        inputs.Remove(input.Name);
+        input.SerializeInto(inputs);
+    }
+
+    /// <summary>
+    /// Auto-sync handler for input-list changes (Add/Remove/Clear or any list child's value
+    /// change). Removes every wire key the list claims, then refans by calling
+    /// <see cref="INodeInputList.SerializeInto"/>. Heavier than the singular path but correct
+    /// under index renumbering.
+    /// </summary>
+    private void OnInputListChanged(ComfyNode node, INodeInputList list)
+    {
+        if (!TryGetInPlaceInputs(node, out JObject inputs))
+        {
+            return;
+        }
+        List<string> toRemove = [];
+        foreach (JProperty prop in inputs.Properties())
+        {
+            if (list.TryParseKey(prop.Name) >= 0)
+            {
+                toRemove.Add(prop.Name);
+            }
+        }
+        foreach (string key in toRemove)
+        {
+            inputs.Remove(key);
+        }
+        list.SerializeInto(inputs);
+    }
+
+    /// <summary>Get the <c>inputs</c> JObject for in-place mutation. Returns false (and skips
+    /// the change handler) if the node isn't represented in the JObject yet, or rebuilds the
+    /// inputs JObject from scratch when RawInputs/structure is stale.</summary>
+    private bool TryGetInPlaceInputs(ComfyNode node, out JObject inputs)
+    {
+        inputs = null!;
         if (Workflow[node.Id] is not JObject existingNode)
         {
             // Node isn't represented in the JObject yet (e.g. mutation between Graph.AddNode and bridge AddNode).
             // The next AddNode call will write the full snapshot.
-            return;
+            return false;
         }
 
         // For UnknownNode, RawInputs (when set) wins over typed slots in ToWorkflowNode. The first typed
@@ -395,24 +444,17 @@ public sealed class WorkflowBridge : IDisposable
         {
             unknown.RawInputs = null;
             existingNode["inputs"] = (JObject)node.ToWorkflowNode()["inputs"]!;
-            return;
+            return false;
         }
 
-        if (existingNode["inputs"] is not JObject inputs)
+        if (existingNode["inputs"] is not JObject existingInputs)
         {
             existingNode["inputs"] = (JObject)node.ToWorkflowNode()["inputs"]!;
-            return;
+            return false;
         }
 
-        JToken? value = input.Serialize();
-        if (value is null)
-        {
-            inputs.Remove(input.Name);
-        }
-        else
-        {
-            inputs[input.Name] = value;
-        }
+        inputs = existingInputs;
+        return true;
     }
 
     private void EnsureNextIdCoversWorkflow()

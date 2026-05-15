@@ -440,7 +440,12 @@ public static partial class Program
         bool Required,
         bool IsPrimitive,
         string? CSharpType,
-        object? DefaultValue);
+        object? DefaultValue,
+        bool IsList = false,
+        string? Prefix = null,
+        int Min = 0,
+        int Max = 0,
+        MarkerInfo? ElementMarker = null);
 
     private sealed record OutputDef(
         string Name,
@@ -525,6 +530,21 @@ public static partial class Program
 
             string comfyType = spec[0] is JArray ? "COMBO" : spec[0]?.ToString() ?? "*";
 
+            // COMFY_AUTOGROW_V3: typed list of element type. Children fan out as
+            // "{inputName}.{prefix}{i}" wire keys; modeled as NodeInputList<T>.
+            if (comfyType == "COMFY_AUTOGROW_V3"
+                && TryParseAutogrow(spec, typeMapping, generatedMarkers, markerNamespace,
+                    out string? listPrefix, out int listMin, out int listMax, out MarkerInfo? elementMarker))
+            {
+                string listPropName = SanitizeInputPropertyName(inputProp.Name, inputs, outputs);
+                inputs.Add(new InputDef(
+                    inputProp.Name, listPropName, comfyType, elementMarker!,
+                    required, IsPrimitive: false, CSharpType: null, DefaultValue: null,
+                    IsList: true, Prefix: listPrefix, Min: listMin, Max: listMax,
+                    ElementMarker: elementMarker));
+                continue;
+            }
+
             object? defaultValue = null;
             if (spec.Count >= 2 && spec[1] is JObject options && options["default"] is JToken defToken)
             {
@@ -538,7 +558,8 @@ public static partial class Program
                 };
             }
 
-            // COMBO, multi-types ("CLIP,GEMMA"), and dynamic V3 widget types collapse to STRING.
+            // COMBO, multi-types ("CLIP,GEMMA"), and DYNAMICCOMBO_V3 (variant-shaped) collapse to STRING.
+            // AUTOGROW_V3 that failed parse above also lands here as a safety fallback.
             string effectiveType = comfyType;
             if (comfyType == "COMBO"
                 || comfyType.Contains(',')
@@ -556,6 +577,55 @@ public static partial class Program
             inputs.Add(new InputDef(
                 inputProp.Name, propName, comfyType, marker, required, isPrimitive, csharpType, defaultValue));
         }
+    }
+
+    /// <summary>Parse a COMFY_AUTOGROW_V3 input spec. Schema shape:
+    /// <c>["COMFY_AUTOGROW_V3", { "template": { "input": { "required": { "&lt;key&gt;": ["IMAGE", {}] } }, "prefix": "image", "min": 2, "max": 50 } }]</c>
+    /// </summary>
+    private static bool TryParseAutogrow(
+        JArray spec,
+        Dictionary<string, MarkerInfo> typeMapping,
+        Dictionary<string, MarkerInfo> generatedMarkers,
+        string markerNamespace,
+        out string? prefix,
+        out int min,
+        out int max,
+        out MarkerInfo? elementMarker)
+    {
+        prefix = null;
+        min = 0;
+        max = 0;
+        elementMarker = null;
+        if (spec.Count < 2 || spec[1] is not JObject opts)
+        {
+            return false;
+        }
+        if (opts["template"] is not JObject template)
+        {
+            return false;
+        }
+        prefix = template.Value<string>("prefix");
+        if (string.IsNullOrEmpty(prefix))
+        {
+            return false;
+        }
+        min = template.Value<int?>("min") ?? 0;
+        max = template.Value<int?>("max") ?? int.MaxValue;
+        if (template["input"] is not JObject inputSection
+            || inputSection["required"] is not JObject requiredSection
+            || requiredSection.Count == 0)
+        {
+            return false;
+        }
+        JProperty first = requiredSection.Properties().First();
+        if (first.Value is not JArray elemSpec || elemSpec.Count == 0)
+        {
+            return false;
+        }
+        string elemComfyType = elemSpec[0] is JArray ? "COMBO" : elemSpec[0]?.ToString() ?? "*";
+        elementMarker = ResolveMarkerType(elemComfyType, typeMapping, generatedMarkers, markerNamespace);
+
+        return true;
     }
 
     // Code generation
@@ -577,6 +647,10 @@ public static partial class Program
         foreach (InputDef inp in node.Inputs)
         {
             markerNamespaces.Add(inp.Marker.Namespace);
+            if (inp.ElementMarker is not null)
+            {
+                markerNamespaces.Add(inp.ElementMarker.Namespace);
+            }
         }
         markerNamespaces.Remove(ns);
         foreach (string nsRef in markerNamespaces)
@@ -628,14 +702,29 @@ public static partial class Program
             sb.AppendLine();
         }
 
-        if (node.Inputs.Count > 0)
+        List<InputDef> singularInputs = node.Inputs.Where(i => !i.IsList).ToList();
+        List<InputDef> listInputs = node.Inputs.Where(i => i.IsList).ToList();
+
+        if (singularInputs.Count > 0)
         {
             sb.AppendLine("    // ── Inputs ──");
-            foreach (InputDef inp in node.Inputs)
+            foreach (InputDef inp in singularInputs)
             {
                 string tail = inp.Required ? "" : " // optional";
                 sb.AppendLine(
                     $"    public NodeInput<{inp.Marker.ShortName}> {inp.PropertyName} {{ get; }}{tail}");
+            }
+            sb.AppendLine();
+        }
+
+        if (listInputs.Count > 0)
+        {
+            sb.AppendLine("    // ── Input lists (COMFY_AUTOGROW_V3) ──");
+            foreach (InputDef inp in listInputs)
+            {
+                string tail = inp.Required ? "" : " // optional";
+                sb.AppendLine(
+                    $"    public NodeInputList<{inp.ElementMarker!.ShortName}> {inp.PropertyName} {{ get; }}{tail}");
             }
             sb.AppendLine();
         }
@@ -647,7 +736,7 @@ public static partial class Program
             sb.AppendLine(
                 $"        {o.PropertyName} = AddOutput<{o.Marker.ShortName}>({o.SlotIndex}, \"{o.Name}\");");
         }
-        foreach (InputDef inp in node.Inputs)
+        foreach (InputDef inp in singularInputs)
         {
             string req = inp.Required ? "true" : "false";
             sb.AppendLine(
@@ -657,9 +746,18 @@ public static partial class Program
                 sb.AppendLine($"        {inp.PropertyName}.Set({FormatLiteral(inp.DefaultValue, inp.CSharpType!)});");
             }
         }
+        foreach (InputDef inp in listInputs)
+        {
+            string req = inp.Required ? "true" : "false";
+            string maxLit = inp.Max == int.MaxValue ? "int.MaxValue" : inp.Max.ToString();
+            sb.AppendLine(
+                $"        {inp.PropertyName} = AddInputList<{inp.ElementMarker!.ShortName}>("
+                + $"\"{inp.Name}\", prefix: \"{EscapeCSharpString(inp.Prefix!)}\", "
+                + $"min: {inp.Min}, max: {maxLit}, required: {req});");
+        }
         sb.AppendLine("    }");
 
-        List<InputDef> primitiveInputs = node.Inputs.Where(i => i.IsPrimitive).ToList();
+        List<InputDef> primitiveInputs = singularInputs.Where(i => i.IsPrimitive).ToList();
         if (primitiveInputs.Count > 0)
         {
             sb.AppendLine();
@@ -751,7 +849,11 @@ public static partial class Program
             name = "Input";
         }
         name = EnsureValidIdentifier(name);
-        if (name is "ClassType" or "ClassTypeName")
+        // Reserve the ComfyNode base class's public surface so a slot name like "inputs"
+        // doesn't hide ComfyNode.Inputs (CS0108).
+        if (name is "ClassType" or "ClassTypeName"
+            or "Inputs" or "InputLists" or "Outputs"
+            or "ExtraInputs" or "Id")
         {
             name += "Input";
         }

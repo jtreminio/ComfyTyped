@@ -15,23 +15,12 @@ public sealed class BatchMasksNodeNode : ComfyNode
     // ── Outputs ──
     public NodeOutput<MaskType> MASK { get; }
 
-    // ── Inputs ──
-    public NodeInput<StringType> Masks { get; }
+    // ── Input lists (COMFY_AUTOGROW_V3) ──
+    public NodeInputList<MaskType> Masks { get; }
 
     public BatchMasksNodeNode()
     {
         MASK = AddOutput<MaskType>(0, "MASK");
-        Masks = AddInput<StringType>("masks", required: true);
-    }
-
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
-    public BatchMasksNodeNode With(
-        string? Masks = null
-    )
-    {
-        if (Masks is { } v_Masks) this.Masks.Set(v_Masks);
-        return this;
+        Masks = AddInputList<MaskType>("masks", prefix: "mask", min: 2, max: 50, required: true);
     }
 }
