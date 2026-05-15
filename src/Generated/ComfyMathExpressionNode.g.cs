@@ -19,7 +19,9 @@ public sealed class ComfyMathExpressionNode : ComfyNode
 
     // ── Inputs ──
     public NodeInput<StringType> Expression { get; }
-    public NodeInput<StringType> Values { get; }
+
+    // ── Input lists (COMFY_AUTOGROW_V3) ──
+    public NodeInputList<AnyType> Values { get; }
 
     public ComfyMathExpressionNode()
     {
@@ -28,19 +30,17 @@ public sealed class ComfyMathExpressionNode : ComfyNode
         BOOL = AddOutput<BooleanType>(2, "BOOL");
         Expression = AddInput<StringType>("expression", required: true);
         Expression.Set("a + b");
-        Values = AddInput<StringType>("values", required: true);
+        Values = AddInputList<AnyType>("values", names: new string[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" }, min: 1, max: 26, required: true);
     }
 
     /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
     /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
     /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
     public ComfyMathExpressionNode With(
-        string? Expression = null,
-        string? Values = null
+        string? Expression = null
     )
     {
         if (Expression is { } v_Expression) this.Expression.Set(v_Expression);
-        if (Values is { } v_Values) this.Values.Set(v_Values);
         return this;
     }
 }

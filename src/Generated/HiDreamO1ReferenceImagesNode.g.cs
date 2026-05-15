@@ -20,7 +20,9 @@ public sealed class HiDreamO1ReferenceImagesNode : ComfyNode
     // ── Inputs ──
     public NodeInput<ConditioningType> PositiveInput { get; }
     public NodeInput<ConditioningType> NegativeInput { get; }
-    public NodeInput<StringType> Images { get; }
+
+    // ── Input lists (COMFY_AUTOGROW_V3) ──
+    public NodeInputList<ImageType> Images { get; }
 
     public HiDreamO1ReferenceImagesNode()
     {
@@ -28,17 +30,6 @@ public sealed class HiDreamO1ReferenceImagesNode : ComfyNode
         Negative = AddOutput<ConditioningType>(1, "negative");
         PositiveInput = AddInput<ConditioningType>("positive", required: true);
         NegativeInput = AddInput<ConditioningType>("negative", required: true);
-        Images = AddInput<StringType>("images", required: true);
-    }
-
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
-    public HiDreamO1ReferenceImagesNode With(
-        string? Images = null
-    )
-    {
-        if (Images is { } v_Images) this.Images.Set(v_Images);
-        return this;
+        Images = AddInputList<ImageType>("images", names: new string[] { "image_1", "image_2", "image_3", "image_4", "image_5", "image_6", "image_7", "image_8", "image_9", "image_10" }, min: 1, max: 10, required: true);
     }
 }
