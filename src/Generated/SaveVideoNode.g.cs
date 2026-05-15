@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Saves the input images to your ComfyUI output directory.</summary>
-/// <remarks>Category: image/video</remarks>
+/// <remarks>Category: video</remarks>
 public sealed class SaveVideoNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

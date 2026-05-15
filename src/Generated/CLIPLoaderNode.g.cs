@@ -13,6 +13,7 @@ namespace ComfyTyped.Generated;
 /// sd3: t5 xxl/ clip-g / clip-l
 /// stable_audio: t5 base
 /// mochi: t5 xxl
+/// cogvideox: t5 xxl (226-token padding)
 /// cosmos: old t5 xxl
 /// lumina2: gemma 2 2B
 /// wan: umt5 xxl

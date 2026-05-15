@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: detection/</remarks>
+/// <remarks>Category: detection</remarks>
 public sealed class SAM3VideoTrackNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -32,7 +32,7 @@ public sealed class SAM3VideoTrackNode : ComfyNode
         DetectionThreshold = AddInput<FloatType>("detection_threshold", required: true);
         DetectionThreshold.Set(0.5);
         MaxObjects = AddInput<IntType>("max_objects", required: true);
-        MaxObjects.Set(0L);
+        MaxObjects.Set(4L);
         DetectInterval = AddInput<IntType>("detect_interval", required: true);
         DetectInterval.Set(1L);
         InitialMask = AddInput<MaskType>("initial_mask", required: false);

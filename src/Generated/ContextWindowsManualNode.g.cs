@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Manually set context windows.</summary>
-/// <remarks>Category: context</remarks>
+/// <remarks>Category: model_patches</remarks>
 public sealed class ContextWindowsManualNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -28,6 +28,7 @@ public sealed class ContextWindowsManualNode : ComfyNode
     public NodeInput<BooleanType> Freenoise { get; }
     public NodeInput<StringType> CondRetainIndexList { get; }
     public NodeInput<BooleanType> SplitCondsToWindows { get; }
+    public NodeInput<BooleanType> CausalWindowFix { get; }
 
     public ContextWindowsManualNode()
     {
@@ -52,6 +53,8 @@ public sealed class ContextWindowsManualNode : ComfyNode
         CondRetainIndexList.Set("");
         SplitCondsToWindows = AddInput<BooleanType>("split_conds_to_windows", required: true);
         SplitCondsToWindows.Set(false);
+        CausalWindowFix = AddInput<BooleanType>("causal_window_fix", required: true);
+        CausalWindowFix.Set(true);
     }
 
     /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
@@ -67,7 +70,8 @@ public sealed class ContextWindowsManualNode : ComfyNode
         long? Dim = null,
         bool? Freenoise = null,
         string? CondRetainIndexList = null,
-        bool? SplitCondsToWindows = null
+        bool? SplitCondsToWindows = null,
+        bool? CausalWindowFix = null
     )
     {
         if (ContextLength is { } v_ContextLength) this.ContextLength.Set(v_ContextLength);
@@ -80,6 +84,7 @@ public sealed class ContextWindowsManualNode : ComfyNode
         if (Freenoise is { } v_Freenoise) this.Freenoise.Set(v_Freenoise);
         if (CondRetainIndexList is { } v_CondRetainIndexList) this.CondRetainIndexList.Set(v_CondRetainIndexList);
         if (SplitCondsToWindows is { } v_SplitCondsToWindows) this.SplitCondsToWindows.Set(v_SplitCondsToWindows);
+        if (CausalWindowFix is { } v_CausalWindowFix) this.CausalWindowFix.Set(v_CausalWindowFix);
         return this;
     }
 }

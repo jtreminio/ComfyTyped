@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: _for_testing/custom_sampling/noise</remarks>
+/// <remarks>Category: experimental/custom_sampling/noise</remarks>
 public sealed class AddNoiseNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

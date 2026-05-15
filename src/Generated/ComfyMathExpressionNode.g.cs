@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: math</remarks>
+/// <remarks>Category: logic</remarks>
 public sealed class ComfyMathExpressionNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -15,6 +15,7 @@ public sealed class ComfyMathExpressionNode : ComfyNode
     // ── Outputs ──
     public NodeOutput<FloatType> FLOAT { get; }
     public NodeOutput<IntType> INT { get; }
+    public NodeOutput<BooleanType> BOOL { get; }
 
     // ── Inputs ──
     public NodeInput<StringType> Expression { get; }
@@ -24,6 +25,7 @@ public sealed class ComfyMathExpressionNode : ComfyNode
     {
         FLOAT = AddOutput<FloatType>(0, "FLOAT");
         INT = AddOutput<IntType>(1, "INT");
+        BOOL = AddOutput<BooleanType>(2, "BOOL");
         Expression = AddInput<StringType>("expression", required: true);
         Expression.Set("a + b");
         Values = AddInput<StringType>("values", required: true);

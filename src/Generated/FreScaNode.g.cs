@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Applies frequency-dependent scaling to the guidance</summary>
-/// <remarks>Category: _for_testing</remarks>
+/// <remarks>Category: experimental</remarks>
 public sealed class FreScaNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

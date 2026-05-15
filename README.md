@@ -13,7 +13,7 @@ are relative paths, run from the ComfyTyped checkout:
 
 ```
 cd /path/to/ComfyTyped
-dotnet run --project /path/to/ComfyTyped/tools/ComfyTyped.CodeGen -- \
+dotnet run --project tools/ComfyTyped.CodeGen -- \
   --root \
   --comfy-json object_info.json
 ```
@@ -34,7 +34,7 @@ Diff mode emits every node and IComfyType marker that isn't already in the
 core assembly. All paths absolute, run from anywhere:
 
 ```
-dotnet run --project /path/to/ComfyTyped/tools/ComfyTyped.CodeGen -- \
+dotnet run --project tools/ComfyTyped.CodeGen -- \
   --comfy-json http://127.0.0.1:8188/object_info \
   --output /path/to/your-extension/src/Generated \
   --namespace YourExt.Generated \
@@ -54,7 +54,7 @@ Delete generated files whose class name isn't referenced anywhere under
 before committing:
 
 ```
-dotnet run --project /path/to/ComfyTyped/tools/ComfyTyped.CodeGen -- prune \
+dotnet run --project tools/ComfyTyped.CodeGen -- prune \
   --generated-dir /path/to/your-extension/src/Generated \
   --source /path/to/your-extension/src \
   [--dry-run]
@@ -62,7 +62,7 @@ dotnet run --project /path/to/ComfyTyped/tools/ComfyTyped.CodeGen -- prune \
 
 `NodeRegistrations.g.cs` is always preserved.
 
-See all flags: `dotnet run --project /path/to/ComfyTyped/tools/ComfyTyped.CodeGen -- --help`.
+See all flags: `dotnet run --project tools/ComfyTyped.CodeGen -- --help`.
 
 ## Usage
 

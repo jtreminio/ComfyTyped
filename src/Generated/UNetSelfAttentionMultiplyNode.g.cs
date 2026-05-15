@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: _for_testing/attention_experiments</remarks>
+/// <remarks>Category: experimental/attention_experiments</remarks>
 public sealed class UNetSelfAttentionMultiplyNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

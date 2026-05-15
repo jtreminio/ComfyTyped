@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: textgen</remarks>
+/// <remarks>Category: text</remarks>
 public sealed class TextGenerateLTX2PromptNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -21,6 +21,8 @@ public sealed class TextGenerateLTX2PromptNode : ComfyNode
     public NodeInput<IntType> MaxLength { get; }
     public NodeInput<StringType> SamplingMode { get; }
     public NodeInput<ImageType> Image { get; } // optional
+    public NodeInput<ImageType> Video { get; } // optional
+    public NodeInput<AudioType> Audio { get; } // optional
     public NodeInput<BooleanType> Thinking { get; } // optional
     public NodeInput<BooleanType> UseDefaultTemplate { get; } // optional
 
@@ -34,6 +36,8 @@ public sealed class TextGenerateLTX2PromptNode : ComfyNode
         MaxLength.Set(256L);
         SamplingMode = AddInput<StringType>("sampling_mode", required: true);
         Image = AddInput<ImageType>("image", required: false);
+        Video = AddInput<ImageType>("video", required: false);
+        Audio = AddInput<AudioType>("audio", required: false);
         Thinking = AddInput<BooleanType>("thinking", required: false);
         Thinking.Set(false);
         UseDefaultTemplate = AddInput<BooleanType>("use_default_template", required: false);

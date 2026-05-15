@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Modify the guidance to scale more on the 'direction' of the positive prompt rather than the difference between the negative prompt.</summary>
-/// <remarks>Category: _for_testing</remarks>
+/// <remarks>Category: experimental</remarks>
 public sealed class MahiroNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

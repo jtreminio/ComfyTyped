@@ -46,6 +46,7 @@ public sealed class TextEncodeAceStepAudio15Node : ComfyNode
         Duration.Set(120.0);
         Timesignature = AddInput<StringType>("timesignature", required: true);
         Language = AddInput<StringType>("language", required: true);
+        Language.Set("en");
         Keyscale = AddInput<StringType>("keyscale", required: true);
         GenerateAudioCodes = AddInput<BooleanType>("generate_audio_codes", required: true);
         GenerateAudioCodes.Set(true);

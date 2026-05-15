@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Resize an image or mask using various scaling methods.</summary>
-/// <remarks>Category: transform</remarks>
+/// <remarks>Category: image/transform</remarks>
 public sealed class ResizeImageMaskNodeNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

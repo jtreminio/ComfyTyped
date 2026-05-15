@@ -18,20 +18,20 @@ public sealed class ColorTransferNode : ComfyNode
 
     // ── Inputs ──
     public NodeInput<ImageType> ImageTarget { get; }
+    public NodeInput<ImageType> ImageRef { get; }
     public NodeInput<StringType> Method { get; }
     public NodeInput<StringType> SourceStats { get; }
     public NodeInput<FloatType> Strength { get; }
-    public NodeInput<ImageType> ImageRef { get; } // optional
 
     public ColorTransferNode()
     {
         Image = AddOutput<ImageType>(0, "image");
         ImageTarget = AddInput<ImageType>("image_target", required: true);
+        ImageRef = AddInput<ImageType>("image_ref", required: true);
         Method = AddInput<StringType>("method", required: true);
         SourceStats = AddInput<StringType>("source_stats", required: true);
         Strength = AddInput<FloatType>("strength", required: true);
         Strength.Set(1.0);
-        ImageRef = AddInput<ImageType>("image_ref", required: false);
     }
 
     /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.

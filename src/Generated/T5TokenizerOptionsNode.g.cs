@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: _for_testing/conditioning</remarks>
+/// <remarks>Category: experimental/conditioning</remarks>
 public sealed class T5TokenizerOptionsNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

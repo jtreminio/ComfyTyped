@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Find and replace text using regex patterns.</summary>
-/// <remarks>Category: utils/string</remarks>
+/// <remarks>Category: text</remarks>
 public sealed class RegexReplaceNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
