@@ -258,13 +258,31 @@ public sealed class ComfyGraph
 
     // ── Graph queries ───────────────────────────────────────────────
 
+    /// <summary>Every singular input on the node plus every child of every input list,
+    /// in declaration order. Use this anywhere you'd otherwise iterate <see cref="ComfyNode.Inputs"/>
+    /// and want to include list children (AUTOGROW_V3 connections).</summary>
+    private static IEnumerable<INodeInput> AllInputs(ComfyNode node)
+    {
+        foreach (INodeInput input in node.Inputs)
+        {
+            yield return input;
+        }
+        foreach (INodeInputList list in node.InputLists)
+        {
+            foreach (INodeInput child in list.Items)
+            {
+                yield return child;
+            }
+        }
+    }
+
     /// <summary>Find all nodes that have an input connected to the given output.</summary>
     public IReadOnlyList<ComfyNode> FindDownstream(INodeOutput output)
     {
         List<ComfyNode> result = [];
         foreach (ComfyNode node in _nodes.Values)
         {
-            foreach (INodeInput input in node.Inputs)
+            foreach (INodeInput input in AllInputs(node))
             {
                 if (input.Connection == output)
                 {
@@ -281,7 +299,7 @@ public sealed class ComfyGraph
     public IReadOnlyList<ComfyNode> FindUpstream(ComfyNode node)
     {
         List<ComfyNode> result = [];
-        foreach (INodeInput input in node.Inputs)
+        foreach (INodeInput input in AllInputs(node))
         {
             if (input.Connection?.Node is ComfyNode upstream && !result.Contains(upstream))
             {
@@ -303,7 +321,7 @@ public sealed class ComfyGraph
         while (pending.Count > 0)
         {
             ComfyNode current = pending.Dequeue();
-            foreach (INodeInput input in current.Inputs)
+            foreach (INodeInput input in AllInputs(current))
             {
                 if (input.Connection?.Node is not ComfyNode upstream || !visited.Add(upstream.Id))
                 {
@@ -336,7 +354,7 @@ public sealed class ComfyGraph
         while (pending.Count > 0)
         {
             ComfyNode current = pending.Dequeue();
-            foreach (INodeInput input in current.Inputs)
+            foreach (INodeInput input in AllInputs(current))
             {
                 if (input.Connection?.Node is not ComfyNode upstream || !visited.Add(upstream.Id))
                 {
@@ -353,13 +371,14 @@ public sealed class ComfyGraph
         return false;
     }
 
-    /// <summary>Find all (node, input) pairs where the input is connected to the given output.</summary>
+    /// <summary>Find all (node, input) pairs where the input is connected to the given output.
+    /// Includes connections wired through <see cref="NodeInputList{T}"/> children.</summary>
     public IReadOnlyList<(ComfyNode Node, INodeInput Input)> FindInputsConnectedTo(INodeOutput output)
     {
         List<(ComfyNode, INodeInput)> result = [];
         foreach (ComfyNode node in _nodes.Values)
         {
-            foreach (INodeInput input in node.Inputs)
+            foreach (INodeInput input in AllInputs(node))
             {
                 if (input.Connection is INodeOutput conn
                     && conn.Node == output.Node
@@ -375,7 +394,7 @@ public sealed class ComfyGraph
 
     /// <summary>
     /// Rewire all inputs currently connected to <paramref name="from"/> so they connect to <paramref name="to"/> instead.
-    /// Returns the number of connections retargeted.
+    /// Returns the number of connections retargeted. Works for both singular inputs and list children.
     /// </summary>
     public int RetargetConnections(
         INodeOutput from,
@@ -389,7 +408,8 @@ public sealed class ComfyGraph
             {
                 continue;
             }
-            input.Clear();
+            // ConnectToUntyped fully replaces existing state; no pre-Clear needed.
+            // Clear() would throw on list children, so this also keeps the path uniform.
             input.ConnectToUntyped(to);
             count++;
         }

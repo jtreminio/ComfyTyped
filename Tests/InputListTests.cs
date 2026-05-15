@@ -230,6 +230,105 @@ public class InputListTests
         Assert.Equal(-1, list.TryParseKey("images.image-1"));           // negative
     }
 
+    // ── Graph traversal includes list-child connections ──────────────
+
+    [Fact]
+    public void FindDownstream_SeesListChildConnections()
+    {
+        JObject workflow = MakeBatchImagesFixture("10", "11", "12");
+        ComfyGraph graph = ComfyGraph.FromWorkflow(workflow);
+        UnknownNode source = graph.GetNode<UnknownNode>("11")!;
+        IReadOnlyList<ComfyNode> downstream = graph.FindDownstream(source.GetOutput(0));
+        Assert.Single(downstream);
+        Assert.Equal("20", downstream[0].Id);
+    }
+
+    [Fact]
+    public void FindUpstream_SeesListChildConnections()
+    {
+        JObject workflow = MakeBatchImagesFixture("10", "11", "12");
+        ComfyGraph graph = ComfyGraph.FromWorkflow(workflow);
+        ComfyNode batch = graph.GetNode("20")!;
+        IReadOnlyList<ComfyNode> upstream = graph.FindUpstream(batch);
+        Assert.Equal(3, upstream.Count);
+        Assert.Contains(upstream, n => n.Id == "10");
+        Assert.Contains(upstream, n => n.Id == "11");
+        Assert.Contains(upstream, n => n.Id == "12");
+    }
+
+    [Fact]
+    public void FindNearestUpstream_WalksThroughListChildren()
+    {
+        // Build: source(10) → BatchImages(20) → downstream(30) consuming 20's IMAGE.
+        // Walking upstream from 30 should reach 20 via 30's singular Image input,
+        // then reach 10 via 20's list child.
+        JObject workflow = MakeBatchImagesFixture("10");
+        workflow["30"] = new JObject
+        {
+            ["class_type"] = "ImageFromBatch",
+            ["inputs"] = new JObject
+            {
+                ["image"] = new JArray("20", 0),
+                ["batch_index"] = 0L,
+                ["length"] = 1L,
+            },
+        };
+        ComfyGraph graph = ComfyGraph.FromWorkflow(workflow);
+        ImageFromBatchNode start = graph.GetNode<ImageFromBatchNode>("30")!;
+        UnknownNode? src = graph.FindNearestUpstream<UnknownNode>(start);
+        Assert.NotNull(src);
+        Assert.Equal("10", src!.Id);
+    }
+
+    [Fact]
+    public void IsReachableUpstream_FollowsListChildren()
+    {
+        JObject workflow = MakeBatchImagesFixture("10");
+        workflow["30"] = new JObject
+        {
+            ["class_type"] = "ImageFromBatch",
+            ["inputs"] = new JObject
+            {
+                ["image"] = new JArray("20", 0),
+                ["batch_index"] = 0L,
+                ["length"] = 1L,
+            },
+        };
+        ComfyGraph graph = ComfyGraph.FromWorkflow(workflow);
+        Assert.True(graph.IsReachableUpstream(graph.GetNode("30")!, "10"));
+    }
+
+    [Fact]
+    public void FindInputsConnectedTo_ReturnsListChildren()
+    {
+        JObject workflow = MakeBatchImagesFixture("10", "11", "12");
+        ComfyGraph graph = ComfyGraph.FromWorkflow(workflow);
+        UnknownNode source = graph.GetNode<UnknownNode>("11")!;
+        var consumers = graph.FindInputsConnectedTo(source.GetOutput(0));
+        Assert.Single(consumers);
+        Assert.Equal("20", consumers[0].Node.Id);
+        // The consumer is the list child for slot 1 — its Name is the concrete wire key.
+        Assert.Equal("images.image1", consumers[0].Input.Name);
+    }
+
+    [Fact]
+    public void RetargetConnections_RewireListChildToNewSource()
+    {
+        JObject workflow = MakeBatchImagesFixture("10", "11", "12");
+        ComfyGraph graph = ComfyGraph.FromWorkflow(workflow);
+        UnknownNode src11 = graph.GetNode<UnknownNode>("11")!;
+        // Add a fresh source node and retarget 11's consumers to it.
+        UnknownNode src99 = graph.AddNode(new UnknownNode("UnitTest_ImageSource"), "99");
+        int count = graph.RetargetConnections(src11.GetOutput(0), src99.GetOutput(0));
+        Assert.Equal(1, count);
+
+        JObject inputs = (JObject)graph.ToWorkflow()["20"]!["inputs"]!;
+        // image1 now points at "99", others unchanged.
+        Assert.Equal("10", (string)((JArray)inputs["images.image0"]!)[0]!);
+        Assert.Equal("99", (string)((JArray)inputs["images.image1"]!)[0]!);
+        Assert.Equal("12", (string)((JArray)inputs["images.image2"]!)[0]!);
+    }
+
     // ── Fixture helpers ──────────────────────────────────────────────
 
     /// <summary>Build a workflow with one BatchImagesNode (id "20") wiring its list to N
