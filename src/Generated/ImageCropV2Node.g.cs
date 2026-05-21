@@ -5,6 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
+/// <summary>Crop an image to the specified dimensions.</summary>
 /// <remarks>Category: image/transform</remarks>
 public sealed class ImageCropV2Node : ComfyNode
 {

@@ -5,7 +5,8 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: dataset/image</remarks>
+/// <summary>Concatenate multiple image lists into one.</summary>
+/// <remarks>Category: image/batch</remarks>
 public sealed class MergeImageListsNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

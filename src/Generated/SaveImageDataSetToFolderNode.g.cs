@@ -5,7 +5,8 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: dataset</remarks>
+/// <summary>Save a dataset of images to a specified folder. Supported formats: PNG.</summary>
+/// <remarks>Category: image</remarks>
 public sealed class SaveImageDataSetToFolderNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

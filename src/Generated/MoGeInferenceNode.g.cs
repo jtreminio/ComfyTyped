@@ -5,6 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
+/// <summary>Run MoGe on a single image to estimate depth and geometry.</summary>
 /// <remarks>Category: image/geometry_estimation</remarks>
 public sealed class MoGeInferenceNode : ComfyNode
 {

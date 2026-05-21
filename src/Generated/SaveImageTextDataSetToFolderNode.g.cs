@@ -5,7 +5,8 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: dataset</remarks>
+/// <summary>Save a dataset of pairs of images and text captions to a specified folder. Images are saved as PNG files and captions are saved as TXT files with the same filename_prefix.</summary>
+/// <remarks>Category: image</remarks>
 public sealed class SaveImageTextDataSetToFolderNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -14,32 +15,32 @@ public sealed class SaveImageTextDataSetToFolderNode : ComfyNode
 
     // ── Inputs ──
     public NodeInput<ImageType> Images { get; }
-    public NodeInput<StringType> Texts { get; }
     public NodeInput<StringType> FolderName { get; }
     public NodeInput<StringType> FilenamePrefix { get; }
+    public NodeInput<StringType> Texts { get; } // optional
 
     public SaveImageTextDataSetToFolderNode()
     {
         Images = AddInput<ImageType>("images", required: true);
-        Texts = AddInput<StringType>("texts", required: true);
         FolderName = AddInput<StringType>("folder_name", required: true);
         FolderName.Set("dataset");
         FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
         FilenamePrefix.Set("image");
+        Texts = AddInput<StringType>("texts", required: false);
     }
 
     /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
     /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
     /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
     public SaveImageTextDataSetToFolderNode With(
-        string? Texts = null,
         string? FolderName = null,
-        string? FilenamePrefix = null
+        string? FilenamePrefix = null,
+        string? Texts = null
     )
     {
-        if (Texts is { } v_Texts) this.Texts.Set(v_Texts);
         if (FolderName is { } v_FolderName) this.FolderName.Set(v_FolderName);
         if (FilenamePrefix is { } v_FilenamePrefix) this.FilenamePrefix.Set(v_FilenamePrefix);
+        if (Texts is { } v_Texts) this.Texts.Set(v_Texts);
         return this;
     }
 }

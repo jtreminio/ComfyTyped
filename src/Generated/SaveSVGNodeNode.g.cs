@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Save SVG files on disk.</summary>
-/// <remarks>Category: image/save</remarks>
+/// <remarks>Category: image</remarks>
 public sealed class SaveSVGNodeNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

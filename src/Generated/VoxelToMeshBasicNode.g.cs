@@ -5,6 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
+/// <summary>Converts a voxel grid to a mesh.</summary>
 /// <remarks>Category: 3d</remarks>
 public sealed class VoxelToMeshBasicNode : ComfyNode
 {

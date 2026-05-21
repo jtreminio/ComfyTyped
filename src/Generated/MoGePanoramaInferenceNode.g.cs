@@ -5,6 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
+/// <summary>Run MoGe on an equirectangular panorama by splitting it into 12 perspective views, running inference on each, and merging the results into a single depth map.</summary>
 /// <remarks>Category: image/geometry_estimation</remarks>
 public sealed class MoGePanoramaInferenceNode : ComfyNode
 {

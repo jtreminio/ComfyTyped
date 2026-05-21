@@ -5,6 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
+/// <summary>Convert a MoGe point map into a 3D mesh.</summary>
 /// <remarks>Category: image/geometry_estimation</remarks>
 public sealed class MoGePointMapToMeshNode : ComfyNode
 {

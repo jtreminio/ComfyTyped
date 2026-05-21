@@ -25,6 +25,8 @@ public sealed class LTXVAddGuideNode : ComfyNode
     public NodeInput<ImageType> Image { get; }
     public NodeInput<IntType> FrameIdx { get; }
     public NodeInput<FloatType> Strength { get; }
+    public NodeInput<MaskType> AttentionMask { get; } // optional
+    public NodeInput<IcLoraParametersType> IcloraParameters { get; } // optional
 
     public LTXVAddGuideNode()
     {
@@ -40,6 +42,8 @@ public sealed class LTXVAddGuideNode : ComfyNode
         FrameIdx.Set(0L);
         Strength = AddInput<FloatType>("strength", required: true);
         Strength.Set(1.0);
+        AttentionMask = AddInput<MaskType>("attention_mask", required: false);
+        IcloraParameters = AddInput<IcLoraParametersType>("iclora_parameters", required: false);
     }
 
     /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.

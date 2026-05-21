@@ -21,6 +21,6 @@ public sealed class BatchLatentsNodeNode : ComfyNode
     public BatchLatentsNodeNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Latents = AddInputList<LatentType>("latents", prefix: "latent", min: 2, max: 50, required: true);
+        Latents = AddInputList<LatentType>("latents", prefix: "latent", min: 1, max: 50, required: true);
     }
 }

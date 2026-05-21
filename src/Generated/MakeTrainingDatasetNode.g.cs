@@ -5,7 +5,8 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: dataset</remarks>
+/// <summary>Encode images with VAE and texts with CLIP to create a training dataset of latents and conditionings.</summary>
+/// <remarks>Category: training</remarks>
 public sealed class MakeTrainingDatasetNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

@@ -5,6 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
+/// <summary>Render a depth map or normal map from geometry data</summary>
 /// <remarks>Category: image/geometry_estimation</remarks>
 public sealed class MoGeRenderNode : ComfyNode
 {

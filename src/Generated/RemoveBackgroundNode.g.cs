@@ -5,6 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
+/// <summary>Generates a foreground mask to remove the background from an image using a background removal model.</summary>
 /// <remarks>Category: image/background removal</remarks>
 public sealed class RemoveBackgroundNode : ComfyNode
 {

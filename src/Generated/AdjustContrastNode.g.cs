@@ -5,7 +5,8 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: dataset/image</remarks>
+/// <summary>Adjust the contrast of an image.</summary>
+/// <remarks>Category: image/adjustments</remarks>
 public sealed class AdjustContrastNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
