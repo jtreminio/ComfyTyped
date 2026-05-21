@@ -98,7 +98,36 @@ public static partial class Program
         string MarkerNamespace,
         string RegistrationsClass,
         string? CoreAssemblyPath,
-        bool NativeOnly);
+        bool NativeOnly,
+        string? KeepListPath);
+
+    /// <summary>Consumer-declared "always keep these typed bindings, even if unused" inputs.
+    /// Read from the JSON pointed at by <c>--keep-list</c>. The JSON shape is:
+    /// <code>
+    /// {
+    ///   "keep_modules": ["custom_nodes.ComfyUI-LTXVideo"],
+    ///   "keep_class_types": ["SomeSpecificNode"]
+    /// }
+    /// </code>
+    /// Each <c>keep_modules</c> entry is resolved against <c>object_info</c>'s
+    /// <c>python_module</c> field; matching <c>class_type</c>s plus any explicit
+    /// <c>keep_class_types</c> are written into <c>PruneManifest.g.cs</c>.
+    /// </summary>
+    internal sealed record KeepList(
+        IReadOnlyList<string> Modules,
+        IReadOnlyList<string> ClassTypes)
+    {
+        public bool IsEmpty => Modules.Count == 0 && ClassTypes.Count == 0;
+    }
+
+    /// <summary>Result of resolving a <see cref="KeepList"/> against the set of
+    /// class_types actually emitted by codegen: the typed C# class names that
+    /// should land in <c>PruneManifest.g.cs</c>, plus human-readable warnings
+    /// for keep-list entries that resolved to zero generated nodes (typos, or
+    /// modules where every class_type was already in core).</summary>
+    internal sealed record KeepListResolution(
+        IReadOnlyList<string> ClassNames,
+        IReadOnlyList<string> Warnings);
 
     public static int Main(string[] args)
     {
@@ -136,10 +165,16 @@ public static partial class Program
         Directory.CreateDirectory(opts.OutputDir);
         ClearGeneratedFiles(opts.OutputDir);
 
+        KeepList? keepList = opts.KeepListPath is null ? null : LoadKeepList(opts.KeepListPath);
+        HashSet<string> forceInclude = ResolveForceIncludeClassTypes(keepList, objectInfo);
+
+        Dictionary<string, string> generatedClassTypeToClassName = new(StringComparer.Ordinal);
+
         int generated = 0;
         int skippedDiff = 0;
         int skippedNonNative = 0;
         int skippedParse = 0;
+        int forceIncluded = 0;
 
         foreach (JProperty nodeProp in objectInfo.Properties())
         {
@@ -154,7 +189,11 @@ public static partial class Program
                 skippedDiff++;
                 continue;
             }
-            if (opts.NativeOnly && !IsNativeModule(nodeInfo.Value<string>("python_module")))
+            // Force-included class_types bypass --native-only so keep-list entries
+            // for non-bundled packs actually produce typed bindings.
+            bool wouldDropAsNonNative =
+                opts.NativeOnly && !IsNativeModule(GetPythonModule(nodeInfo));
+            if (wouldDropAsNonNative && !forceInclude.Contains(classType))
             {
                 skippedNonNative++;
                 continue;
@@ -178,7 +217,14 @@ public static partial class Program
             File.WriteAllText(
                 Path.Combine(opts.OutputDir, $"{nodeDef.ClassName}.g.cs"),
                 GenerateNodeClass(nodeDef, opts.Namespace));
+            generatedClassTypeToClassName[classType] = nodeDef.ClassName;
             generated++;
+            // Increment only after a file is actually emitted, so a parse failure
+            // or diff-name collision doesn't inflate the "Force-included" summary.
+            if (wouldDropAsNonNative)
+            {
+                forceIncluded++;
+            }
         }
 
         foreach ((string comfyType, MarkerInfo info) in generatedMarkers)
@@ -192,11 +238,112 @@ public static partial class Program
             Path.Combine(opts.OutputDir, $"{opts.RegistrationsClass}.g.cs"),
             GenerateRegistrationFile(opts.Namespace, opts.RegistrationsClass));
 
+        int manifestCount = 0;
+        if (keepList is not null)
+        {
+            KeepListResolution res = ResolveKeepList(keepList, objectInfo, generatedClassTypeToClassName);
+            foreach (string warning in res.Warnings)
+            {
+                Console.Error.WriteLine($"  WARN: {warning}");
+            }
+            File.WriteAllText(
+                Path.Combine(opts.OutputDir, $"{PruneManifestFileName}"),
+                GeneratePruneManifest(opts.Namespace, res.ClassNames));
+            manifestCount = res.ClassNames.Count;
+        }
+
+        string manifestSummary = keepList is null
+            ? ""
+            : $" PruneManifest: {manifestCount} always-keep class name(s).";
+        string forceIncludedSummary = forceIncluded > 0
+            ? $" Force-included {forceIncluded} non-native node(s) via keep-list."
+            : "";
         Console.WriteLine(
             $"Generated {generated} nodes and {generatedMarkers.Count} markers; "
-            + $"skipped {skippedDiff} (in core), {skippedNonNative} (non-native), {skippedParse} (parse).");
+            + $"skipped {skippedDiff} (in core), {skippedNonNative} (non-native), {skippedParse} (parse)."
+            + forceIncludedSummary
+            + manifestSummary);
 
         return 0;
+    }
+
+    internal const string PruneManifestClassName = "PruneManifest";
+    internal const string PruneManifestFileName = "PruneManifest.g.cs";
+    internal const string PruneManifestBeginMarker = "PRUNE-MANIFEST-BEGIN";
+    internal const string PruneManifestEndMarker = "PRUNE-MANIFEST-END";
+
+    /// <summary>Emit <c>PruneManifest.g.cs</c>. The format is deliberately simple:
+    /// a static <c>string[] AlwaysKeep</c> array sandwiched between sentinel comment
+    /// markers so the <c>prune</c> subcommand can parse it with a regex without
+    /// caring about whitespace or surrounding C# code.</summary>
+    internal static string GeneratePruneManifest(string ns, IEnumerable<string> classNames)
+    {
+        List<string> sorted = [.. classNames.Distinct(StringComparer.Ordinal)
+            .OrderBy(n => n, StringComparer.Ordinal)];
+
+        StringBuilder sb = new();
+        sb.AppendLine("// <auto-generated/>");
+        sb.AppendLine("#nullable enable");
+        sb.AppendLine();
+        sb.AppendLine($"namespace {ns};");
+        sb.AppendLine();
+        sb.AppendLine("/// <summary>Typed node class names the <c>prune</c> tool must always keep,");
+        sb.AppendLine("/// regardless of whether consumer source references them. Driven by the");
+        sb.AppendLine("/// <c>--keep-list</c> JSON passed to ComfyTyped.CodeGen at generation time;");
+        sb.AppendLine("/// regenerate after editing the keep-list — do not hand-edit this file.</summary>");
+        sb.AppendLine($"public static class {PruneManifestClassName}");
+        sb.AppendLine("{");
+        sb.AppendLine($"    // {PruneManifestBeginMarker}");
+        sb.AppendLine("    public static readonly string[] AlwaysKeep = new string[]");
+        sb.AppendLine("    {");
+        foreach (string name in sorted)
+        {
+            sb.AppendLine($"        \"{EscapeCSharpString(name)}\",");
+        }
+        sb.AppendLine("    };");
+        sb.AppendLine($"    // {PruneManifestEndMarker}");
+        sb.AppendLine("}");
+
+        return sb.ToString();
+    }
+
+    /// <summary>Parse the always-keep class names out of a <c>PruneManifest.g.cs</c>
+    /// file. Returns an empty set if the file doesn't exist or doesn't contain the
+    /// expected sentinel block, so prune can run safely against generated trees
+    /// produced without <c>--keep-list</c>.</summary>
+    internal static HashSet<string> ReadPruneManifestKeepSet(string generatedDir)
+    {
+        HashSet<string> keep = new(StringComparer.Ordinal);
+        string path = Path.Combine(generatedDir, PruneManifestFileName);
+        if (!File.Exists(path))
+        {
+            return keep;
+        }
+        string text = File.ReadAllText(path);
+        Match block = Regex.Match(
+            text,
+            $@"{Regex.Escape(PruneManifestBeginMarker)}(.*?){Regex.Escape(PruneManifestEndMarker)}",
+            RegexOptions.Singleline);
+        if (!block.Success)
+        {
+            return keep;
+        }
+        // Within the sentinel block, narrow further to the AlwaysKeep array literal
+        // body so any incidental quoted identifier — XML doc trivia, attribute
+        // arguments, or a stray comment — can't be misread as a keep entry.
+        Match array = Regex.Match(
+            block.Groups[1].Value,
+            @"AlwaysKeep\s*=\s*new\s+string\s*\[\s*\]\s*\{(.*?)\}\s*;",
+            RegexOptions.Singleline);
+        if (!array.Success)
+        {
+            return keep;
+        }
+        foreach (Match m in Regex.Matches(array.Groups[1].Value, "\"([A-Za-z_][A-Za-z0-9_]*)\""))
+        {
+            keep.Add(m.Groups[1].Value);
+        }
+        return keep;
     }
 
     private static bool IsNativeModule(string? pythonModule) =>
@@ -204,6 +351,22 @@ public static partial class Program
         && (pythonModule == "nodes"
             || pythonModule.StartsWith("comfy_extras.", StringComparison.Ordinal)
             || SwarmNativeModules.Contains(pythonModule));
+
+    /// <summary>Read a node's <c>python_module</c> defensively. ComfyUI always emits
+    /// this field as a string in practice, but a single malformed entry (number,
+    /// array, missing field, JSON null) would otherwise crash <c>Value&lt;string&gt;</c>
+    /// or coerce numbers into nonsense module names — both of which would silently
+    /// break the keep-list resolution. Returns null for anything not a string.</summary>
+    private static string? GetPythonModule(JObject nodeInfo)
+    {
+        if (nodeInfo["python_module"] is JValue jv
+            && jv.Type == JTokenType.String
+            && jv.Value is string s)
+        {
+            return s;
+        }
+        return null;
+    }
 
     // CLI
 
@@ -218,6 +381,7 @@ public static partial class Program
         string registrationsClass = RootRegistrationsClass;
         string? coreAssembly = null;
         bool nativeOnly = root;
+        string? keepListPath = null;
 
         for (int i = 0; i < args.Length; i++)
         {
@@ -232,6 +396,7 @@ public static partial class Program
                 case "--registrations-class": registrationsClass = NextArg(args, ref i, a); break;
                 case "--core-assembly": coreAssembly = NextArg(args, ref i, a); break;
                 case "--native-only": nativeOnly = true; break;
+                case "--keep-list": keepListPath = NextArg(args, ref i, a); break;
                 case "--help" or "-h": PrintUsage(); return null;
                 default:
                     Console.Error.WriteLine($"Unknown argument: {a}");
@@ -254,7 +419,8 @@ public static partial class Program
         }
 
         return new Options(
-            comfyJsonSource, outputDir, ns, markerNs ?? ns, registrationsClass, coreAssembly, nativeOnly);
+            comfyJsonSource, outputDir, ns, markerNs ?? ns, registrationsClass,
+            coreAssembly, nativeOnly, keepListPath);
     }
 
     private static Options? Fail(string message)
@@ -315,6 +481,23 @@ public static partial class Program
                                                SwarmUI-bundled / SwarmUI-installable packs
                                                (see SwarmNativeModules in source). Implied by --root.
 
+            Prune manifest:
+              --keep-list <path>               JSON file declaring typed bindings to ship
+                                               even when no consumer source references them.
+                                               Shape:
+                                                 {
+                                                   "keep_modules":     ["custom_nodes.X"],
+                                                   "keep_class_types": ["SomeNode"]
+                                                 }
+                                               Each keep_modules entry is resolved against
+                                               object_info's python_module field; matching
+                                               nodes are force-emitted (bypassing
+                                               --native-only) and listed alongside any
+                                               keep_class_types entries in
+                                               PruneManifest.g.cs. The `prune` subcommand
+                                               reads that file and unconditionally keeps
+                                               the listed class names.
+
               -h, --help                       Show this message.
             """);
     }
@@ -347,6 +530,217 @@ public static partial class Program
         }
 
         return JObject.Parse(resp.Content.ReadAsStringAsync().GetAwaiter().GetResult());
+    }
+
+    // Keep-list parsing
+
+    private static readonly HashSet<string> KeepListKnownKeys =
+        new(StringComparer.Ordinal) { "keep_modules", "keep_class_types" };
+
+    internal static KeepList LoadKeepList(string path)
+    {
+        string text;
+        try
+        {
+            text = File.ReadAllText(path);
+        }
+        catch (FileNotFoundException ex)
+        {
+            throw new InvalidOperationException(
+                $"Failed to load --keep-list: file not found at '{path}'.", ex);
+        }
+        catch (DirectoryNotFoundException ex)
+        {
+            throw new InvalidOperationException(
+                $"Failed to load --keep-list: directory not found for '{path}'.", ex);
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+        {
+            throw new InvalidOperationException(
+                $"Failed to load --keep-list at '{path}': {ex.Message}", ex);
+        }
+
+        // Parse to JToken first so a top-level array / scalar produces a targeted
+        // "must be a JSON object" error instead of leaking Newtonsoft's internal
+        // "Current JsonReader item is not an object: StartArray" wording.
+        JToken token;
+        try
+        {
+            token = JToken.Parse(text);
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException(
+                $"Failed to parse --keep-list at '{path}': {ex.Message}", ex);
+        }
+        if (token is not JObject obj)
+        {
+            throw new InvalidOperationException(
+                $"--keep-list at '{path}' must be a JSON object "
+                + $"(got {token.Type}). Expected shape: "
+                + "{ \"keep_modules\": [...], \"keep_class_types\": [...] }.");
+        }
+
+        // Reject unknown top-level keys so `{ "keep_module": [...] }` (singular typo)
+        // doesn't silently parse to an empty keep-list. The whole point of the manifest
+        // is that the consumer can't tell from a quiet build whether the keep-list took
+        // effect; failing loud here is the only way to make typos visible.
+        foreach (JProperty p in obj.Properties())
+        {
+            if (!KeepListKnownKeys.Contains(p.Name))
+            {
+                throw new InvalidOperationException(
+                    $"--keep-list at '{path}' contains unknown top-level key '{p.Name}'. "
+                    + $"Allowed keys: {string.Join(", ", KeepListKnownKeys.OrderBy(k => k))}.");
+            }
+        }
+
+        return new KeepList(
+            ReadStringArray(obj, "keep_modules", path),
+            ReadStringArray(obj, "keep_class_types", path));
+    }
+
+    private static List<string> ReadStringArray(JObject obj, string key, string path)
+    {
+        if (!obj.TryGetValue(key, out JToken? value))
+        {
+            return [];
+        }
+        if (value is not JArray arr)
+        {
+            // Wrong-typed value for a known key — e.g. `{ "keep_modules": "single" }`
+            // — would otherwise silently produce an empty keep-list, the same
+            // foot-gun the unknown-key check exists to prevent.
+            throw new InvalidOperationException(
+                $"--keep-list at '{path}' key '{key}' must be a JSON array of strings "
+                + $"(got {value.Type}).");
+        }
+        List<string> result = [];
+        foreach (JToken t in arr)
+        {
+            if (t is JValue jv && jv.Type == JTokenType.String && jv.Value is string s && s.Length > 0)
+            {
+                result.Add(s);
+            }
+            else
+            {
+                throw new InvalidOperationException(
+                    $"--keep-list at '{path}' key '{key}' must be an array of "
+                    + $"non-empty strings; got: {t}.");
+            }
+        }
+        return result;
+    }
+
+    /// <summary>Resolve a <see cref="KeepList"/> against the <c>object_info</c> dump
+    /// (for the <c>python_module</c> mapping) and the set of class_types that codegen
+    /// actually emitted (passed via <paramref name="generatedClassTypeToClassName"/>).
+    /// Modules and class_types that resolve to zero generated nodes produce warnings
+    /// but never fail the run.</summary>
+    internal static KeepListResolution ResolveKeepList(
+        KeepList keepList,
+        JObject objectInfo,
+        IReadOnlyDictionary<string, string> generatedClassTypeToClassName)
+    {
+        HashSet<string> classNames = new(StringComparer.Ordinal);
+        List<string> warnings = [];
+
+        Dictionary<string, List<string>> classTypesByModule = new(StringComparer.Ordinal);
+        foreach (JProperty p in objectInfo.Properties())
+        {
+            if (p.Value is not JObject info)
+            {
+                continue;
+            }
+            string? mod = GetPythonModule(info);
+            if (string.IsNullOrEmpty(mod))
+            {
+                continue;
+            }
+            if (!classTypesByModule.TryGetValue(mod, out List<string>? bucket))
+            {
+                bucket = [];
+                classTypesByModule[mod] = bucket;
+            }
+            bucket.Add(p.Name);
+        }
+
+        foreach (string module in keepList.Modules)
+        {
+            int hits = 0;
+            if (classTypesByModule.TryGetValue(module, out List<string>? classTypes))
+            {
+                foreach (string ct in classTypes)
+                {
+                    if (generatedClassTypeToClassName.TryGetValue(ct, out string? className))
+                    {
+                        classNames.Add(className);
+                        hits++;
+                    }
+                }
+            }
+            if (hits == 0)
+            {
+                warnings.Add(
+                    classTypesByModule.ContainsKey(module)
+                        ? $"keep_modules '{module}': matched class_types in object_info but none were generated "
+                            + "(already in --core-assembly, filtered by --native-only, or otherwise skipped)."
+                        : $"keep_modules '{module}': no class_types in object_info have this python_module "
+                            + "(typo, or the pack isn't installed in the ComfyUI you dumped from).");
+            }
+        }
+
+        foreach (string classType in keepList.ClassTypes)
+        {
+            if (generatedClassTypeToClassName.TryGetValue(classType, out string? className))
+            {
+                classNames.Add(className);
+            }
+            else
+            {
+                warnings.Add(
+                    $"keep_class_types '{classType}': not present in generated output "
+                        + "(typo, already in --core-assembly, filtered by --native-only, "
+                        + "or otherwise skipped).");
+            }
+        }
+
+        List<string> sorted = [.. classNames.OrderBy(n => n, StringComparer.Ordinal)];
+        return new KeepListResolution(sorted, warnings);
+    }
+
+    /// <summary>Compute the set of ComfyUI class_types that the keep-list demands be
+    /// emitted regardless of <c>--native-only</c> filtering. Returns an empty set when
+    /// the keep-list is empty or null.</summary>
+    internal static HashSet<string> ResolveForceIncludeClassTypes(
+        KeepList? keepList, JObject objectInfo)
+    {
+        HashSet<string> result = new(StringComparer.Ordinal);
+        if (keepList is null || keepList.IsEmpty)
+        {
+            return result;
+        }
+        HashSet<string> moduleSet = new(keepList.Modules, StringComparer.Ordinal);
+        if (moduleSet.Count > 0)
+        {
+            foreach (JProperty p in objectInfo.Properties())
+            {
+                if (p.Value is not JObject info)
+                {
+                    continue;
+                }
+                string? mod = GetPythonModule(info);
+                if (mod is not null && moduleSet.Contains(mod))
+                {
+                    result.Add(p.Name);
+                }
+            }
+        }
+        foreach (string ct in keepList.ClassTypes)
+        {
+            result.Add(ct);
+        }
+        return result;
     }
 
     // Diff mode
@@ -888,7 +1282,7 @@ public static partial class Program
 
     // Naming
 
-    private static string SanitizeClassName(string classType)
+    internal static string SanitizeClassName(string classType)
     {
         string sanitized = InvalidCharsRegex().Replace(classType, "_");
         if (sanitized.Length > 0 && char.IsDigit(sanitized[0]))
@@ -1119,7 +1513,7 @@ public static partial class Program
 
     private sealed record PruneCandidate(string ClassName, string ClassType, bool IsNode, string FilePath, string Text);
 
-    private static int RunPrune(string[] args)
+    internal static int RunPrune(string[] args)
     {
         PruneOptions? opts = ParsePruneArgs(args);
         if (opts is null)
@@ -1132,13 +1526,15 @@ public static partial class Program
             return 1;
         }
 
+        HashSet<string> manifestAlwaysKeep = ReadPruneManifestKeepSet(opts.GeneratedDir);
+
         // Enumerate every generated *.g.cs as a candidate. Both ComfyNode subclasses
         // and IComfyType marker classes are eligible for pruning.
         List<PruneCandidate> candidates = [];
         foreach (string file in Directory.EnumerateFiles(opts.GeneratedDir, "*.g.cs", SearchOption.TopDirectoryOnly))
         {
             string name = Path.GetFileName(file);
-            if (name == "NodeRegistrations.g.cs")
+            if (name == "NodeRegistrations.g.cs" || name == PruneManifestFileName)
             {
                 continue;
             }
@@ -1194,19 +1590,28 @@ public static partial class Program
         string consumerSource = allSource.ToString();
 
         // Pass 1: a Node is kept if its class name OR its class_type string appears
-        // word-bounded in consumer source. Consumers usually reference nodes by
-        // class_type ("g.CreateNode(\"FooBar\", ...)") rather than by typed class name.
+        // word-bounded in consumer source, OR it's listed in PruneManifest.g.cs.
+        // Consumers usually reference nodes by class_type ("g.CreateNode(\"FooBar\",
+        // ...)") rather than by typed class name; the manifest covers the third case
+        // where the consumer ships typed bindings on purpose with no source usage yet.
         HashSet<string> keptNames = new(StringComparer.Ordinal);
         StringBuilder extendedSourceBuilder = new(consumerSource);
+        int keptFromManifest = 0;
         foreach (PruneCandidate c in candidates.Where(c => c.IsNode))
         {
-            bool classNameUsed = Regex.IsMatch(consumerSource, $@"\b{Regex.Escape(c.ClassName)}\b");
+            bool inManifest = manifestAlwaysKeep.Contains(c.ClassName);
+            bool classNameUsed = inManifest
+                || Regex.IsMatch(consumerSource, $@"\b{Regex.Escape(c.ClassName)}\b");
             bool classTypeUsed = !string.IsNullOrEmpty(c.ClassType)
                 && Regex.IsMatch(consumerSource, $@"\b{Regex.Escape(c.ClassType)}\b");
             if (classNameUsed || classTypeUsed)
             {
                 keptNames.Add(c.ClassName);
                 extendedSourceBuilder.AppendLine(c.Text);
+                if (inManifest)
+                {
+                    keptFromManifest++;
+                }
             }
         }
 
@@ -1243,9 +1648,13 @@ public static partial class Program
 
         int kept = candidates.Count - toPrune.Count;
         string verb = opts.DryRun ? "would prune" : "pruned";
+        string manifestNote = manifestAlwaysKeep.Count > 0
+            ? $" ({keptFromManifest} retained via PruneManifest.g.cs)"
+            : "";
         Console.WriteLine(
             $"prune: scanned {sourceFileCount} source files; "
-            + $"kept {kept}/{candidates.Count} generated classes; {verb} {toPrune.Count}.");
+            + $"kept {kept}/{candidates.Count} generated classes{manifestNote}; "
+            + $"{verb} {toPrune.Count}.");
 
         return 0;
     }
@@ -1288,11 +1697,13 @@ public static partial class Program
 
             Deletes unused *.g.cs files in --generated-dir. A node file is kept if its
             C# class name OR its ComfyUI class_type string appears word-bounded in any
-            *.cs file under the --source directories. An IComfyType marker file is kept
-            if its class name appears either in --source or in the content of a kept
-            node file. Files under --generated-dir are excluded from the source scan
-            so generated self-references don't defeat the prune. NodeRegistrations.g.cs
-            is always preserved.
+            *.cs file under the --source directories, OR its class name is listed in
+            PruneManifest.g.cs (emitted by codegen when --keep-list was passed). An
+            IComfyType marker file is kept if its class name appears either in --source
+            or in the content of a kept node file. Files under --generated-dir are
+            excluded from the source scan so generated self-references don't defeat
+            the prune. NodeRegistrations.g.cs and PruneManifest.g.cs are always
+            preserved.
 
             Run before shipping an extension to drop generated classes for unrelated
             custom-node packs that were present in the developer's object_info.json

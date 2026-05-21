@@ -9,4 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
   </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="ComfyTyped.Tests" />
+  </ItemGroup>
 </Project>

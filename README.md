@@ -18,7 +18,7 @@ dotnet run --project tools/ComfyTyped.CodeGen -- \
   --comfy-json object_info.json
 ```
 
-`--comfy-json` accepts a local file or an HTTP URL — fetch live from a running
+`--comfy-json` accepts a local file or an HTTP URL - fetch live from a running
 ComfyUI instead of the committed `object_info.json`:
 
 ```
@@ -44,7 +44,7 @@ dotnet run --project tools/ComfyTyped.CodeGen -- \
 The codegen scans `ComfyTyped.dll` for every `class_type` and every
 `IComfyType` marker class core already defines, and only emits the diff. New
 IO type names encountered in the comfy-json (e.g. an extension's custom
-`SOME_CUSTOM_TYPE`) get a marker class generated automatically — mechanical
+`SOME_CUSTOM_TYPE`) get a marker class generated automatically - mechanical
 PascalCase + `Type` suffix, so `SOME_CUSTOM_TYPE` → `SomeCustomTypeType`.
 
 ### Pruning unused generated files
@@ -60,7 +60,57 @@ dotnet run --project tools/ComfyTyped.CodeGen -- prune \
   [--dry-run]
 ```
 
-`NodeRegistrations.g.cs` is always preserved.
+`NodeRegistrations.g.cs` and `PruneManifest.g.cs` are always preserved.
+
+### Keeping always-bundled bindings via `--keep-list`
+
+When an extension wants to ship typed bindings for nodes that no source file
+references yet - e.g. a custom-node pack whose surface area is part of the
+extension's supported contract - pass a `--keep-list` JSON to codegen.
+Generation force-includes the listed nodes (even with `--native-only`) and
+emits a `PruneManifest.g.cs` that the `prune` subcommand consults
+automatically.
+
+A `comfytyped.keep.json` next to your `.csproj`:
+
+```json
+{
+  "keep_modules": ["custom_nodes.ComfyUI-LTXVideo"],
+  "keep_class_types": ["LTXAddVideoICLoRAGuide"]
+}
+```
+
+- `keep_modules` - each entry is resolved against `object_info`'s
+  `python_module` field. Every `class_type` from a matching module is emitted
+  and listed in the manifest.
+- `keep_class_types` - explicit `class_type` strings to keep one at a time.
+
+`keep_modules` entries are ComfyUI `python_module` strings (e.g.
+`custom_nodes.ComfyUI-LTXVideo`); `keep_class_types` entries are ComfyUI
+`class_type` strings (e.g. `LTXAddVideoICLoRAGuide`). The emitted
+`PruneManifest.g.cs` stores the *generated C# class names* instead
+(`LTXAddVideoICLoRAGuide` → `LTXAddVideoICLoRAGuideNode`) since that's what
+the prune tool matches against. Codegen does the rename for you.
+
+Wire it into codegen:
+
+```
+dotnet run --project tools/ComfyTyped.CodeGen -- \
+  --comfy-json http://127.0.0.1:8188/object_info \
+  --output /path/to/your-extension/src/Generated \
+  --namespace YourExt.Generated \
+  --core-assembly /path/to/your-extension/lib/ComfyTyped.dll \
+  --keep-list /path/to/your-extension/comfytyped.keep.json
+```
+
+`prune` then needs no extra flag - it reads `PruneManifest.g.cs` from the
+generated directory and keeps every class name it lists, regardless of
+`--source` usage. Codegen warns to stderr on keep-list entries that resolved
+to zero generated nodes (typos, or modules whose `class_type`s were all
+already in `--core-assembly`).
+
+Regenerate after editing the keep-list. The manifest is a derived artifact
+- do not hand-edit it.
 
 See all flags: `dotnet run --project tools/ComfyTyped.CodeGen -- --help`.
 
@@ -100,12 +150,12 @@ JObject workflow = graph.ToWorkflow();
 // → submit to ComfyUI
 ```
 
-The `ConnectTo` calls are statically type-checked — connecting a `LatentType`
+The `ConnectTo` calls are statically type-checked - connecting a `LatentType`
 output to a `ModelType` input will not compile.
 
 `With(...)` is a generated fluent setter for primitive inputs (INT/FLOAT/STRING/BOOL).
 Pass only what you want to set; `null` leaves the existing default untouched.
-Connection inputs are intentionally not exposed via `With(...)` — they go through
+Connection inputs are intentionally not exposed via `With(...)` - they go through
 `ConnectTo(...)` / `ConnectToUntyped(...)` so type-mismatch stays a compile error.
 
 ### Load and traverse an existing workflow
@@ -148,7 +198,7 @@ sampler.Seed.Set(7L);
 // Push the change back to the JObject
 bridge.SyncNode(sampler);
 
-// AddNode/RemoveNode write through automatically — no Sync needed
+// AddNode/RemoveNode write through automatically - no Sync needed
 var newDecode = bridge.AddNode(new VAEDecodeNode());
 newDecode.Samples.ConnectTo(sampler.LATENT);
 ```
@@ -178,7 +228,7 @@ for one of the path-aware helpers instead of resolving by hand:
 // Before:
 cond.PositiveInput.ConnectToUntyped(bridge.ResolvePath(genInfo.PosCond));
 
-// After — T inferred from the receiver, no manual <ConditioningType>:
+// After - T inferred from the receiver, no manual <ConditioningType>:
 cond.PositiveInput.ConnectFromPath(bridge, genInfo.PosCond);
 ```
 
@@ -193,16 +243,16 @@ on LTXVConditioningNode#5 (expected 'CONDITIONING').
 
 `TryConnectFromPath` mirrors the existing `TryConnectToUntyped` contract:
 returns `false` (no-op, slot state preserved) when the path is null or
-doesn't resolve; type mismatches still throw — null tolerance is the only
+doesn't resolve; type mismatches still throw - null tolerance is the only
 soft failure.
 
 #### Wildcard caveat
 
-`ResolvePath<T>` is strict — it will not auto-coerce `AnyType` (UnknownNode
+`ResolvePath<T>` is strict - it will not auto-coerce `AnyType` (UnknownNode
 outputs) or `ComfyMatchTypeV3` (V3 wildcard outputs) into a concrete `T`,
 because there's no honest way to return a `NodeOutput<T>` for a wildcard.
 When the source may be a wildcard, route through the connection layer
-instead — `ConnectFromPath` and `ConnectToUntyped` both accept wildcards
+instead - `ConnectFromPath` and `ConnectToUntyped` both accept wildcards
 through their existing acceptance path:
 
 ```csharp
@@ -218,7 +268,7 @@ NodeOutput<ImageType>? typed = bridge.ResolvePath<ImageType>(somePath);
 
 For cases that need to inspect the resolved node (graph navigation, type
 checks, conditional rewiring), keep using the non-generic
-`bridge.ResolvePath(path)` — it returns `INodeOutput?` and never throws on
+`bridge.ResolvePath(path)` - it returns `INodeOutput?` and never throws on
 type mismatch:
 
 ```csharp
@@ -243,7 +293,7 @@ int count = graph.RetargetConnections(
 
 ### Removing a node that has consumers
 
-`bridge.RemoveNode(node)` is a "dumb delete" — it drops the node from the graph and JObject but
+`bridge.RemoveNode(node)` is a "dumb delete" - it drops the node from the graph and JObject but
 does **not** clean up downstream inputs that pointed at its outputs. Those inputs keep a reference
 to the now-removed node, and the `[id, slot]` JArrays in their serialized inputs still name the
 deleted ID. Before deleting a middle node, rewire each output to its replacement and let auto-sync
@@ -261,7 +311,7 @@ foreach (INodeOutput output in old.Outputs)
 bridge.RemoveNode(old);
 ```
 
-The null guard matters when the replacement is a different class than the original — slot
+The null guard matters when the replacement is a different class than the original - slot
 indices that don't exist on the replacement leave those consumers dangling, and you'll need
 to handle them yourself (rewire to a different output, or `Clear()` them). When the
 replacement is the same class as `old`, every slot index lines up and the guard never trips.
@@ -296,22 +346,22 @@ var sampler = bridge.AddNode(new KSamplerNode());
 g.CurrentMedia = sampler.LATENT.ToWGNodeData(
     g, WGNodeData.DT_LATENT_IMAGE, g.CurrentCompat());
 
-// Defaulted to g.CurrentCompat() — most call sites use this:
+// Defaulted to g.CurrentCompat() - most call sites use this:
 g.CurrentMedia = sampler.LATENT.ToWGNodeData(g, WGNodeData.DT_LATENT_IMAGE);
 
-// With media metadata (Width/Height/Frames/FPS) inline — replaces the
+// With media metadata (Width/Height/Frames/FPS) inline - replaces the
 // `new WGNodeData(...) { Width = 512, Height = 512, ... }` initializer block:
 g.CurrentMedia = decode.IMAGE.ToWGMedia(
     g, WGNodeData.DT_VIDEO,
     width: 512, height: 512, frames: 16, fps: 24);
 
-// Audio attachments — uses g.CurrentAudioVae?.Compat (g.CurrentCompat() is
+// Audio attachments - uses g.CurrentAudioVae?.Compat (g.CurrentCompat() is
 // the wrong compat for audio output paths):
 g.CurrentMedia.AttachedAudio = audioDecode.Audio.ToWGAttachedAudio(g);
 ```
 
 `ToWGNodeData` / `ToWGMedia` are the typed-output peer of
-`MediaRef.ToWGNodeData(g)` — the latter projects a typed `MediaRef` that
+`MediaRef.ToWGNodeData(g)` - the latter projects a typed `MediaRef` that
 already carries dimensions / FPS / `AttachedAudio`; the former two are the
 lightweight path for callers that just need the `[id, slot]` projection or
 inline media metadata.
@@ -344,12 +394,12 @@ new(g =>
                       .WithOutputs("MODEL", "CLIP", "VAE");
     g.CurrentModel = model.GetOutput(0).ToWGNodeData(g, WGNodeData.DT_MODEL);
 
-    // BridgeSync.SyncLastId(g) fires on dispose — no manual call.
+    // BridgeSync.SyncLastId(g) fires on dispose - no manual call.
 }, priority);
 ```
 
 The wrapper is intentionally a separate type so `WorkflowBridge.Dispose`
-stays pure (subscription teardown only) — no surprise side-effects on
+stays pure (subscription teardown only) - no surprise side-effects on
 production-shaped bridges. Reach for `For(g)` when you want the
 auto-sync; reach for `WorkflowBridge.Create(g.Workflow)` when you don't.
 

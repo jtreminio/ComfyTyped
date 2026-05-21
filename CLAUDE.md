@@ -54,6 +54,8 @@ dotnet run --project tools/ComfyTyped.CodeGen -- prune \
   [--dry-run]
 ```
 
+To ship typed bindings for nodes the consumer code does not reference yet (custom-node packs that are part of the extension's supported surface area), pass `--keep-list <json>` at gen time. The JSON shape is `{ "keep_modules": [...], "keep_class_types": [...] }`; codegen force-includes matching nodes past `--native-only` and writes `PruneManifest.g.cs` listing the resolved C# class names. The `prune` subcommand reads that manifest automatically — no extra flag — so listed classes survive even with no consumer-source reference. Regenerate after editing the keep-list; the manifest is a derived artifact.
+
 `tools/ComfyTyped.CodeGen -- --help` lists every flag.
 
 ## Architecture
