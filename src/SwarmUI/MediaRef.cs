@@ -21,8 +21,25 @@ public sealed class MediaRef
     public int? Width { get; set; }
     public int? Height { get; set; }
     public int? Frames { get; set; }
-    public int? FPS { get; set; }
+
+    /// <summary>
+    /// The frames per second of a video, if known and valid. Mirrors <see cref="WGNodeData.FPS"/>:
+    /// holds either an integer <see cref="JValue"/> or a node-ref token (a connection to a node output),
+    /// so node-ref FPS values round-trip through the boundary without being flattened. Use
+    /// <see cref="GetRawFPS"/> to read it as an int when it is a literal.
+    /// </summary>
+    public JToken? FPS { get; set; }
     public MediaRef? AttachedAudio { get; set; }
+
+    /// <summary>Returns the FPS as an int, or null if it is a node-ref or unset. Mirrors <see cref="WGNodeData.GetRawFPS"/>.</summary>
+    public int? GetRawFPS()
+    {
+        if (FPS is JValue v && v.Type == JTokenType.Integer)
+        {
+            return v.Value<int>();
+        }
+        return null;
+    }
 
     /// <summary>
     /// Convert this typed reference back to a <see cref="WGNodeData"/> for SwarmUI consumption.
