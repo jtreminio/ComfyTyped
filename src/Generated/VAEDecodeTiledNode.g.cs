@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <remarks>Category: experimental</remarks>
-public sealed class VAEDecodeTiledNode : ComfyNode
+public sealed class VAEDecodeTiledNode : ComfyNode, ComfyTyped.Families.IVaeDecode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
     public const string ClassType = "VAEDecodeTiled";

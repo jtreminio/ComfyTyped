@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: model/conditioning</remarks>
+/// <remarks>Category: conditioning</remarks>
 public sealed class ConditioningSetAreaPercentageNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

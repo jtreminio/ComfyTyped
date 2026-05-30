@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Set reference audio for ID-LoRA speaker identity transfer. Encodes a reference audio clip into the conditioning and optionally patches the model with identity guidance (extra forward pass without reference, amplifying the speaker identity effect).</summary>
-/// <remarks>Category: model/conditioning/audio</remarks>
+/// <remarks>Category: conditioning/audio</remarks>
 public sealed class LTXVReferenceAudioNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

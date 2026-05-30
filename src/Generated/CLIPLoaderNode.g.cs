@@ -19,8 +19,6 @@ namespace ComfyTyped.Generated;
 /// wan: umt5 xxl
 /// hidream: llama-3.1 (Recommend) or t5
 /// omnigen2: qwen vl 2.5 3B
-/// lens: gpt-oss-20b
-/// pixeldit: gemma 2 2B elm
 /// </summary>
 /// <remarks>Category: advanced/loaders</remarks>
 public sealed class CLIPLoaderNode : ComfyNode

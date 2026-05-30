@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: text</remarks>
+/// <remarks>Category: dataset/text</remarks>
 public sealed class AddTextPrefixNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

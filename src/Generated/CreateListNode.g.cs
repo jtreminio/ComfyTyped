@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: utilities</remarks>
+/// <remarks>Category: logic</remarks>
 public sealed class CreateListNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

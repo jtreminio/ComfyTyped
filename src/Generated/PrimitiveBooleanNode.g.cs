@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: utilities/primitive</remarks>
+/// <remarks>Category: utils/primitive</remarks>
 public sealed class PrimitiveBooleanNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

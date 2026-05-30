@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Normalizes the initial frames of a video latent to match the mean and standard deviation of subsequent reference frames. Helps reduce differences between the starting frames and the rest of the video.</summary>
-/// <remarks>Category: model/conditioning/video_models</remarks>
+/// <remarks>Category: conditioning/video_models</remarks>
 public sealed class NormalizeVideoLatentStartNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

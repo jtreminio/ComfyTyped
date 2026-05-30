@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Encodes a text prompt using a CLIP model into an embedding that can be used to guide the diffusion model towards generating specific images.</summary>
-/// <remarks>Category: model/conditioning</remarks>
+/// <remarks>Category: conditioning</remarks>
 public sealed class CLIPTextEncodeNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Enables KV Cache optimization for reference images on Flux family models.</summary>
-/// <remarks>Category: experimental</remarks>
+/// <remarks>Category: </remarks>
 public sealed class FluxKVCacheNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

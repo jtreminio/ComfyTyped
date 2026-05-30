@@ -5,8 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>Save encoded training dataset (latents + conditioning) to disk for efficient loading during training.</summary>
-/// <remarks>Category: model/training</remarks>
+/// <remarks>Category: dataset</remarks>
 public sealed class SaveTrainingDatasetNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

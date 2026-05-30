@@ -6,7 +6,7 @@ namespace ComfyTyped.Core;
 /// Base class for all ComfyUI node representations.
 /// Generated node classes inherit from this, as does <see cref="UnknownNode"/>.
 /// </summary>
-public abstract class ComfyNode
+public abstract class ComfyNode : IComfyNode
 {
     /// <summary>The ComfyUI class_type string (e.g. "KSampler", "VAEDecode").</summary>
     public abstract string ClassTypeName { get; }

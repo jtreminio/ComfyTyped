@@ -5,8 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>Resize images so that the shorter edge matches the specified dimension while preserving aspect ratio.</summary>
-/// <remarks>Category: image/transform</remarks>
+/// <remarks>Category: dataset/image</remarks>
 public sealed class ResizeImagesByShorterEdgeNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

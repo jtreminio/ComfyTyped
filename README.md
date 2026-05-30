@@ -15,7 +15,8 @@ are relative paths, run from the ComfyTyped checkout:
 cd /path/to/ComfyTyped
 dotnet run --project tools/ComfyTyped.CodeGen -- \
   --root \
-  --comfy-json object_info.json
+  --comfy-json object_info.json \
+  --families families.json
 ```
 
 `--comfy-json` accepts a local file or an HTTP URL - fetch live from a running
@@ -25,7 +26,8 @@ ComfyUI instead of the committed `object_info.json`:
 cd /path/to/ComfyTyped
 dotnet run --project tools/ComfyTyped.CodeGen -- \
   --root \
-  --comfy-json http://127.0.0.1:8188/object_info
+  --comfy-json http://192.168.1.99:7801/ComfyBackendDirect/api/object_info \
+  --families families.json
 ```
 
 ### Generating from another project (extension)

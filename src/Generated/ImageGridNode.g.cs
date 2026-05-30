@@ -5,8 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>Arrange multiple images into a grid layout.</summary>
-/// <remarks>Category: image/batch</remarks>
+/// <remarks>Category: dataset/image</remarks>
 public sealed class ImageGridNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

@@ -6,8 +6,8 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Decodes latent images back into pixel space images.</summary>
-/// <remarks>Category: model/latent</remarks>
-public sealed class VAEDecodeNode : ComfyNode
+/// <remarks>Category: latent</remarks>
+public sealed class VAEDecodeNode : ComfyNode, ComfyTyped.Families.IVaeDecode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
     public const string ClassType = "VAEDecode";

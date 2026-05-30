@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: image/mask</remarks>
+/// <remarks>Category: mask</remarks>
 public sealed class BatchMasksNodeNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -21,6 +21,6 @@ public sealed class BatchMasksNodeNode : ComfyNode
     public BatchMasksNodeNode()
     {
         MASK = AddOutput<MaskType>(0, "MASK");
-        Masks = AddInputList<MaskType>("masks", prefix: "mask", min: 1, max: 50, required: true);
+        Masks = AddInputList<MaskType>("masks", prefix: "mask", min: 2, max: 50, required: true);
     }
 }

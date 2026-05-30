@@ -5,7 +5,6 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>Adjust the volume of the audio by a specified amount in decibels (dB).</summary>
 /// <remarks>Category: audio</remarks>
 public sealed class AudioAdjustVolumeNode : ComfyNode
 {

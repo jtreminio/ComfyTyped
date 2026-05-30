@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Match the colors of one image to another using various algorithms.</summary>
-/// <remarks>Category: image/filters</remarks>
+/// <remarks>Category: image/postprocessing</remarks>
 public sealed class ColorTransferNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

@@ -5,8 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>Group latents and conditionings into buckets</summary>
-/// <remarks>Category: model/training</remarks>
+/// <remarks>Category: dataset</remarks>
 public sealed class ResolutionBucketNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

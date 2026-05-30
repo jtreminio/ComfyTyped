@@ -20,7 +20,6 @@ public sealed class Load3DNode : ComfyNode
     public NodeOutput<Load3dCameraType> CameraInfo { get; }
     public NodeOutput<VideoType> RecordingVideo { get; }
     public NodeOutput<File3dType> Model3d { get; }
-    public NodeOutput<Load3dModelInfoType> Model3dInfo { get; }
 
     // ── Inputs ──
     public NodeInput<StringType> ModelFile { get; }
@@ -37,7 +36,6 @@ public sealed class Load3DNode : ComfyNode
         CameraInfo = AddOutput<Load3dCameraType>(4, "camera_info");
         RecordingVideo = AddOutput<VideoType>(5, "recording_video");
         Model3d = AddOutput<File3dType>(6, "model_3d");
-        Model3dInfo = AddOutput<Load3dModelInfoType>(7, "model_3d_info");
         ModelFile = AddInput<StringType>("model_file", required: true);
         ImageInput = AddInput<Load3dType>("image", required: true);
         Width = AddInput<IntType>("width", required: true);

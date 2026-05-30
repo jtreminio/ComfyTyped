@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Calculate width and height from aspect ratio and megapixel target. Useful for setting up Empty Latent Image dimensions.</summary>
-/// <remarks>Category: utilities</remarks>
+/// <remarks>Category: utils</remarks>
 public sealed class ResolutionSelectorNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>LCM sampler with tunable per-step noise. s_noise is a multiplier on the model's training noise scale</summary>
-/// <remarks>Category: model/sampling/samplers</remarks>
+/// <remarks>Category: sampling/samplers</remarks>
 public sealed class SamplerLCMNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: model/sampling/schedulers</remarks>
+/// <remarks>Category: sampling/custom_sampling/schedulers</remarks>
 public sealed class LTXVSchedulerNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

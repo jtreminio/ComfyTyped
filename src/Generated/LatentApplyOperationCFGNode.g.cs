@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: model/latent/advanced/operations</remarks>
+/// <remarks>Category: latent/advanced/operations</remarks>
 public sealed class LatentApplyOperationCFGNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

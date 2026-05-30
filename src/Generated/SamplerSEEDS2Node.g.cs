@@ -17,7 +17,7 @@ namespace ComfyTyped.Generated;
 /// exp_heun_2_x0_sde
 /// - solver_type=phi_2, r=1.0, eta=1.0, s_noise=1.0
 /// </summary>
-/// <remarks>Category: model/sampling/samplers</remarks>
+/// <remarks>Category: sampling/custom_sampling/samplers</remarks>
 public sealed class SamplerSEEDS2Node : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Crop and resize regions from the input image batch based on provided bounding boxes.</summary>
-/// <remarks>Category: image/transform</remarks>
+/// <remarks>Category: image/preprocessors</remarks>
 public sealed class CropByBBoxesNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

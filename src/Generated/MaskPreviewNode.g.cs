@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Saves the input images to your ComfyUI output directory.</summary>
-/// <remarks>Category: image/mask</remarks>
+/// <remarks>Category: mask</remarks>
 public sealed class MaskPreviewNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

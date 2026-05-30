@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Manually set context windows.</summary>
-/// <remarks>Category: model/patch</remarks>
+/// <remarks>Category: model_patches</remarks>
 public sealed class ContextWindowsManualNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

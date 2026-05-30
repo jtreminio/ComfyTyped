@@ -5,8 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>Save a dataset of images to a specified folder. Supported formats: PNG.</summary>
-/// <remarks>Category: image</remarks>
+/// <remarks>Category: dataset</remarks>
 public sealed class SaveImageDataSetToFolderNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -17,7 +16,6 @@ public sealed class SaveImageDataSetToFolderNode : ComfyNode
     public NodeInput<ImageType> Images { get; }
     public NodeInput<StringType> FolderName { get; }
     public NodeInput<StringType> FilenamePrefix { get; }
-    public NodeInput<StringType> Mode { get; }
 
     public SaveImageDataSetToFolderNode()
     {
@@ -26,8 +24,6 @@ public sealed class SaveImageDataSetToFolderNode : ComfyNode
         FolderName.Set("dataset");
         FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
         FilenamePrefix.Set("image");
-        Mode = AddInput<StringType>("mode", required: true);
-        Mode.Set("overwrite");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -37,14 +33,12 @@ public sealed class SaveImageDataSetToFolderNode : ComfyNode
     public SaveImageDataSetToFolderNode With(
         In<ImageType>? Images = null,
         StringArg? FolderName = null,
-        StringArg? FilenamePrefix = null,
-        StringArg? Mode = null
+        StringArg? FilenamePrefix = null
     )
     {
         Images?.ApplyTo(this.Images);
         FolderName?.ApplyTo(this.FolderName);
         FilenamePrefix?.ApplyTo(this.FilenamePrefix);
-        Mode?.ApplyTo(this.Mode);
         return this;
     }
 }

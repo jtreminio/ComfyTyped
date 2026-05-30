@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Attach 1-10 reference images to conditioning, one for edit instructionor multiple for subject-driven personalization.</summary>
-/// <remarks>Category: model/conditioning/image</remarks>
+/// <remarks>Category: conditioning/image</remarks>
 public sealed class HiDreamO1ReferenceImagesNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

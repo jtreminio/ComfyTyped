@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: model/latent/video/ltxv</remarks>
+/// <remarks>Category: latent/video/ltxv</remarks>
 public sealed class EmptyLTXVLatentVideoNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Loads a diffusion model checkpoint, diffusion models are used to denoise latents.</summary>
-/// <remarks>Category: model/loaders</remarks>
+/// <remarks>Category: loaders</remarks>
 public sealed class CheckpointLoaderSimpleNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

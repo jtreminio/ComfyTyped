@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: model/latent/chroma_radiance</remarks>
+/// <remarks>Category: latent/chroma_radiance</remarks>
 public sealed class EmptyChromaRadianceLatentImageNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

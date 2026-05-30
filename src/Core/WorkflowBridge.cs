@@ -349,6 +349,33 @@ public sealed class WorkflowBridge : IDisposable
             + $"expected '{T.TypeName}'.");
     }
 
+    /// <summary>
+    /// Resolve the <em>node</em> at a connection path (the slot index in <paramref name="path"/>
+    /// is ignored — use <see cref="ResolvePath(JArray?)"/> when you want the output slot). The
+    /// typed shorthand for the ubiquitous <c>Graph.GetNode($"{path[0]}")</c> over a SwarmUI
+    /// path (<c>WGNodeData.Path</c>, <c>genInfo.PosCond</c>, …). Returns <c>null</c> when
+    /// <paramref name="path"/> is null/empty or the node is absent — no <c>$"{path[0]}"</c>
+    /// interpolation or <c>Count</c> guard at the call site.
+    /// </summary>
+    public ComfyNode? NodeAt(JArray? path)
+    {
+        if (path is not { Count: >= 1 })
+        {
+            return null;
+        }
+        string? nodeId = path[0]?.ToString();
+
+        return nodeId is null ? null : Graph.GetNode(nodeId);
+    }
+
+    /// <summary>
+    /// <see cref="NodeAt(JArray?)"/> narrowed to <typeparamref name="T"/> — a node class, or
+    /// (once family interfaces ship) a shared node interface. Returns <c>null</c> when the path
+    /// does not resolve or the node is not a <typeparamref name="T"/>. Replaces
+    /// <c>Graph.GetNode&lt;T&gt;($"{path[0]}")</c>.
+    /// </summary>
+    public T? NodeAt<T>(JArray? path) where T : class => NodeAt(path) as T;
+
     // ── Disposal ────────────────────────────────────────────────────
 
     /// <summary>

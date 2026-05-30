@@ -22,3 +22,7 @@ coverage/
 
 __pycache__/
 
+# Generated codegen input dump (~1-4MB), pulled from a running ComfyUI on demand
+object_info.json
+
+regen.sh

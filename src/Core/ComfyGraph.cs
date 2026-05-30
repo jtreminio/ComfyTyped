@@ -41,11 +41,16 @@ public sealed class ComfyGraph
     /// <summary>Get a node by ID.</summary>
     public ComfyNode? GetNode(string id) => _nodes.TryGetValue(id, out ComfyNode? node) ? node : null;
 
-    /// <summary>Get a typed node by ID.</summary>
-    public T? GetNode<T>(string id) where T : ComfyNode => _nodes.TryGetValue(id, out ComfyNode? node) ? node as T : null;
+    /// <summary>Get a node by ID narrowed to <typeparamref name="T"/> — a node class, or a shared
+    /// node interface (e.g. a codegen-emitted family interface like <c>IVaeDecode</c>). Returns
+    /// null when absent or not a <typeparamref name="T"/>. The <c>class</c> (not <c>ComfyNode</c>)
+    /// constraint is what permits interface targets.</summary>
+    public T? GetNode<T>(string id) where T : class => _nodes.TryGetValue(id, out ComfyNode? node) ? node as T : null;
 
-    /// <summary>Find all nodes of a specific type.</summary>
-    public IReadOnlyList<T> NodesOfType<T>() where T : ComfyNode => [.. _nodes.Values.OfType<T>()];
+    /// <summary>Find all nodes assignable to <typeparamref name="T"/> — a node class or a shared
+    /// node interface. The <c>class</c> constraint permits interface targets
+    /// (e.g. <c>NodesOfType&lt;IVaeDecode&gt;()</c>).</summary>
+    public IReadOnlyList<T> NodesOfType<T>() where T : class => [.. _nodes.Values.OfType<T>()];
 
     /// <summary>Find all nodes with a specific ComfyUI class_type string.</summary>
     public IReadOnlyList<ComfyNode> NodesOfType(string classType) => [.. _nodes.Values.Where(n => n.ClassTypeName == classType)];
@@ -319,8 +324,10 @@ public sealed class ComfyGraph
         return result;
     }
 
-    /// <summary>Walk upstream from a node to find the nearest node of a specific type.</summary>
-    public T? FindNearestUpstream<T>(ComfyNode startNode) where T : ComfyNode
+    /// <summary>Walk upstream from a node to find the nearest node assignable to <typeparamref name="T"/>
+    /// — a node class or a shared node interface (e.g. <c>FindNearestUpstream&lt;IVaeDecode&gt;()</c>
+    /// matches both <c>VAEDecodeNode</c> and <c>VAEDecodeTiledNode</c>).</summary>
+    public T? FindNearestUpstream<T>(ComfyNode startNode) where T : class
     {
         Queue<ComfyNode> pending = new();
         HashSet<string> visited = [];
@@ -464,8 +471,9 @@ public sealed class ComfyGraph
         return null;
     }
 
-    /// <summary>Walk downstream from a node's output to find the nearest node of a specific type.</summary>
-    public T? FindNearestDownstream<T>(INodeOutput output) where T : ComfyNode
+    /// <summary>Walk downstream from a node's output to find the nearest node assignable to
+    /// <typeparamref name="T"/> — a node class or a shared node interface.</summary>
+    public T? FindNearestDownstream<T>(INodeOutput output) where T : class
     {
         Queue<ComfyNode> pending = new();
         HashSet<string> visited = [];

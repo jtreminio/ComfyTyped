@@ -123,4 +123,35 @@ public static class NodeInputExtensions
 
         return input.TryConnectToUntyped(bridge.ResolvePath(path));
     }
+
+    // ── Literal-or-connection tokens ────────────────────────────────
+
+    /// <summary>
+    /// Set an INT input from a SwarmUI-style <see cref="JToken"/> that may be <em>either</em> a
+    /// literal integer <em>or</em> a <c>[nodeId, slotIndex]</c> connection path — the
+    /// frame-count / length idiom where a value is sometimes a constant and sometimes wired from
+    /// an upstream size/count node. A <see cref="JArray"/> is resolved and connected through
+    /// <paramref name="bridge"/> (via <see cref="TryConnectFromPath{T}"/>); a numeric
+    /// <see cref="JValue"/> is set as a literal <see cref="long"/>. Returns <c>true</c> if the
+    /// input was set or connected, <c>false</c> for a null/empty/unresolvable token (slot left
+    /// untouched). Replaces the hand-rolled "is it an array or a value" helpers callers were
+    /// duplicating.
+    /// </summary>
+    public static bool SetFromToken(this NodeInput<IntType> input, WorkflowBridge bridge, JToken? token)
+    {
+        ArgumentNullException.ThrowIfNull(input);
+        ArgumentNullException.ThrowIfNull(bridge);
+
+        if (token is JArray arr)
+        {
+            return input.TryConnectFromPath(bridge, arr);
+        }
+        if (token is JValue { Value: not null } v)
+        {
+            input.Set(Convert.ToInt64(v.Value));
+            return true;
+        }
+
+        return false;
+    }
 }

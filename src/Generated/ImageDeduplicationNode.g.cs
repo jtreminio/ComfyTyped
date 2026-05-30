@@ -5,8 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>Remove duplicate or very similar images from a list.</summary>
-/// <remarks>Category: image/batch</remarks>
+/// <remarks>Category: dataset/image</remarks>
 public sealed class ImageDeduplicationNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

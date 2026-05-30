@@ -99,7 +99,8 @@ public static partial class Program
         string RegistrationsClass,
         string? CoreAssemblyPath,
         bool NativeOnly,
-        string? KeepListPath);
+        string? KeepListPath,
+        string? FamiliesPath);
 
     /// <summary>Consumer-declared "always keep these typed bindings, even if unused" inputs.
     /// Read from the JSON pointed at by <c>--keep-list</c>. The JSON shape is:
@@ -168,6 +169,9 @@ public static partial class Program
         KeepList? keepList = opts.KeepListPath is null ? null : LoadKeepList(opts.KeepListPath);
         HashSet<string> forceInclude = ResolveForceIncludeClassTypes(keepList, objectInfo);
 
+        IReadOnlyDictionary<string, IReadOnlyList<string>> familyMap =
+            opts.FamiliesPath is null ? EmptyFamilyMap : LoadFamilies(opts.FamiliesPath);
+
         Dictionary<string, string> generatedClassTypeToClassName = new(StringComparer.Ordinal);
 
         int generated = 0;
@@ -216,7 +220,7 @@ public static partial class Program
 
             File.WriteAllText(
                 Path.Combine(opts.OutputDir, $"{nodeDef.ClassName}.g.cs"),
-                GenerateNodeClass(nodeDef, opts.Namespace));
+                GenerateNodeClass(nodeDef, opts.Namespace, familyMap));
             generatedClassTypeToClassName[classType] = nodeDef.ClassName;
             generated++;
             // Increment only after a file is actually emitted, so a parse failure
@@ -382,6 +386,7 @@ public static partial class Program
         string? coreAssembly = null;
         bool nativeOnly = root;
         string? keepListPath = null;
+        string? familiesPath = null;
 
         for (int i = 0; i < args.Length; i++)
         {
@@ -397,6 +402,7 @@ public static partial class Program
                 case "--core-assembly": coreAssembly = NextArg(args, ref i, a); break;
                 case "--native-only": nativeOnly = true; break;
                 case "--keep-list": keepListPath = NextArg(args, ref i, a); break;
+                case "--families": familiesPath = NextArg(args, ref i, a); break;
                 case "--help" or "-h": PrintUsage(); return null;
                 default:
                     Console.Error.WriteLine($"Unknown argument: {a}");
@@ -420,7 +426,7 @@ public static partial class Program
 
         return new Options(
             comfyJsonSource, outputDir, ns, markerNs ?? ns, registrationsClass,
-            coreAssembly, nativeOnly, keepListPath);
+            coreAssembly, nativeOnly, keepListPath, familiesPath);
     }
 
     private static Options? Fail(string message)
@@ -497,6 +503,21 @@ public static partial class Program
                                                PruneManifest.g.cs. The `prune` subcommand
                                                reads that file and unconditionally keeps
                                                the listed class names.
+
+            Family interfaces:
+              --families <path>                JSON mapping a fully-qualified C# interface
+                                               (hand-written under src/Families/) to the
+                                               class_types that should implement it. Codegen
+                                               appends the interface to each member node's
+                                               base list. Shape:
+                                                 {
+                                                   "ComfyTyped.Families.IVaeDecode":
+                                                     ["VAEDecode", "VAEDecodeTiled"]
+                                                 }
+                                               Underscore-prefixed keys (e.g. "_comment") are
+                                               ignored. Member nodes must already expose the
+                                               interface's slot properties or the regenerated
+                                               file will not compile.
 
               -h, --help                       Show this message.
             """);
@@ -1068,9 +1089,76 @@ public static partial class Program
         return false;
     }
 
+    // ── Family interfaces ───────────────────────────────────────────
+
+    private static readonly IReadOnlyDictionary<string, IReadOnlyList<string>> EmptyFamilyMap =
+        new Dictionary<string, IReadOnlyList<string>>(StringComparer.Ordinal);
+
+    /// <summary>
+    /// Load the <c>--families</c> map. The JSON is keyed by the <em>fully-qualified interface
+    /// name</em>, valued by the list of ComfyUI <c>class_type</c>s that should implement it:
+    /// <code>
+    /// {
+    ///   "ComfyTyped.Families.IVaeDecode": ["VAEDecode", "VAEDecodeTiled"],
+    ///   "ComfyTyped.Families.IVaeEncode": ["VAEEncode", "VAEEncodeTiled"]
+    /// }
+    /// </code>
+    /// Returns the inverted lookup <c>class_type → [interface FQNs]</c> (interfaces sorted, so
+    /// emission is deterministic). The interface bodies themselves are hand-written in the
+    /// library; codegen only appends the names to each node's base list. A node listed here that
+    /// does not actually expose the interface's slot properties will fail to compile after regen.
+    /// </summary>
+    private static IReadOnlyDictionary<string, IReadOnlyList<string>> LoadFamilies(string path)
+    {
+        if (!File.Exists(path))
+        {
+            throw new FileNotFoundException($"--families file not found: {path}");
+        }
+
+        JObject obj = JObject.Parse(File.ReadAllText(path));
+        SortedDictionary<string, SortedSet<string>> byClassType = new(StringComparer.Ordinal);
+        foreach (JProperty prop in obj.Properties())
+        {
+            // Underscore-prefixed keys are comments (e.g. "_comment"), not interfaces.
+            if (prop.Name.StartsWith('_'))
+            {
+                continue;
+            }
+            if (prop.Value is not JArray classTypes)
+            {
+                throw new InvalidOperationException(
+                    $"--families at '{path}': value for interface '{prop.Name}' must be a JSON "
+                    + "array of class_type strings.");
+            }
+            foreach (JToken token in classTypes)
+            {
+                string? classType = token.Value<string>();
+                if (string.IsNullOrWhiteSpace(classType))
+                {
+                    continue;
+                }
+                if (!byClassType.TryGetValue(classType, out SortedSet<string>? interfaces))
+                {
+                    interfaces = new SortedSet<string>(StringComparer.Ordinal);
+                    byClassType[classType] = interfaces;
+                }
+                interfaces.Add(prop.Name);
+            }
+        }
+
+        Dictionary<string, IReadOnlyList<string>> map = new(StringComparer.Ordinal);
+        foreach ((string classType, SortedSet<string> interfaces) in byClassType)
+        {
+            map[classType] = interfaces.ToList();
+        }
+
+        return map;
+    }
+
     // Code generation
 
-    private static string GenerateNodeClass(NodeDef node, string ns)
+    private static string GenerateNodeClass(
+        NodeDef node, string ns, IReadOnlyDictionary<string, IReadOnlyList<string>> familyMap)
     {
         StringBuilder sb = new();
         sb.AppendLine("// <auto-generated/>");
@@ -1125,7 +1213,16 @@ public static partial class Program
             sb.AppendLine($"/// <remarks>Category: {EscapeXml(node.Category)}</remarks>");
         }
 
-        sb.AppendLine($"public sealed class {node.ClassName} : ComfyNode");
+        List<string> baseTypes = ["ComfyNode"];
+        if (familyMap.TryGetValue(node.ClassType, out IReadOnlyList<string>? familyInterfaces))
+        {
+            // Family interfaces (e.g. ComfyTyped.Families.IVaeDecode) let heterogeneous nodes
+            // that share a slot shape be queried/handled through one typed surface. The interface
+            // bodies are hand-written; the node must already expose matching slot properties, so
+            // a mismatch surfaces as a compile error here after regen — by design.
+            baseTypes.AddRange(familyInterfaces);
+        }
+        sb.AppendLine($"public sealed class {node.ClassName} : {string.Join(", ", baseTypes)}");
         sb.AppendLine("{");
         sb.AppendLine($"    /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>");
         sb.AppendLine($"    public const string ClassType = \"{node.ClassType}\";");

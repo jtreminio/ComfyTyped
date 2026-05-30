@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: model/latent</remarks>
+/// <remarks>Category: latent</remarks>
 public sealed class BatchLatentsNodeNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -21,6 +21,6 @@ public sealed class BatchLatentsNodeNode : ComfyNode
     public BatchLatentsNodeNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Latents = AddInputList<LatentType>("latents", prefix: "latent", min: 1, max: 50, required: true);
+        Latents = AddInputList<LatentType>("latents", prefix: "latent", min: 2, max: 50, required: true);
     }
 }

@@ -21,6 +21,6 @@ public sealed class BatchImagesNodeNode : ComfyNode
     public BatchImagesNodeNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Images = AddInputList<ImageType>("images", prefix: "image", min: 1, max: 50, required: true);
+        Images = AddInputList<ImageType>("images", prefix: "image", min: 2, max: 50, required: true);
     }
 }

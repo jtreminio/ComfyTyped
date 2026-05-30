@@ -5,8 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>Save a dataset of pairs of images and text captions to a specified folder. Images are saved as PNG files and captions are saved as TXT files with the same filename_prefix.</summary>
-/// <remarks>Category: image</remarks>
+/// <remarks>Category: dataset</remarks>
 public sealed class SaveImageTextDataSetToFolderNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -15,21 +14,18 @@ public sealed class SaveImageTextDataSetToFolderNode : ComfyNode
 
     // ── Inputs ──
     public NodeInput<ImageType> Images { get; }
+    public NodeInput<StringType> Texts { get; }
     public NodeInput<StringType> FolderName { get; }
     public NodeInput<StringType> FilenamePrefix { get; }
-    public NodeInput<StringType> Mode { get; }
-    public NodeInput<StringType> Texts { get; } // optional
 
     public SaveImageTextDataSetToFolderNode()
     {
         Images = AddInput<ImageType>("images", required: true);
+        Texts = AddInput<StringType>("texts", required: true);
         FolderName = AddInput<StringType>("folder_name", required: true);
         FolderName.Set("dataset");
         FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
         FilenamePrefix.Set("image");
-        Mode = AddInput<StringType>("mode", required: true);
-        Mode.Set("overwrite");
-        Texts = AddInput<StringType>("texts", required: false);
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -38,17 +34,15 @@ public sealed class SaveImageTextDataSetToFolderNode : ComfyNode
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SaveImageTextDataSetToFolderNode With(
         In<ImageType>? Images = null,
+        StringArg? Texts = null,
         StringArg? FolderName = null,
-        StringArg? FilenamePrefix = null,
-        StringArg? Mode = null,
-        StringArg? Texts = null
+        StringArg? FilenamePrefix = null
     )
     {
         Images?.ApplyTo(this.Images);
+        Texts?.ApplyTo(this.Texts);
         FolderName?.ApplyTo(this.FolderName);
         FilenamePrefix?.ApplyTo(this.FilenamePrefix);
-        Mode?.ApplyTo(this.Mode);
-        Texts?.ApplyTo(this.Texts);
         return this;
     }
 }

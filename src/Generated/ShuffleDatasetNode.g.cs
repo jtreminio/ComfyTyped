@@ -5,8 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>Randomly shuffle the order of images in a list.</summary>
-/// <remarks>Category: image/batch</remarks>
+/// <remarks>Category: dataset/image</remarks>
 public sealed class ShuffleDatasetNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

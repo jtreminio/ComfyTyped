@@ -5,8 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>Normalize images using mean and standard deviation.</summary>
-/// <remarks>Category: image/color</remarks>
+/// <remarks>Category: dataset/image</remarks>
 public sealed class NormalizeImagesNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
