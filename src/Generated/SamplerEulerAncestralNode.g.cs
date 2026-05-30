@@ -22,9 +22,9 @@ public sealed class SamplerEulerAncestralNode : ComfyNode
     public SamplerEulerAncestralNode()
     {
         SAMPLER = AddOutput<SamplerType>(0, "SAMPLER");
-        Eta = AddInput<FloatType>("eta", required: true);
+        Eta = AddInput<FloatType>("eta");
         Eta.Set(1.0);
-        SNoise = AddInput<FloatType>("s_noise", required: true);
+        SNoise = AddInput<FloatType>("s_noise");
         SNoise.Set(1.0);
     }
 

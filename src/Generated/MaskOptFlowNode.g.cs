@@ -24,8 +24,8 @@ public sealed class MaskOptFlowNode : ComfyNode
     {
         OPTICALFLOW = AddOutput<OpticalFlowType>(0, "OPTICAL_FLOW");
         PREVIEWIMAGE = AddOutput<ImageType>(1, "PREVIEW_IMAGE");
-        OpticalFlow = AddInput<OpticalFlowType>("optical_flow", required: true);
-        Mask = AddInput<MaskType>("mask", required: true);
+        OpticalFlow = AddInput<OpticalFlowType>("optical_flow");
+        Mask = AddInput<MaskType>("mask");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

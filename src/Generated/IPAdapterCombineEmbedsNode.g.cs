@@ -26,12 +26,12 @@ public sealed class IPAdapterCombineEmbedsNode : ComfyNode
     public IPAdapterCombineEmbedsNode()
     {
         EMBEDS = AddOutput<EmbedsType>(0, "EMBEDS");
-        Embed1 = AddInput<EmbedsType>("embed1", required: true);
-        Method = AddInput<StringType>("method", required: true);
-        Embed2 = AddInput<EmbedsType>("embed2", required: false);
-        Embed3 = AddInput<EmbedsType>("embed3", required: false);
-        Embed4 = AddInput<EmbedsType>("embed4", required: false);
-        Embed5 = AddInput<EmbedsType>("embed5", required: false);
+        Embed1 = AddInput<EmbedsType>("embed1");
+        Method = AddInput<StringType>("method");
+        Embed2 = AddInput<EmbedsType>("embed2");
+        Embed3 = AddInput<EmbedsType>("embed3");
+        Embed4 = AddInput<EmbedsType>("embed4");
+        Embed5 = AddInput<EmbedsType>("embed5");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

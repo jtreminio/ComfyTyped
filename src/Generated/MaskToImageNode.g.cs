@@ -21,7 +21,7 @@ public sealed class MaskToImageNode : ComfyNode
     public MaskToImageNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Mask = AddInput<MaskType>("mask", required: true);
+        Mask = AddInput<MaskType>("mask");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

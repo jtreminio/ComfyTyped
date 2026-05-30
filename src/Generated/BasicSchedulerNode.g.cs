@@ -24,11 +24,11 @@ public sealed class BasicSchedulerNode : ComfyNode
     public BasicSchedulerNode()
     {
         SIGMAS = AddOutput<SigmasType>(0, "SIGMAS");
-        Model = AddInput<ModelType>("model", required: true);
-        Scheduler = AddInput<StringType>("scheduler", required: true);
-        Steps = AddInput<IntType>("steps", required: true);
+        Model = AddInput<ModelType>("model");
+        Scheduler = AddInput<StringType>("scheduler");
+        Steps = AddInput<IntType>("steps");
         Steps.Set(20L);
-        Denoise = AddInput<FloatType>("denoise", required: true);
+        Denoise = AddInput<FloatType>("denoise");
         Denoise.Set(1.0);
     }
 

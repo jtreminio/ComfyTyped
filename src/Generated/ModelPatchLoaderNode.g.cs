@@ -21,7 +21,7 @@ public sealed class ModelPatchLoaderNode : ComfyNode
     public ModelPatchLoaderNode()
     {
         MODELPATCH = AddOutput<ModelPatchType>(0, "MODEL_PATCH");
-        Name = AddInput<StringType>("name", required: true);
+        Name = AddInput<StringType>("name");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

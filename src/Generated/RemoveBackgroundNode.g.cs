@@ -22,8 +22,8 @@ public sealed class RemoveBackgroundNode : ComfyNode
     public RemoveBackgroundNode()
     {
         Mask = AddOutput<MaskType>(0, "mask");
-        Image = AddInput<ImageType>("image", required: true);
-        BgRemovalModel = AddInput<BackgroundRemovalType>("bg_removal_model", required: true);
+        Image = AddInput<ImageType>("image");
+        BgRemovalModel = AddInput<BackgroundRemovalType>("bg_removal_model");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

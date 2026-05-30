@@ -22,8 +22,8 @@ public sealed class ImageColorToMaskNode : ComfyNode
     public ImageColorToMaskNode()
     {
         MASK = AddOutput<MaskType>(0, "MASK");
-        Image = AddInput<ImageType>("image", required: true);
-        Color = AddInput<IntType>("color", required: true);
+        Image = AddInput<ImageType>("image");
+        Color = AddInput<IntType>("color");
         Color.Set(0L);
     }
 

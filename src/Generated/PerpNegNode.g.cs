@@ -23,9 +23,9 @@ public sealed class PerpNegNode : ComfyNode
     public PerpNegNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        EmptyConditioning = AddInput<ConditioningType>("empty_conditioning", required: true);
-        NegScale = AddInput<FloatType>("neg_scale", required: true);
+        Model = AddInput<ModelType>("model");
+        EmptyConditioning = AddInput<ConditioningType>("empty_conditioning");
+        NegScale = AddInput<FloatType>("neg_scale");
         NegScale.Set(1.0);
     }
 

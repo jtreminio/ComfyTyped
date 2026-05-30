@@ -21,7 +21,7 @@ public sealed class LoadImageDataSetFromFolderNode : ComfyNode
     public LoadImageDataSetFromFolderNode()
     {
         Images = AddOutput<ImageType>(0, "images");
-        Folder = AddInput<StringType>("folder", required: true);
+        Folder = AddInput<StringType>("folder");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

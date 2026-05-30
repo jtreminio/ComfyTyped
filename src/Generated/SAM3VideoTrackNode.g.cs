@@ -27,16 +27,16 @@ public sealed class SAM3VideoTrackNode : ComfyNode
     public SAM3VideoTrackNode()
     {
         TrackData = AddOutput<Sam3TrackDataType>(0, "track_data");
-        Images = AddInput<ImageType>("images", required: true);
-        Model = AddInput<ModelType>("model", required: true);
-        DetectionThreshold = AddInput<FloatType>("detection_threshold", required: true);
+        Images = AddInput<ImageType>("images");
+        Model = AddInput<ModelType>("model");
+        DetectionThreshold = AddInput<FloatType>("detection_threshold");
         DetectionThreshold.Set(0.5);
-        MaxObjects = AddInput<IntType>("max_objects", required: true);
+        MaxObjects = AddInput<IntType>("max_objects");
         MaxObjects.Set(4L);
-        DetectInterval = AddInput<IntType>("detect_interval", required: true);
+        DetectInterval = AddInput<IntType>("detect_interval");
         DetectInterval.Set(1L);
-        InitialMask = AddInput<MaskType>("initial_mask", required: false);
-        Conditioning = AddInput<ConditioningType>("conditioning", required: false);
+        InitialMask = AddInput<MaskType>("initial_mask");
+        Conditioning = AddInput<ConditioningType>("conditioning");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -21,7 +21,7 @@ public sealed class RandomNoiseNode : ComfyNode
     public RandomNoiseNode()
     {
         NOISE = AddOutput<NoiseType>(0, "NOISE");
-        NoiseSeed = AddInput<IntType>("noise_seed", required: true);
+        NoiseSeed = AddInput<IntType>("noise_seed");
         NoiseSeed.Set(0L);
     }
 

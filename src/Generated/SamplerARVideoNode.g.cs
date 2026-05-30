@@ -21,7 +21,7 @@ public sealed class SamplerARVideoNode : ComfyNode
     public SamplerARVideoNode()
     {
         SAMPLER = AddOutput<SamplerType>(0, "SAMPLER");
-        NumFramePerBlock = AddInput<IntType>("num_frame_per_block", required: true);
+        NumFramePerBlock = AddInput<IntType>("num_frame_per_block");
         NumFramePerBlock.Set(1L);
     }
 

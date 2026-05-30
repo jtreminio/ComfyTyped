@@ -23,9 +23,9 @@ public sealed class USOStyleReferenceNode : ComfyNode
     public USOStyleReferenceNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        ModelPatch = AddInput<ModelPatchType>("model_patch", required: true);
-        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output", required: true);
+        Model = AddInput<ModelType>("model");
+        ModelPatch = AddInput<ModelPatchType>("model_patch");
+        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

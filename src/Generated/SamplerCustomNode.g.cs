@@ -31,18 +31,18 @@ public sealed class SamplerCustomNode : ComfyNode
     {
         Output = AddOutput<LatentType>(0, "output");
         DenoisedOutput = AddOutput<LatentType>(1, "denoised_output");
-        Model = AddInput<ModelType>("model", required: true);
-        AddNoise = AddInput<BooleanType>("add_noise", required: true);
+        Model = AddInput<ModelType>("model");
+        AddNoise = AddInput<BooleanType>("add_noise");
         AddNoise.Set(true);
-        NoiseSeed = AddInput<IntType>("noise_seed", required: true);
+        NoiseSeed = AddInput<IntType>("noise_seed");
         NoiseSeed.Set(0L);
-        Cfg = AddInput<FloatType>("cfg", required: true);
+        Cfg = AddInput<FloatType>("cfg");
         Cfg.Set(8.0);
-        Positive = AddInput<ConditioningType>("positive", required: true);
-        Negative = AddInput<ConditioningType>("negative", required: true);
-        Sampler = AddInput<SamplerType>("sampler", required: true);
-        Sigmas = AddInput<SigmasType>("sigmas", required: true);
-        LatentImage = AddInput<LatentType>("latent_image", required: true);
+        Positive = AddInput<ConditioningType>("positive");
+        Negative = AddInput<ConditioningType>("negative");
+        Sampler = AddInput<SamplerType>("sampler");
+        Sigmas = AddInput<SigmasType>("sigmas");
+        LatentImage = AddInput<LatentType>("latent_image");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -22,8 +22,8 @@ public sealed class SetUnionControlNetTypeNode : ComfyNode
     public SetUnionControlNetTypeNode()
     {
         CONTROLNET = AddOutput<ControlNetType>(0, "CONTROL_NET");
-        ControlNet = AddInput<ControlNetType>("control_net", required: true);
-        Type = AddInput<StringType>("type", required: true);
+        ControlNet = AddInput<ControlNetType>("control_net");
+        Type = AddInput<StringType>("type");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

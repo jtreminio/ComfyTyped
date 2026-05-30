@@ -32,22 +32,22 @@ public sealed class SwarmInputImageNode : ComfyNode
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
         MASK = AddOutput<MaskType>(1, "MASK");
-        Title = AddInput<StringType>("title", required: true);
+        Title = AddInput<StringType>("title");
         Title.Set("My Image");
-        Value = AddInput<StringType>("value", required: true);
+        Value = AddInput<StringType>("value");
         Value.Set("(Do Not Set Me)");
-        AutoResize = AddInput<BooleanType>("auto_resize", required: true);
+        AutoResize = AddInput<BooleanType>("auto_resize");
         AutoResize.Set(true);
-        Description = AddInput<StringType>("description", required: true);
+        Description = AddInput<StringType>("description");
         Description.Set("");
-        OrderPriority = AddInput<FloatType>("order_priority", required: true);
+        OrderPriority = AddInput<FloatType>("order_priority");
         OrderPriority.Set(0.0);
-        IsAdvanced = AddInput<BooleanType>("is_advanced", required: true);
+        IsAdvanced = AddInput<BooleanType>("is_advanced");
         IsAdvanced.Set(false);
-        RawId = AddInput<StringType>("raw_id", required: true);
+        RawId = AddInput<StringType>("raw_id");
         RawId.Set("");
-        Image = AddInput<StringType>("image", required: true);
-        Group = AddInput<GroupType>("group", required: false);
+        Image = AddInput<StringType>("image");
+        Group = AddInput<GroupType>("group");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

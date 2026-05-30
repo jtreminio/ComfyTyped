@@ -23,9 +23,9 @@ public sealed class CLIPTextEncodeKandinsky5Node : ComfyNode
     public CLIPTextEncodeKandinsky5Node()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Clip = AddInput<ClipType>("clip", required: true);
-        ClipL = AddInput<StringType>("clip_l", required: true);
-        Qwen257b = AddInput<StringType>("qwen25_7b", required: true);
+        Clip = AddInput<ClipType>("clip");
+        ClipL = AddInput<StringType>("clip_l");
+        Qwen257b = AddInput<StringType>("qwen25_7b");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

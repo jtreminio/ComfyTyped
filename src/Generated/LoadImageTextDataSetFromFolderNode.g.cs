@@ -23,7 +23,7 @@ public sealed class LoadImageTextDataSetFromFolderNode : ComfyNode
     {
         Images = AddOutput<ImageType>(0, "images");
         Texts = AddOutput<StringType>(1, "texts");
-        Folder = AddInput<StringType>("folder", required: true);
+        Folder = AddInput<StringType>("folder");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

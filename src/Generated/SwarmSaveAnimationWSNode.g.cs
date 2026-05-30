@@ -23,16 +23,16 @@ public sealed class SwarmSaveAnimationWSNode : ComfyNode
 
     public SwarmSaveAnimationWSNode()
     {
-        Images = AddInput<ImageType>("images", required: true);
-        Fps = AddInput<FloatType>("fps", required: true);
+        Images = AddInput<ImageType>("images");
+        Fps = AddInput<FloatType>("fps");
         Fps.Set(6.0);
-        Lossless = AddInput<BooleanType>("lossless", required: true);
+        Lossless = AddInput<BooleanType>("lossless");
         Lossless.Set(true);
-        Quality = AddInput<IntType>("quality", required: true);
+        Quality = AddInput<IntType>("quality");
         Quality.Set(80L);
-        Method = AddInput<StringType>("method", required: true);
-        Format = AddInput<StringType>("format", required: true);
-        Audio = AddInput<AudioType>("audio", required: false);
+        Method = AddInput<StringType>("method");
+        Format = AddInput<StringType>("format");
+        Audio = AddInput<AudioType>("audio");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

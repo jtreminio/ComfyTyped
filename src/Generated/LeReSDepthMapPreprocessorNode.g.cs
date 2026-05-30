@@ -25,14 +25,14 @@ public sealed class LeReSDepthMapPreprocessorNode : ComfyNode
     public LeReSDepthMapPreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        RmNearest = AddInput<FloatType>("rm_nearest", required: false);
+        Image = AddInput<ImageType>("image");
+        RmNearest = AddInput<FloatType>("rm_nearest");
         RmNearest.Set(0.0);
-        RmBackground = AddInput<FloatType>("rm_background", required: false);
+        RmBackground = AddInput<FloatType>("rm_background");
         RmBackground.Set(0.0);
-        Boost = AddInput<StringType>("boost", required: false);
+        Boost = AddInput<StringType>("boost");
         Boost.Set("disable");
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

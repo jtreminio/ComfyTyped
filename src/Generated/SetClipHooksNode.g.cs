@@ -24,12 +24,12 @@ public sealed class SetClipHooksNode : ComfyNode
     public SetClipHooksNode()
     {
         CLIP = AddOutput<ClipType>(0, "CLIP");
-        Clip = AddInput<ClipType>("clip", required: true);
-        ApplyToConds = AddInput<BooleanType>("apply_to_conds", required: true);
+        Clip = AddInput<ClipType>("clip");
+        ApplyToConds = AddInput<BooleanType>("apply_to_conds");
         ApplyToConds.Set(true);
-        ScheduleClip = AddInput<BooleanType>("schedule_clip", required: true);
+        ScheduleClip = AddInput<BooleanType>("schedule_clip");
         ScheduleClip.Set(false);
-        Hooks = AddInput<HooksType>("hooks", required: false);
+        Hooks = AddInput<HooksType>("hooks");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

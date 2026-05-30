@@ -19,8 +19,8 @@ public sealed class SwarmAddSaveMetadataWSNode : ComfyNode
 
     public SwarmAddSaveMetadataWSNode()
     {
-        Key = AddInput<StringType>("key", required: true);
-        Value = AddInput<StringType>("value", required: true);
+        Key = AddInput<StringType>("key");
+        Value = AddInput<StringType>("value");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

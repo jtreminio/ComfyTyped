@@ -27,9 +27,9 @@ public sealed class LTXVCropGuidesNode : ComfyNode, ComfyTyped.Families.IConditi
         Positive = AddOutput<ConditioningType>(0, "positive");
         Negative = AddOutput<ConditioningType>(1, "negative");
         Latent = AddOutput<LatentType>(2, "latent");
-        PositiveInput = AddInput<ConditioningType>("positive", required: true);
-        NegativeInput = AddInput<ConditioningType>("negative", required: true);
-        LatentInput = AddInput<LatentType>("latent", required: true);
+        PositiveInput = AddInput<ConditioningType>("positive");
+        NegativeInput = AddInput<ConditioningType>("negative");
+        LatentInput = AddInput<LatentType>("latent");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

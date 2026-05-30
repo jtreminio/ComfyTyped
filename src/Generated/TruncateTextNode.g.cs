@@ -22,8 +22,8 @@ public sealed class TruncateTextNode : ComfyNode
     public TruncateTextNode()
     {
         Texts = AddOutput<StringType>(0, "texts");
-        TextsInput = AddInput<StringType>("texts", required: true);
-        MaxLength = AddInput<IntType>("max_length", required: true);
+        TextsInput = AddInput<StringType>("texts");
+        MaxLength = AddInput<IntType>("max_length");
         MaxLength.Set(77L);
     }
 

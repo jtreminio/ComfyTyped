@@ -36,12 +36,12 @@ public sealed class SamplerSEEDS2Node : ComfyNode
     public SamplerSEEDS2Node()
     {
         SAMPLER = AddOutput<SamplerType>(0, "SAMPLER");
-        SolverType = AddInput<StringType>("solver_type", required: true);
-        Eta = AddInput<FloatType>("eta", required: true);
+        SolverType = AddInput<StringType>("solver_type");
+        Eta = AddInput<FloatType>("eta");
         Eta.Set(1.0);
-        SNoise = AddInput<FloatType>("s_noise", required: true);
+        SNoise = AddInput<FloatType>("s_noise");
         SNoise.Set(1.0);
-        R = AddInput<FloatType>("r", required: true);
+        R = AddInput<FloatType>("r");
         R.Set(0.5);
     }
 

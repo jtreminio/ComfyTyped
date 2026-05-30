@@ -26,13 +26,13 @@ public sealed class StableCascadeEmptyLatentImageNode : ComfyNode
     {
         StageC = AddOutput<LatentType>(0, "stage_c");
         StageB = AddOutput<LatentType>(1, "stage_b");
-        Width = AddInput<IntType>("width", required: true);
+        Width = AddInput<IntType>("width");
         Width.Set(1024L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(1024L);
-        Compression = AddInput<IntType>("compression", required: true);
+        Compression = AddInput<IntType>("compression");
         Compression.Set(42L);
-        BatchSize = AddInput<IntType>("batch_size", required: true);
+        BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
     }
 

@@ -23,7 +23,7 @@ public sealed class SwarmRemBgNode : ComfyNode
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
         MASK = AddOutput<MaskType>(1, "MASK");
-        Images = AddInput<ImageType>("images", required: true);
+        Images = AddInput<ImageType>("images");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

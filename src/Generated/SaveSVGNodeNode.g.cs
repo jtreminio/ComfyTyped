@@ -19,8 +19,8 @@ public sealed class SaveSVGNodeNode : ComfyNode
 
     public SaveSVGNodeNode()
     {
-        Svg = AddInput<SvgType>("svg", required: true);
-        FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
+        Svg = AddInput<SvgType>("svg");
+        FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("svg/ComfyUI");
     }
 

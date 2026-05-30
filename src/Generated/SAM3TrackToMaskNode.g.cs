@@ -22,8 +22,8 @@ public sealed class SAM3TrackToMaskNode : ComfyNode
     public SAM3TrackToMaskNode()
     {
         Masks = AddOutput<MaskType>(0, "masks");
-        TrackData = AddInput<Sam3TrackDataType>("track_data", required: true);
-        ObjectIndices = AddInput<StringType>("object_indices", required: true);
+        TrackData = AddInput<Sam3TrackDataType>("track_data");
+        ObjectIndices = AddInput<StringType>("object_indices");
         ObjectIndices.Set("");
     }
 

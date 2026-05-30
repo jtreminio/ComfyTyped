@@ -23,9 +23,9 @@ public sealed class MorphologyNode : ComfyNode
     public MorphologyNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        Operation = AddInput<StringType>("operation", required: true);
-        KernelSize = AddInput<IntType>("kernel_size", required: true);
+        Image = AddInput<ImageType>("image");
+        Operation = AddInput<StringType>("operation");
+        KernelSize = AddInput<IntType>("kernel_size");
         KernelSize.Set(3L);
     }
 

@@ -22,8 +22,8 @@ public sealed class AddTextPrefixNode : ComfyNode
     public AddTextPrefixNode()
     {
         Texts = AddOutput<StringType>(0, "texts");
-        TextsInput = AddInput<StringType>("texts", required: true);
-        Prefix = AddInput<StringType>("prefix", required: true);
+        TextsInput = AddInput<StringType>("texts");
+        Prefix = AddInput<StringType>("prefix");
         Prefix.Set("");
     }
 

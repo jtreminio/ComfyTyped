@@ -39,23 +39,23 @@ public sealed class IPAdapterWeightsNode : ComfyNode
         Image1 = AddOutput<ImageType>(3, "image_1");
         Image2 = AddOutput<ImageType>(4, "image_2");
         WeightsStrategy = AddOutput<WeightsStrategyType>(5, "weights_strategy");
-        WeightsInput = AddInput<StringType>("weights", required: true);
+        WeightsInput = AddInput<StringType>("weights");
         WeightsInput.Set("1.0, 0.0");
-        Timing = AddInput<StringType>("timing", required: true);
+        Timing = AddInput<StringType>("timing");
         Timing.Set("linear");
-        Frames = AddInput<IntType>("frames", required: true);
+        Frames = AddInput<IntType>("frames");
         Frames.Set(0L);
-        StartFrame = AddInput<IntType>("start_frame", required: true);
+        StartFrame = AddInput<IntType>("start_frame");
         StartFrame.Set(0L);
-        EndFrame = AddInput<IntType>("end_frame", required: true);
+        EndFrame = AddInput<IntType>("end_frame");
         EndFrame.Set(9999L);
-        AddStartingFrames = AddInput<IntType>("add_starting_frames", required: true);
+        AddStartingFrames = AddInput<IntType>("add_starting_frames");
         AddStartingFrames.Set(0L);
-        AddEndingFrames = AddInput<IntType>("add_ending_frames", required: true);
+        AddEndingFrames = AddInput<IntType>("add_ending_frames");
         AddEndingFrames.Set(0L);
-        Method = AddInput<StringType>("method", required: true);
+        Method = AddInput<StringType>("method");
         Method.Set("full batch");
-        Image = AddInput<ImageType>("image", required: false);
+        Image = AddInput<ImageType>("image");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

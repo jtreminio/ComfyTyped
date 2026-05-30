@@ -23,9 +23,9 @@ public sealed class SwarmIntAddNode : ComfyNode
     public SwarmIntAddNode()
     {
         INT = AddOutput<IntType>(0, "INT");
-        A = AddInput<IntType>("a", required: true);
+        A = AddInput<IntType>("a");
         A.Set(0L);
-        B = AddInput<IntType>("b", required: true);
+        B = AddInput<IntType>("b");
         B.Set(0L);
     }
 

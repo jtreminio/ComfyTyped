@@ -27,7 +27,7 @@ public sealed class UnCLIPCheckpointLoaderNode : ComfyNode
         CLIP = AddOutput<ClipType>(1, "CLIP");
         VAE = AddOutput<VaeType>(2, "VAE");
         CLIPVISION = AddOutput<ClipVisionType>(3, "CLIP_VISION");
-        CkptName = AddInput<StringType>("ckpt_name", required: true);
+        CkptName = AddInput<StringType>("ckpt_name");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

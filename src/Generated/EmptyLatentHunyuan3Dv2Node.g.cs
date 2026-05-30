@@ -22,9 +22,9 @@ public sealed class EmptyLatentHunyuan3Dv2Node : ComfyNode
     public EmptyLatentHunyuan3Dv2Node()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Resolution = AddInput<IntType>("resolution", required: true);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(3072L);
-        BatchSize = AddInput<IntType>("batch_size", required: true);
+        BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
     }
 

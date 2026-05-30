@@ -23,10 +23,10 @@ public sealed class AIOPreprocessorNode : ComfyNode
     public AIOPreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        Preprocessor = AddInput<StringType>("preprocessor", required: false);
+        Image = AddInput<ImageType>("image");
+        Preprocessor = AddInput<StringType>("preprocessor");
         Preprocessor.Set("none");
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

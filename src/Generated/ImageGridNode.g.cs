@@ -25,14 +25,14 @@ public sealed class ImageGridNode : ComfyNode
     public ImageGridNode()
     {
         Images = AddOutput<ImageType>(0, "images");
-        ImagesInput = AddInput<ImageType>("images", required: true);
-        Columns = AddInput<IntType>("columns", required: true);
+        ImagesInput = AddInput<ImageType>("images");
+        Columns = AddInput<IntType>("columns");
         Columns.Set(4L);
-        CellWidth = AddInput<IntType>("cell_width", required: true);
+        CellWidth = AddInput<IntType>("cell_width");
         CellWidth.Set(256L);
-        CellHeight = AddInput<IntType>("cell_height", required: true);
+        CellHeight = AddInput<IntType>("cell_height");
         CellHeight.Set(256L);
-        Padding = AddInput<IntType>("padding", required: true);
+        Padding = AddInput<IntType>("padding");
         Padding.Set(4L);
     }
 

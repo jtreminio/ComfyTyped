@@ -24,10 +24,10 @@ public sealed class QuadrupleCLIPLoaderGGUFNode : ComfyNode
     public QuadrupleCLIPLoaderGGUFNode()
     {
         CLIP = AddOutput<ClipType>(0, "CLIP");
-        ClipName1 = AddInput<StringType>("clip_name1", required: true);
-        ClipName2 = AddInput<StringType>("clip_name2", required: true);
-        ClipName3 = AddInput<StringType>("clip_name3", required: true);
-        ClipName4 = AddInput<StringType>("clip_name4", required: true);
+        ClipName1 = AddInput<StringType>("clip_name1");
+        ClipName2 = AddInput<StringType>("clip_name2");
+        ClipName3 = AddInput<StringType>("clip_name3");
+        ClipName4 = AddInput<StringType>("clip_name4");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

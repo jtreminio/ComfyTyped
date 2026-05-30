@@ -23,9 +23,9 @@ public sealed class CLIPMergeSimpleNode : ComfyNode
     public CLIPMergeSimpleNode()
     {
         CLIP = AddOutput<ClipType>(0, "CLIP");
-        Clip1 = AddInput<ClipType>("clip1", required: true);
-        Clip2 = AddInput<ClipType>("clip2", required: true);
-        Ratio = AddInput<FloatType>("ratio", required: true);
+        Clip1 = AddInput<ClipType>("clip1");
+        Clip2 = AddInput<ClipType>("clip2");
+        Ratio = AddInput<FloatType>("ratio");
         Ratio.Set(1.0);
     }
 

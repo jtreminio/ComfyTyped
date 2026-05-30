@@ -34,25 +34,25 @@ public sealed class IPAdapterClipVisionEnhancerNode : ComfyNode
     public IPAdapterClipVisionEnhancerNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        Ipadapter = AddInput<IpAdapterType>("ipadapter", required: true);
-        Image = AddInput<ImageType>("image", required: true);
-        Weight = AddInput<FloatType>("weight", required: true);
+        Model = AddInput<ModelType>("model");
+        Ipadapter = AddInput<IpAdapterType>("ipadapter");
+        Image = AddInput<ImageType>("image");
+        Weight = AddInput<FloatType>("weight");
         Weight.Set(1.0);
-        WeightType = AddInput<StringType>("weight_type", required: true);
-        CombineEmbeds = AddInput<StringType>("combine_embeds", required: true);
-        StartAt = AddInput<FloatType>("start_at", required: true);
+        WeightType = AddInput<StringType>("weight_type");
+        CombineEmbeds = AddInput<StringType>("combine_embeds");
+        StartAt = AddInput<FloatType>("start_at");
         StartAt.Set(0.0);
-        EndAt = AddInput<FloatType>("end_at", required: true);
+        EndAt = AddInput<FloatType>("end_at");
         EndAt.Set(1.0);
-        EmbedsScaling = AddInput<StringType>("embeds_scaling", required: true);
-        EnhanceTiles = AddInput<IntType>("enhance_tiles", required: true);
+        EmbedsScaling = AddInput<StringType>("embeds_scaling");
+        EnhanceTiles = AddInput<IntType>("enhance_tiles");
         EnhanceTiles.Set(2L);
-        EnhanceRatio = AddInput<FloatType>("enhance_ratio", required: true);
+        EnhanceRatio = AddInput<FloatType>("enhance_ratio");
         EnhanceRatio.Set(1.0);
-        ImageNegative = AddInput<ImageType>("image_negative", required: false);
-        AttnMask = AddInput<MaskType>("attn_mask", required: false);
-        ClipVision = AddInput<ClipVisionType>("clip_vision", required: false);
+        ImageNegative = AddInput<ImageType>("image_negative");
+        AttnMask = AddInput<MaskType>("attn_mask");
+        ClipVision = AddInput<ClipVisionType>("clip_vision");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

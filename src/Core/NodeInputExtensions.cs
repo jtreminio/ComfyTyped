@@ -58,13 +58,6 @@ public static class NodeInputExtensions
         _ => null,
     };
 
-    /// <summary>Read the literal as <see cref="bool"/>. Returns null if connected, unset, or non-boolean.</summary>
-    public static bool? LiteralAsBool(this INodeInput? input) => input?.LiteralValue switch
-    {
-        bool b => b,
-        _ => null,
-    };
-
     // ── Path connectors ─────────────────────────────────────────────
 
     /// <summary>

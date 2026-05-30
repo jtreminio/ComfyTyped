@@ -22,8 +22,8 @@ public sealed class CLIPMergeAddNode : ComfyNode
     public CLIPMergeAddNode()
     {
         CLIP = AddOutput<ClipType>(0, "CLIP");
-        Clip1 = AddInput<ClipType>("clip1", required: true);
-        Clip2 = AddInput<ClipType>("clip2", required: true);
+        Clip1 = AddInput<ClipType>("clip1");
+        Clip2 = AddInput<ClipType>("clip2");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

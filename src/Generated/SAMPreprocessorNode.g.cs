@@ -22,8 +22,8 @@ public sealed class SAMPreprocessorNode : ComfyNode
     public SAMPreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Image = AddInput<ImageType>("image");
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

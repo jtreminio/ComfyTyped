@@ -29,12 +29,12 @@ public sealed class SD4XUpscaleConditioningNode : ComfyNode
         Positive = AddOutput<ConditioningType>(0, "positive");
         Negative = AddOutput<ConditioningType>(1, "negative");
         Latent = AddOutput<LatentType>(2, "latent");
-        Images = AddInput<ImageType>("images", required: true);
-        PositiveInput = AddInput<ConditioningType>("positive", required: true);
-        NegativeInput = AddInput<ConditioningType>("negative", required: true);
-        ScaleRatio = AddInput<FloatType>("scale_ratio", required: true);
+        Images = AddInput<ImageType>("images");
+        PositiveInput = AddInput<ConditioningType>("positive");
+        NegativeInput = AddInput<ConditioningType>("negative");
+        ScaleRatio = AddInput<FloatType>("scale_ratio");
         ScaleRatio.Set(4.0);
-        NoiseAugmentation = AddInput<FloatType>("noise_augmentation", required: true);
+        NoiseAugmentation = AddInput<FloatType>("noise_augmentation");
         NoiseAugmentation.Set(0.0);
     }
 

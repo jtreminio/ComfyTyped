@@ -22,8 +22,8 @@ public sealed class ImageUpscaleWithModelNode : ComfyNode
     public ImageUpscaleWithModelNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        UpscaleModel = AddInput<UpscaleModelType>("upscale_model", required: true);
-        Image = AddInput<ImageType>("image", required: true);
+        UpscaleModel = AddInput<UpscaleModelType>("upscale_model");
+        Image = AddInput<ImageType>("image");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

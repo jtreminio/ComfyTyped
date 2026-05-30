@@ -28,18 +28,18 @@ public sealed class ScaleROPENode : ComfyNode
     public ScaleROPENode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        ScaleX = AddInput<FloatType>("scale_x", required: true);
+        Model = AddInput<ModelType>("model");
+        ScaleX = AddInput<FloatType>("scale_x");
         ScaleX.Set(1.0);
-        ShiftX = AddInput<FloatType>("shift_x", required: true);
+        ShiftX = AddInput<FloatType>("shift_x");
         ShiftX.Set(0.0);
-        ScaleY = AddInput<FloatType>("scale_y", required: true);
+        ScaleY = AddInput<FloatType>("scale_y");
         ScaleY.Set(1.0);
-        ShiftY = AddInput<FloatType>("shift_y", required: true);
+        ShiftY = AddInput<FloatType>("shift_y");
         ShiftY.Set(0.0);
-        ScaleT = AddInput<FloatType>("scale_t", required: true);
+        ScaleT = AddInput<FloatType>("scale_t");
         ScaleT.Set(1.0);
-        ShiftT = AddInput<FloatType>("shift_t", required: true);
+        ShiftT = AddInput<FloatType>("shift_t");
         ShiftT.Set(0.0);
     }
 

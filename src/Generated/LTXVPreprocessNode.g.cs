@@ -22,8 +22,8 @@ public sealed class LTXVPreprocessNode : ComfyNode
     public LTXVPreprocessNode()
     {
         OutputImage = AddOutput<ImageType>(0, "output_image");
-        Image = AddInput<ImageType>("image", required: true);
-        ImgCompression = AddInput<IntType>("img_compression", required: true);
+        Image = AddInput<ImageType>("image");
+        ImgCompression = AddInput<IntType>("img_compression");
         ImgCompression.Set(35L);
     }
 

@@ -26,16 +26,16 @@ public sealed class WanMoveVisualizeTracksNode : ComfyNode
     public WanMoveVisualizeTracksNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Images = AddInput<ImageType>("images", required: true);
-        LineResolution = AddInput<IntType>("line_resolution", required: true);
+        Images = AddInput<ImageType>("images");
+        LineResolution = AddInput<IntType>("line_resolution");
         LineResolution.Set(24L);
-        CircleSize = AddInput<IntType>("circle_size", required: true);
+        CircleSize = AddInput<IntType>("circle_size");
         CircleSize.Set(12L);
-        Opacity = AddInput<FloatType>("opacity", required: true);
+        Opacity = AddInput<FloatType>("opacity");
         Opacity.Set(0.75);
-        LineWidth = AddInput<IntType>("line_width", required: true);
+        LineWidth = AddInput<IntType>("line_width");
         LineWidth.Set(16L);
-        Tracks = AddInput<TracksType>("tracks", required: false);
+        Tracks = AddInput<TracksType>("tracks");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

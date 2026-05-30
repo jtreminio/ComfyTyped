@@ -31,19 +31,19 @@ public sealed class KSamplerNode : ComfyNode
     public KSamplerNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Model = AddInput<ModelType>("model", required: true);
-        Seed = AddInput<IntType>("seed", required: true);
+        Model = AddInput<ModelType>("model");
+        Seed = AddInput<IntType>("seed");
         Seed.Set(0L);
-        Steps = AddInput<IntType>("steps", required: true);
+        Steps = AddInput<IntType>("steps");
         Steps.Set(20L);
-        Cfg = AddInput<FloatType>("cfg", required: true);
+        Cfg = AddInput<FloatType>("cfg");
         Cfg.Set(8.0);
-        SamplerName = AddInput<StringType>("sampler_name", required: true);
-        Scheduler = AddInput<StringType>("scheduler", required: true);
-        Positive = AddInput<ConditioningType>("positive", required: true);
-        Negative = AddInput<ConditioningType>("negative", required: true);
-        LatentImage = AddInput<LatentType>("latent_image", required: true);
-        Denoise = AddInput<FloatType>("denoise", required: true);
+        SamplerName = AddInput<StringType>("sampler_name");
+        Scheduler = AddInput<StringType>("scheduler");
+        Positive = AddInput<ConditioningType>("positive");
+        Negative = AddInput<ConditioningType>("negative");
+        LatentImage = AddInput<LatentType>("latent_image");
+        Denoise = AddInput<FloatType>("denoise");
         Denoise.Set(1.0);
     }
 

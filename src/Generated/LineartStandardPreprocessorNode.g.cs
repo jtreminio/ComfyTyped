@@ -24,12 +24,12 @@ public sealed class LineartStandardPreprocessorNode : ComfyNode
     public LineartStandardPreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        GuassianSigma = AddInput<FloatType>("guassian_sigma", required: false);
+        Image = AddInput<ImageType>("image");
+        GuassianSigma = AddInput<FloatType>("guassian_sigma");
         GuassianSigma.Set(6.0);
-        IntensityThreshold = AddInput<IntType>("intensity_threshold", required: false);
+        IntensityThreshold = AddInput<IntType>("intensity_threshold");
         IntensityThreshold.Set(8L);
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

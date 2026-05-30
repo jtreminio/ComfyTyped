@@ -23,10 +23,10 @@ public sealed class SelfAttentionGuidanceNode : ComfyNode
     public SelfAttentionGuidanceNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        Scale = AddInput<FloatType>("scale", required: true);
+        Model = AddInput<ModelType>("model");
+        Scale = AddInput<FloatType>("scale");
         Scale.Set(0.5);
-        BlurSigma = AddInput<FloatType>("blur_sigma", required: true);
+        BlurSigma = AddInput<FloatType>("blur_sigma");
         BlurSigma.Set(2.0);
     }
 

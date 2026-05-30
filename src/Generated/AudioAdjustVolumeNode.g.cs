@@ -22,8 +22,8 @@ public sealed class AudioAdjustVolumeNode : ComfyNode
     public AudioAdjustVolumeNode()
     {
         AUDIO = AddOutput<AudioType>(0, "AUDIO");
-        Audio = AddInput<AudioType>("audio", required: true);
-        Volume = AddInput<IntType>("volume", required: true);
+        Audio = AddInput<AudioType>("audio");
+        Volume = AddInput<IntType>("volume");
         Volume.Set(1L);
     }
 

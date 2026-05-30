@@ -23,7 +23,7 @@ public sealed class ComfyNumberConvertNode : ComfyNode
     {
         FLOAT = AddOutput<FloatType>(0, "FLOAT");
         INT = AddOutput<IntType>(1, "INT");
-        Value = AddInput<StringType>("value", required: true);
+        Value = AddInput<StringType>("value");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

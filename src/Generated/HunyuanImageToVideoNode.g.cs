@@ -30,18 +30,18 @@ public sealed class HunyuanImageToVideoNode : ComfyNode
     {
         Positive = AddOutput<ConditioningType>(0, "positive");
         Latent = AddOutput<LatentType>(1, "latent");
-        PositiveInput = AddInput<ConditioningType>("positive", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        Width = AddInput<IntType>("width", required: true);
+        PositiveInput = AddInput<ConditioningType>("positive");
+        Vae = AddInput<VaeType>("vae");
+        Width = AddInput<IntType>("width");
         Width.Set(848L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(480L);
-        Length = AddInput<IntType>("length", required: true);
+        Length = AddInput<IntType>("length");
         Length.Set(53L);
-        BatchSize = AddInput<IntType>("batch_size", required: true);
+        BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
-        GuidanceType = AddInput<StringType>("guidance_type", required: true);
-        StartImage = AddInput<ImageType>("start_image", required: false);
+        GuidanceType = AddInput<StringType>("guidance_type");
+        StartImage = AddInput<ImageType>("start_image");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

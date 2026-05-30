@@ -22,8 +22,8 @@ public sealed class ImageCropV2Node : ComfyNode
     public ImageCropV2Node()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        CropRegion = AddInput<BoundingBoxType>("crop_region", required: true);
+        Image = AddInput<ImageType>("image");
+        CropRegion = AddInput<BoundingBoxType>("crop_region");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

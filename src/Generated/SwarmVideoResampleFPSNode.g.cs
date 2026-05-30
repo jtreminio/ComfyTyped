@@ -25,11 +25,11 @@ public sealed class SwarmVideoResampleFPSNode : ComfyNode
     public SwarmVideoResampleFPSNode()
     {
         Images = AddOutput<ImageType>(0, "images");
-        ImagesInput = AddInput<ImageType>("images", required: true);
-        FpsIn = AddInput<FloatType>("fps_in", required: true);
-        FpsOut = AddInput<FloatType>("fps_out", required: true);
+        ImagesInput = AddInput<ImageType>("images");
+        FpsIn = AddInput<FloatType>("fps_in");
+        FpsOut = AddInput<FloatType>("fps_out");
         FpsOut.Set(24.0);
-        Method = AddInput<StringType>("method", required: true);
+        Method = AddInput<StringType>("method");
         Method.Set("linear");
     }
 

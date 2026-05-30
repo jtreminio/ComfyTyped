@@ -24,7 +24,7 @@ public sealed class SplitAudioChannelsNode : ComfyNode
     {
         Left = AddOutput<AudioType>(0, "left");
         Right = AddOutput<AudioType>(1, "right");
-        Audio = AddInput<AudioType>("audio", required: true);
+        Audio = AddInput<AudioType>("audio");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

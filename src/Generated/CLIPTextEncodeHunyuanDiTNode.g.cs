@@ -23,9 +23,9 @@ public sealed class CLIPTextEncodeHunyuanDiTNode : ComfyNode
     public CLIPTextEncodeHunyuanDiTNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Clip = AddInput<ClipType>("clip", required: true);
-        Bert = AddInput<StringType>("bert", required: true);
-        Mt5xl = AddInput<StringType>("mt5xl", required: true);
+        Clip = AddInput<ClipType>("clip");
+        Bert = AddInput<StringType>("bert");
+        Mt5xl = AddInput<StringType>("mt5xl");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

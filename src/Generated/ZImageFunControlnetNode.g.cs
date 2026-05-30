@@ -27,14 +27,14 @@ public sealed class ZImageFunControlnetNode : ComfyNode
     public ZImageFunControlnetNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        ModelPatch = AddInput<ModelPatchType>("model_patch", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        Strength = AddInput<FloatType>("strength", required: true);
+        Model = AddInput<ModelType>("model");
+        ModelPatch = AddInput<ModelPatchType>("model_patch");
+        Vae = AddInput<VaeType>("vae");
+        Strength = AddInput<FloatType>("strength");
         Strength.Set(1.0);
-        Image = AddInput<ImageType>("image", required: false);
-        InpaintImage = AddInput<ImageType>("inpaint_image", required: false);
-        Mask = AddInput<MaskType>("mask", required: false);
+        Image = AddInput<ImageType>("image");
+        InpaintImage = AddInput<ImageType>("inpaint_image");
+        Mask = AddInput<MaskType>("mask");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -22,7 +22,7 @@ public sealed class FluxKVCacheNode : ComfyNode
     public FluxKVCacheNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
+        Model = AddInput<ModelType>("model");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

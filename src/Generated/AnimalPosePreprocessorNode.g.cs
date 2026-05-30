@@ -26,12 +26,12 @@ public sealed class AnimalPosePreprocessorNode : ComfyNode
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
         POSEKEYPOINT = AddOutput<PoseKeypointType>(1, "POSE_KEYPOINT");
-        Image = AddInput<ImageType>("image", required: true);
-        BboxDetector = AddInput<StringType>("bbox_detector", required: false);
+        Image = AddInput<ImageType>("image");
+        BboxDetector = AddInput<StringType>("bbox_detector");
         BboxDetector.Set("yolox_l.torchscript.pt");
-        PoseEstimator = AddInput<StringType>("pose_estimator", required: false);
+        PoseEstimator = AddInput<StringType>("pose_estimator");
         PoseEstimator.Set("rtmpose-m_ap10k_256_bs5.torchscript.pt");
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

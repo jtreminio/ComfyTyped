@@ -24,12 +24,12 @@ public sealed class ModelSamplingLTXVNode : ComfyNode
     public ModelSamplingLTXVNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        MaxShift = AddInput<FloatType>("max_shift", required: true);
+        Model = AddInput<ModelType>("model");
+        MaxShift = AddInput<FloatType>("max_shift");
         MaxShift.Set(2.05);
-        BaseShift = AddInput<FloatType>("base_shift", required: true);
+        BaseShift = AddInput<FloatType>("base_shift");
         BaseShift.Set(0.95);
-        Latent = AddInput<LatentType>("latent", required: false);
+        Latent = AddInput<LatentType>("latent");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

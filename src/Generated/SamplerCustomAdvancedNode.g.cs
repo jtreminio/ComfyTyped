@@ -27,11 +27,11 @@ public sealed class SamplerCustomAdvancedNode : ComfyNode
     {
         Output = AddOutput<LatentType>(0, "output");
         DenoisedOutput = AddOutput<LatentType>(1, "denoised_output");
-        Noise = AddInput<NoiseType>("noise", required: true);
-        Guider = AddInput<GuiderType>("guider", required: true);
-        Sampler = AddInput<SamplerType>("sampler", required: true);
-        Sigmas = AddInput<SigmasType>("sigmas", required: true);
-        LatentImage = AddInput<LatentType>("latent_image", required: true);
+        Noise = AddInput<NoiseType>("noise");
+        Guider = AddInput<GuiderType>("guider");
+        Sampler = AddInput<SamplerType>("sampler");
+        Sigmas = AddInput<SigmasType>("sigmas");
+        LatentImage = AddInput<LatentType>("latent_image");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -24,12 +24,12 @@ public sealed class SamplerDPMPP2MSDENode : ComfyNode
     public SamplerDPMPP2MSDENode()
     {
         SAMPLER = AddOutput<SamplerType>(0, "SAMPLER");
-        SolverType = AddInput<StringType>("solver_type", required: true);
-        Eta = AddInput<FloatType>("eta", required: true);
+        SolverType = AddInput<StringType>("solver_type");
+        Eta = AddInput<FloatType>("eta");
         Eta.Set(1.0);
-        SNoise = AddInput<FloatType>("s_noise", required: true);
+        SNoise = AddInput<FloatType>("s_noise");
         SNoise.Set(1.0);
-        NoiseDevice = AddInput<StringType>("noise_device", required: true);
+        NoiseDevice = AddInput<StringType>("noise_device");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

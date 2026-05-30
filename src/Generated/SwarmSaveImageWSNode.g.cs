@@ -19,8 +19,8 @@ public sealed class SwarmSaveImageWSNode : ComfyNode
 
     public SwarmSaveImageWSNode()
     {
-        Images = AddInput<ImageType>("images", required: true);
-        BitDepth = AddInput<StringType>("bit_depth", required: false);
+        Images = AddInput<ImageType>("images");
+        BitDepth = AddInput<StringType>("bit_depth");
         BitDepth.Set("8bit");
     }
 

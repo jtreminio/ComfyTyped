@@ -24,12 +24,12 @@ public sealed class UnetLoaderGGUFAdvancedNode : ComfyNode
     public UnetLoaderGGUFAdvancedNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        UnetName = AddInput<StringType>("unet_name", required: true);
-        DequantDtype = AddInput<StringType>("dequant_dtype", required: true);
+        UnetName = AddInput<StringType>("unet_name");
+        DequantDtype = AddInput<StringType>("dequant_dtype");
         DequantDtype.Set("default");
-        PatchDtype = AddInput<StringType>("patch_dtype", required: true);
+        PatchDtype = AddInput<StringType>("patch_dtype");
         PatchDtype.Set("default");
-        PatchOnDevice = AddInput<BooleanType>("patch_on_device", required: true);
+        PatchOnDevice = AddInput<BooleanType>("patch_on_device");
         PatchOnDevice.Set(false);
     }
 

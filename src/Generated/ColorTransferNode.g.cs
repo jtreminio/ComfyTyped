@@ -26,11 +26,11 @@ public sealed class ColorTransferNode : ComfyNode
     public ColorTransferNode()
     {
         Image = AddOutput<ImageType>(0, "image");
-        ImageTarget = AddInput<ImageType>("image_target", required: true);
-        ImageRef = AddInput<ImageType>("image_ref", required: true);
-        Method = AddInput<StringType>("method", required: true);
-        SourceStats = AddInput<StringType>("source_stats", required: true);
-        Strength = AddInput<FloatType>("strength", required: true);
+        ImageTarget = AddInput<ImageType>("image_target");
+        ImageRef = AddInput<ImageType>("image_ref");
+        Method = AddInput<StringType>("method");
+        SourceStats = AddInput<StringType>("source_stats");
+        Strength = AddInput<FloatType>("strength");
         Strength.Set(1.0);
     }
 

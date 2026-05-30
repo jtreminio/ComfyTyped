@@ -24,12 +24,12 @@ public sealed class APGNode : ComfyNode
     public APGNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        Eta = AddInput<FloatType>("eta", required: true);
+        Model = AddInput<ModelType>("model");
+        Eta = AddInput<FloatType>("eta");
         Eta.Set(1.0);
-        NormThreshold = AddInput<FloatType>("norm_threshold", required: true);
+        NormThreshold = AddInput<FloatType>("norm_threshold");
         NormThreshold.Set(5.0);
-        Momentum = AddInput<FloatType>("momentum", required: true);
+        Momentum = AddInput<FloatType>("momentum");
         Momentum.Set(0.0);
     }
 

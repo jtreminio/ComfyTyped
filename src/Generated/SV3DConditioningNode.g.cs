@@ -31,16 +31,16 @@ public sealed class SV3DConditioningNode : ComfyNode
         Positive = AddOutput<ConditioningType>(0, "positive");
         Negative = AddOutput<ConditioningType>(1, "negative");
         Latent = AddOutput<LatentType>(2, "latent");
-        ClipVision = AddInput<ClipVisionType>("clip_vision", required: true);
-        InitImage = AddInput<ImageType>("init_image", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        Width = AddInput<IntType>("width", required: true);
+        ClipVision = AddInput<ClipVisionType>("clip_vision");
+        InitImage = AddInput<ImageType>("init_image");
+        Vae = AddInput<VaeType>("vae");
+        Width = AddInput<IntType>("width");
         Width.Set(576L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(576L);
-        VideoFrames = AddInput<IntType>("video_frames", required: true);
+        VideoFrames = AddInput<IntType>("video_frames");
         VideoFrames.Set(21L);
-        Elevation = AddInput<FloatType>("elevation", required: true);
+        Elevation = AddInput<FloatType>("elevation");
         Elevation.Set(0.0);
     }
 

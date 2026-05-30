@@ -24,8 +24,8 @@ public sealed class SplitSigmasDenoiseNode : ComfyNode
     {
         HighSigmas = AddOutput<SigmasType>(0, "high_sigmas");
         LowSigmas = AddOutput<SigmasType>(1, "low_sigmas");
-        Sigmas = AddInput<SigmasType>("sigmas", required: true);
-        Denoise = AddInput<FloatType>("denoise", required: true);
+        Sigmas = AddInput<SigmasType>("sigmas");
+        Denoise = AddInput<FloatType>("denoise");
         Denoise.Set(1.0);
     }
 

@@ -23,9 +23,9 @@ public sealed class ModelMergeSimpleNode : ComfyNode
     public ModelMergeSimpleNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model1 = AddInput<ModelType>("model1", required: true);
-        Model2 = AddInput<ModelType>("model2", required: true);
-        Ratio = AddInput<FloatType>("ratio", required: true);
+        Model1 = AddInput<ModelType>("model1");
+        Model2 = AddInput<ModelType>("model2");
+        Ratio = AddInput<FloatType>("ratio");
         Ratio.Set(1.0);
     }
 

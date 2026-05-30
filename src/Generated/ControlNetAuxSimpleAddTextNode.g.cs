@@ -22,8 +22,8 @@ public sealed class ControlNetAuxSimpleAddTextNode : ComfyNode
     public ControlNetAuxSimpleAddTextNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        Text = AddInput<StringType>("text", required: true);
+        Image = AddInput<ImageType>("image");
+        Text = AddInput<StringType>("text");
         Text.Set("");
     }
 

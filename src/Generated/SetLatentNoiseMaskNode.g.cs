@@ -22,8 +22,8 @@ public sealed class SetLatentNoiseMaskNode : ComfyNode
     public SetLatentNoiseMaskNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Samples = AddInput<LatentType>("samples", required: true);
-        Mask = AddInput<MaskType>("mask", required: true);
+        Samples = AddInput<LatentType>("samples");
+        Mask = AddInput<MaskType>("mask");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

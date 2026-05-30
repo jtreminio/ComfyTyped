@@ -27,15 +27,15 @@ public sealed class CropByBBoxesNode : ComfyNode
     public CropByBBoxesNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        Bboxes = AddInput<BoundingBoxType>("bboxes", required: true);
-        OutputWidth = AddInput<IntType>("output_width", required: true);
+        Image = AddInput<ImageType>("image");
+        Bboxes = AddInput<BoundingBoxType>("bboxes");
+        OutputWidth = AddInput<IntType>("output_width");
         OutputWidth.Set(512L);
-        OutputHeight = AddInput<IntType>("output_height", required: true);
+        OutputHeight = AddInput<IntType>("output_height");
         OutputHeight.Set(512L);
-        Padding = AddInput<IntType>("padding", required: true);
+        Padding = AddInput<IntType>("padding");
         Padding.Set(0L);
-        KeepAspect = AddInput<StringType>("keep_aspect", required: true);
+        KeepAspect = AddInput<StringType>("keep_aspect");
         KeepAspect.Set("stretch");
     }
 

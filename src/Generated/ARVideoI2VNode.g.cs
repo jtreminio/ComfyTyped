@@ -29,16 +29,16 @@ public sealed class ARVideoI2VNode : ComfyNode
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
         LATENT = AddOutput<LatentType>(1, "LATENT");
-        Model = AddInput<ModelType>("model", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        StartImage = AddInput<ImageType>("start_image", required: true);
-        Width = AddInput<IntType>("width", required: true);
+        Model = AddInput<ModelType>("model");
+        Vae = AddInput<VaeType>("vae");
+        StartImage = AddInput<ImageType>("start_image");
+        Width = AddInput<IntType>("width");
         Width.Set(832L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(480L);
-        Length = AddInput<IntType>("length", required: true);
+        Length = AddInput<IntType>("length");
         Length.Set(81L);
-        BatchSize = AddInput<IntType>("batch_size", required: true);
+        BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
     }
 

@@ -21,7 +21,7 @@ public sealed class OpticalFlowLoaderNode : ComfyNode
     public OpticalFlowLoaderNode()
     {
         OPTICALFLOW = AddOutput<OpticalFlowType>(0, "OPTICAL_FLOW");
-        ModelName = AddInput<StringType>("model_name", required: true);
+        ModelName = AddInput<StringType>("model_name");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

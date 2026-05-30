@@ -24,9 +24,9 @@ public sealed class LoraLoaderModelOnlyNode : ComfyNode
     public LoraLoaderModelOnlyNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        LoraName = AddInput<StringType>("lora_name", required: true);
-        StrengthModel = AddInput<FloatType>("strength_model", required: true);
+        Model = AddInput<ModelType>("model");
+        LoraName = AddInput<StringType>("lora_name");
+        StrengthModel = AddInput<FloatType>("strength_model");
         StrengthModel.Set(1.0);
     }
 

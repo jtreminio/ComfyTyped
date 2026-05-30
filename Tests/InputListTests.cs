@@ -430,7 +430,6 @@ public class InputListTests
             Images = AddInputList<ImageType>(
                 "images",
                 names: new string[] { "image_1", "image_2", "image_3" },
-                min: 1,
                 max: int.MaxValue);
         }
     }

@@ -22,8 +22,8 @@ public sealed class ImageDeduplicationNode : ComfyNode
     public ImageDeduplicationNode()
     {
         Images = AddOutput<ImageType>(0, "images");
-        ImagesInput = AddInput<ImageType>("images", required: true);
-        SimilarityThreshold = AddInput<FloatType>("similarity_threshold", required: true);
+        ImagesInput = AddInput<ImageType>("images");
+        SimilarityThreshold = AddInput<FloatType>("similarity_threshold");
         SimilarityThreshold.Set(0.95);
     }
 

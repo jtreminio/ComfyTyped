@@ -23,9 +23,9 @@ public sealed class CLIPMergeSubtractNode : ComfyNode
     public CLIPMergeSubtractNode()
     {
         CLIP = AddOutput<ClipType>(0, "CLIP");
-        Clip1 = AddInput<ClipType>("clip1", required: true);
-        Clip2 = AddInput<ClipType>("clip2", required: true);
-        Multiplier = AddInput<FloatType>("multiplier", required: true);
+        Clip1 = AddInput<ClipType>("clip1");
+        Clip2 = AddInput<ClipType>("clip2");
+        Multiplier = AddInput<FloatType>("multiplier");
         Multiplier.Set(1.0);
     }
 

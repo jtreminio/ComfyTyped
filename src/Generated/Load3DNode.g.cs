@@ -36,11 +36,11 @@ public sealed class Load3DNode : ComfyNode
         CameraInfo = AddOutput<Load3dCameraType>(4, "camera_info");
         RecordingVideo = AddOutput<VideoType>(5, "recording_video");
         Model3d = AddOutput<File3dType>(6, "model_3d");
-        ModelFile = AddInput<StringType>("model_file", required: true);
-        ImageInput = AddInput<Load3dType>("image", required: true);
-        Width = AddInput<IntType>("width", required: true);
+        ModelFile = AddInput<StringType>("model_file");
+        ImageInput = AddInput<Load3dType>("image");
+        Width = AddInput<IntType>("width");
         Width.Set(1024L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(1024L);
     }
 

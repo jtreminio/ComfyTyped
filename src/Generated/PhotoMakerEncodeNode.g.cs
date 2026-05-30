@@ -24,10 +24,10 @@ public sealed class PhotoMakerEncodeNode : ComfyNode
     public PhotoMakerEncodeNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Photomaker = AddInput<PhotomakerType>("photomaker", required: true);
-        Image = AddInput<ImageType>("image", required: true);
-        Clip = AddInput<ClipType>("clip", required: true);
-        Text = AddInput<StringType>("text", required: true);
+        Photomaker = AddInput<PhotomakerType>("photomaker");
+        Image = AddInput<ImageType>("image");
+        Clip = AddInput<ClipType>("clip");
+        Text = AddInput<StringType>("text");
         Text.Set("photograph of photomaker");
     }
 

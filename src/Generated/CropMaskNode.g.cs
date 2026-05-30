@@ -25,14 +25,14 @@ public sealed class CropMaskNode : ComfyNode
     public CropMaskNode()
     {
         MASK = AddOutput<MaskType>(0, "MASK");
-        Mask = AddInput<MaskType>("mask", required: true);
-        X = AddInput<IntType>("x", required: true);
+        Mask = AddInput<MaskType>("mask");
+        X = AddInput<IntType>("x");
         X.Set(0L);
-        Y = AddInput<IntType>("y", required: true);
+        Y = AddInput<IntType>("y");
         Y.Set(0L);
-        Width = AddInput<IntType>("width", required: true);
+        Width = AddInput<IntType>("width");
         Width.Set(512L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(512L);
     }
 

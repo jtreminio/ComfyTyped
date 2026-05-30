@@ -25,9 +25,9 @@ public sealed class ResolutionSelectorNode : ComfyNode
     {
         Width = AddOutput<IntType>(0, "width");
         Height = AddOutput<IntType>(1, "height");
-        AspectRatio = AddInput<StringType>("aspect_ratio", required: true);
+        AspectRatio = AddInput<StringType>("aspect_ratio");
         AspectRatio.Set("1:1 (Square)");
-        Megapixels = AddInput<FloatType>("megapixels", required: true);
+        Megapixels = AddInput<FloatType>("megapixels");
         Megapixels.Set(1.0);
     }
 

@@ -27,15 +27,15 @@ public sealed class DualCFGGuiderNode : ComfyNode
     public DualCFGGuiderNode()
     {
         GUIDER = AddOutput<GuiderType>(0, "GUIDER");
-        Model = AddInput<ModelType>("model", required: true);
-        Cond1 = AddInput<ConditioningType>("cond1", required: true);
-        Cond2 = AddInput<ConditioningType>("cond2", required: true);
-        Negative = AddInput<ConditioningType>("negative", required: true);
-        CfgConds = AddInput<FloatType>("cfg_conds", required: true);
+        Model = AddInput<ModelType>("model");
+        Cond1 = AddInput<ConditioningType>("cond1");
+        Cond2 = AddInput<ConditioningType>("cond2");
+        Negative = AddInput<ConditioningType>("negative");
+        CfgConds = AddInput<FloatType>("cfg_conds");
         CfgConds.Set(8.0);
-        CfgCond2Negative = AddInput<FloatType>("cfg_cond2_negative", required: true);
+        CfgCond2Negative = AddInput<FloatType>("cfg_cond2_negative");
         CfgCond2Negative.Set(8.0);
-        Style = AddInput<StringType>("style", required: true);
+        Style = AddInput<StringType>("style");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

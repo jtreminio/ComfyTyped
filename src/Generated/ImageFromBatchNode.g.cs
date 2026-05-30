@@ -23,10 +23,10 @@ public sealed class ImageFromBatchNode : ComfyNode
     public ImageFromBatchNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        BatchIndex = AddInput<IntType>("batch_index", required: true);
+        Image = AddInput<ImageType>("image");
+        BatchIndex = AddInput<IntType>("batch_index");
         BatchIndex.Set(0L);
-        Length = AddInput<IntType>("length", required: true);
+        Length = AddInput<IntType>("length");
         Length.Set(1L);
     }
 

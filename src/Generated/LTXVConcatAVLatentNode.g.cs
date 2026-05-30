@@ -22,8 +22,8 @@ public sealed class LTXVConcatAVLatentNode : ComfyNode
     public LTXVConcatAVLatentNode()
     {
         Latent = AddOutput<LatentType>(0, "latent");
-        VideoLatent = AddInput<LatentType>("video_latent", required: true);
-        AudioLatent = AddInput<LatentType>("audio_latent", required: true);
+        VideoLatent = AddInput<LatentType>("video_latent");
+        AudioLatent = AddInput<LatentType>("audio_latent");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

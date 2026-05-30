@@ -24,9 +24,9 @@ public sealed class AudioConcatNode : ComfyNode
     public AudioConcatNode()
     {
         AUDIO = AddOutput<AudioType>(0, "AUDIO");
-        Audio1 = AddInput<AudioType>("audio1", required: true);
-        Audio2 = AddInput<AudioType>("audio2", required: true);
-        Direction = AddInput<StringType>("direction", required: true);
+        Audio1 = AddInput<AudioType>("audio1");
+        Audio2 = AddInput<AudioType>("audio2");
+        Direction = AddInput<StringType>("direction");
         Direction.Set("after");
     }
 

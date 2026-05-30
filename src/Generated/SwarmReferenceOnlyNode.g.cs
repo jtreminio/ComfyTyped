@@ -26,9 +26,9 @@ public sealed class SwarmReferenceOnlyNode : ComfyNode
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
         LATENT = AddOutput<LatentType>(1, "LATENT");
-        Model = AddInput<ModelType>("model", required: true);
-        Reference = AddInput<LatentType>("reference", required: true);
-        Latent = AddInput<LatentType>("latent", required: true);
+        Model = AddInput<ModelType>("model");
+        Reference = AddInput<LatentType>("reference");
+        Latent = AddInput<LatentType>("latent");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -36,32 +36,32 @@ public sealed class GenerateTracksNode : ComfyNode
     {
         TRACKS = AddOutput<TracksType>(0, "TRACKS");
         TrackLength = AddOutput<IntType>(1, "track_length");
-        Width = AddInput<IntType>("width", required: true);
+        Width = AddInput<IntType>("width");
         Width.Set(832L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(480L);
-        StartX = AddInput<FloatType>("start_x", required: true);
+        StartX = AddInput<FloatType>("start_x");
         StartX.Set(0.0);
-        StartY = AddInput<FloatType>("start_y", required: true);
+        StartY = AddInput<FloatType>("start_y");
         StartY.Set(0.0);
-        EndX = AddInput<FloatType>("end_x", required: true);
+        EndX = AddInput<FloatType>("end_x");
         EndX.Set(1.0);
-        EndY = AddInput<FloatType>("end_y", required: true);
+        EndY = AddInput<FloatType>("end_y");
         EndY.Set(1.0);
-        NumFrames = AddInput<IntType>("num_frames", required: true);
+        NumFrames = AddInput<IntType>("num_frames");
         NumFrames.Set(81L);
-        NumTracks = AddInput<IntType>("num_tracks", required: true);
+        NumTracks = AddInput<IntType>("num_tracks");
         NumTracks.Set(5L);
-        TrackSpread = AddInput<FloatType>("track_spread", required: true);
+        TrackSpread = AddInput<FloatType>("track_spread");
         TrackSpread.Set(0.025);
-        Bezier = AddInput<BooleanType>("bezier", required: true);
+        Bezier = AddInput<BooleanType>("bezier");
         Bezier.Set(false);
-        MidX = AddInput<FloatType>("mid_x", required: true);
+        MidX = AddInput<FloatType>("mid_x");
         MidX.Set(0.5);
-        MidY = AddInput<FloatType>("mid_y", required: true);
+        MidY = AddInput<FloatType>("mid_y");
         MidY.Set(0.5);
-        Interpolation = AddInput<StringType>("interpolation", required: true);
-        TrackMask = AddInput<MaskType>("track_mask", required: false);
+        Interpolation = AddInput<StringType>("interpolation");
+        TrackMask = AddInput<MaskType>("track_mask");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

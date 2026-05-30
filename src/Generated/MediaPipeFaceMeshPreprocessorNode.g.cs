@@ -24,12 +24,12 @@ public sealed class MediaPipeFaceMeshPreprocessorNode : ComfyNode
     public MediaPipeFaceMeshPreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        MaxFaces = AddInput<IntType>("max_faces", required: false);
+        Image = AddInput<ImageType>("image");
+        MaxFaces = AddInput<IntType>("max_faces");
         MaxFaces.Set(10L);
-        MinConfidence = AddInput<FloatType>("min_confidence", required: false);
+        MinConfidence = AddInput<FloatType>("min_confidence");
         MinConfidence.Set(0.5);
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

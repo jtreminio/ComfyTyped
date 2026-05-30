@@ -28,9 +28,9 @@ public sealed class ComfyMathExpressionNode : ComfyNode
         FLOAT = AddOutput<FloatType>(0, "FLOAT");
         INT = AddOutput<IntType>(1, "INT");
         BOOL = AddOutput<BooleanType>(2, "BOOL");
-        Expression = AddInput<StringType>("expression", required: true);
+        Expression = AddInput<StringType>("expression");
         Expression.Set("a + b");
-        Values = AddInputList<AnyType>("values", names: new string[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" }, min: 1, max: 26, required: true);
+        Values = AddInputList<AnyType>("values", names: new string[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" }, max: 26);
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

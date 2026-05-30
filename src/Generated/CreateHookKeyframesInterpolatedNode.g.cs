@@ -28,20 +28,20 @@ public sealed class CreateHookKeyframesInterpolatedNode : ComfyNode
     public CreateHookKeyframesInterpolatedNode()
     {
         HOOKKF = AddOutput<HookKeyframesType>(0, "HOOK_KF");
-        StrengthStart = AddInput<FloatType>("strength_start", required: true);
+        StrengthStart = AddInput<FloatType>("strength_start");
         StrengthStart.Set(1.0);
-        StrengthEnd = AddInput<FloatType>("strength_end", required: true);
+        StrengthEnd = AddInput<FloatType>("strength_end");
         StrengthEnd.Set(1.0);
-        Interpolation = AddInput<StringType>("interpolation", required: true);
-        StartPercent = AddInput<FloatType>("start_percent", required: true);
+        Interpolation = AddInput<StringType>("interpolation");
+        StartPercent = AddInput<FloatType>("start_percent");
         StartPercent.Set(0.0);
-        EndPercent = AddInput<FloatType>("end_percent", required: true);
+        EndPercent = AddInput<FloatType>("end_percent");
         EndPercent.Set(1.0);
-        KeyframesCount = AddInput<IntType>("keyframes_count", required: true);
+        KeyframesCount = AddInput<IntType>("keyframes_count");
         KeyframesCount.Set(5L);
-        PrintKeyframes = AddInput<BooleanType>("print_keyframes", required: true);
+        PrintKeyframes = AddInput<BooleanType>("print_keyframes");
         PrintKeyframes.Set(false);
-        PrevHookKf = AddInput<HookKeyframesType>("prev_hook_kf", required: false);
+        PrevHookKf = AddInput<HookKeyframesType>("prev_hook_kf");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

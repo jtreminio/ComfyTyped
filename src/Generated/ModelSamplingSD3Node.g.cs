@@ -22,8 +22,8 @@ public sealed class ModelSamplingSD3Node : ComfyNode
     public ModelSamplingSD3Node()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        Shift = AddInput<FloatType>("shift", required: true);
+        Model = AddInput<ModelType>("model");
+        Shift = AddInput<FloatType>("shift");
         Shift.Set(3.0);
     }
 

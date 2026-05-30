@@ -23,8 +23,8 @@ public sealed class CLIPTextEncodeNode : ComfyNode
     public CLIPTextEncodeNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Text = AddInput<StringType>("text", required: true);
-        Clip = AddInput<ClipType>("clip", required: true);
+        Text = AddInput<StringType>("text");
+        Clip = AddInput<ClipType>("clip");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

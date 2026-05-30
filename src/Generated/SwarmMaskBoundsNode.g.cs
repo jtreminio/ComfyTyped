@@ -31,12 +31,12 @@ public sealed class SwarmMaskBoundsNode : ComfyNode
         Y = AddOutput<IntType>(1, "y");
         Width = AddOutput<IntType>(2, "width");
         Height = AddOutput<IntType>(3, "height");
-        Mask = AddInput<MaskType>("mask", required: true);
-        Grow = AddInput<IntType>("grow", required: true);
+        Mask = AddInput<MaskType>("mask");
+        Grow = AddInput<IntType>("grow");
         Grow.Set(0L);
-        AspectX = AddInput<IntType>("aspect_x", required: false);
+        AspectX = AddInput<IntType>("aspect_x");
         AspectX.Set(0L);
-        AspectY = AddInput<IntType>("aspect_y", required: false);
+        AspectY = AddInput<IntType>("aspect_y");
         AspectY.Set(0L);
     }
 

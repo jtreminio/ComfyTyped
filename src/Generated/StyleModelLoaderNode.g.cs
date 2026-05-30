@@ -21,7 +21,7 @@ public sealed class StyleModelLoaderNode : ComfyNode
     public StyleModelLoaderNode()
     {
         STYLEMODEL = AddOutput<StyleModelType>(0, "STYLE_MODEL");
-        StyleModelName = AddInput<StringType>("style_model_name", required: true);
+        StyleModelName = AddInput<StringType>("style_model_name");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

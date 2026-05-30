@@ -26,14 +26,14 @@ public sealed class ChromaRadianceOptionsNode : ComfyNode
     public ChromaRadianceOptionsNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        PreserveWrapper = AddInput<BooleanType>("preserve_wrapper", required: true);
+        Model = AddInput<ModelType>("model");
+        PreserveWrapper = AddInput<BooleanType>("preserve_wrapper");
         PreserveWrapper.Set(true);
-        StartSigma = AddInput<FloatType>("start_sigma", required: true);
+        StartSigma = AddInput<FloatType>("start_sigma");
         StartSigma.Set(1.0);
-        EndSigma = AddInput<FloatType>("end_sigma", required: true);
+        EndSigma = AddInput<FloatType>("end_sigma");
         EndSigma.Set(0.0);
-        NerfTileSize = AddInput<IntType>("nerf_tile_size", required: true);
+        NerfTileSize = AddInput<IntType>("nerf_tile_size");
         NerfTileSize.Set(-1L);
     }
 

@@ -21,7 +21,7 @@ public sealed class LatentUpscaleModelLoaderNode : ComfyNode
     public LatentUpscaleModelLoaderNode()
     {
         LATENTUPSCALEMODEL = AddOutput<LatentUpscaleModelType>(0, "LATENT_UPSCALE_MODEL");
-        ModelName = AddInput<StringType>("model_name", required: true);
+        ModelName = AddInput<StringType>("model_name");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

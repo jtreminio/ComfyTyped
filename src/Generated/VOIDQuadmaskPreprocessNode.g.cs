@@ -22,8 +22,8 @@ public sealed class VOIDQuadmaskPreprocessNode : ComfyNode
     public VOIDQuadmaskPreprocessNode()
     {
         Quadmask = AddOutput<MaskType>(0, "quadmask");
-        Mask = AddInput<MaskType>("mask", required: true);
-        DilateWidth = AddInput<IntType>("dilate_width", required: true);
+        Mask = AddInput<MaskType>("mask");
+        DilateWidth = AddInput<IntType>("dilate_width");
         DilateWidth.Set(0L);
     }
 

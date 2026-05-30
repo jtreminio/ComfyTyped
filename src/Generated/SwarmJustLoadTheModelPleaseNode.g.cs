@@ -20,9 +20,9 @@ public sealed class SwarmJustLoadTheModelPleaseNode : ComfyNode
 
     public SwarmJustLoadTheModelPleaseNode()
     {
-        Model = AddInput<ModelType>("model", required: true);
-        Clip = AddInput<StringType>("clip", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
+        Model = AddInput<ModelType>("model");
+        Clip = AddInput<StringType>("clip");
+        Vae = AddInput<VaeType>("vae");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -22,8 +22,8 @@ public sealed class TrimVideoLatentNode : ComfyNode
     public TrimVideoLatentNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Samples = AddInput<LatentType>("samples", required: true);
-        TrimAmount = AddInput<IntType>("trim_amount", required: true);
+        Samples = AddInput<LatentType>("samples");
+        TrimAmount = AddInput<IntType>("trim_amount");
         TrimAmount.Set(0L);
     }
 

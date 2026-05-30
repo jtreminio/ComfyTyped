@@ -31,20 +31,20 @@ public sealed class IPAdapterEmbedsBatchNode : ComfyNode
     public IPAdapterEmbedsBatchNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        Ipadapter = AddInput<IpAdapterType>("ipadapter", required: true);
-        PosEmbed = AddInput<EmbedsType>("pos_embed", required: true);
-        Weight = AddInput<FloatType>("weight", required: true);
+        Model = AddInput<ModelType>("model");
+        Ipadapter = AddInput<IpAdapterType>("ipadapter");
+        PosEmbed = AddInput<EmbedsType>("pos_embed");
+        Weight = AddInput<FloatType>("weight");
         Weight.Set(1.0);
-        WeightType = AddInput<StringType>("weight_type", required: true);
-        StartAt = AddInput<FloatType>("start_at", required: true);
+        WeightType = AddInput<StringType>("weight_type");
+        StartAt = AddInput<FloatType>("start_at");
         StartAt.Set(0.0);
-        EndAt = AddInput<FloatType>("end_at", required: true);
+        EndAt = AddInput<FloatType>("end_at");
         EndAt.Set(1.0);
-        EmbedsScaling = AddInput<StringType>("embeds_scaling", required: true);
-        NegEmbed = AddInput<EmbedsType>("neg_embed", required: false);
-        AttnMask = AddInput<MaskType>("attn_mask", required: false);
-        ClipVision = AddInput<ClipVisionType>("clip_vision", required: false);
+        EmbedsScaling = AddInput<StringType>("embeds_scaling");
+        NegEmbed = AddInput<EmbedsType>("neg_embed");
+        AttnMask = AddInput<MaskType>("attn_mask");
+        ClipVision = AddInput<ClipVisionType>("clip_vision");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

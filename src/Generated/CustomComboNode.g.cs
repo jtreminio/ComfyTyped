@@ -23,7 +23,7 @@ public sealed class CustomComboNode : ComfyNode
     {
         STRING = AddOutput<StringType>(0, "STRING");
         INDEX = AddOutput<IntType>(1, "INDEX");
-        Choice = AddInput<StringType>("choice", required: true);
+        Choice = AddInput<StringType>("choice");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

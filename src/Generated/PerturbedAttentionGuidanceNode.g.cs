@@ -22,8 +22,8 @@ public sealed class PerturbedAttentionGuidanceNode : ComfyNode
     public PerturbedAttentionGuidanceNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        Scale = AddInput<FloatType>("scale", required: true);
+        Model = AddInput<ModelType>("model");
+        Scale = AddInput<FloatType>("scale");
         Scale.Set(3.0);
     }
 

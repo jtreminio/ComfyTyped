@@ -21,7 +21,7 @@ public sealed class StripWhitespaceNode : ComfyNode
     public StripWhitespaceNode()
     {
         Texts = AddOutput<StringType>(0, "texts");
-        TextsInput = AddInput<StringType>("texts", required: true);
+        TextsInput = AddInput<StringType>("texts");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -33,20 +33,20 @@ public sealed class SVDImg2vidConditioningNode : ComfyNode
         Positive = AddOutput<ConditioningType>(0, "positive");
         Negative = AddOutput<ConditioningType>(1, "negative");
         Latent = AddOutput<LatentType>(2, "latent");
-        ClipVision = AddInput<ClipVisionType>("clip_vision", required: true);
-        InitImage = AddInput<ImageType>("init_image", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        Width = AddInput<IntType>("width", required: true);
+        ClipVision = AddInput<ClipVisionType>("clip_vision");
+        InitImage = AddInput<ImageType>("init_image");
+        Vae = AddInput<VaeType>("vae");
+        Width = AddInput<IntType>("width");
         Width.Set(1024L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(576L);
-        VideoFrames = AddInput<IntType>("video_frames", required: true);
+        VideoFrames = AddInput<IntType>("video_frames");
         VideoFrames.Set(14L);
-        MotionBucketId = AddInput<IntType>("motion_bucket_id", required: true);
+        MotionBucketId = AddInput<IntType>("motion_bucket_id");
         MotionBucketId.Set(127L);
-        Fps = AddInput<IntType>("fps", required: true);
+        Fps = AddInput<IntType>("fps");
         Fps.Set(6L);
-        AugmentationLevel = AddInput<FloatType>("augmentation_level", required: true);
+        AugmentationLevel = AddInput<FloatType>("augmentation_level");
         AugmentationLevel.Set(0.0);
     }
 

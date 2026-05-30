@@ -26,14 +26,14 @@ public sealed class SwarmImageCropNode : ComfyNode
     public SwarmImageCropNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        X = AddInput<IntType>("x", required: true);
+        Image = AddInput<ImageType>("image");
+        X = AddInput<IntType>("x");
         X.Set(0L);
-        Y = AddInput<IntType>("y", required: true);
+        Y = AddInput<IntType>("y");
         Y.Set(0L);
-        Width = AddInput<IntType>("width", required: true);
+        Width = AddInput<IntType>("width");
         Width.Set(512L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(512L);
     }
 

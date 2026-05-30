@@ -21,7 +21,7 @@ public sealed class LatentOperationTonemapReinhardNode : ComfyNode
     public LatentOperationTonemapReinhardNode()
     {
         LATENTOPERATION = AddOutput<LatentOperationType>(0, "LATENT_OPERATION");
-        Multiplier = AddInput<FloatType>("multiplier", required: true);
+        Multiplier = AddInput<FloatType>("multiplier");
         Multiplier.Set(1.0);
     }
 

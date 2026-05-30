@@ -25,9 +25,9 @@ public sealed class IPAdapterUnifiedLoaderNode : ComfyNode
     {
         Model = AddOutput<ModelType>(0, "model");
         Ipadapter = AddOutput<IpAdapterType>(1, "ipadapter");
-        ModelInput = AddInput<ModelType>("model", required: true);
-        Preset = AddInput<StringType>("preset", required: true);
-        IpadapterInput = AddInput<IpAdapterType>("ipadapter", required: false);
+        ModelInput = AddInput<ModelType>("model");
+        Preset = AddInput<StringType>("preset");
+        IpadapterInput = AddInput<IpAdapterType>("ipadapter");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

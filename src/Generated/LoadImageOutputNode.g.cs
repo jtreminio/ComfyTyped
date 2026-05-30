@@ -24,7 +24,7 @@ public sealed class LoadImageOutputNode : ComfyNode
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
         MASK = AddOutput<MaskType>(1, "MASK");
-        Image = AddInput<StringType>("image", required: true);
+        Image = AddInput<StringType>("image");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

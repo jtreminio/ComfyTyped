@@ -22,8 +22,8 @@ public sealed class DrawBBoxesNode : ComfyNode
     public DrawBBoxesNode()
     {
         OutImage = AddOutput<ImageType>(0, "out_image");
-        Bboxes = AddInput<BoundingBoxType>("bboxes", required: true);
-        Image = AddInput<ImageType>("image", required: false);
+        Bboxes = AddInput<BoundingBoxType>("bboxes");
+        Image = AddInput<ImageType>("image");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

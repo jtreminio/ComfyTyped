@@ -21,7 +21,7 @@ public sealed class LTXVAudioVAELoaderNode : ComfyNode
     public LTXVAudioVAELoaderNode()
     {
         AudioVAE = AddOutput<VaeType>(0, "Audio VAE");
-        CkptName = AddInput<StringType>("ckpt_name", required: true);
+        CkptName = AddInput<StringType>("ckpt_name");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

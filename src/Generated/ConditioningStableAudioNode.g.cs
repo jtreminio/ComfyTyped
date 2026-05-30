@@ -26,11 +26,11 @@ public sealed class ConditioningStableAudioNode : ComfyNode
     {
         Positive = AddOutput<ConditioningType>(0, "positive");
         Negative = AddOutput<ConditioningType>(1, "negative");
-        PositiveInput = AddInput<ConditioningType>("positive", required: true);
-        NegativeInput = AddInput<ConditioningType>("negative", required: true);
-        SecondsStart = AddInput<FloatType>("seconds_start", required: true);
+        PositiveInput = AddInput<ConditioningType>("positive");
+        NegativeInput = AddInput<ConditioningType>("negative");
+        SecondsStart = AddInput<FloatType>("seconds_start");
         SecondsStart.Set(0.0);
-        SecondsTotal = AddInput<FloatType>("seconds_total", required: true);
+        SecondsTotal = AddInput<FloatType>("seconds_total");
         SecondsTotal.Set(47.0);
     }
 

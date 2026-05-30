@@ -23,10 +23,10 @@ public sealed class SamplingPercentToSigmaNode : ComfyNode
     public SamplingPercentToSigmaNode()
     {
         SigmaValue = AddOutput<FloatType>(0, "sigma_value");
-        Model = AddInput<ModelType>("model", required: true);
-        SamplingPercent = AddInput<FloatType>("sampling_percent", required: true);
+        Model = AddInput<ModelType>("model");
+        SamplingPercent = AddInput<FloatType>("sampling_percent");
         SamplingPercent.Set(0.0);
-        ReturnActualSigma = AddInput<BooleanType>("return_actual_sigma", required: true);
+        ReturnActualSigma = AddInput<BooleanType>("return_actual_sigma");
         ReturnActualSigma.Set(false);
     }
 

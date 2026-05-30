@@ -27,14 +27,14 @@ public sealed class PainterNode : ComfyNode
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
         MASK = AddOutput<MaskType>(1, "MASK");
-        Mask = AddInput<StringType>("mask", required: true);
+        Mask = AddInput<StringType>("mask");
         Mask.Set("");
-        Width = AddInput<IntType>("width", required: true);
+        Width = AddInput<IntType>("width");
         Width.Set(512L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(512L);
-        BgColor = AddInput<ColorType>("bg_color", required: true);
-        Image = AddInput<ImageType>("image", required: false);
+        BgColor = AddInput<ColorType>("bg_color");
+        Image = AddInput<ImageType>("image");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

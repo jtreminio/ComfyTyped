@@ -22,8 +22,8 @@ public sealed class VAEEncodeAudioNode : ComfyNode
     public VAEEncodeAudioNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Audio = AddInput<AudioType>("audio", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
+        Audio = AddInput<AudioType>("audio");
+        Vae = AddInput<VaeType>("vae");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

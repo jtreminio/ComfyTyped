@@ -27,10 +27,10 @@ public sealed class SwarmLoraLoaderNode : ComfyNode
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
         CLIP = AddOutput<ClipType>(1, "CLIP");
-        Model = AddInput<ModelType>("model", required: true);
-        Clip = AddInput<ClipType>("clip", required: true);
-        LoraNames = AddInput<StringType>("lora_names", required: true);
-        LoraWeights = AddInput<StringType>("lora_weights", required: true);
+        Model = AddInput<ModelType>("model");
+        Clip = AddInput<ClipType>("clip");
+        LoraNames = AddInput<StringType>("lora_names");
+        LoraWeights = AddInput<StringType>("lora_weights");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -30,17 +30,17 @@ public sealed class SwarmUnsamplerNode : ComfyNode
     public SwarmUnsamplerNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Model = AddInput<ModelType>("model", required: true);
-        Steps = AddInput<IntType>("steps", required: true);
+        Model = AddInput<ModelType>("model");
+        Steps = AddInput<IntType>("steps");
         Steps.Set(20L);
-        SamplerName = AddInput<StringType>("sampler_name", required: true);
-        Scheduler = AddInput<StringType>("scheduler", required: true);
-        Positive = AddInput<ConditioningType>("positive", required: true);
-        Negative = AddInput<ConditioningType>("negative", required: true);
-        LatentImage = AddInput<LatentType>("latent_image", required: true);
-        StartAtStep = AddInput<IntType>("start_at_step", required: true);
+        SamplerName = AddInput<StringType>("sampler_name");
+        Scheduler = AddInput<StringType>("scheduler");
+        Positive = AddInput<ConditioningType>("positive");
+        Negative = AddInput<ConditioningType>("negative");
+        LatentImage = AddInput<LatentType>("latent_image");
+        StartAtStep = AddInput<IntType>("start_at_step");
         StartAtStep.Set(0L);
-        Previews = AddInput<StringType>("previews", required: true);
+        Previews = AddInput<StringType>("previews");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

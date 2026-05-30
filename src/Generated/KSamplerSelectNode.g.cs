@@ -21,7 +21,7 @@ public sealed class KSamplerSelectNode : ComfyNode
     public KSamplerSelectNode()
     {
         SAMPLER = AddOutput<SamplerType>(0, "SAMPLER");
-        SamplerName = AddInput<StringType>("sampler_name", required: true);
+        SamplerName = AddInput<StringType>("sampler_name");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

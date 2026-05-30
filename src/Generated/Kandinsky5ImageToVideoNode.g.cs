@@ -34,18 +34,18 @@ public sealed class Kandinsky5ImageToVideoNode : ComfyNode
         Negative = AddOutput<ConditioningType>(1, "negative");
         Latent = AddOutput<LatentType>(2, "latent");
         CondLatent = AddOutput<LatentType>(3, "cond_latent");
-        PositiveInput = AddInput<ConditioningType>("positive", required: true);
-        NegativeInput = AddInput<ConditioningType>("negative", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        Width = AddInput<IntType>("width", required: true);
+        PositiveInput = AddInput<ConditioningType>("positive");
+        NegativeInput = AddInput<ConditioningType>("negative");
+        Vae = AddInput<VaeType>("vae");
+        Width = AddInput<IntType>("width");
         Width.Set(768L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(512L);
-        Length = AddInput<IntType>("length", required: true);
+        Length = AddInput<IntType>("length");
         Length.Set(121L);
-        BatchSize = AddInput<IntType>("batch_size", required: true);
+        BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
-        StartImage = AddInput<ImageType>("start_image", required: false);
+        StartImage = AddInput<ImageType>("start_image");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

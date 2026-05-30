@@ -23,10 +23,10 @@ public sealed class ScribbleXDoGPreprocessorNode : ComfyNode
     public ScribbleXDoGPreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        Threshold = AddInput<IntType>("threshold", required: false);
+        Image = AddInput<ImageType>("image");
+        Threshold = AddInput<IntType>("threshold");
         Threshold.Set(32L);
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

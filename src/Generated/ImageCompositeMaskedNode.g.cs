@@ -26,15 +26,15 @@ public sealed class ImageCompositeMaskedNode : ComfyNode
     public ImageCompositeMaskedNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Destination = AddInput<ImageType>("destination", required: true);
-        Source = AddInput<ImageType>("source", required: true);
-        X = AddInput<IntType>("x", required: true);
+        Destination = AddInput<ImageType>("destination");
+        Source = AddInput<ImageType>("source");
+        X = AddInput<IntType>("x");
         X.Set(0L);
-        Y = AddInput<IntType>("y", required: true);
+        Y = AddInput<IntType>("y");
         Y.Set(0L);
-        ResizeSource = AddInput<BooleanType>("resize_source", required: true);
+        ResizeSource = AddInput<BooleanType>("resize_source");
         ResizeSource.Set(false);
-        Mask = AddInput<MaskType>("mask", required: false);
+        Mask = AddInput<MaskType>("mask");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

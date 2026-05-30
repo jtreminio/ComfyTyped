@@ -26,15 +26,15 @@ public sealed class LatentCompositeMaskedNode : ComfyNode
     public LatentCompositeMaskedNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Destination = AddInput<LatentType>("destination", required: true);
-        Source = AddInput<LatentType>("source", required: true);
-        X = AddInput<IntType>("x", required: true);
+        Destination = AddInput<LatentType>("destination");
+        Source = AddInput<LatentType>("source");
+        X = AddInput<IntType>("x");
         X.Set(0L);
-        Y = AddInput<IntType>("y", required: true);
+        Y = AddInput<IntType>("y");
         Y.Set(0L);
-        ResizeSource = AddInput<BooleanType>("resize_source", required: true);
+        ResizeSource = AddInput<BooleanType>("resize_source");
         ResizeSource.Set(false);
-        Mask = AddInput<MaskType>("mask", required: false);
+        Mask = AddInput<MaskType>("mask");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

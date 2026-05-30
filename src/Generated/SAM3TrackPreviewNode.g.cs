@@ -20,12 +20,12 @@ public sealed class SAM3TrackPreviewNode : ComfyNode
 
     public SAM3TrackPreviewNode()
     {
-        TrackData = AddInput<Sam3TrackDataType>("track_data", required: true);
-        Opacity = AddInput<FloatType>("opacity", required: true);
+        TrackData = AddInput<Sam3TrackDataType>("track_data");
+        Opacity = AddInput<FloatType>("opacity");
         Opacity.Set(0.5);
-        Fps = AddInput<FloatType>("fps", required: true);
+        Fps = AddInput<FloatType>("fps");
         Fps.Set(24.0);
-        Images = AddInput<ImageType>("images", required: false);
+        Images = AddInput<ImageType>("images");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

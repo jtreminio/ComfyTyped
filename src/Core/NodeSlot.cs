@@ -17,8 +17,6 @@ public interface INodeSlot
     /// this is the outer prefix (e.g. <c>"images"</c>) — children fan out as <c>"{SlotName}.{Prefix}{i}"</c>.</summary>
     string SlotName { get; }
 
-    bool IsRequired { get; }
-
     /// <summary>For singular slots, the slot's own type. For lists, the element type.</summary>
     string TypeName { get; }
 
@@ -93,16 +91,10 @@ public interface INodeInput : INodeSlot
 /// </summary>
 public interface INodeInputList : INodeSlot
 {
-    /// <summary>Lower-bound hint from the schema. Informational — not enforced on serialize.</summary>
-    int Min { get; }
-
     /// <summary>Upper-bound from the schema. <see cref="NodeInputList{T}.Add(NodeOutput{T})"/> throws past this.</summary>
     int Max { get; }
 
     int Count { get; }
-
-    /// <summary>The element type's <c>TypeName</c>, matching <see cref="INodeSlot.TypeName"/>.</summary>
-    string ElementTypeName { get; }
 
     /// <summary>Read-only view of the child slots as <see cref="INodeInput"/>s, in order.</summary>
     IReadOnlyList<INodeInput> Items { get; }
@@ -160,7 +152,6 @@ public sealed class NodeInput<T> : INodeInput where T : IComfyType
     /// <see cref="Name"/> across structural mutations.</para></summary>
     public string Name { get; }
     public string SlotName => ParentList?.SlotName ?? Name;
-    public bool IsRequired { get; }
     public string TypeName => T.TypeName;
 
     private NodeOutput<T>? _connection;
@@ -183,10 +174,9 @@ public sealed class NodeInput<T> : INodeInput where T : IComfyType
     /// <summary>The node that owns this input slot. Used to bubble change events for auto-sync.</summary>
     internal ComfyNode Owner { get; }
 
-    internal NodeInput(string name, bool required, ComfyNode owner)
+    internal NodeInput(string name, ComfyNode owner)
     {
         Name = name;
-        IsRequired = required;
         Owner = owner;
     }
 
@@ -385,11 +375,8 @@ internal interface NodeInputListChangeSink
 public sealed class NodeInputList<T> : INodeInputList, NodeInputListChangeSink where T : IComfyType
 {
     public string SlotName { get; }
-    public int Min { get; }
     public int Max { get; }
-    public bool IsRequired { get; }
     public string TypeName => T.TypeName;
-    public string ElementTypeName => T.TypeName;
 
     // Exactly one of these is non-null. Naming strategy is hidden from callers:
     // _prefix → child name = $"{_prefix}{index}" (generated, 0-indexed, no separator).
@@ -407,7 +394,7 @@ public sealed class NodeInputList<T> : INodeInputList, NodeInputListChangeSink w
     public NodeInput<T> this[int index] => _items[index];
 
     /// <summary>Construct a prefix-shape list (generated child names: <c>{prefix}0</c>, <c>{prefix}1</c>, …).</summary>
-    internal NodeInputList(string slotName, string prefix, int min, int max, bool required, ComfyNode owner)
+    internal NodeInputList(string slotName, string prefix, int max, ComfyNode owner)
     {
         if (string.IsNullOrEmpty(prefix))
         {
@@ -416,16 +403,14 @@ public sealed class NodeInputList<T> : INodeInputList, NodeInputListChangeSink w
         SlotName = slotName;
         _prefix = prefix;
         _names = null;
-        Min = min;
         Max = max;
-        IsRequired = required;
         Owner = owner;
     }
 
     /// <summary>Construct a names-shape list (explicit child names from the schema).
     /// <paramref name="max"/> is capped at <c>names.Count</c> — there's no way to
     /// add more children than there are names available.</summary>
-    internal NodeInputList(string slotName, IReadOnlyList<string> names, int min, int max, bool required, ComfyNode owner)
+    internal NodeInputList(string slotName, IReadOnlyList<string> names, int max, ComfyNode owner)
     {
         ArgumentNullException.ThrowIfNull(names);
         if (names.Count == 0)
@@ -435,9 +420,7 @@ public sealed class NodeInputList<T> : INodeInputList, NodeInputListChangeSink w
         SlotName = slotName;
         _prefix = null;
         _names = names;
-        Min = min;
         Max = Math.Min(max, names.Count);
-        IsRequired = required;
         Owner = owner;
     }
 
@@ -631,7 +614,7 @@ public sealed class NodeInputList<T> : INodeInputList, NodeInputListChangeSink w
         // Name is informational on list children — stamped with the wire key at append
         // time but not kept in sync after sibling removals (see the Name property docstring
         // on NodeInput<T>). Serialization derives keys from position instead.
-        return new NodeInput<T>(WireKeyAt(_items.Count), required: true, Owner)
+        return new NodeInput<T>(WireKeyAt(_items.Count), Owner)
         {
             ParentList = this,
         };

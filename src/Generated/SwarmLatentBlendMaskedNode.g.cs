@@ -25,10 +25,10 @@ public sealed class SwarmLatentBlendMaskedNode : ComfyNode
     public SwarmLatentBlendMaskedNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Samples0 = AddInput<LatentType>("samples0", required: true);
-        Samples1 = AddInput<LatentType>("samples1", required: true);
-        Mask = AddInput<MaskType>("mask", required: true);
-        BlendFactor = AddInput<FloatType>("blend_factor", required: true);
+        Samples0 = AddInput<LatentType>("samples0");
+        Samples1 = AddInput<LatentType>("samples1");
+        Mask = AddInput<MaskType>("mask");
+        BlendFactor = AddInput<FloatType>("blend_factor");
         BlendFactor.Set(0.5);
     }
 

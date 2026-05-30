@@ -23,10 +23,10 @@ public sealed class LatentFromBatchNode : ComfyNode
     public LatentFromBatchNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Samples = AddInput<LatentType>("samples", required: true);
-        BatchIndex = AddInput<IntType>("batch_index", required: true);
+        Samples = AddInput<LatentType>("samples");
+        BatchIndex = AddInput<IntType>("batch_index");
         BatchIndex.Set(0L);
-        Length = AddInput<IntType>("length", required: true);
+        Length = AddInput<IntType>("length");
         Length.Set(1L);
     }
 

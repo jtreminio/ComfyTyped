@@ -23,10 +23,10 @@ public sealed class ZoeDepthAnythingPreprocessorNode : ComfyNode
     public ZoeDepthAnythingPreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        Environment = AddInput<StringType>("environment", required: false);
+        Image = AddInput<ImageType>("image");
+        Environment = AddInput<StringType>("environment");
         Environment.Set("indoor");
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

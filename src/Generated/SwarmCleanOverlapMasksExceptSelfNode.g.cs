@@ -23,8 +23,8 @@ public sealed class SwarmCleanOverlapMasksExceptSelfNode : ComfyNode
     public SwarmCleanOverlapMasksExceptSelfNode()
     {
         MASK = AddOutput<MaskType>(0, "MASK");
-        MaskSelf = AddInput<MaskType>("mask_self", required: true);
-        MaskMerged = AddInput<MaskType>("mask_merged", required: true);
+        MaskSelf = AddInput<MaskType>("mask_self");
+        MaskMerged = AddInput<MaskType>("mask_merged");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

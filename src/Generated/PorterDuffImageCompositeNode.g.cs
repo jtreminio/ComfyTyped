@@ -27,11 +27,11 @@ public sealed class PorterDuffImageCompositeNode : ComfyNode
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
         MASK = AddOutput<MaskType>(1, "MASK");
-        Source = AddInput<ImageType>("source", required: true);
-        SourceAlpha = AddInput<MaskType>("source_alpha", required: true);
-        Destination = AddInput<ImageType>("destination", required: true);
-        DestinationAlpha = AddInput<MaskType>("destination_alpha", required: true);
-        Mode = AddInput<StringType>("mode", required: true);
+        Source = AddInput<ImageType>("source");
+        SourceAlpha = AddInput<MaskType>("source_alpha");
+        Destination = AddInput<ImageType>("destination");
+        DestinationAlpha = AddInput<MaskType>("destination_alpha");
+        Mode = AddInput<StringType>("mode");
         Mode.Set("DST");
     }
 

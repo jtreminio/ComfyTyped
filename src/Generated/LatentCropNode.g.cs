@@ -25,14 +25,14 @@ public sealed class LatentCropNode : ComfyNode
     public LatentCropNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Samples = AddInput<LatentType>("samples", required: true);
-        Width = AddInput<IntType>("width", required: true);
+        Samples = AddInput<LatentType>("samples");
+        Width = AddInput<IntType>("width");
         Width.Set(512L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(512L);
-        X = AddInput<IntType>("x", required: true);
+        X = AddInput<IntType>("x");
         X.Set(0L);
-        Y = AddInput<IntType>("y", required: true);
+        Y = AddInput<IntType>("y");
         Y.Set(0L);
     }
 

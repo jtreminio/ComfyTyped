@@ -25,14 +25,14 @@ public sealed class UNetTemporalAttentionMultiplyNode : ComfyNode
     public UNetTemporalAttentionMultiplyNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        SelfStructural = AddInput<FloatType>("self_structural", required: true);
+        Model = AddInput<ModelType>("model");
+        SelfStructural = AddInput<FloatType>("self_structural");
         SelfStructural.Set(1.0);
-        SelfTemporal = AddInput<FloatType>("self_temporal", required: true);
+        SelfTemporal = AddInput<FloatType>("self_temporal");
         SelfTemporal.Set(1.0);
-        CrossStructural = AddInput<FloatType>("cross_structural", required: true);
+        CrossStructural = AddInput<FloatType>("cross_structural");
         CrossStructural.Set(1.0);
-        CrossTemporal = AddInput<FloatType>("cross_temporal", required: true);
+        CrossTemporal = AddInput<FloatType>("cross_temporal");
         CrossTemporal.Set(1.0);
     }
 

@@ -22,8 +22,8 @@ public sealed class FluxKontextMultiReferenceLatentMethodNode : ComfyNode
     public FluxKontextMultiReferenceLatentMethodNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Conditioning = AddInput<ConditioningType>("conditioning", required: true);
-        ReferenceLatentsMethod = AddInput<StringType>("reference_latents_method", required: true);
+        Conditioning = AddInput<ConditioningType>("conditioning");
+        ReferenceLatentsMethod = AddInput<StringType>("reference_latents_method");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -23,7 +23,7 @@ public sealed class ImageGenResolutionFromLatentNode : ComfyNode
     {
         IMAGEGENWIDTHINT = AddOutput<IntType>(0, "IMAGE_GEN_WIDTH (INT)");
         IMAGEGENHEIGHTINT = AddOutput<IntType>(1, "IMAGE_GEN_HEIGHT (INT)");
-        Latent = AddInput<LatentType>("latent", required: true);
+        Latent = AddInput<LatentType>("latent");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

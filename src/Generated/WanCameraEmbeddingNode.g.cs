@@ -35,23 +35,23 @@ public sealed class WanCameraEmbeddingNode : ComfyNode
         Width = AddOutput<IntType>(1, "width");
         Height = AddOutput<IntType>(2, "height");
         Length = AddOutput<IntType>(3, "length");
-        CameraPose = AddInput<StringType>("camera_pose", required: true);
+        CameraPose = AddInput<StringType>("camera_pose");
         CameraPose.Set("Static");
-        WidthInput = AddInput<IntType>("width", required: true);
+        WidthInput = AddInput<IntType>("width");
         WidthInput.Set(832L);
-        HeightInput = AddInput<IntType>("height", required: true);
+        HeightInput = AddInput<IntType>("height");
         HeightInput.Set(480L);
-        LengthInput = AddInput<IntType>("length", required: true);
+        LengthInput = AddInput<IntType>("length");
         LengthInput.Set(81L);
-        Speed = AddInput<FloatType>("speed", required: false);
+        Speed = AddInput<FloatType>("speed");
         Speed.Set(1.0);
-        Fx = AddInput<FloatType>("fx", required: false);
+        Fx = AddInput<FloatType>("fx");
         Fx.Set(0.5);
-        Fy = AddInput<FloatType>("fy", required: false);
+        Fy = AddInput<FloatType>("fy");
         Fy.Set(0.5);
-        Cx = AddInput<FloatType>("cx", required: false);
+        Cx = AddInput<FloatType>("cx");
         Cx.Set(0.5);
-        Cy = AddInput<FloatType>("cy", required: false);
+        Cy = AddInput<FloatType>("cy");
         Cy.Set(0.5);
     }
 

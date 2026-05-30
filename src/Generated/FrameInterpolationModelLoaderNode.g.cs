@@ -21,7 +21,7 @@ public sealed class FrameInterpolationModelLoaderNode : ComfyNode
     public FrameInterpolationModelLoaderNode()
     {
         INTERPMODEL = AddOutput<InterpModelType>(0, "INTERP_MODEL");
-        ModelName = AddInput<StringType>("model_name", required: true);
+        ModelName = AddInput<StringType>("model_name");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

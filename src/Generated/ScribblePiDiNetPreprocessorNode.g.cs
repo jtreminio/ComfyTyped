@@ -23,9 +23,9 @@ public sealed class ScribblePiDiNetPreprocessorNode : ComfyNode
     public ScribblePiDiNetPreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        Safe = AddInput<StringType>("safe", required: false);
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Image = AddInput<ImageType>("image");
+        Safe = AddInput<StringType>("safe");
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

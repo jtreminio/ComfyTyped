@@ -25,7 +25,7 @@ public sealed class ImageOnlyCheckpointLoaderNode : ComfyNode
         MODEL = AddOutput<ModelType>(0, "MODEL");
         CLIPVISION = AddOutput<ClipVisionType>(1, "CLIP_VISION");
         VAE = AddOutput<VaeType>(2, "VAE");
-        CkptName = AddInput<StringType>("ckpt_name", required: true);
+        CkptName = AddInput<StringType>("ckpt_name");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

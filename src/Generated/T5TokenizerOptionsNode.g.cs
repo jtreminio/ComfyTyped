@@ -23,10 +23,10 @@ public sealed class T5TokenizerOptionsNode : ComfyNode
     public T5TokenizerOptionsNode()
     {
         CLIP = AddOutput<ClipType>(0, "CLIP");
-        Clip = AddInput<ClipType>("clip", required: true);
-        MinPadding = AddInput<IntType>("min_padding", required: true);
+        Clip = AddInput<ClipType>("clip");
+        MinPadding = AddInput<IntType>("min_padding");
         MinPadding.Set(0L);
-        MinLength = AddInput<IntType>("min_length", required: true);
+        MinLength = AddInput<IntType>("min_length");
         MinLength.Set(0L);
     }
 

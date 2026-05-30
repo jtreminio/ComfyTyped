@@ -21,7 +21,7 @@ public sealed class RecordAudioNode : ComfyNode
     public RecordAudioNode()
     {
         AUDIO = AddOutput<AudioType>(0, "AUDIO");
-        Audio = AddInput<AudioRecordType>("audio", required: true);
+        Audio = AddInput<AudioRecordType>("audio");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

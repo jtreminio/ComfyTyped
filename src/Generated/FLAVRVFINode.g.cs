@@ -26,15 +26,15 @@ public sealed class FLAVRVFINode : ComfyNode
     public FLAVRVFINode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        CkptName = AddInput<StringType>("ckpt_name", required: true);
-        Frames = AddInput<ImageType>("frames", required: true);
-        ClearCacheAfterNFrames = AddInput<IntType>("clear_cache_after_n_frames", required: true);
+        CkptName = AddInput<StringType>("ckpt_name");
+        Frames = AddInput<ImageType>("frames");
+        ClearCacheAfterNFrames = AddInput<IntType>("clear_cache_after_n_frames");
         ClearCacheAfterNFrames.Set(10L);
-        Multiplier = AddInput<IntType>("multiplier", required: true);
+        Multiplier = AddInput<IntType>("multiplier");
         Multiplier.Set(2L);
-        DuplicateFirstLastFrames = AddInput<BooleanType>("duplicate_first_last_frames", required: true);
+        DuplicateFirstLastFrames = AddInput<BooleanType>("duplicate_first_last_frames");
         DuplicateFirstLastFrames.Set(false);
-        OptionalInterpolationStates = AddInput<InterpolationStatesType>("optional_interpolation_states", required: false);
+        OptionalInterpolationStates = AddInput<InterpolationStatesType>("optional_interpolation_states");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

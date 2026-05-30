@@ -36,14 +36,14 @@ public sealed class GLSLShaderNode : ComfyNode
         IMAGE1 = AddOutput<ImageType>(1, "IMAGE1");
         IMAGE2 = AddOutput<ImageType>(2, "IMAGE2");
         IMAGE3 = AddOutput<ImageType>(3, "IMAGE3");
-        FragmentShader = AddInput<StringType>("fragment_shader", required: true);
+        FragmentShader = AddInput<StringType>("fragment_shader");
         FragmentShader.Set("#version 300 es\nprecision highp float;\n\nuniform sampler2D u_image0;\nuniform vec2 u_resolution;\n\nin vec2 v_texCoord;\nlayout(location = 0) out vec4 fragColor0;\n\nvoid main() {\n    fragColor0 = texture(u_image0, v_texCoord);\n}\n");
-        SizeMode = AddInput<StringType>("size_mode", required: true);
-        Images = AddInputList<ImageType>("images", prefix: "image", min: 1, max: 5, required: true);
-        Floats = AddInputList<FloatType>("floats", prefix: "u_float", min: 0, max: 20, required: true);
-        Ints = AddInputList<IntType>("ints", prefix: "u_int", min: 0, max: 20, required: true);
-        Bools = AddInputList<BooleanType>("bools", prefix: "u_bool", min: 0, max: 10, required: true);
-        Curves = AddInputList<CurveType>("curves", prefix: "u_curve", min: 0, max: 4, required: true);
+        SizeMode = AddInput<StringType>("size_mode");
+        Images = AddInputList<ImageType>("images", prefix: "image", max: 5);
+        Floats = AddInputList<FloatType>("floats", prefix: "u_float", max: 20);
+        Ints = AddInputList<IntType>("ints", prefix: "u_int", max: 20);
+        Bools = AddInputList<BooleanType>("bools", prefix: "u_bool", max: 10);
+        Curves = AddInputList<CurveType>("curves", prefix: "u_curve", max: 4);
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

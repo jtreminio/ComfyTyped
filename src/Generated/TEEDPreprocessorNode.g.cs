@@ -23,10 +23,10 @@ public sealed class TEEDPreprocessorNode : ComfyNode
     public TEEDPreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        SafeSteps = AddInput<IntType>("safe_steps", required: false);
+        Image = AddInput<ImageType>("image");
+        SafeSteps = AddInput<IntType>("safe_steps");
         SafeSteps.Set(2L);
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

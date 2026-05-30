@@ -21,13 +21,13 @@ public sealed class SaveWEBMNode : ComfyNode
 
     public SaveWEBMNode()
     {
-        Images = AddInput<ImageType>("images", required: true);
-        FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
+        Images = AddInput<ImageType>("images");
+        FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("ComfyUI");
-        Codec = AddInput<StringType>("codec", required: true);
-        Fps = AddInput<FloatType>("fps", required: true);
+        Codec = AddInput<StringType>("codec");
+        Fps = AddInput<FloatType>("fps");
         Fps.Set(24.0);
-        Crf = AddInput<FloatType>("crf", required: true);
+        Crf = AddInput<FloatType>("crf");
         Crf.Set(32.0);
     }
 

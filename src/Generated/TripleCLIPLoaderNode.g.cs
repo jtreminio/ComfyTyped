@@ -28,9 +28,9 @@ public sealed class TripleCLIPLoaderNode : ComfyNode
     public TripleCLIPLoaderNode()
     {
         CLIP = AddOutput<ClipType>(0, "CLIP");
-        ClipName1 = AddInput<StringType>("clip_name1", required: true);
-        ClipName2 = AddInput<StringType>("clip_name2", required: true);
-        ClipName3 = AddInput<StringType>("clip_name3", required: true);
+        ClipName1 = AddInput<StringType>("clip_name1");
+        ClipName2 = AddInput<StringType>("clip_name2");
+        ClipName3 = AddInput<StringType>("clip_name3");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

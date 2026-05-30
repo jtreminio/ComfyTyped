@@ -21,7 +21,7 @@ public sealed class MergeImageListsNode : ComfyNode
     public MergeImageListsNode()
     {
         Images = AddOutput<ImageType>(0, "images");
-        ImagesInput = AddInput<ImageType>("images", required: true);
+        ImagesInput = AddInput<ImageType>("images");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

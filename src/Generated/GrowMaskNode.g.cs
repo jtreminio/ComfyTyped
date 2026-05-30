@@ -23,10 +23,10 @@ public sealed class GrowMaskNode : ComfyNode
     public GrowMaskNode()
     {
         MASK = AddOutput<MaskType>(0, "MASK");
-        Mask = AddInput<MaskType>("mask", required: true);
-        Expand = AddInput<IntType>("expand", required: true);
+        Mask = AddInput<MaskType>("mask");
+        Expand = AddInput<IntType>("expand");
         Expand.Set(0L);
-        TaperedCorners = AddInput<BooleanType>("tapered_corners", required: true);
+        TaperedCorners = AddInput<BooleanType>("tapered_corners");
         TaperedCorners.Set(true);
     }
 

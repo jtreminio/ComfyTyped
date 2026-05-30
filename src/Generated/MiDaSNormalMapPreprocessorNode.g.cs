@@ -24,12 +24,12 @@ public sealed class MiDaSNormalMapPreprocessorNode : ComfyNode
     public MiDaSNormalMapPreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        A = AddInput<FloatType>("a", required: false);
+        Image = AddInput<ImageType>("image");
+        A = AddInput<FloatType>("a");
         A.Set(6.283185307179586);
-        BgThreshold = AddInput<FloatType>("bg_threshold", required: false);
+        BgThreshold = AddInput<FloatType>("bg_threshold");
         BgThreshold.Set(0.1);
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

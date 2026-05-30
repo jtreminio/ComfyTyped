@@ -32,18 +32,18 @@ public sealed class SwarmInputCheckpointNode : ComfyNode
         MODEL = AddOutput<ModelType>(0, "MODEL");
         CLIP = AddOutput<ClipType>(1, "CLIP");
         VAE = AddOutput<VaeType>(2, "VAE");
-        Title = AddInput<StringType>("title", required: true);
+        Title = AddInput<StringType>("title");
         Title.Set("My Checkpoint Model Name Input");
-        Value = AddInput<StringType>("value", required: true);
-        Description = AddInput<StringType>("description", required: true);
+        Value = AddInput<StringType>("value");
+        Description = AddInput<StringType>("description");
         Description.Set("");
-        OrderPriority = AddInput<FloatType>("order_priority", required: true);
+        OrderPriority = AddInput<FloatType>("order_priority");
         OrderPriority.Set(0.0);
-        IsAdvanced = AddInput<BooleanType>("is_advanced", required: true);
+        IsAdvanced = AddInput<BooleanType>("is_advanced");
         IsAdvanced.Set(false);
-        RawId = AddInput<StringType>("raw_id", required: true);
+        RawId = AddInput<StringType>("raw_id");
         RawId.Set("");
-        Group = AddInput<GroupType>("group", required: false);
+        Group = AddInput<GroupType>("group");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -23,8 +23,8 @@ public sealed class SwarmMaskGrowNode : ComfyNode
     public SwarmMaskGrowNode()
     {
         MASK = AddOutput<MaskType>(0, "MASK");
-        Mask = AddInput<MaskType>("mask", required: true);
-        Grow = AddInput<IntType>("grow", required: true);
+        Mask = AddInput<MaskType>("mask");
+        Grow = AddInput<IntType>("grow");
         Grow.Set(0L);
     }
 

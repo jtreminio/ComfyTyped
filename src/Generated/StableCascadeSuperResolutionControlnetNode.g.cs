@@ -26,8 +26,8 @@ public sealed class StableCascadeSuperResolutionControlnetNode : ComfyNode
         ControlnetInput = AddOutput<ImageType>(0, "controlnet_input");
         StageC = AddOutput<LatentType>(1, "stage_c");
         StageB = AddOutput<LatentType>(2, "stage_b");
-        Image = AddInput<ImageType>("image", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
+        Image = AddInput<ImageType>("image");
+        Vae = AddInput<VaeType>("vae");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

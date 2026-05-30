@@ -27,14 +27,14 @@ public sealed class SwarmImageCompositeMaskedColorCorrectingNode : ComfyNode
     public SwarmImageCompositeMaskedColorCorrectingNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Destination = AddInput<ImageType>("destination", required: true);
-        Source = AddInput<ImageType>("source", required: true);
-        X = AddInput<IntType>("x", required: true);
+        Destination = AddInput<ImageType>("destination");
+        Source = AddInput<ImageType>("source");
+        X = AddInput<IntType>("x");
         X.Set(0L);
-        Y = AddInput<IntType>("y", required: true);
+        Y = AddInput<IntType>("y");
         Y.Set(0L);
-        Mask = AddInput<MaskType>("mask", required: true);
-        CorrectionMethod = AddInput<StringType>("correction_method", required: true);
+        Mask = AddInput<MaskType>("mask");
+        CorrectionMethod = AddInput<StringType>("correction_method");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

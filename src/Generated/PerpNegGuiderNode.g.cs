@@ -26,13 +26,13 @@ public sealed class PerpNegGuiderNode : ComfyNode
     public PerpNegGuiderNode()
     {
         GUIDER = AddOutput<GuiderType>(0, "GUIDER");
-        Model = AddInput<ModelType>("model", required: true);
-        Positive = AddInput<ConditioningType>("positive", required: true);
-        Negative = AddInput<ConditioningType>("negative", required: true);
-        EmptyConditioning = AddInput<ConditioningType>("empty_conditioning", required: true);
-        Cfg = AddInput<FloatType>("cfg", required: true);
+        Model = AddInput<ModelType>("model");
+        Positive = AddInput<ConditioningType>("positive");
+        Negative = AddInput<ConditioningType>("negative");
+        EmptyConditioning = AddInput<ConditioningType>("empty_conditioning");
+        Cfg = AddInput<FloatType>("cfg");
         Cfg.Set(8.0);
-        NegScale = AddInput<FloatType>("neg_scale", required: true);
+        NegScale = AddInput<FloatType>("neg_scale");
         NegScale.Set(1.0);
     }
 

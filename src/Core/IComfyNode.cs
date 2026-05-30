@@ -8,8 +8,7 @@ namespace ComfyTyped.Core;
 /// <see cref="Outputs"/>, etc. alongside its own typed slots.
 ///
 /// <para>Implemented by <see cref="ComfyNode"/> itself — every node, generated or
-/// <see cref="UnknownNode"/>, is an <see cref="IComfyNode"/>. The members mirror
-/// <see cref="ComfyNode"/>'s existing public read surface exactly, so no node needs new code.</para>
+/// <see cref="UnknownNode"/>, is an <see cref="IComfyNode"/>.</para>
 /// </summary>
 public interface IComfyNode
 {

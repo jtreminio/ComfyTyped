@@ -24,12 +24,12 @@ public sealed class WebcamCaptureNode : ComfyNode
     public WebcamCaptureNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<WebcamType>("image", required: true);
-        Width = AddInput<IntType>("width", required: true);
+        Image = AddInput<WebcamType>("image");
+        Width = AddInput<IntType>("width");
         Width.Set(0L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(0L);
-        CaptureOnQueue = AddInput<BooleanType>("capture_on_queue", required: true);
+        CaptureOnQueue = AddInput<BooleanType>("capture_on_queue");
         CaptureOnQueue.Set(true);
     }
 

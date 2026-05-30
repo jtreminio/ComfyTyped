@@ -23,9 +23,9 @@ public sealed class LatentConcatNode : ComfyNode
     public LatentConcatNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Samples1 = AddInput<LatentType>("samples1", required: true);
-        Samples2 = AddInput<LatentType>("samples2", required: true);
-        Dim = AddInput<StringType>("dim", required: true);
+        Samples1 = AddInput<LatentType>("samples1");
+        Samples2 = AddInput<LatentType>("samples2");
+        Dim = AddInput<StringType>("dim");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

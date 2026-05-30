@@ -19,10 +19,10 @@ public sealed class SaveAudioMP3Node : ComfyNode
 
     public SaveAudioMP3Node()
     {
-        Audio = AddInput<AudioType>("audio", required: true);
-        FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
+        Audio = AddInput<AudioType>("audio");
+        FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("audio/ComfyUI");
-        Quality = AddInput<StringType>("quality", required: true);
+        Quality = AddInput<StringType>("quality");
         Quality.Set("V0");
     }
 

@@ -26,17 +26,17 @@ public sealed class LTXVSchedulerNode : ComfyNode
     public LTXVSchedulerNode()
     {
         SIGMAS = AddOutput<SigmasType>(0, "SIGMAS");
-        Steps = AddInput<IntType>("steps", required: true);
+        Steps = AddInput<IntType>("steps");
         Steps.Set(20L);
-        MaxShift = AddInput<FloatType>("max_shift", required: true);
+        MaxShift = AddInput<FloatType>("max_shift");
         MaxShift.Set(2.05);
-        BaseShift = AddInput<FloatType>("base_shift", required: true);
+        BaseShift = AddInput<FloatType>("base_shift");
         BaseShift.Set(0.95);
-        Stretch = AddInput<BooleanType>("stretch", required: true);
+        Stretch = AddInput<BooleanType>("stretch");
         Stretch.Set(true);
-        Terminal = AddInput<FloatType>("terminal", required: true);
+        Terminal = AddInput<FloatType>("terminal");
         Terminal.Set(0.1);
-        Latent = AddInput<LatentType>("latent", required: false);
+        Latent = AddInput<LatentType>("latent");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -25,7 +25,7 @@ public sealed class DiffusersLoaderNode : ComfyNode
         MODEL = AddOutput<ModelType>(0, "MODEL");
         CLIP = AddOutput<ClipType>(1, "CLIP");
         VAE = AddOutput<VaeType>(2, "VAE");
-        ModelPath = AddInput<StringType>("model_path", required: true);
+        ModelPath = AddInput<StringType>("model_path");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

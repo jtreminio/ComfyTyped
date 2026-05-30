@@ -31,14 +31,14 @@ public sealed class HunyuanVideo15SuperResolutionNode : ComfyNode
         Positive = AddOutput<ConditioningType>(0, "positive");
         Negative = AddOutput<ConditioningType>(1, "negative");
         Latent = AddOutput<LatentType>(2, "latent");
-        PositiveInput = AddInput<ConditioningType>("positive", required: true);
-        NegativeInput = AddInput<ConditioningType>("negative", required: true);
-        LatentInput = AddInput<LatentType>("latent", required: true);
-        NoiseAugmentation = AddInput<FloatType>("noise_augmentation", required: true);
+        PositiveInput = AddInput<ConditioningType>("positive");
+        NegativeInput = AddInput<ConditioningType>("negative");
+        LatentInput = AddInput<LatentType>("latent");
+        NoiseAugmentation = AddInput<FloatType>("noise_augmentation");
         NoiseAugmentation.Set(0.7);
-        Vae = AddInput<VaeType>("vae", required: false);
-        StartImage = AddInput<ImageType>("start_image", required: false);
-        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output", required: false);
+        Vae = AddInput<VaeType>("vae");
+        StartImage = AddInput<ImageType>("start_image");
+        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

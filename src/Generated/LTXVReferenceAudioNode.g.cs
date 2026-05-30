@@ -33,16 +33,16 @@ public sealed class LTXVReferenceAudioNode : ComfyNode
         MODEL = AddOutput<ModelType>(0, "MODEL");
         Positive = AddOutput<ConditioningType>(1, "positive");
         Negative = AddOutput<ConditioningType>(2, "negative");
-        Model = AddInput<ModelType>("model", required: true);
-        PositiveInput = AddInput<ConditioningType>("positive", required: true);
-        NegativeInput = AddInput<ConditioningType>("negative", required: true);
-        ReferenceAudio = AddInput<AudioType>("reference_audio", required: true);
-        AudioVae = AddInput<VaeType>("audio_vae", required: true);
-        IdentityGuidanceScale = AddInput<FloatType>("identity_guidance_scale", required: true);
+        Model = AddInput<ModelType>("model");
+        PositiveInput = AddInput<ConditioningType>("positive");
+        NegativeInput = AddInput<ConditioningType>("negative");
+        ReferenceAudio = AddInput<AudioType>("reference_audio");
+        AudioVae = AddInput<VaeType>("audio_vae");
+        IdentityGuidanceScale = AddInput<FloatType>("identity_guidance_scale");
         IdentityGuidanceScale.Set(3.0);
-        StartPercent = AddInput<FloatType>("start_percent", required: true);
+        StartPercent = AddInput<FloatType>("start_percent");
         StartPercent.Set(0.0);
-        EndPercent = AddInput<FloatType>("end_percent", required: true);
+        EndPercent = AddInput<FloatType>("end_percent");
         EndPercent.Set(1.0);
     }
 

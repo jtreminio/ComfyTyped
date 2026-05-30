@@ -24,13 +24,13 @@ public sealed class LTXVEmptyLatentAudioNode : ComfyNode
     public LTXVEmptyLatentAudioNode()
     {
         Latent = AddOutput<LatentType>(0, "Latent");
-        FramesNumber = AddInput<IntType>("frames_number", required: true);
+        FramesNumber = AddInput<IntType>("frames_number");
         FramesNumber.Set(97L);
-        FrameRate = AddInput<IntType>("frame_rate", required: true);
+        FrameRate = AddInput<IntType>("frame_rate");
         FrameRate.Set(25L);
-        BatchSize = AddInput<IntType>("batch_size", required: true);
+        BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
-        AudioVae = AddInput<VaeType>("audio_vae", required: true);
+        AudioVae = AddInput<VaeType>("audio_vae");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

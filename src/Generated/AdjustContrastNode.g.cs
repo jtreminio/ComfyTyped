@@ -22,8 +22,8 @@ public sealed class AdjustContrastNode : ComfyNode
     public AdjustContrastNode()
     {
         Images = AddOutput<ImageType>(0, "images");
-        ImagesInput = AddInput<ImageType>("images", required: true);
-        Factor = AddInput<FloatType>("factor", required: true);
+        ImagesInput = AddInput<ImageType>("images");
+        Factor = AddInput<FloatType>("factor");
         Factor.Set(1.0);
     }
 

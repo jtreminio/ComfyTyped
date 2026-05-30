@@ -26,14 +26,14 @@ public sealed class SwarmYoloDetectionNode : ComfyNode
     public SwarmYoloDetectionNode()
     {
         MASK = AddOutput<MaskType>(0, "MASK");
-        Image = AddInput<ImageType>("image", required: true);
-        ModelName = AddInput<StringType>("model_name", required: true);
-        Index = AddInput<IntType>("index", required: true);
+        Image = AddInput<ImageType>("image");
+        ModelName = AddInput<StringType>("model_name");
+        Index = AddInput<IntType>("index");
         Index.Set(0L);
-        ClassFilter = AddInput<StringType>("class_filter", required: false);
+        ClassFilter = AddInput<StringType>("class_filter");
         ClassFilter.Set("");
-        SortOrder = AddInput<StringType>("sort_order", required: false);
-        Threshold = AddInput<FloatType>("threshold", required: false);
+        SortOrder = AddInput<StringType>("sort_order");
+        Threshold = AddInput<FloatType>("threshold");
         Threshold.Set(0.25);
     }
 

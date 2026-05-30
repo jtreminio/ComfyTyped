@@ -24,11 +24,11 @@ public sealed class LoraModelLoaderNode : ComfyNode
     public LoraModelLoaderNode()
     {
         Model = AddOutput<ModelType>(0, "model");
-        ModelInput = AddInput<ModelType>("model", required: true);
-        Lora = AddInput<LoraModelType>("lora", required: true);
-        StrengthModel = AddInput<FloatType>("strength_model", required: true);
+        ModelInput = AddInput<ModelType>("model");
+        Lora = AddInput<LoraModelType>("lora");
+        StrengthModel = AddInput<FloatType>("strength_model");
         StrengthModel.Set(1.0);
-        Bypass = AddInput<BooleanType>("bypass", required: true);
+        Bypass = AddInput<BooleanType>("bypass");
         Bypass.Set(false);
     }
 

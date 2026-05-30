@@ -24,8 +24,8 @@ public sealed class ResolutionBucketNode : ComfyNode
     {
         Latents = AddOutput<LatentType>(0, "latents");
         Conditioning = AddOutput<ConditioningType>(1, "conditioning");
-        LatentsInput = AddInput<LatentType>("latents", required: true);
-        ConditioningInput = AddInput<ConditioningType>("conditioning", required: true);
+        LatentsInput = AddInput<LatentType>("latents");
+        ConditioningInput = AddInput<ConditioningType>("conditioning");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

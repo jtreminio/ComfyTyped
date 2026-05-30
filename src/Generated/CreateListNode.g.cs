@@ -21,6 +21,6 @@ public sealed class CreateListNode : ComfyNode
     public CreateListNode()
     {
         List = AddOutput<ComfyMatchTypeV3>(0, "list");
-        InputsInput = AddInputList<ComfyMatchTypeV3>("inputs", prefix: "input", min: 1, max: 10, required: true);
+        InputsInput = AddInputList<ComfyMatchTypeV3>("inputs", prefix: "input", max: 10);
     }
 }

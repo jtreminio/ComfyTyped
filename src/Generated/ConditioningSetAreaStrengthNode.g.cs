@@ -22,8 +22,8 @@ public sealed class ConditioningSetAreaStrengthNode : ComfyNode
     public ConditioningSetAreaStrengthNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Conditioning = AddInput<ConditioningType>("conditioning", required: true);
-        Strength = AddInput<FloatType>("strength", required: true);
+        Conditioning = AddInput<ConditioningType>("conditioning");
+        Strength = AddInput<FloatType>("strength");
         Strength.Set(1.0);
     }
 

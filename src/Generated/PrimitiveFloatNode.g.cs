@@ -21,7 +21,7 @@ public sealed class PrimitiveFloatNode : ComfyNode
     public PrimitiveFloatNode()
     {
         FLOAT = AddOutput<FloatType>(0, "FLOAT");
-        Value = AddInput<FloatType>("value", required: true);
+        Value = AddInput<FloatType>("value");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -25,14 +25,14 @@ public sealed class ExtendIntermediateSigmasNode : ComfyNode
     public ExtendIntermediateSigmasNode()
     {
         SIGMAS = AddOutput<SigmasType>(0, "SIGMAS");
-        Sigmas = AddInput<SigmasType>("sigmas", required: true);
-        Steps = AddInput<IntType>("steps", required: true);
+        Sigmas = AddInput<SigmasType>("sigmas");
+        Steps = AddInput<IntType>("steps");
         Steps.Set(2L);
-        StartAtSigma = AddInput<FloatType>("start_at_sigma", required: true);
+        StartAtSigma = AddInput<FloatType>("start_at_sigma");
         StartAtSigma.Set(-1.0);
-        EndAtSigma = AddInput<FloatType>("end_at_sigma", required: true);
+        EndAtSigma = AddInput<FloatType>("end_at_sigma");
         EndAtSigma.Set(12.0);
-        Spacing = AddInput<StringType>("spacing", required: true);
+        Spacing = AddInput<StringType>("spacing");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

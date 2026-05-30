@@ -18,8 +18,8 @@ public sealed class ModelSaveNode : ComfyNode
 
     public ModelSaveNode()
     {
-        Model = AddInput<ModelType>("model", required: true);
-        FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
+        Model = AddInput<ModelType>("model");
+        FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("diffusion_models/ComfyUI");
     }
 

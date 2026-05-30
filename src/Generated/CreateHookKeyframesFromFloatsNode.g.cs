@@ -25,14 +25,14 @@ public sealed class CreateHookKeyframesFromFloatsNode : ComfyNode
     public CreateHookKeyframesFromFloatsNode()
     {
         HOOKKF = AddOutput<HookKeyframesType>(0, "HOOK_KF");
-        FloatsStrength = AddInput<FloatsType>("floats_strength", required: true);
-        StartPercent = AddInput<FloatType>("start_percent", required: true);
+        FloatsStrength = AddInput<FloatsType>("floats_strength");
+        StartPercent = AddInput<FloatType>("start_percent");
         StartPercent.Set(0.0);
-        EndPercent = AddInput<FloatType>("end_percent", required: true);
+        EndPercent = AddInput<FloatType>("end_percent");
         EndPercent.Set(1.0);
-        PrintKeyframes = AddInput<BooleanType>("print_keyframes", required: true);
+        PrintKeyframes = AddInput<BooleanType>("print_keyframes");
         PrintKeyframes.Set(false);
-        PrevHookKf = AddInput<HookKeyframesType>("prev_hook_kf", required: false);
+        PrevHookKf = AddInput<HookKeyframesType>("prev_hook_kf");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

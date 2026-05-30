@@ -35,21 +35,21 @@ public sealed class WanFirstLastFrameToVideoNode : ComfyNode, ComfyTyped.Familie
         Positive = AddOutput<ConditioningType>(0, "positive");
         Negative = AddOutput<ConditioningType>(1, "negative");
         Latent = AddOutput<LatentType>(2, "latent");
-        PositiveInput = AddInput<ConditioningType>("positive", required: true);
-        NegativeInput = AddInput<ConditioningType>("negative", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        Width = AddInput<IntType>("width", required: true);
+        PositiveInput = AddInput<ConditioningType>("positive");
+        NegativeInput = AddInput<ConditioningType>("negative");
+        Vae = AddInput<VaeType>("vae");
+        Width = AddInput<IntType>("width");
         Width.Set(832L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(480L);
-        Length = AddInput<IntType>("length", required: true);
+        Length = AddInput<IntType>("length");
         Length.Set(81L);
-        BatchSize = AddInput<IntType>("batch_size", required: true);
+        BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
-        ClipVisionStartImage = AddInput<ClipVisionOutputType>("clip_vision_start_image", required: false);
-        ClipVisionEndImage = AddInput<ClipVisionOutputType>("clip_vision_end_image", required: false);
-        StartImage = AddInput<ImageType>("start_image", required: false);
-        EndImage = AddInput<ImageType>("end_image", required: false);
+        ClipVisionStartImage = AddInput<ClipVisionOutputType>("clip_vision_start_image");
+        ClipVisionEndImage = AddInput<ClipVisionOutputType>("clip_vision_end_image");
+        StartImage = AddInput<ImageType>("start_image");
+        EndImage = AddInput<ImageType>("end_image");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

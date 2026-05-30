@@ -33,24 +33,24 @@ public sealed class KSamplerAdvancedNode : ComfyNode
     public KSamplerAdvancedNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Model = AddInput<ModelType>("model", required: true);
-        AddNoise = AddInput<StringType>("add_noise", required: true);
-        NoiseSeed = AddInput<IntType>("noise_seed", required: true);
+        Model = AddInput<ModelType>("model");
+        AddNoise = AddInput<StringType>("add_noise");
+        NoiseSeed = AddInput<IntType>("noise_seed");
         NoiseSeed.Set(0L);
-        Steps = AddInput<IntType>("steps", required: true);
+        Steps = AddInput<IntType>("steps");
         Steps.Set(20L);
-        Cfg = AddInput<FloatType>("cfg", required: true);
+        Cfg = AddInput<FloatType>("cfg");
         Cfg.Set(8.0);
-        SamplerName = AddInput<StringType>("sampler_name", required: true);
-        Scheduler = AddInput<StringType>("scheduler", required: true);
-        Positive = AddInput<ConditioningType>("positive", required: true);
-        Negative = AddInput<ConditioningType>("negative", required: true);
-        LatentImage = AddInput<LatentType>("latent_image", required: true);
-        StartAtStep = AddInput<IntType>("start_at_step", required: true);
+        SamplerName = AddInput<StringType>("sampler_name");
+        Scheduler = AddInput<StringType>("scheduler");
+        Positive = AddInput<ConditioningType>("positive");
+        Negative = AddInput<ConditioningType>("negative");
+        LatentImage = AddInput<LatentType>("latent_image");
+        StartAtStep = AddInput<IntType>("start_at_step");
         StartAtStep.Set(0L);
-        EndAtStep = AddInput<IntType>("end_at_step", required: true);
+        EndAtStep = AddInput<IntType>("end_at_step");
         EndAtStep.Set(10000L);
-        ReturnWithLeftoverNoise = AddInput<StringType>("return_with_leftover_noise", required: true);
+        ReturnWithLeftoverNoise = AddInput<StringType>("return_with_leftover_noise");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

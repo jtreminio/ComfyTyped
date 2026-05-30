@@ -25,13 +25,13 @@ public sealed class RegexMatchNode : ComfyNode
     public RegexMatchNode()
     {
         Matches = AddOutput<BooleanType>(0, "matches");
-        String = AddInput<StringType>("string", required: true);
-        RegexPattern = AddInput<StringType>("regex_pattern", required: true);
-        CaseInsensitive = AddInput<BooleanType>("case_insensitive", required: true);
+        String = AddInput<StringType>("string");
+        RegexPattern = AddInput<StringType>("regex_pattern");
+        CaseInsensitive = AddInput<BooleanType>("case_insensitive");
         CaseInsensitive.Set(true);
-        Multiline = AddInput<BooleanType>("multiline", required: true);
+        Multiline = AddInput<BooleanType>("multiline");
         Multiline.Set(false);
-        Dotall = AddInput<BooleanType>("dotall", required: true);
+        Dotall = AddInput<BooleanType>("dotall");
         Dotall.Set(false);
     }
 

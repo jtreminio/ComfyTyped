@@ -23,10 +23,10 @@ public sealed class ReplaceTextNode : ComfyNode
     public ReplaceTextNode()
     {
         Texts = AddOutput<StringType>(0, "texts");
-        TextsInput = AddInput<StringType>("texts", required: true);
-        Find = AddInput<StringType>("find", required: true);
+        TextsInput = AddInput<StringType>("texts");
+        Find = AddInput<StringType>("find");
         Find.Set("");
-        Replace = AddInput<StringType>("replace", required: true);
+        Replace = AddInput<StringType>("replace");
         Replace.Set("");
     }
 

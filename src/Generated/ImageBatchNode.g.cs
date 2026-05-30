@@ -22,8 +22,8 @@ public sealed class ImageBatchNode : ComfyNode
     public ImageBatchNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image1 = AddInput<ImageType>("image1", required: true);
-        Image2 = AddInput<ImageType>("image2", required: true);
+        Image1 = AddInput<ImageType>("image1");
+        Image2 = AddInput<ImageType>("image2");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

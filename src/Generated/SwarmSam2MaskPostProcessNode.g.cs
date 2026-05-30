@@ -23,10 +23,10 @@ public sealed class SwarmSam2MaskPostProcessNode : ComfyNode
     public SwarmSam2MaskPostProcessNode()
     {
         Mask = AddOutput<MaskType>(0, "mask");
-        MaskInput = AddInput<MaskType>("mask", required: true);
-        FillHoles = AddInput<BooleanType>("fill_holes", required: false);
+        MaskInput = AddInput<MaskType>("mask");
+        FillHoles = AddInput<BooleanType>("fill_holes");
         FillHoles.Set(true);
-        HoleKernelSize = AddInput<IntType>("hole_kernel_size", required: false);
+        HoleKernelSize = AddInput<IntType>("hole_kernel_size");
         HoleKernelSize.Set(5L);
     }
 

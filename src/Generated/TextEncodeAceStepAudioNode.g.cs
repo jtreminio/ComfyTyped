@@ -24,10 +24,10 @@ public sealed class TextEncodeAceStepAudioNode : ComfyNode
     public TextEncodeAceStepAudioNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Clip = AddInput<ClipType>("clip", required: true);
-        Tags = AddInput<StringType>("tags", required: true);
-        Lyrics = AddInput<StringType>("lyrics", required: true);
-        LyricsStrength = AddInput<FloatType>("lyrics_strength", required: true);
+        Clip = AddInput<ClipType>("clip");
+        Tags = AddInput<StringType>("tags");
+        Lyrics = AddInput<StringType>("lyrics");
+        LyricsStrength = AddInput<FloatType>("lyrics_strength");
         LyricsStrength.Set(1.0);
     }
 

@@ -22,7 +22,7 @@ public sealed class MahiroNode : ComfyNode
     public MahiroNode()
     {
         PatchedModel = AddOutput<ModelType>(0, "patched_model");
-        Model = AddInput<ModelType>("model", required: true);
+        Model = AddInput<ModelType>("model");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

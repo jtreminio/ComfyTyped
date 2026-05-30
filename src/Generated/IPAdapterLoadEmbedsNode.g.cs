@@ -21,7 +21,7 @@ public sealed class IPAdapterLoadEmbedsNode : ComfyNode
     public IPAdapterLoadEmbedsNode()
     {
         EMBEDS = AddOutput<EmbedsType>(0, "EMBEDS");
-        Embeds = AddInput<StringType>("embeds", required: true);
+        Embeds = AddInput<StringType>("embeds");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

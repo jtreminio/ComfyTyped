@@ -23,9 +23,9 @@ public sealed class StringSubstringNode : ComfyNode
     public StringSubstringNode()
     {
         STRING = AddOutput<StringType>(0, "STRING");
-        String = AddInput<StringType>("string", required: true);
-        Start = AddInput<IntType>("start", required: true);
-        End = AddInput<IntType>("end", required: true);
+        String = AddInput<StringType>("string");
+        Start = AddInput<IntType>("start");
+        End = AddInput<IntType>("end");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

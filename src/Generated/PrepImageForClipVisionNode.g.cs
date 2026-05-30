@@ -24,10 +24,10 @@ public sealed class PrepImageForClipVisionNode : ComfyNode
     public PrepImageForClipVisionNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        Interpolation = AddInput<StringType>("interpolation", required: true);
-        CropPosition = AddInput<StringType>("crop_position", required: true);
-        Sharpening = AddInput<FloatType>("sharpening", required: true);
+        Image = AddInput<ImageType>("image");
+        Interpolation = AddInput<StringType>("interpolation");
+        CropPosition = AddInput<StringType>("crop_position");
+        Sharpening = AddInput<FloatType>("sharpening");
         Sharpening.Set(0.0);
     }
 

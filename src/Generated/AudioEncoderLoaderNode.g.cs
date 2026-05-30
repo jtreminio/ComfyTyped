@@ -21,7 +21,7 @@ public sealed class AudioEncoderLoaderNode : ComfyNode
     public AudioEncoderLoaderNode()
     {
         AUDIOENCODER = AddOutput<AudioEncoderType>(0, "AUDIO_ENCODER");
-        AudioEncoderName = AddInput<StringType>("audio_encoder_name", required: true);
+        AudioEncoderName = AddInput<StringType>("audio_encoder_name");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

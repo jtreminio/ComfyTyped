@@ -22,8 +22,8 @@ public sealed class VideoLinearCFGGuidanceNode : ComfyNode
     public VideoLinearCFGGuidanceNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        MinCfg = AddInput<FloatType>("min_cfg", required: true);
+        Model = AddInput<ModelType>("model");
+        MinCfg = AddInput<FloatType>("min_cfg");
         MinCfg.Set(1.0);
     }
 

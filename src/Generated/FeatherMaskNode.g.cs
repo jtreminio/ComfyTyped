@@ -25,14 +25,14 @@ public sealed class FeatherMaskNode : ComfyNode
     public FeatherMaskNode()
     {
         MASK = AddOutput<MaskType>(0, "MASK");
-        Mask = AddInput<MaskType>("mask", required: true);
-        Left = AddInput<IntType>("left", required: true);
+        Mask = AddInput<MaskType>("mask");
+        Left = AddInput<IntType>("left");
         Left.Set(0L);
-        Top = AddInput<IntType>("top", required: true);
+        Top = AddInput<IntType>("top");
         Top.Set(0L);
-        Right = AddInput<IntType>("right", required: true);
+        Right = AddInput<IntType>("right");
         Right.Set(0L);
-        Bottom = AddInput<IntType>("bottom", required: true);
+        Bottom = AddInput<IntType>("bottom");
         Bottom.Set(0L);
     }
 

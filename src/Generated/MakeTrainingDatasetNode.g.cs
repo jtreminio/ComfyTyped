@@ -26,10 +26,10 @@ public sealed class MakeTrainingDatasetNode : ComfyNode
     {
         Latents = AddOutput<LatentType>(0, "latents");
         Conditioning = AddOutput<ConditioningType>(1, "conditioning");
-        Images = AddInput<ImageType>("images", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        Clip = AddInput<ClipType>("clip", required: true);
-        Texts = AddInput<StringType>("texts", required: false);
+        Images = AddInput<ImageType>("images");
+        Vae = AddInput<VaeType>("vae");
+        Clip = AddInput<ClipType>("clip");
+        Texts = AddInput<StringType>("texts");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

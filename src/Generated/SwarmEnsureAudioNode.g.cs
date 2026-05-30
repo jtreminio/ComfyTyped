@@ -23,8 +23,8 @@ public sealed class SwarmEnsureAudioNode : ComfyNode
     public SwarmEnsureAudioNode()
     {
         AUDIO = AddOutput<AudioType>(0, "AUDIO");
-        Audio = AddInput<AudioType>("audio", required: true);
-        TargetDuration = AddInput<FloatType>("target_duration", required: true);
+        Audio = AddInput<AudioType>("audio");
+        TargetDuration = AddInput<FloatType>("target_duration");
         TargetDuration.Set(0.0);
     }
 

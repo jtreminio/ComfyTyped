@@ -26,16 +26,16 @@ public sealed class TTPlanetTileGFPreprocessorNode : ComfyNode
     public TTPlanetTileGFPreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        ScaleFactor = AddInput<FloatType>("scale_factor", required: false);
+        Image = AddInput<ImageType>("image");
+        ScaleFactor = AddInput<FloatType>("scale_factor");
         ScaleFactor.Set(1.0);
-        BlurStrength = AddInput<FloatType>("blur_strength", required: false);
+        BlurStrength = AddInput<FloatType>("blur_strength");
         BlurStrength.Set(2.0);
-        Radius = AddInput<IntType>("radius", required: false);
+        Radius = AddInput<IntType>("radius");
         Radius.Set(7L);
-        Eps = AddInput<FloatType>("eps", required: false);
+        Eps = AddInput<FloatType>("eps");
         Eps.Set(0.01);
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

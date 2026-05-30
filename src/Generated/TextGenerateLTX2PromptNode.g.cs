@@ -29,18 +29,18 @@ public sealed class TextGenerateLTX2PromptNode : ComfyNode
     public TextGenerateLTX2PromptNode()
     {
         GeneratedText = AddOutput<StringType>(0, "generated_text");
-        Clip = AddInput<ClipType>("clip", required: true);
-        Prompt = AddInput<StringType>("prompt", required: true);
+        Clip = AddInput<ClipType>("clip");
+        Prompt = AddInput<StringType>("prompt");
         Prompt.Set("");
-        MaxLength = AddInput<IntType>("max_length", required: true);
+        MaxLength = AddInput<IntType>("max_length");
         MaxLength.Set(256L);
-        SamplingMode = AddInput<StringType>("sampling_mode", required: true);
-        Image = AddInput<ImageType>("image", required: false);
-        Video = AddInput<ImageType>("video", required: false);
-        Audio = AddInput<AudioType>("audio", required: false);
-        Thinking = AddInput<BooleanType>("thinking", required: false);
+        SamplingMode = AddInput<StringType>("sampling_mode");
+        Image = AddInput<ImageType>("image");
+        Video = AddInput<ImageType>("video");
+        Audio = AddInput<AudioType>("audio");
+        Thinking = AddInput<BooleanType>("thinking");
         Thinking.Set(false);
-        UseDefaultTemplate = AddInput<BooleanType>("use_default_template", required: false);
+        UseDefaultTemplate = AddInput<BooleanType>("use_default_template");
         UseDefaultTemplate.Set(true);
     }
 

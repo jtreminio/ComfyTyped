@@ -25,8 +25,8 @@ public sealed class SwarmCleanOverlapMasksNode : ComfyNode
     {
         MASK = AddOutput<MaskType>(0, "MASK");
         MASK2 = AddOutput<MaskType>(1, "MASK");
-        MaskA = AddInput<MaskType>("mask_a", required: true);
-        MaskB = AddInput<MaskType>("mask_b", required: true);
+        MaskA = AddInput<MaskType>("mask_a");
+        MaskB = AddInput<MaskType>("mask_b");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

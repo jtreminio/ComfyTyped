@@ -21,7 +21,7 @@ public sealed class SamplerLMSNode : ComfyNode
     public SamplerLMSNode()
     {
         SAMPLER = AddOutput<SamplerType>(0, "SAMPLER");
-        Order = AddInput<IntType>("order", required: true);
+        Order = AddInput<IntType>("order");
         Order.Set(4L);
     }
 

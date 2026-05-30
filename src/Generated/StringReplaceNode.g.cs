@@ -23,9 +23,9 @@ public sealed class StringReplaceNode : ComfyNode
     public StringReplaceNode()
     {
         STRING = AddOutput<StringType>(0, "STRING");
-        String = AddInput<StringType>("string", required: true);
-        Find = AddInput<StringType>("find", required: true);
-        Replace = AddInput<StringType>("replace", required: true);
+        String = AddInput<StringType>("string");
+        Find = AddInput<StringType>("find");
+        Replace = AddInput<StringType>("replace");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

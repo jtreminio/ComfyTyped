@@ -18,8 +18,8 @@ public sealed class LossGraphNodeNode : ComfyNode
 
     public LossGraphNodeNode()
     {
-        Loss = AddInput<LossMapType>("loss", required: true);
-        FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
+        Loss = AddInput<LossMapType>("loss");
+        FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("loss_graph");
     }
 

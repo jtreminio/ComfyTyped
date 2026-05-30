@@ -22,8 +22,8 @@ public sealed class ModelNoiseScaleNode : ComfyNode
     public ModelNoiseScaleNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        NoiseScale = AddInput<FloatType>("noise_scale", required: true);
+        Model = AddInput<ModelType>("model");
+        NoiseScale = AddInput<FloatType>("noise_scale");
         NoiseScale.Set(1.0);
     }
 

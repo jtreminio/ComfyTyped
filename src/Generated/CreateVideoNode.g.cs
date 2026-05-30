@@ -24,10 +24,10 @@ public sealed class CreateVideoNode : ComfyNode
     public CreateVideoNode()
     {
         VIDEO = AddOutput<VideoType>(0, "VIDEO");
-        Images = AddInput<ImageType>("images", required: true);
-        Fps = AddInput<FloatType>("fps", required: true);
+        Images = AddInput<ImageType>("images");
+        Fps = AddInput<FloatType>("fps");
         Fps.Set(30.0);
-        Audio = AddInput<AudioType>("audio", required: false);
+        Audio = AddInput<AudioType>("audio");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

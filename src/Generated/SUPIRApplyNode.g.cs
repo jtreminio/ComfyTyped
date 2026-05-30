@@ -28,17 +28,17 @@ public sealed class SUPIRApplyNode : ComfyNode
     public SUPIRApplyNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        ModelPatch = AddInput<ModelPatchType>("model_patch", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        Image = AddInput<ImageType>("image", required: true);
-        StrengthStart = AddInput<FloatType>("strength_start", required: true);
+        Model = AddInput<ModelType>("model");
+        ModelPatch = AddInput<ModelPatchType>("model_patch");
+        Vae = AddInput<VaeType>("vae");
+        Image = AddInput<ImageType>("image");
+        StrengthStart = AddInput<FloatType>("strength_start");
         StrengthStart.Set(1.0);
-        StrengthEnd = AddInput<FloatType>("strength_end", required: true);
+        StrengthEnd = AddInput<FloatType>("strength_end");
         StrengthEnd.Set(1.0);
-        RestoreCfg = AddInput<FloatType>("restore_cfg", required: true);
+        RestoreCfg = AddInput<FloatType>("restore_cfg");
         RestoreCfg.Set(4.0);
-        RestoreCfgSTmin = AddInput<FloatType>("restore_cfg_s_tmin", required: true);
+        RestoreCfgSTmin = AddInput<FloatType>("restore_cfg_s_tmin");
         RestoreCfgSTmin.Set(0.05);
     }
 

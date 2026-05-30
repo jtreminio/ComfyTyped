@@ -24,13 +24,13 @@ public sealed class EmptyHunyuanVideo15LatentNode : ComfyNode
     public EmptyHunyuanVideo15LatentNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Width = AddInput<IntType>("width", required: true);
+        Width = AddInput<IntType>("width");
         Width.Set(848L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(480L);
-        Length = AddInput<IntType>("length", required: true);
+        Length = AddInput<IntType>("length");
         Length.Set(25L);
-        BatchSize = AddInput<IntType>("batch_size", required: true);
+        BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
     }
 

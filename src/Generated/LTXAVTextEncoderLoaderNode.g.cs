@@ -28,9 +28,9 @@ public sealed class LTXAVTextEncoderLoaderNode : ComfyNode
     public LTXAVTextEncoderLoaderNode()
     {
         CLIP = AddOutput<ClipType>(0, "CLIP");
-        TextEncoder = AddInput<StringType>("text_encoder", required: true);
-        CkptName = AddInput<StringType>("ckpt_name", required: true);
-        Device = AddInput<StringType>("device", required: true);
+        TextEncoder = AddInput<StringType>("text_encoder");
+        CkptName = AddInput<StringType>("ckpt_name");
+        Device = AddInput<StringType>("device");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

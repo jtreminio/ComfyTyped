@@ -24,10 +24,10 @@ public sealed class SwarmMaskThresholdNode : ComfyNode
     public SwarmMaskThresholdNode()
     {
         MASK = AddOutput<MaskType>(0, "MASK");
-        Mask = AddInput<MaskType>("mask", required: true);
-        Min = AddInput<FloatType>("min", required: true);
+        Mask = AddInput<MaskType>("mask");
+        Min = AddInput<FloatType>("min");
         Min.Set(0.2);
-        Max = AddInput<FloatType>("max", required: true);
+        Max = AddInput<FloatType>("max");
         Max.Set(0.8);
     }
 

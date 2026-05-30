@@ -25,7 +25,7 @@ public sealed class ImageRGBToYUVNode : ComfyNode
         Y = AddOutput<ImageType>(0, "Y");
         U = AddOutput<ImageType>(1, "U");
         V = AddOutput<ImageType>(2, "V");
-        Image = AddInput<ImageType>("image", required: true);
+        Image = AddInput<ImageType>("image");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -22,8 +22,8 @@ public sealed class LatentFlipNode : ComfyNode
     public LatentFlipNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Samples = AddInput<LatentType>("samples", required: true);
-        FlipMethod = AddInput<StringType>("flip_method", required: true);
+        Samples = AddInput<LatentType>("samples");
+        FlipMethod = AddInput<StringType>("flip_method");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

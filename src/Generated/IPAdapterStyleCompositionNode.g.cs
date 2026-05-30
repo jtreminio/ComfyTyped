@@ -34,26 +34,26 @@ public sealed class IPAdapterStyleCompositionNode : ComfyNode
     public IPAdapterStyleCompositionNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        Ipadapter = AddInput<IpAdapterType>("ipadapter", required: true);
-        ImageStyle = AddInput<ImageType>("image_style", required: true);
-        ImageComposition = AddInput<ImageType>("image_composition", required: true);
-        WeightStyle = AddInput<FloatType>("weight_style", required: true);
+        Model = AddInput<ModelType>("model");
+        Ipadapter = AddInput<IpAdapterType>("ipadapter");
+        ImageStyle = AddInput<ImageType>("image_style");
+        ImageComposition = AddInput<ImageType>("image_composition");
+        WeightStyle = AddInput<FloatType>("weight_style");
         WeightStyle.Set(1.0);
-        WeightComposition = AddInput<FloatType>("weight_composition", required: true);
+        WeightComposition = AddInput<FloatType>("weight_composition");
         WeightComposition.Set(1.0);
-        ExpandStyle = AddInput<BooleanType>("expand_style", required: true);
+        ExpandStyle = AddInput<BooleanType>("expand_style");
         ExpandStyle.Set(false);
-        CombineEmbeds = AddInput<StringType>("combine_embeds", required: true);
+        CombineEmbeds = AddInput<StringType>("combine_embeds");
         CombineEmbeds.Set("average");
-        StartAt = AddInput<FloatType>("start_at", required: true);
+        StartAt = AddInput<FloatType>("start_at");
         StartAt.Set(0.0);
-        EndAt = AddInput<FloatType>("end_at", required: true);
+        EndAt = AddInput<FloatType>("end_at");
         EndAt.Set(1.0);
-        EmbedsScaling = AddInput<StringType>("embeds_scaling", required: true);
-        ImageNegative = AddInput<ImageType>("image_negative", required: false);
-        AttnMask = AddInput<MaskType>("attn_mask", required: false);
-        ClipVision = AddInput<ClipVisionType>("clip_vision", required: false);
+        EmbedsScaling = AddInput<StringType>("embeds_scaling");
+        ImageNegative = AddInput<ImageType>("image_negative");
+        AttnMask = AddInput<MaskType>("attn_mask");
+        ClipVision = AddInput<ClipVisionType>("clip_vision");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -24,11 +24,11 @@ public sealed class ModelSamplingContinuousEDMNode : ComfyNode
     public ModelSamplingContinuousEDMNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        Sampling = AddInput<StringType>("sampling", required: true);
-        SigmaMax = AddInput<FloatType>("sigma_max", required: true);
+        Model = AddInput<ModelType>("model");
+        Sampling = AddInput<StringType>("sampling");
+        SigmaMax = AddInput<FloatType>("sigma_max");
         SigmaMax.Set(120.0);
-        SigmaMin = AddInput<FloatType>("sigma_min", required: true);
+        SigmaMin = AddInput<FloatType>("sigma_min");
         SigmaMin.Set(0.002);
     }
 

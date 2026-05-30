@@ -26,15 +26,15 @@ public sealed class VOIDWarpedNoiseNode : ComfyNode
     public VOIDWarpedNoiseNode()
     {
         WarpedNoise = AddOutput<LatentType>(0, "warped_noise");
-        OpticalFlow = AddInput<OpticalFlowType>("optical_flow", required: true);
-        Video = AddInput<ImageType>("video", required: true);
-        Width = AddInput<IntType>("width", required: true);
+        OpticalFlow = AddInput<OpticalFlowType>("optical_flow");
+        Video = AddInput<ImageType>("video");
+        Width = AddInput<IntType>("width");
         Width.Set(672L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(384L);
-        Length = AddInput<IntType>("length", required: true);
+        Length = AddInput<IntType>("length");
         Length.Set(45L);
-        BatchSize = AddInput<IntType>("batch_size", required: true);
+        BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
     }
 

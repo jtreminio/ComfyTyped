@@ -21,7 +21,7 @@ public sealed class GLIGENLoaderNode : ComfyNode
     public GLIGENLoaderNode()
     {
         GLIGEN = AddOutput<GligenType>(0, "GLIGEN");
-        GligenName = AddInput<StringType>("gligen_name", required: true);
+        GligenName = AddInput<StringType>("gligen_name");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

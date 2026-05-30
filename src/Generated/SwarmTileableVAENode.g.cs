@@ -23,8 +23,8 @@ public sealed class SwarmTileableVAENode : ComfyNode
     public SwarmTileableVAENode()
     {
         VAE = AddOutput<VaeType>(0, "VAE");
-        Vae = AddInput<VaeType>("vae", required: true);
-        TileAxis = AddInput<StringType>("tile_axis", required: false);
+        Vae = AddInput<VaeType>("vae");
+        TileAxis = AddInput<StringType>("tile_axis");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

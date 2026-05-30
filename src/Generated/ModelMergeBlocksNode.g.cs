@@ -25,13 +25,13 @@ public sealed class ModelMergeBlocksNode : ComfyNode
     public ModelMergeBlocksNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model1 = AddInput<ModelType>("model1", required: true);
-        Model2 = AddInput<ModelType>("model2", required: true);
-        Input = AddInput<FloatType>("input", required: true);
+        Model1 = AddInput<ModelType>("model1");
+        Model2 = AddInput<ModelType>("model2");
+        Input = AddInput<FloatType>("input");
         Input.Set(1.0);
-        Middle = AddInput<FloatType>("middle", required: true);
+        Middle = AddInput<FloatType>("middle");
         Middle.Set(1.0);
-        Out = AddInput<FloatType>("out", required: true);
+        Out = AddInput<FloatType>("out");
         Out.Set(1.0);
     }
 

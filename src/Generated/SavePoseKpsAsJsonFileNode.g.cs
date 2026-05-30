@@ -18,8 +18,8 @@ public sealed class SavePoseKpsAsJsonFileNode : ComfyNode
 
     public SavePoseKpsAsJsonFileNode()
     {
-        PoseKps = AddInput<PoseKeypointType>("pose_kps", required: true);
-        FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
+        PoseKps = AddInput<PoseKeypointType>("pose_kps");
+        FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("PoseKeypoint");
     }
 

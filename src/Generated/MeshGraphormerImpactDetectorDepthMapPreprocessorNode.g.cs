@@ -33,25 +33,25 @@ public sealed class MeshGraphormerImpactDetectorDepthMapPreprocessorNode : Comfy
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
         INPAINTINGMASK = AddOutput<MaskType>(1, "INPAINTING_MASK");
-        Image = AddInput<ImageType>("image", required: true);
-        BboxDetector = AddInput<BboxDetectorType>("bbox_detector", required: true);
-        BboxThreshold = AddInput<FloatType>("bbox_threshold", required: false);
+        Image = AddInput<ImageType>("image");
+        BboxDetector = AddInput<BboxDetectorType>("bbox_detector");
+        BboxThreshold = AddInput<FloatType>("bbox_threshold");
         BboxThreshold.Set(0.5);
-        BboxDilation = AddInput<IntType>("bbox_dilation", required: false);
+        BboxDilation = AddInput<IntType>("bbox_dilation");
         BboxDilation.Set(10L);
-        BboxCropFactor = AddInput<FloatType>("bbox_crop_factor", required: false);
+        BboxCropFactor = AddInput<FloatType>("bbox_crop_factor");
         BboxCropFactor.Set(3.0);
-        DropSize = AddInput<IntType>("drop_size", required: false);
+        DropSize = AddInput<IntType>("drop_size");
         DropSize.Set(10L);
-        MaskBboxPadding = AddInput<IntType>("mask_bbox_padding", required: false);
+        MaskBboxPadding = AddInput<IntType>("mask_bbox_padding");
         MaskBboxPadding.Set(30L);
-        MaskType = AddInput<StringType>("mask_type", required: false);
+        MaskType = AddInput<StringType>("mask_type");
         MaskType.Set("based_on_depth");
-        MaskExpand = AddInput<IntType>("mask_expand", required: false);
+        MaskExpand = AddInput<IntType>("mask_expand");
         MaskExpand.Set(5L);
-        RandSeed = AddInput<IntType>("rand_seed", required: false);
+        RandSeed = AddInput<IntType>("rand_seed");
         RandSeed.Set(88L);
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

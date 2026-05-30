@@ -24,11 +24,11 @@ public sealed class LatentCutNode : ComfyNode
     public LatentCutNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Samples = AddInput<LatentType>("samples", required: true);
-        Dim = AddInput<StringType>("dim", required: true);
-        Index = AddInput<IntType>("index", required: true);
+        Samples = AddInput<LatentType>("samples");
+        Dim = AddInput<StringType>("dim");
+        Index = AddInput<IntType>("index");
         Index.Set(0L);
-        Amount = AddInput<IntType>("amount", required: true);
+        Amount = AddInput<IntType>("amount");
         Amount.Set(1L);
     }
 

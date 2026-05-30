@@ -28,20 +28,20 @@ public sealed class SDPoseDrawKeypointsNode : ComfyNode
     public SDPoseDrawKeypointsNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Keypoints = AddInput<PoseKeypointType>("keypoints", required: true);
-        DrawBody = AddInput<BooleanType>("draw_body", required: true);
+        Keypoints = AddInput<PoseKeypointType>("keypoints");
+        DrawBody = AddInput<BooleanType>("draw_body");
         DrawBody.Set(true);
-        DrawHands = AddInput<BooleanType>("draw_hands", required: true);
+        DrawHands = AddInput<BooleanType>("draw_hands");
         DrawHands.Set(true);
-        DrawFace = AddInput<BooleanType>("draw_face", required: true);
+        DrawFace = AddInput<BooleanType>("draw_face");
         DrawFace.Set(true);
-        DrawFeet = AddInput<BooleanType>("draw_feet", required: true);
+        DrawFeet = AddInput<BooleanType>("draw_feet");
         DrawFeet.Set(false);
-        StickWidth = AddInput<IntType>("stick_width", required: true);
+        StickWidth = AddInput<IntType>("stick_width");
         StickWidth.Set(4L);
-        FacePointSize = AddInput<IntType>("face_point_size", required: true);
+        FacePointSize = AddInput<IntType>("face_point_size");
         FacePointSize.Set(3L);
-        ScoreThreshold = AddInput<FloatType>("score_threshold", required: true);
+        ScoreThreshold = AddInput<FloatType>("score_threshold");
         ScoreThreshold.Set(0.3);
     }
 

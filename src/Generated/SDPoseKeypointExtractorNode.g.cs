@@ -26,12 +26,12 @@ public sealed class SDPoseKeypointExtractorNode : ComfyNode
     public SDPoseKeypointExtractorNode()
     {
         Keypoints = AddOutput<PoseKeypointType>(0, "keypoints");
-        Model = AddInput<ModelType>("model", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        Image = AddInput<ImageType>("image", required: true);
-        BatchSize = AddInput<IntType>("batch_size", required: true);
+        Model = AddInput<ModelType>("model");
+        Vae = AddInput<VaeType>("vae");
+        Image = AddInput<ImageType>("image");
+        BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(16L);
-        Bboxes = AddInput<BoundingBoxType>("bboxes", required: false);
+        Bboxes = AddInput<BoundingBoxType>("bboxes");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

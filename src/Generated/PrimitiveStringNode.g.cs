@@ -21,7 +21,7 @@ public sealed class PrimitiveStringNode : ComfyNode
     public PrimitiveStringNode()
     {
         STRING = AddOutput<StringType>(0, "STRING");
-        Value = AddInput<StringType>("value", required: true);
+        Value = AddInput<StringType>("value");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

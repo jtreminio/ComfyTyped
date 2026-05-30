@@ -23,9 +23,9 @@ public sealed class LTXVLatentUpsamplerNode : ComfyNode
     public LTXVLatentUpsamplerNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Samples = AddInput<LatentType>("samples", required: true);
-        UpscaleModel = AddInput<LatentUpscaleModelType>("upscale_model", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
+        Samples = AddInput<LatentType>("samples");
+        UpscaleModel = AddInput<LatentUpscaleModelType>("upscale_model");
+        Vae = AddInput<VaeType>("vae");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

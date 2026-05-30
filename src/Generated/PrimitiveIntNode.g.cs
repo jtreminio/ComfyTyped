@@ -21,7 +21,7 @@ public sealed class PrimitiveIntNode : ComfyNode
     public PrimitiveIntNode()
     {
         INT = AddOutput<IntType>(0, "INT");
-        Value = AddInput<IntType>("value", required: true);
+        Value = AddInput<IntType>("value");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

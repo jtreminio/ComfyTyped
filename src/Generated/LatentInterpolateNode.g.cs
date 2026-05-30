@@ -23,9 +23,9 @@ public sealed class LatentInterpolateNode : ComfyNode
     public LatentInterpolateNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Samples1 = AddInput<LatentType>("samples1", required: true);
-        Samples2 = AddInput<LatentType>("samples2", required: true);
-        Ratio = AddInput<FloatType>("ratio", required: true);
+        Samples1 = AddInput<LatentType>("samples1");
+        Samples2 = AddInput<LatentType>("samples2");
+        Ratio = AddInput<FloatType>("ratio");
         Ratio.Set(1.0);
     }
 

@@ -24,11 +24,11 @@ public sealed class VAEDecodeHunyuan3DNode : ComfyNode
     public VAEDecodeHunyuan3DNode()
     {
         VOXEL = AddOutput<VoxelType>(0, "VOXEL");
-        Samples = AddInput<LatentType>("samples", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        NumChunks = AddInput<IntType>("num_chunks", required: true);
+        Samples = AddInput<LatentType>("samples");
+        Vae = AddInput<VaeType>("vae");
+        NumChunks = AddInput<IntType>("num_chunks");
         NumChunks.Set(8000L);
-        OctreeResolution = AddInput<IntType>("octree_resolution", required: true);
+        OctreeResolution = AddInput<IntType>("octree_resolution");
         OctreeResolution.Set(256L);
     }
 

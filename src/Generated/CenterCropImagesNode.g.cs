@@ -23,10 +23,10 @@ public sealed class CenterCropImagesNode : ComfyNode
     public CenterCropImagesNode()
     {
         Images = AddOutput<ImageType>(0, "images");
-        ImagesInput = AddInput<ImageType>("images", required: true);
-        Width = AddInput<IntType>("width", required: true);
+        ImagesInput = AddInput<ImageType>("images");
+        Width = AddInput<IntType>("width");
         Width.Set(512L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(512L);
     }
 

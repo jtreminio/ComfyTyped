@@ -24,10 +24,10 @@ public sealed class TrimAudioDurationNode : ComfyNode
     public TrimAudioDurationNode()
     {
         AUDIO = AddOutput<AudioType>(0, "AUDIO");
-        Audio = AddInput<AudioType>("audio", required: true);
-        StartIndex = AddInput<FloatType>("start_index", required: true);
+        Audio = AddInput<AudioType>("audio");
+        StartIndex = AddInput<FloatType>("start_index");
         StartIndex.Set(0.0);
-        Duration = AddInput<FloatType>("duration", required: true);
+        Duration = AddInput<FloatType>("duration");
         Duration.Set(60.0);
     }
 

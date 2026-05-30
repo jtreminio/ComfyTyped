@@ -23,10 +23,10 @@ public sealed class SDPoseFaceBBoxesNode : ComfyNode
     public SDPoseFaceBBoxesNode()
     {
         Bboxes = AddOutput<BoundingBoxType>(0, "bboxes");
-        Keypoints = AddInput<PoseKeypointType>("keypoints", required: true);
-        Scale = AddInput<FloatType>("scale", required: true);
+        Keypoints = AddInput<PoseKeypointType>("keypoints");
+        Scale = AddInput<FloatType>("scale");
         Scale.Set(1.5);
-        ForceSquare = AddInput<BooleanType>("force_square", required: true);
+        ForceSquare = AddInput<BooleanType>("force_square");
         ForceSquare.Set(true);
     }
 

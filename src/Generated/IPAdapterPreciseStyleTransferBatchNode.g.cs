@@ -32,22 +32,22 @@ public sealed class IPAdapterPreciseStyleTransferBatchNode : ComfyNode
     public IPAdapterPreciseStyleTransferBatchNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        Ipadapter = AddInput<IpAdapterType>("ipadapter", required: true);
-        Image = AddInput<ImageType>("image", required: true);
-        Weight = AddInput<FloatType>("weight", required: true);
+        Model = AddInput<ModelType>("model");
+        Ipadapter = AddInput<IpAdapterType>("ipadapter");
+        Image = AddInput<ImageType>("image");
+        Weight = AddInput<FloatType>("weight");
         Weight.Set(1.0);
-        StyleBoost = AddInput<FloatType>("style_boost", required: true);
+        StyleBoost = AddInput<FloatType>("style_boost");
         StyleBoost.Set(1.0);
-        CombineEmbeds = AddInput<StringType>("combine_embeds", required: true);
-        StartAt = AddInput<FloatType>("start_at", required: true);
+        CombineEmbeds = AddInput<StringType>("combine_embeds");
+        StartAt = AddInput<FloatType>("start_at");
         StartAt.Set(0.0);
-        EndAt = AddInput<FloatType>("end_at", required: true);
+        EndAt = AddInput<FloatType>("end_at");
         EndAt.Set(1.0);
-        EmbedsScaling = AddInput<StringType>("embeds_scaling", required: true);
-        ImageNegative = AddInput<ImageType>("image_negative", required: false);
-        AttnMask = AddInput<MaskType>("attn_mask", required: false);
-        ClipVision = AddInput<ClipVisionType>("clip_vision", required: false);
+        EmbedsScaling = AddInput<StringType>("embeds_scaling");
+        ImageNegative = AddInput<ImageType>("image_negative");
+        AttnMask = AddInput<MaskType>("attn_mask");
+        ClipVision = AddInput<ClipVisionType>("clip_vision");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

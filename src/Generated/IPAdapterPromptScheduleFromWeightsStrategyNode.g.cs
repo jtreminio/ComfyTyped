@@ -22,8 +22,8 @@ public sealed class IPAdapterPromptScheduleFromWeightsStrategyNode : ComfyNode
     public IPAdapterPromptScheduleFromWeightsStrategyNode()
     {
         PromptSchedule = AddOutput<StringType>(0, "prompt_schedule");
-        WeightsStrategy = AddInput<WeightsStrategyType>("weights_strategy", required: true);
-        Prompt = AddInput<StringType>("prompt", required: true);
+        WeightsStrategy = AddInput<WeightsStrategyType>("weights_strategy");
+        Prompt = AddInput<StringType>("prompt");
         Prompt.Set("");
     }
 

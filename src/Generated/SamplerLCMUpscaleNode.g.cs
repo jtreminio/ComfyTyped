@@ -23,11 +23,11 @@ public sealed class SamplerLCMUpscaleNode : ComfyNode
     public SamplerLCMUpscaleNode()
     {
         SAMPLER = AddOutput<SamplerType>(0, "SAMPLER");
-        ScaleRatio = AddInput<FloatType>("scale_ratio", required: true);
+        ScaleRatio = AddInput<FloatType>("scale_ratio");
         ScaleRatio.Set(1.0);
-        ScaleSteps = AddInput<IntType>("scale_steps", required: true);
+        ScaleSteps = AddInput<IntType>("scale_steps");
         ScaleSteps.Set(-1L);
-        UpscaleMethod = AddInput<StringType>("upscale_method", required: true);
+        UpscaleMethod = AddInput<StringType>("upscale_method");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -25,10 +25,10 @@ public sealed class AnimeFaceSemSegPreprocessorNode : ComfyNode
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
         ABGCHARACTERMASKMASK = AddOutput<MaskType>(1, "ABG_CHARACTER_MASK (MASK)");
-        Image = AddInput<ImageType>("image", required: true);
-        RemoveBackgroundUsingAbg = AddInput<BooleanType>("remove_background_using_abg", required: false);
+        Image = AddInput<ImageType>("image");
+        RemoveBackgroundUsingAbg = AddInput<BooleanType>("remove_background_using_abg");
         RemoveBackgroundUsingAbg.Set(true);
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

@@ -33,28 +33,28 @@ public sealed class SwarmInputFloatNode : ComfyNode
     public SwarmInputFloatNode()
     {
         FLOAT = AddOutput<FloatType>(0, "FLOAT");
-        Title = AddInput<StringType>("title", required: true);
+        Title = AddInput<StringType>("title");
         Title.Set("My Floating-Point Number");
-        Value = AddInput<FloatType>("value", required: true);
+        Value = AddInput<FloatType>("value");
         Value.Set(0.0);
-        Step = AddInput<FloatType>("step", required: true);
+        Step = AddInput<FloatType>("step");
         Step.Set(0.1);
-        Min = AddInput<FloatType>("min", required: true);
+        Min = AddInput<FloatType>("min");
         Min.Set(0.0);
-        Max = AddInput<FloatType>("max", required: true);
+        Max = AddInput<FloatType>("max");
         Max.Set(100.0);
-        ViewMax = AddInput<FloatType>("view_max", required: true);
+        ViewMax = AddInput<FloatType>("view_max");
         ViewMax.Set(100.0);
-        ViewType = AddInput<StringType>("view_type", required: true);
-        Description = AddInput<StringType>("description", required: true);
+        ViewType = AddInput<StringType>("view_type");
+        Description = AddInput<StringType>("description");
         Description.Set("");
-        OrderPriority = AddInput<FloatType>("order_priority", required: true);
+        OrderPriority = AddInput<FloatType>("order_priority");
         OrderPriority.Set(0.0);
-        IsAdvanced = AddInput<BooleanType>("is_advanced", required: true);
+        IsAdvanced = AddInput<BooleanType>("is_advanced");
         IsAdvanced.Set(false);
-        RawId = AddInput<StringType>("raw_id", required: true);
+        RawId = AddInput<StringType>("raw_id");
         RawId.Set("");
-        Group = AddInput<GroupType>("group", required: false);
+        Group = AddInput<GroupType>("group");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -23,10 +23,10 @@ public sealed class PiDiNetPreprocessorNode : ComfyNode
     public PiDiNetPreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        Safe = AddInput<StringType>("safe", required: false);
+        Image = AddInput<ImageType>("image");
+        Safe = AddInput<StringType>("safe");
         Safe.Set("enable");
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

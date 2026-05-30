@@ -24,12 +24,12 @@ public sealed class CannyEdgePreprocessorNode : ComfyNode
     public CannyEdgePreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        LowThreshold = AddInput<IntType>("low_threshold", required: false);
+        Image = AddInput<ImageType>("image");
+        LowThreshold = AddInput<IntType>("low_threshold");
         LowThreshold.Set(100L);
-        HighThreshold = AddInput<IntType>("high_threshold", required: false);
+        HighThreshold = AddInput<IntType>("high_threshold");
         HighThreshold.Set(200L);
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

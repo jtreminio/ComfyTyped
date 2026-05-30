@@ -29,14 +29,14 @@ public sealed class PairConditioningSetPropertiesNode : ComfyNode
     {
         Positive = AddOutput<ConditioningType>(0, "positive");
         Negative = AddOutput<ConditioningType>(1, "negative");
-        PositiveNEW = AddInput<ConditioningType>("positive_NEW", required: true);
-        NegativeNEW = AddInput<ConditioningType>("negative_NEW", required: true);
-        Strength = AddInput<FloatType>("strength", required: true);
+        PositiveNEW = AddInput<ConditioningType>("positive_NEW");
+        NegativeNEW = AddInput<ConditioningType>("negative_NEW");
+        Strength = AddInput<FloatType>("strength");
         Strength.Set(1.0);
-        SetCondArea = AddInput<StringType>("set_cond_area", required: true);
-        Mask = AddInput<MaskType>("mask", required: false);
-        Hooks = AddInput<HooksType>("hooks", required: false);
-        Timesteps = AddInput<TimestepsRangeType>("timesteps", required: false);
+        SetCondArea = AddInput<StringType>("set_cond_area");
+        Mask = AddInput<MaskType>("mask");
+        Hooks = AddInput<HooksType>("hooks");
+        Timesteps = AddInput<TimestepsRangeType>("timesteps");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

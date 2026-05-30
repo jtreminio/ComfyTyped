@@ -23,9 +23,9 @@ public sealed class ImageYUVToRGBNode : ComfyNode
     public ImageYUVToRGBNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Y = AddInput<ImageType>("Y", required: true);
-        U = AddInput<ImageType>("U", required: true);
-        V = AddInput<ImageType>("V", required: true);
+        Y = AddInput<ImageType>("Y");
+        U = AddInput<ImageType>("U");
+        V = AddInput<ImageType>("V");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

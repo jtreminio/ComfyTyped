@@ -28,20 +28,20 @@ public sealed class ConditioningSetAreaPercentageVideoNode : ComfyNode
     public ConditioningSetAreaPercentageVideoNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Conditioning = AddInput<ConditioningType>("conditioning", required: true);
-        Width = AddInput<FloatType>("width", required: true);
+        Conditioning = AddInput<ConditioningType>("conditioning");
+        Width = AddInput<FloatType>("width");
         Width.Set(1.0);
-        Height = AddInput<FloatType>("height", required: true);
+        Height = AddInput<FloatType>("height");
         Height.Set(1.0);
-        Temporal = AddInput<FloatType>("temporal", required: true);
+        Temporal = AddInput<FloatType>("temporal");
         Temporal.Set(1.0);
-        X = AddInput<FloatType>("x", required: true);
+        X = AddInput<FloatType>("x");
         X.Set(0.0);
-        Y = AddInput<FloatType>("y", required: true);
+        Y = AddInput<FloatType>("y");
         Y.Set(0.0);
-        Z = AddInput<FloatType>("z", required: true);
+        Z = AddInput<FloatType>("z");
         Z.Set(0.0);
-        Strength = AddInput<FloatType>("strength", required: true);
+        Strength = AddInput<FloatType>("strength");
         Strength.Set(1.0);
     }
 

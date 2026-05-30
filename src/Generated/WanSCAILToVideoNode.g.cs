@@ -37,26 +37,26 @@ public sealed class WanSCAILToVideoNode : ComfyNode
         Positive = AddOutput<ConditioningType>(0, "positive");
         Negative = AddOutput<ConditioningType>(1, "negative");
         Latent = AddOutput<LatentType>(2, "latent");
-        PositiveInput = AddInput<ConditioningType>("positive", required: true);
-        NegativeInput = AddInput<ConditioningType>("negative", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        Width = AddInput<IntType>("width", required: true);
+        PositiveInput = AddInput<ConditioningType>("positive");
+        NegativeInput = AddInput<ConditioningType>("negative");
+        Vae = AddInput<VaeType>("vae");
+        Width = AddInput<IntType>("width");
         Width.Set(512L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(896L);
-        Length = AddInput<IntType>("length", required: true);
+        Length = AddInput<IntType>("length");
         Length.Set(81L);
-        BatchSize = AddInput<IntType>("batch_size", required: true);
+        BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
-        PoseStrength = AddInput<FloatType>("pose_strength", required: true);
+        PoseStrength = AddInput<FloatType>("pose_strength");
         PoseStrength.Set(1.0);
-        PoseStart = AddInput<FloatType>("pose_start", required: true);
+        PoseStart = AddInput<FloatType>("pose_start");
         PoseStart.Set(0.0);
-        PoseEnd = AddInput<FloatType>("pose_end", required: true);
+        PoseEnd = AddInput<FloatType>("pose_end");
         PoseEnd.Set(1.0);
-        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output", required: false);
-        ReferenceImage = AddInput<ImageType>("reference_image", required: false);
-        PoseVideo = AddInput<ImageType>("pose_video", required: false);
+        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output");
+        ReferenceImage = AddInput<ImageType>("reference_image");
+        PoseVideo = AddInput<ImageType>("pose_video");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

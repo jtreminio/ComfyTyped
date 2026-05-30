@@ -21,7 +21,7 @@ public sealed class ManualSigmasNode : ComfyNode
     public ManualSigmasNode()
     {
         SIGMAS = AddOutput<SigmasType>(0, "SIGMAS");
-        Sigmas = AddInput<StringType>("sigmas", required: true);
+        Sigmas = AddInput<StringType>("sigmas");
         Sigmas.Set("1, 0.5");
     }
 

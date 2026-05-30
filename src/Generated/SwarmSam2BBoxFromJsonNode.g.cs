@@ -21,7 +21,7 @@ public sealed class SwarmSam2BBoxFromJsonNode : ComfyNode
     public SwarmSam2BBoxFromJsonNode()
     {
         Bboxes = AddOutput<BboxType>(0, "bboxes");
-        BboxJson = AddInput<StringType>("bbox_json", required: true);
+        BboxJson = AddInput<StringType>("bbox_json");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

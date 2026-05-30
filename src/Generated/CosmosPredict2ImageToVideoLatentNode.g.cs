@@ -27,17 +27,17 @@ public sealed class CosmosPredict2ImageToVideoLatentNode : ComfyNode
     public CosmosPredict2ImageToVideoLatentNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Vae = AddInput<VaeType>("vae", required: true);
-        Width = AddInput<IntType>("width", required: true);
+        Vae = AddInput<VaeType>("vae");
+        Width = AddInput<IntType>("width");
         Width.Set(848L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(480L);
-        Length = AddInput<IntType>("length", required: true);
+        Length = AddInput<IntType>("length");
         Length.Set(93L);
-        BatchSize = AddInput<IntType>("batch_size", required: true);
+        BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
-        StartImage = AddInput<ImageType>("start_image", required: false);
-        EndImage = AddInput<ImageType>("end_image", required: false);
+        StartImage = AddInput<ImageType>("start_image");
+        EndImage = AddInput<ImageType>("end_image");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

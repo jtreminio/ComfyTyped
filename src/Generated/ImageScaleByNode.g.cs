@@ -23,9 +23,9 @@ public sealed class ImageScaleByNode : ComfyNode
     public ImageScaleByNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        UpscaleMethod = AddInput<StringType>("upscale_method", required: true);
-        ScaleBy = AddInput<FloatType>("scale_by", required: true);
+        Image = AddInput<ImageType>("image");
+        UpscaleMethod = AddInput<StringType>("upscale_method");
+        ScaleBy = AddInput<FloatType>("scale_by");
         ScaleBy.Set(1.0);
     }
 

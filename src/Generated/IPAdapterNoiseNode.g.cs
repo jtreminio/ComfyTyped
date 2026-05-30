@@ -24,12 +24,12 @@ public sealed class IPAdapterNoiseNode : ComfyNode
     public IPAdapterNoiseNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Type = AddInput<StringType>("type", required: true);
-        Strength = AddInput<FloatType>("strength", required: true);
+        Type = AddInput<StringType>("type");
+        Strength = AddInput<FloatType>("strength");
         Strength.Set(1.0);
-        Blur = AddInput<IntType>("blur", required: true);
+        Blur = AddInput<IntType>("blur");
         Blur.Set(0L);
-        ImageOptional = AddInput<ImageType>("image_optional", required: false);
+        ImageOptional = AddInput<ImageType>("image_optional");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

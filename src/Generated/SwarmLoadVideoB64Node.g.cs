@@ -22,7 +22,7 @@ public sealed class SwarmLoadVideoB64Node : ComfyNode
     public SwarmLoadVideoB64Node()
     {
         VIDEO = AddOutput<VideoType>(0, "VIDEO");
-        VideoBase64 = AddInput<StringType>("video_base64", required: true);
+        VideoBase64 = AddInput<StringType>("video_base64");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

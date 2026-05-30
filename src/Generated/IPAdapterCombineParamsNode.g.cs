@@ -25,11 +25,11 @@ public sealed class IPAdapterCombineParamsNode : ComfyNode
     public IPAdapterCombineParamsNode()
     {
         IPADAPTERPARAMS = AddOutput<IpadapterParamsType>(0, "IPADAPTER_PARAMS");
-        Params1 = AddInput<IpadapterParamsType>("params_1", required: true);
-        Params2 = AddInput<IpadapterParamsType>("params_2", required: true);
-        Params3 = AddInput<IpadapterParamsType>("params_3", required: false);
-        Params4 = AddInput<IpadapterParamsType>("params_4", required: false);
-        Params5 = AddInput<IpadapterParamsType>("params_5", required: false);
+        Params1 = AddInput<IpadapterParamsType>("params_1");
+        Params2 = AddInput<IpadapterParamsType>("params_2");
+        Params3 = AddInput<IpadapterParamsType>("params_3");
+        Params4 = AddInput<IpadapterParamsType>("params_4");
+        Params5 = AddInput<IpadapterParamsType>("params_5");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

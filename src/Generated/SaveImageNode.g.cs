@@ -19,8 +19,8 @@ public sealed class SaveImageNode : ComfyNode
 
     public SaveImageNode()
     {
-        Images = AddInput<ImageType>("images", required: true);
-        FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
+        Images = AddInput<ImageType>("images");
+        FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("ComfyUI");
     }
 

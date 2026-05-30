@@ -22,8 +22,8 @@ public sealed class IPAdapterInsightFaceLoaderNode : ComfyNode
     public IPAdapterInsightFaceLoaderNode()
     {
         INSIGHTFACE = AddOutput<InsightfaceType>(0, "INSIGHTFACE");
-        Provider = AddInput<StringType>("provider", required: true);
-        ModelName = AddInput<StringType>("model_name", required: true);
+        Provider = AddInput<StringType>("provider");
+        ModelName = AddInput<StringType>("model_name");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

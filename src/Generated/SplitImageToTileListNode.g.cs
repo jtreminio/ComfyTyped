@@ -25,12 +25,12 @@ public sealed class SplitImageToTileListNode : ComfyNode
     public SplitImageToTileListNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        TileWidth = AddInput<IntType>("tile_width", required: true);
+        Image = AddInput<ImageType>("image");
+        TileWidth = AddInput<IntType>("tile_width");
         TileWidth.Set(1024L);
-        TileHeight = AddInput<IntType>("tile_height", required: true);
+        TileHeight = AddInput<IntType>("tile_height");
         TileHeight.Set(1024L);
-        Overlap = AddInput<IntType>("overlap", required: true);
+        Overlap = AddInput<IntType>("overlap");
         Overlap.Set(128L);
     }
 

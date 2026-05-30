@@ -22,7 +22,7 @@ public sealed class SwarmEmbedLoaderListProviderNode : ComfyNode
     public SwarmEmbedLoaderListProviderNode()
     {
         EMBEDDING = AddOutput<EmbeddingType>(0, "EMBEDDING");
-        EmbedName = AddInput<StringType>("embed_name", required: true);
+        EmbedName = AddInput<StringType>("embed_name");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

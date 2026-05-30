@@ -26,14 +26,14 @@ public sealed class SkipLayerGuidanceDiTSimpleNode : ComfyNode
     public SkipLayerGuidanceDiTSimpleNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        DoubleLayers = AddInput<StringType>("double_layers", required: true);
+        Model = AddInput<ModelType>("model");
+        DoubleLayers = AddInput<StringType>("double_layers");
         DoubleLayers.Set("7, 8, 9");
-        SingleLayers = AddInput<StringType>("single_layers", required: true);
+        SingleLayers = AddInput<StringType>("single_layers");
         SingleLayers.Set("7, 8, 9");
-        StartPercent = AddInput<FloatType>("start_percent", required: true);
+        StartPercent = AddInput<FloatType>("start_percent");
         StartPercent.Set(0.0);
-        EndPercent = AddInput<FloatType>("end_percent", required: true);
+        EndPercent = AddInput<FloatType>("end_percent");
         EndPercent.Set(1.0);
     }
 

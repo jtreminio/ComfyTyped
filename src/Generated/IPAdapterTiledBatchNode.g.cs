@@ -37,24 +37,24 @@ public sealed class IPAdapterTiledBatchNode : ComfyNode
         MODEL = AddOutput<ModelType>(0, "MODEL");
         Tiles = AddOutput<ImageType>(1, "tiles");
         Masks = AddOutput<MaskType>(2, "masks");
-        Model = AddInput<ModelType>("model", required: true);
-        Ipadapter = AddInput<IpAdapterType>("ipadapter", required: true);
-        Image = AddInput<ImageType>("image", required: true);
-        Weight = AddInput<FloatType>("weight", required: true);
+        Model = AddInput<ModelType>("model");
+        Ipadapter = AddInput<IpAdapterType>("ipadapter");
+        Image = AddInput<ImageType>("image");
+        Weight = AddInput<FloatType>("weight");
         Weight.Set(1.0);
-        WeightType = AddInput<StringType>("weight_type", required: true);
-        StartAt = AddInput<FloatType>("start_at", required: true);
+        WeightType = AddInput<StringType>("weight_type");
+        StartAt = AddInput<FloatType>("start_at");
         StartAt.Set(0.0);
-        EndAt = AddInput<FloatType>("end_at", required: true);
+        EndAt = AddInput<FloatType>("end_at");
         EndAt.Set(1.0);
-        Sharpening = AddInput<FloatType>("sharpening", required: true);
+        Sharpening = AddInput<FloatType>("sharpening");
         Sharpening.Set(0.0);
-        EmbedsScaling = AddInput<StringType>("embeds_scaling", required: true);
-        EncodeBatchSize = AddInput<IntType>("encode_batch_size", required: true);
+        EmbedsScaling = AddInput<StringType>("embeds_scaling");
+        EncodeBatchSize = AddInput<IntType>("encode_batch_size");
         EncodeBatchSize.Set(0L);
-        ImageNegative = AddInput<ImageType>("image_negative", required: false);
-        AttnMask = AddInput<MaskType>("attn_mask", required: false);
-        ClipVision = AddInput<ClipVisionType>("clip_vision", required: false);
+        ImageNegative = AddInput<ImageType>("image_negative");
+        AttnMask = AddInput<MaskType>("attn_mask");
+        ClipVision = AddInput<ClipVisionType>("clip_vision");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

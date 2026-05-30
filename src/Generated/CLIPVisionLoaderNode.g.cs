@@ -21,7 +21,7 @@ public sealed class CLIPVisionLoaderNode : ComfyNode
     public CLIPVisionLoaderNode()
     {
         CLIPVISION = AddOutput<ClipVisionType>(0, "CLIP_VISION");
-        ClipName = AddInput<StringType>("clip_name", required: true);
+        ClipName = AddInput<StringType>("clip_name");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

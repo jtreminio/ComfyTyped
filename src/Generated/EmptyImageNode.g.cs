@@ -24,13 +24,13 @@ public sealed class EmptyImageNode : ComfyNode
     public EmptyImageNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Width = AddInput<IntType>("width", required: true);
+        Width = AddInput<IntType>("width");
         Width.Set(512L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(512L);
-        BatchSize = AddInput<IntType>("batch_size", required: true);
+        BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
-        Color = AddInput<IntType>("color", required: true);
+        Color = AddInput<IntType>("color");
         Color.Set(0L);
     }
 

@@ -80,9 +80,9 @@ public abstract class ComfyNode : IComfyNode
     internal void RaiseInputListChanged(INodeInputList list) => InputListChanged?.Invoke(this, list);
 
     /// <summary>Register a typed input slot. Called by generated node constructors.</summary>
-    protected NodeInput<T> AddInput<T>(string name, bool required = true) where T : Types.IComfyType
+    protected NodeInput<T> AddInput<T>(string name) where T : Types.IComfyType
     {
-        NodeInput<T> input = new(name, required, this);
+        NodeInput<T> input = new(name, this);
         _inputs.Add(input);
 
         return input;
@@ -93,10 +93,10 @@ public abstract class ComfyNode : IComfyNode
     /// <c>"{slotName}.{prefix}{i}"</c> (0-indexed, no separator). Called by generated node
     /// constructors.</summary>
     protected NodeInputList<T> AddInputList<T>(
-        string slotName, string prefix, int min, int max, bool required = true)
+        string slotName, string prefix, int max)
         where T : Types.IComfyType
     {
-        NodeInputList<T> list = new(slotName, prefix, min, max, required, this);
+        NodeInputList<T> list = new(slotName, prefix, max, this);
         _inputLists.Add(list);
 
         return list;
@@ -108,10 +108,10 @@ public abstract class ComfyNode : IComfyNode
     /// (e.g. <c>"images.image_1"</c>, <c>"images.image_2"</c>). <paramref name="max"/> is
     /// capped at <c>names.Count</c>. Called by generated node constructors.</summary>
     protected NodeInputList<T> AddInputList<T>(
-        string slotName, IReadOnlyList<string> names, int min, int max, bool required = true)
+        string slotName, IReadOnlyList<string> names, int max)
         where T : Types.IComfyType
     {
-        NodeInputList<T> list = new(slotName, names, min, max, required, this);
+        NodeInputList<T> list = new(slotName, names, max, this);
         _inputLists.Add(list);
 
         return list;
@@ -126,9 +126,6 @@ public abstract class ComfyNode : IComfyNode
         return output;
     }
 
-    /// <summary>Find an input list by slot name.</summary>
-    public INodeInputList? FindInputList(string slotName) =>
-        _inputLists.FirstOrDefault(l => string.Equals(l.SlotName, slotName, StringComparison.OrdinalIgnoreCase));
 
     /// <summary>Find an input slot by name.</summary>
     public INodeInput? FindInput(string name) =>

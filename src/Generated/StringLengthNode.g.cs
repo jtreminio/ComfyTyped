@@ -21,7 +21,7 @@ public sealed class StringLengthNode : ComfyNode
     public StringLengthNode()
     {
         Length = AddOutput<IntType>(0, "length");
-        String = AddInput<StringType>("string", required: true);
+        String = AddInput<StringType>("string");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

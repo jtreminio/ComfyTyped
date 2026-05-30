@@ -23,9 +23,9 @@ public sealed class VoxelToMeshNode : ComfyNode
     public VoxelToMeshNode()
     {
         MESH = AddOutput<MeshType>(0, "MESH");
-        Voxel = AddInput<VoxelType>("voxel", required: true);
-        Algorithm = AddInput<StringType>("algorithm", required: true);
-        Threshold = AddInput<FloatType>("threshold", required: true);
+        Voxel = AddInput<VoxelType>("voxel");
+        Algorithm = AddInput<StringType>("algorithm");
+        Threshold = AddInput<FloatType>("threshold");
         Threshold.Set(0.6);
     }
 

@@ -30,17 +30,17 @@ public sealed class ControlNetApplyAdvancedNode : ComfyNode
     {
         Positive = AddOutput<ConditioningType>(0, "positive");
         Negative = AddOutput<ConditioningType>(1, "negative");
-        PositiveInput = AddInput<ConditioningType>("positive", required: true);
-        NegativeInput = AddInput<ConditioningType>("negative", required: true);
-        ControlNet = AddInput<ControlNetType>("control_net", required: true);
-        Image = AddInput<ImageType>("image", required: true);
-        Strength = AddInput<FloatType>("strength", required: true);
+        PositiveInput = AddInput<ConditioningType>("positive");
+        NegativeInput = AddInput<ConditioningType>("negative");
+        ControlNet = AddInput<ControlNetType>("control_net");
+        Image = AddInput<ImageType>("image");
+        Strength = AddInput<FloatType>("strength");
         Strength.Set(1.0);
-        StartPercent = AddInput<FloatType>("start_percent", required: true);
+        StartPercent = AddInput<FloatType>("start_percent");
         StartPercent.Set(0.0);
-        EndPercent = AddInput<FloatType>("end_percent", required: true);
+        EndPercent = AddInput<FloatType>("end_percent");
         EndPercent.Set(1.0);
-        Vae = AddInput<VaeType>("vae", required: false);
+        Vae = AddInput<VaeType>("vae");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -23,9 +23,9 @@ public sealed class ConditioningSetDefaultCombineNode : ComfyNode
     public ConditioningSetDefaultCombineNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Cond = AddInput<ConditioningType>("cond", required: true);
-        CondDEFAULT = AddInput<ConditioningType>("cond_DEFAULT", required: true);
-        Hooks = AddInput<HooksType>("hooks", required: false);
+        Cond = AddInput<ConditioningType>("cond");
+        CondDEFAULT = AddInput<ConditioningType>("cond_DEFAULT");
+        Hooks = AddInput<HooksType>("hooks");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

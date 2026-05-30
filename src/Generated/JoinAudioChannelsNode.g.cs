@@ -23,8 +23,8 @@ public sealed class JoinAudioChannelsNode : ComfyNode
     public JoinAudioChannelsNode()
     {
         Audio = AddOutput<AudioType>(0, "audio");
-        AudioLeft = AddInput<AudioType>("audio_left", required: true);
-        AudioRight = AddInput<AudioType>("audio_right", required: true);
+        AudioLeft = AddInput<AudioType>("audio_left");
+        AudioRight = AddInput<AudioType>("audio_right");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

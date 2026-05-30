@@ -24,12 +24,12 @@ public sealed class ImageSharpenNode : ComfyNode
     public ImageSharpenNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        SharpenRadius = AddInput<IntType>("sharpen_radius", required: true);
+        Image = AddInput<ImageType>("image");
+        SharpenRadius = AddInput<IntType>("sharpen_radius");
         SharpenRadius.Set(1L);
-        Sigma = AddInput<FloatType>("sigma", required: true);
+        Sigma = AddInput<FloatType>("sigma");
         Sigma.Set(1.0);
-        Alpha = AddInput<FloatType>("alpha", required: true);
+        Alpha = AddInput<FloatType>("alpha");
         Alpha.Set(1.0);
     }
 

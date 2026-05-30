@@ -24,11 +24,11 @@ public sealed class ImageBlendNode : ComfyNode
     public ImageBlendNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image1 = AddInput<ImageType>("image1", required: true);
-        Image2 = AddInput<ImageType>("image2", required: true);
-        BlendFactor = AddInput<FloatType>("blend_factor", required: true);
+        Image1 = AddInput<ImageType>("image1");
+        Image2 = AddInput<ImageType>("image2");
+        BlendFactor = AddInput<FloatType>("blend_factor");
         BlendFactor.Set(0.5);
-        BlendMode = AddInput<StringType>("blend_mode", required: true);
+        BlendMode = AddInput<StringType>("blend_mode");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

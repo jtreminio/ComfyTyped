@@ -23,10 +23,10 @@ public sealed class DepthAnythingPreprocessorNode : ComfyNode
     public DepthAnythingPreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        CkptName = AddInput<StringType>("ckpt_name", required: false);
+        Image = AddInput<ImageType>("image");
+        CkptName = AddInput<StringType>("ckpt_name");
         CkptName.Set("depth_anything_vitl14.pth");
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

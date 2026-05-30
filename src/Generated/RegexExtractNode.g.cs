@@ -27,16 +27,16 @@ public sealed class RegexExtractNode : ComfyNode
     public RegexExtractNode()
     {
         STRING = AddOutput<StringType>(0, "STRING");
-        String = AddInput<StringType>("string", required: true);
-        RegexPattern = AddInput<StringType>("regex_pattern", required: true);
-        Mode = AddInput<StringType>("mode", required: true);
-        CaseInsensitive = AddInput<BooleanType>("case_insensitive", required: true);
+        String = AddInput<StringType>("string");
+        RegexPattern = AddInput<StringType>("regex_pattern");
+        Mode = AddInput<StringType>("mode");
+        CaseInsensitive = AddInput<BooleanType>("case_insensitive");
         CaseInsensitive.Set(true);
-        Multiline = AddInput<BooleanType>("multiline", required: true);
+        Multiline = AddInput<BooleanType>("multiline");
         Multiline.Set(false);
-        Dotall = AddInput<BooleanType>("dotall", required: true);
+        Dotall = AddInput<BooleanType>("dotall");
         Dotall.Set(false);
-        GroupIndex = AddInput<IntType>("group_index", required: true);
+        GroupIndex = AddInput<IntType>("group_index");
         GroupIndex.Set(1L);
     }
 

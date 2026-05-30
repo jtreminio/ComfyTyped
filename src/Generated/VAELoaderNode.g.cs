@@ -21,7 +21,7 @@ public sealed class VAELoaderNode : ComfyNode
     public VAELoaderNode()
     {
         VAE = AddOutput<VaeType>(0, "VAE");
-        VaeName = AddInput<StringType>("vae_name", required: true);
+        VaeName = AddInput<StringType>("vae_name");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

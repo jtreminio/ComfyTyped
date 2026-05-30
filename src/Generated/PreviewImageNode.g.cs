@@ -18,7 +18,7 @@ public sealed class PreviewImageNode : ComfyNode
 
     public PreviewImageNode()
     {
-        Images = AddInput<ImageType>("images", required: true);
+        Images = AddInput<ImageType>("images");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

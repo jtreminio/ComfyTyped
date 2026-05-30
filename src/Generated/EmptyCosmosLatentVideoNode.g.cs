@@ -24,13 +24,13 @@ public sealed class EmptyCosmosLatentVideoNode : ComfyNode
     public EmptyCosmosLatentVideoNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Width = AddInput<IntType>("width", required: true);
+        Width = AddInput<IntType>("width");
         Width.Set(1280L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(704L);
-        Length = AddInput<IntType>("length", required: true);
+        Length = AddInput<IntType>("length");
         Length.Set(121L);
-        BatchSize = AddInput<IntType>("batch_size", required: true);
+        BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
     }
 

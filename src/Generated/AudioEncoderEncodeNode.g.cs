@@ -22,8 +22,8 @@ public sealed class AudioEncoderEncodeNode : ComfyNode
     public AudioEncoderEncodeNode()
     {
         AUDIOENCODEROUTPUT = AddOutput<AudioEncoderOutputType>(0, "AUDIO_ENCODER_OUTPUT");
-        AudioEncoder = AddInput<AudioEncoderType>("audio_encoder", required: true);
-        Audio = AddInput<AudioType>("audio", required: true);
+        AudioEncoder = AddInput<AudioEncoderType>("audio_encoder");
+        Audio = AddInput<AudioType>("audio");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

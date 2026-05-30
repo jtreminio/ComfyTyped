@@ -23,9 +23,9 @@ public sealed class ModelMergeSubtractNode : ComfyNode
     public ModelMergeSubtractNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model1 = AddInput<ModelType>("model1", required: true);
-        Model2 = AddInput<ModelType>("model2", required: true);
-        Multiplier = AddInput<FloatType>("multiplier", required: true);
+        Model1 = AddInput<ModelType>("model1");
+        Model2 = AddInput<ModelType>("model2");
+        Multiplier = AddInput<FloatType>("multiplier");
         Multiplier.Set(1.0);
     }
 

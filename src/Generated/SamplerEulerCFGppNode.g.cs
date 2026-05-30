@@ -21,7 +21,7 @@ public sealed class SamplerEulerCFGppNode : ComfyNode
     public SamplerEulerCFGppNode()
     {
         SAMPLER = AddOutput<SamplerType>(0, "SAMPLER");
-        Version = AddInput<StringType>("version", required: true);
+        Version = AddInput<StringType>("version");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

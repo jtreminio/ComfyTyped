@@ -23,10 +23,10 @@ public sealed class ImageLuminanceDetectorNode : ComfyNode
     public ImageLuminanceDetectorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        GammaCorrection = AddInput<FloatType>("gamma_correction", required: false);
+        Image = AddInput<ImageType>("image");
+        GammaCorrection = AddInput<FloatType>("gamma_correction");
         GammaCorrection.Set(1.0);
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

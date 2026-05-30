@@ -21,7 +21,7 @@ public sealed class LoadAudioNode : ComfyNode
     public LoadAudioNode()
     {
         AUDIO = AddOutput<AudioType>(0, "AUDIO");
-        Audio = AddInput<StringType>("audio", required: true);
+        Audio = AddInput<StringType>("audio");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

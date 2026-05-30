@@ -29,20 +29,20 @@ public sealed class SwarmInputVideoNode : ComfyNode
     public SwarmInputVideoNode()
     {
         VIDEO = AddOutput<VideoType>(0, "VIDEO");
-        Title = AddInput<StringType>("title", required: true);
+        Title = AddInput<StringType>("title");
         Title.Set("My Video");
-        Value = AddInput<StringType>("value", required: true);
+        Value = AddInput<StringType>("value");
         Value.Set("(Do Not Set Me)");
-        Description = AddInput<StringType>("description", required: true);
+        Description = AddInput<StringType>("description");
         Description.Set("");
-        OrderPriority = AddInput<FloatType>("order_priority", required: true);
+        OrderPriority = AddInput<FloatType>("order_priority");
         OrderPriority.Set(0.0);
-        IsAdvanced = AddInput<BooleanType>("is_advanced", required: true);
+        IsAdvanced = AddInput<BooleanType>("is_advanced");
         IsAdvanced.Set(false);
-        RawId = AddInput<StringType>("raw_id", required: true);
+        RawId = AddInput<StringType>("raw_id");
         RawId.Set("");
-        Video = AddInput<StringType>("video", required: true);
-        Group = AddInput<GroupType>("group", required: false);
+        Video = AddInput<StringType>("video");
+        Group = AddInput<GroupType>("group");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

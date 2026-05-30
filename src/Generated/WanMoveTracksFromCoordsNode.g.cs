@@ -24,9 +24,9 @@ public sealed class WanMoveTracksFromCoordsNode : ComfyNode
     {
         TRACKS = AddOutput<TracksType>(0, "TRACKS");
         TrackLength = AddOutput<IntType>(1, "track_length");
-        TrackCoords = AddInput<StringType>("track_coords", required: false);
+        TrackCoords = AddInput<StringType>("track_coords");
         TrackCoords.Set("[]");
-        TrackMask = AddInput<MaskType>("track_mask", required: false);
+        TrackMask = AddInput<MaskType>("track_mask");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

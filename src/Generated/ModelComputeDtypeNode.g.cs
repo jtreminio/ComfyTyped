@@ -22,8 +22,8 @@ public sealed class ModelComputeDtypeNode : ComfyNode
     public ModelComputeDtypeNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        Dtype = AddInput<StringType>("dtype", required: true);
+        Model = AddInput<ModelType>("model");
+        Dtype = AddInput<StringType>("dtype");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

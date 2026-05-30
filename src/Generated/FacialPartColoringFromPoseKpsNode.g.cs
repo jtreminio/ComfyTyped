@@ -29,22 +29,22 @@ public sealed class FacialPartColoringFromPoseKpsNode : ComfyNode
     public FacialPartColoringFromPoseKpsNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        PoseKps = AddInput<PoseKeypointType>("pose_kps", required: true);
-        Mode = AddInput<StringType>("mode", required: true);
+        PoseKps = AddInput<PoseKeypointType>("pose_kps");
+        Mode = AddInput<StringType>("mode");
         Mode.Set("polygon");
-        Skin = AddInput<StringType>("skin", required: true);
+        Skin = AddInput<StringType>("skin");
         Skin.Set("rgb(0, 153, 255)");
-        LeftEye = AddInput<StringType>("left_eye", required: true);
+        LeftEye = AddInput<StringType>("left_eye");
         LeftEye.Set("rgb(0, 204, 153)");
-        RightEye = AddInput<StringType>("right_eye", required: true);
+        RightEye = AddInput<StringType>("right_eye");
         RightEye.Set("rgb(255, 153, 0)");
-        Nose = AddInput<StringType>("nose", required: true);
+        Nose = AddInput<StringType>("nose");
         Nose.Set("rgb(255, 102, 255)");
-        UpperLip = AddInput<StringType>("upper_lip", required: true);
+        UpperLip = AddInput<StringType>("upper_lip");
         UpperLip.Set("rgb(102, 0, 51)");
-        InnerMouth = AddInput<StringType>("inner_mouth", required: true);
+        InnerMouth = AddInput<StringType>("inner_mouth");
         InnerMouth.Set("rgb(255, 204, 255)");
-        LowerLip = AddInput<StringType>("lower_lip", required: true);
+        LowerLip = AddInput<StringType>("lower_lip");
         LowerLip.Set("rgb(255, 0, 102)");
     }
 

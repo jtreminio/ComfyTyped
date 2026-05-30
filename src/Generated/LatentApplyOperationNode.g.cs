@@ -22,8 +22,8 @@ public sealed class LatentApplyOperationNode : ComfyNode
     public LatentApplyOperationNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Samples = AddInput<LatentType>("samples", required: true);
-        Operation = AddInput<LatentOperationType>("operation", required: true);
+        Samples = AddInput<LatentType>("samples");
+        Operation = AddInput<LatentOperationType>("operation");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

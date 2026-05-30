@@ -25,14 +25,14 @@ public sealed class CLIPAttentionMultiplyNode : ComfyNode
     public CLIPAttentionMultiplyNode()
     {
         CLIP = AddOutput<ClipType>(0, "CLIP");
-        Clip = AddInput<ClipType>("clip", required: true);
-        Q = AddInput<FloatType>("q", required: true);
+        Clip = AddInput<ClipType>("clip");
+        Q = AddInput<FloatType>("q");
         Q.Set(1.0);
-        K = AddInput<FloatType>("k", required: true);
+        K = AddInput<FloatType>("k");
         K.Set(1.0);
-        V = AddInput<FloatType>("v", required: true);
+        V = AddInput<FloatType>("v");
         V.Set(1.0);
-        Out = AddInput<FloatType>("out", required: true);
+        Out = AddInput<FloatType>("out");
         Out.Set(1.0);
     }
 

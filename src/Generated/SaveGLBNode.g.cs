@@ -18,8 +18,8 @@ public sealed class SaveGLBNode : ComfyNode
 
     public SaveGLBNode()
     {
-        Mesh = AddInput<StringType>("mesh", required: true);
-        FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
+        Mesh = AddInput<StringType>("mesh");
+        FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("3d/ComfyUI");
     }
 

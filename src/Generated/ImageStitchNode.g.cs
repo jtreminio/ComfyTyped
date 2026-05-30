@@ -31,16 +31,16 @@ public sealed class ImageStitchNode : ComfyNode
     public ImageStitchNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image1 = AddInput<ImageType>("image1", required: true);
-        Direction = AddInput<StringType>("direction", required: true);
+        Image1 = AddInput<ImageType>("image1");
+        Direction = AddInput<StringType>("direction");
         Direction.Set("right");
-        MatchImageSize = AddInput<BooleanType>("match_image_size", required: true);
+        MatchImageSize = AddInput<BooleanType>("match_image_size");
         MatchImageSize.Set(true);
-        SpacingWidth = AddInput<IntType>("spacing_width", required: true);
+        SpacingWidth = AddInput<IntType>("spacing_width");
         SpacingWidth.Set(0L);
-        SpacingColor = AddInput<StringType>("spacing_color", required: true);
+        SpacingColor = AddInput<StringType>("spacing_color");
         SpacingColor.Set("white");
-        Image2 = AddInput<ImageType>("image2", required: false);
+        Image2 = AddInput<ImageType>("image2");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

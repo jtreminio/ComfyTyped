@@ -26,16 +26,16 @@ public sealed class Wan22ImageToVideoLatentNode : ComfyNode
     public Wan22ImageToVideoLatentNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Vae = AddInput<VaeType>("vae", required: true);
-        Width = AddInput<IntType>("width", required: true);
+        Vae = AddInput<VaeType>("vae");
+        Width = AddInput<IntType>("width");
         Width.Set(1280L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(704L);
-        Length = AddInput<IntType>("length", required: true);
+        Length = AddInput<IntType>("length");
         Length.Set(49L);
-        BatchSize = AddInput<IntType>("batch_size", required: true);
+        BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
-        StartImage = AddInput<ImageType>("start_image", required: false);
+        StartImage = AddInput<ImageType>("start_image");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

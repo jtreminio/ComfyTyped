@@ -29,20 +29,20 @@ public sealed class SwarmInputTextNode : ComfyNode
     public SwarmInputTextNode()
     {
         STRING = AddOutput<StringType>(0, "STRING");
-        Title = AddInput<StringType>("title", required: true);
+        Title = AddInput<StringType>("title");
         Title.Set("My Text");
-        Value = AddInput<StringType>("value", required: true);
+        Value = AddInput<StringType>("value");
         Value.Set("");
-        ViewType = AddInput<StringType>("view_type", required: true);
-        Description = AddInput<StringType>("description", required: true);
+        ViewType = AddInput<StringType>("view_type");
+        Description = AddInput<StringType>("description");
         Description.Set("");
-        OrderPriority = AddInput<FloatType>("order_priority", required: true);
+        OrderPriority = AddInput<FloatType>("order_priority");
         OrderPriority.Set(0.0);
-        IsAdvanced = AddInput<BooleanType>("is_advanced", required: true);
+        IsAdvanced = AddInput<BooleanType>("is_advanced");
         IsAdvanced.Set(false);
-        RawId = AddInput<StringType>("raw_id", required: true);
+        RawId = AddInput<StringType>("raw_id");
         RawId.Set("");
-        Group = AddInput<GroupType>("group", required: false);
+        Group = AddInput<GroupType>("group");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

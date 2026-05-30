@@ -18,8 +18,8 @@ public sealed class IPAdapterSaveEmbedsNode : ComfyNode
 
     public IPAdapterSaveEmbedsNode()
     {
-        Embeds = AddInput<EmbedsType>("embeds", required: true);
-        FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
+        Embeds = AddInput<EmbedsType>("embeds");
+        FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("IP_embeds");
     }
 

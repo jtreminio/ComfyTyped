@@ -25,9 +25,9 @@ public sealed class LTXVConditioningNode : ComfyNode, ComfyTyped.Families.ICondi
     {
         Positive = AddOutput<ConditioningType>(0, "positive");
         Negative = AddOutput<ConditioningType>(1, "negative");
-        PositiveInput = AddInput<ConditioningType>("positive", required: true);
-        NegativeInput = AddInput<ConditioningType>("negative", required: true);
-        FrameRate = AddInput<FloatType>("frame_rate", required: true);
+        PositiveInput = AddInput<ConditioningType>("positive");
+        NegativeInput = AddInput<ConditioningType>("negative");
+        FrameRate = AddInput<FloatType>("frame_rate");
         FrameRate.Set(25.0);
     }
 

@@ -26,15 +26,15 @@ public sealed class SwarmSquareMaskFromPercentNode : ComfyNode
     public SwarmSquareMaskFromPercentNode()
     {
         MASK = AddOutput<MaskType>(0, "MASK");
-        X = AddInput<FloatType>("x", required: true);
+        X = AddInput<FloatType>("x");
         X.Set(0.0);
-        Y = AddInput<FloatType>("y", required: true);
+        Y = AddInput<FloatType>("y");
         Y.Set(0.0);
-        Width = AddInput<FloatType>("width", required: true);
+        Width = AddInput<FloatType>("width");
         Width.Set(0.0);
-        Height = AddInput<FloatType>("height", required: true);
+        Height = AddInput<FloatType>("height");
         Height.Set(0.0);
-        Strength = AddInput<FloatType>("strength", required: true);
+        Strength = AddInput<FloatType>("strength");
         Strength.Set(1.0);
     }
 

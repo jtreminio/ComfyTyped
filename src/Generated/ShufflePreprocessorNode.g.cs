@@ -23,10 +23,10 @@ public sealed class ShufflePreprocessorNode : ComfyNode
     public ShufflePreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Image = AddInput<ImageType>("image");
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
-        Seed = AddInput<IntType>("seed", required: false);
+        Seed = AddInput<IntType>("seed");
         Seed.Set(0L);
     }
 

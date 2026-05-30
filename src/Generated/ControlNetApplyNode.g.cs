@@ -24,10 +24,10 @@ public sealed class ControlNetApplyNode : ComfyNode
     public ControlNetApplyNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Conditioning = AddInput<ConditioningType>("conditioning", required: true);
-        ControlNet = AddInput<ControlNetType>("control_net", required: true);
-        Image = AddInput<ImageType>("image", required: true);
-        Strength = AddInput<FloatType>("strength", required: true);
+        Conditioning = AddInput<ConditioningType>("conditioning");
+        ControlNet = AddInput<ControlNetType>("control_net");
+        Image = AddInput<ImageType>("image");
+        Strength = AddInput<FloatType>("strength");
         Strength.Set(1.0);
     }
 

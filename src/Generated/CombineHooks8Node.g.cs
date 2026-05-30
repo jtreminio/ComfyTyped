@@ -28,14 +28,14 @@ public sealed class CombineHooks8Node : ComfyNode
     public CombineHooks8Node()
     {
         HOOKS = AddOutput<HooksType>(0, "HOOKS");
-        HooksA = AddInput<HooksType>("hooks_A", required: false);
-        HooksB = AddInput<HooksType>("hooks_B", required: false);
-        HooksC = AddInput<HooksType>("hooks_C", required: false);
-        HooksD = AddInput<HooksType>("hooks_D", required: false);
-        HooksE = AddInput<HooksType>("hooks_E", required: false);
-        HooksF = AddInput<HooksType>("hooks_F", required: false);
-        HooksG = AddInput<HooksType>("hooks_G", required: false);
-        HooksH = AddInput<HooksType>("hooks_H", required: false);
+        HooksA = AddInput<HooksType>("hooks_A");
+        HooksB = AddInput<HooksType>("hooks_B");
+        HooksC = AddInput<HooksType>("hooks_C");
+        HooksD = AddInput<HooksType>("hooks_D");
+        HooksE = AddInput<HooksType>("hooks_E");
+        HooksF = AddInput<HooksType>("hooks_F");
+        HooksG = AddInput<HooksType>("hooks_G");
+        HooksH = AddInput<HooksType>("hooks_H");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

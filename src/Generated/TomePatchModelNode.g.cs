@@ -22,8 +22,8 @@ public sealed class TomePatchModelNode : ComfyNode
     public TomePatchModelNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        Ratio = AddInput<FloatType>("ratio", required: true);
+        Model = AddInput<ModelType>("model");
+        Ratio = AddInput<FloatType>("ratio");
         Ratio.Set(0.3);
     }
 

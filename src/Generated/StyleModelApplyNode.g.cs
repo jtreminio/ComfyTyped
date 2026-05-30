@@ -25,12 +25,12 @@ public sealed class StyleModelApplyNode : ComfyNode
     public StyleModelApplyNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Conditioning = AddInput<ConditioningType>("conditioning", required: true);
-        StyleModel = AddInput<StyleModelType>("style_model", required: true);
-        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output", required: true);
-        Strength = AddInput<FloatType>("strength", required: true);
+        Conditioning = AddInput<ConditioningType>("conditioning");
+        StyleModel = AddInput<StyleModelType>("style_model");
+        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output");
+        Strength = AddInput<FloatType>("strength");
         Strength.Set(1.0);
-        StrengthType = AddInput<StringType>("strength_type", required: true);
+        StrengthType = AddInput<StringType>("strength_type");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

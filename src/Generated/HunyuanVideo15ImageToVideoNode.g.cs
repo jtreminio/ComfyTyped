@@ -33,19 +33,19 @@ public sealed class HunyuanVideo15ImageToVideoNode : ComfyNode
         Positive = AddOutput<ConditioningType>(0, "positive");
         Negative = AddOutput<ConditioningType>(1, "negative");
         Latent = AddOutput<LatentType>(2, "latent");
-        PositiveInput = AddInput<ConditioningType>("positive", required: true);
-        NegativeInput = AddInput<ConditioningType>("negative", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        Width = AddInput<IntType>("width", required: true);
+        PositiveInput = AddInput<ConditioningType>("positive");
+        NegativeInput = AddInput<ConditioningType>("negative");
+        Vae = AddInput<VaeType>("vae");
+        Width = AddInput<IntType>("width");
         Width.Set(848L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(480L);
-        Length = AddInput<IntType>("length", required: true);
+        Length = AddInput<IntType>("length");
         Length.Set(33L);
-        BatchSize = AddInput<IntType>("batch_size", required: true);
+        BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
-        StartImage = AddInput<ImageType>("start_image", required: false);
-        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output", required: false);
+        StartImage = AddInput<ImageType>("start_image");
+        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

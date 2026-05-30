@@ -23,11 +23,11 @@ public sealed class CreateHookKeyframeNode : ComfyNode
     public CreateHookKeyframeNode()
     {
         HOOKKF = AddOutput<HookKeyframesType>(0, "HOOK_KF");
-        StrengthMult = AddInput<FloatType>("strength_mult", required: true);
+        StrengthMult = AddInput<FloatType>("strength_mult");
         StrengthMult.Set(1.0);
-        StartPercent = AddInput<FloatType>("start_percent", required: true);
+        StartPercent = AddInput<FloatType>("start_percent");
         StartPercent.Set(0.0);
-        PrevHookKf = AddInput<HookKeyframesType>("prev_hook_kf", required: false);
+        PrevHookKf = AddInput<HookKeyframesType>("prev_hook_kf");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

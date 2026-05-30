@@ -41,25 +41,25 @@ public sealed class KSamplerGraduallyAddingMoreDenoiseEfficientNode : ComfyNode
         CONDITIONING2 = AddOutput<ConditioningType>(2, "CONDITIONING-");
         LATENT = AddOutput<LatentType>(3, "LATENT");
         VAE = AddOutput<VaeType>(4, "VAE");
-        Model = AddInput<ModelType>("model", required: true);
-        Positive = AddInput<ConditioningType>("positive", required: true);
-        Negative = AddInput<ConditioningType>("negative", required: true);
-        LatentImage = AddInput<LatentType>("latent_image", required: true);
-        Seed = AddInput<IntType>("seed", required: true);
+        Model = AddInput<ModelType>("model");
+        Positive = AddInput<ConditioningType>("positive");
+        Negative = AddInput<ConditioningType>("negative");
+        LatentImage = AddInput<LatentType>("latent_image");
+        Seed = AddInput<IntType>("seed");
         Seed.Set(0L);
-        Steps = AddInput<IntType>("steps", required: true);
+        Steps = AddInput<IntType>("steps");
         Steps.Set(20L);
-        Cfg = AddInput<FloatType>("cfg", required: true);
+        Cfg = AddInput<FloatType>("cfg");
         Cfg.Set(8.0);
-        SamplerName = AddInput<StringType>("sampler_name", required: true);
-        Scheduler = AddInput<StringType>("scheduler", required: true);
-        StartDenoise = AddInput<FloatType>("start_denoise", required: true);
+        SamplerName = AddInput<StringType>("sampler_name");
+        Scheduler = AddInput<StringType>("scheduler");
+        StartDenoise = AddInput<FloatType>("start_denoise");
         StartDenoise.Set(0.0);
-        DenoiseIncrement = AddInput<FloatType>("denoise_increment", required: true);
+        DenoiseIncrement = AddInput<FloatType>("denoise_increment");
         DenoiseIncrement.Set(0.1);
-        DenoiseIncrementSteps = AddInput<IntType>("denoise_increment_steps", required: true);
+        DenoiseIncrementSteps = AddInput<IntType>("denoise_increment_steps");
         DenoiseIncrementSteps.Set(20L);
-        OptionalVae = AddInput<VaeType>("optional_vae", required: false);
+        OptionalVae = AddInput<VaeType>("optional_vae");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -21,7 +21,7 @@ public sealed class FlipSigmasNode : ComfyNode
     public FlipSigmasNode()
     {
         SIGMAS = AddOutput<SigmasType>(0, "SIGMAS");
-        Sigmas = AddInput<SigmasType>("sigmas", required: true);
+        Sigmas = AddInput<SigmasType>("sigmas");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -23,9 +23,9 @@ public sealed class CLIPTextEncodeControlnetNode : ComfyNode
     public CLIPTextEncodeControlnetNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Clip = AddInput<ClipType>("clip", required: true);
-        Conditioning = AddInput<ConditioningType>("conditioning", required: true);
-        Text = AddInput<StringType>("text", required: true);
+        Clip = AddInput<ClipType>("clip");
+        Conditioning = AddInput<ConditioningType>("conditioning");
+        Text = AddInput<StringType>("text");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

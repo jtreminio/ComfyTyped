@@ -22,8 +22,8 @@ public sealed class LatentMultiplyNode : ComfyNode
     public LatentMultiplyNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Samples = AddInput<LatentType>("samples", required: true);
-        Multiplier = AddInput<FloatType>("multiplier", required: true);
+        Samples = AddInput<LatentType>("samples");
+        Multiplier = AddInput<FloatType>("multiplier");
         Multiplier.Set(1.0);
     }
 

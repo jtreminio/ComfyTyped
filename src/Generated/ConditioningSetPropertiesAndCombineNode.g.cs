@@ -27,14 +27,14 @@ public sealed class ConditioningSetPropertiesAndCombineNode : ComfyNode
     public ConditioningSetPropertiesAndCombineNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Cond = AddInput<ConditioningType>("cond", required: true);
-        CondNEW = AddInput<ConditioningType>("cond_NEW", required: true);
-        Strength = AddInput<FloatType>("strength", required: true);
+        Cond = AddInput<ConditioningType>("cond");
+        CondNEW = AddInput<ConditioningType>("cond_NEW");
+        Strength = AddInput<FloatType>("strength");
         Strength.Set(1.0);
-        SetCondArea = AddInput<StringType>("set_cond_area", required: true);
-        Mask = AddInput<MaskType>("mask", required: false);
-        Hooks = AddInput<HooksType>("hooks", required: false);
-        Timesteps = AddInput<TimestepsRangeType>("timesteps", required: false);
+        SetCondArea = AddInput<StringType>("set_cond_area");
+        Mask = AddInput<MaskType>("mask");
+        Hooks = AddInput<HooksType>("hooks");
+        Timesteps = AddInput<TimestepsRangeType>("timesteps");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

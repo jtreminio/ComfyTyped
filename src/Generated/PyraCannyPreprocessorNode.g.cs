@@ -24,12 +24,12 @@ public sealed class PyraCannyPreprocessorNode : ComfyNode
     public PyraCannyPreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        LowThreshold = AddInput<IntType>("low_threshold", required: false);
+        Image = AddInput<ImageType>("image");
+        LowThreshold = AddInput<IntType>("low_threshold");
         LowThreshold.Set(64L);
-        HighThreshold = AddInput<IntType>("high_threshold", required: false);
+        HighThreshold = AddInput<IntType>("high_threshold");
         HighThreshold.Set(128L);
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

@@ -22,8 +22,8 @@ public sealed class LatentRotateNode : ComfyNode
     public LatentRotateNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Samples = AddInput<LatentType>("samples", required: true);
-        Rotation = AddInput<StringType>("rotation", required: true);
+        Samples = AddInput<LatentType>("samples");
+        Rotation = AddInput<StringType>("rotation");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

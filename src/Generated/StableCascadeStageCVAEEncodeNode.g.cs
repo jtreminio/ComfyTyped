@@ -25,9 +25,9 @@ public sealed class StableCascadeStageCVAEEncodeNode : ComfyNode
     {
         StageC = AddOutput<LatentType>(0, "stage_c");
         StageB = AddOutput<LatentType>(1, "stage_b");
-        Image = AddInput<ImageType>("image", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        Compression = AddInput<IntType>("compression", required: true);
+        Image = AddInput<ImageType>("image");
+        Vae = AddInput<VaeType>("vae");
+        Compression = AddInput<IntType>("compression");
         Compression.Set(42L);
     }
 

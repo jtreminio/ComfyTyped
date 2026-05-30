@@ -28,19 +28,19 @@ public sealed class SwarmInputBooleanNode : ComfyNode
     public SwarmInputBooleanNode()
     {
         BOOLEAN = AddOutput<BooleanType>(0, "BOOLEAN");
-        Title = AddInput<StringType>("title", required: true);
+        Title = AddInput<StringType>("title");
         Title.Set("My Boolean");
-        Value = AddInput<BooleanType>("value", required: true);
+        Value = AddInput<BooleanType>("value");
         Value.Set(false);
-        Description = AddInput<StringType>("description", required: true);
+        Description = AddInput<StringType>("description");
         Description.Set("");
-        OrderPriority = AddInput<FloatType>("order_priority", required: true);
+        OrderPriority = AddInput<FloatType>("order_priority");
         OrderPriority.Set(0.0);
-        IsAdvanced = AddInput<BooleanType>("is_advanced", required: true);
+        IsAdvanced = AddInput<BooleanType>("is_advanced");
         IsAdvanced.Set(false);
-        RawId = AddInput<StringType>("raw_id", required: true);
+        RawId = AddInput<StringType>("raw_id");
         RawId.Set("");
-        Group = AddInput<GroupType>("group", required: false);
+        Group = AddInput<GroupType>("group");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

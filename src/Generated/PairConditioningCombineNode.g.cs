@@ -26,10 +26,10 @@ public sealed class PairConditioningCombineNode : ComfyNode
     {
         Positive = AddOutput<ConditioningType>(0, "positive");
         Negative = AddOutput<ConditioningType>(1, "negative");
-        PositiveA = AddInput<ConditioningType>("positive_A", required: true);
-        NegativeA = AddInput<ConditioningType>("negative_A", required: true);
-        PositiveB = AddInput<ConditioningType>("positive_B", required: true);
-        NegativeB = AddInput<ConditioningType>("negative_B", required: true);
+        PositiveA = AddInput<ConditioningType>("positive_A");
+        NegativeA = AddInput<ConditioningType>("negative_A");
+        PositiveB = AddInput<ConditioningType>("positive_B");
+        NegativeB = AddInput<ConditioningType>("negative_B");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

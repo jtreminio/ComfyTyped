@@ -23,10 +23,10 @@ public sealed class NormalizeImagesNode : ComfyNode
     public NormalizeImagesNode()
     {
         Images = AddOutput<ImageType>(0, "images");
-        ImagesInput = AddInput<ImageType>("images", required: true);
-        Mean = AddInput<FloatType>("mean", required: true);
+        ImagesInput = AddInput<ImageType>("images");
+        Mean = AddInput<FloatType>("mean");
         Mean.Set(0.5);
-        Std = AddInput<FloatType>("std", required: true);
+        Std = AddInput<FloatType>("std");
         Std.Set(0.5);
     }
 

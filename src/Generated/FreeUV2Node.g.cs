@@ -25,14 +25,14 @@ public sealed class FreeUV2Node : ComfyNode
     public FreeUV2Node()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        B1 = AddInput<FloatType>("b1", required: true);
+        Model = AddInput<ModelType>("model");
+        B1 = AddInput<FloatType>("b1");
         B1.Set(1.3);
-        B2 = AddInput<FloatType>("b2", required: true);
+        B2 = AddInput<FloatType>("b2");
         B2.Set(1.4);
-        S1 = AddInput<FloatType>("s1", required: true);
+        S1 = AddInput<FloatType>("s1");
         S1.Set(0.9);
-        S2 = AddInput<FloatType>("s2", required: true);
+        S2 = AddInput<FloatType>("s2");
         S2.Set(0.2);
     }
 

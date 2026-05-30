@@ -24,10 +24,10 @@ public sealed class AddNoiseNode : ComfyNode
     public AddNoiseNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Model = AddInput<ModelType>("model", required: true);
-        Noise = AddInput<NoiseType>("noise", required: true);
-        Sigmas = AddInput<SigmasType>("sigmas", required: true);
-        LatentImage = AddInput<LatentType>("latent_image", required: true);
+        Model = AddInput<ModelType>("model");
+        Noise = AddInput<NoiseType>("noise");
+        Sigmas = AddInput<SigmasType>("sigmas");
+        LatentImage = AddInput<LatentType>("latent_image");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

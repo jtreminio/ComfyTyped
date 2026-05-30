@@ -30,25 +30,25 @@ public sealed class SamplerDPMAdaptativeNode : ComfyNode
     public SamplerDPMAdaptativeNode()
     {
         SAMPLER = AddOutput<SamplerType>(0, "SAMPLER");
-        Order = AddInput<IntType>("order", required: true);
+        Order = AddInput<IntType>("order");
         Order.Set(3L);
-        Rtol = AddInput<FloatType>("rtol", required: true);
+        Rtol = AddInput<FloatType>("rtol");
         Rtol.Set(0.05);
-        Atol = AddInput<FloatType>("atol", required: true);
+        Atol = AddInput<FloatType>("atol");
         Atol.Set(0.0078);
-        HInit = AddInput<FloatType>("h_init", required: true);
+        HInit = AddInput<FloatType>("h_init");
         HInit.Set(0.05);
-        Pcoeff = AddInput<FloatType>("pcoeff", required: true);
+        Pcoeff = AddInput<FloatType>("pcoeff");
         Pcoeff.Set(0.0);
-        Icoeff = AddInput<FloatType>("icoeff", required: true);
+        Icoeff = AddInput<FloatType>("icoeff");
         Icoeff.Set(1.0);
-        Dcoeff = AddInput<FloatType>("dcoeff", required: true);
+        Dcoeff = AddInput<FloatType>("dcoeff");
         Dcoeff.Set(0.0);
-        AcceptSafety = AddInput<FloatType>("accept_safety", required: true);
+        AcceptSafety = AddInput<FloatType>("accept_safety");
         AcceptSafety.Set(0.81);
-        Eta = AddInput<FloatType>("eta", required: true);
+        Eta = AddInput<FloatType>("eta");
         Eta.Set(0.0);
-        SNoise = AddInput<FloatType>("s_noise", required: true);
+        SNoise = AddInput<FloatType>("s_noise");
         SNoise.Set(1.0);
     }
 

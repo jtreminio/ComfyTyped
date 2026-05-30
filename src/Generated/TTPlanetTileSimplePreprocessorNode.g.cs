@@ -23,10 +23,10 @@ public sealed class TTPlanetTileSimplePreprocessorNode : ComfyNode
     public TTPlanetTileSimplePreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        ScaleFactor = AddInput<FloatType>("scale_factor", required: false);
+        Image = AddInput<ImageType>("image");
+        ScaleFactor = AddInput<FloatType>("scale_factor");
         ScaleFactor.Set(1.0);
-        BlurStrength = AddInput<FloatType>("blur_strength", required: false);
+        BlurStrength = AddInput<FloatType>("blur_strength");
         BlurStrength.Set(2.0);
     }
 

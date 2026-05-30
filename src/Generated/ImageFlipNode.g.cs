@@ -22,8 +22,8 @@ public sealed class ImageFlipNode : ComfyNode
     public ImageFlipNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        FlipMethod = AddInput<StringType>("flip_method", required: true);
+        Image = AddInput<ImageType>("image");
+        FlipMethod = AddInput<StringType>("flip_method");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

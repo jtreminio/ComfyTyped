@@ -19,10 +19,10 @@ public sealed class SaveLoRANode : ComfyNode
 
     public SaveLoRANode()
     {
-        Lora = AddInput<LoraModelType>("lora", required: true);
-        Prefix = AddInput<StringType>("prefix", required: true);
+        Lora = AddInput<LoraModelType>("lora");
+        Prefix = AddInput<StringType>("prefix");
         Prefix.Set("loras/ComfyUI_trained_lora");
-        Steps = AddInput<IntType>("steps", required: false);
+        Steps = AddInput<IntType>("steps");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

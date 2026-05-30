@@ -28,17 +28,17 @@ public sealed class GLIGENTextBoxApplyNode : ComfyNode
     public GLIGENTextBoxApplyNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        ConditioningTo = AddInput<ConditioningType>("conditioning_to", required: true);
-        Clip = AddInput<ClipType>("clip", required: true);
-        GligenTextboxModel = AddInput<GligenType>("gligen_textbox_model", required: true);
-        Text = AddInput<StringType>("text", required: true);
-        Width = AddInput<IntType>("width", required: true);
+        ConditioningTo = AddInput<ConditioningType>("conditioning_to");
+        Clip = AddInput<ClipType>("clip");
+        GligenTextboxModel = AddInput<GligenType>("gligen_textbox_model");
+        Text = AddInput<StringType>("text");
+        Width = AddInput<IntType>("width");
         Width.Set(64L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(64L);
-        X = AddInput<IntType>("x", required: true);
+        X = AddInput<IntType>("x");
         X.Set(0L);
-        Y = AddInput<IntType>("y", required: true);
+        Y = AddInput<IntType>("y");
         Y.Set(0L);
     }
 

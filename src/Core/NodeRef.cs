@@ -11,9 +11,10 @@ namespace ComfyTyped.Core;
 /// <c>path is { Count: 2 }</c>, <c>new JArray(path[0], path[1])</c> — with one parse and named
 /// fields.
 ///
-/// <para>It is a pure value (no graph reference). To go from a ref to a live typed output, call
-/// <see cref="Resolve"/> with a bridge, or use <see cref="WorkflowBridge.NodeAt(JArray?)"/> to
-/// skip the struct entirely when you only need the node.</para>
+/// <para>It is a pure value (no graph reference). To go from a ref to a live typed output, use
+/// <see cref="WorkflowBridge.ResolvePath(JArray?)"/> on <see cref="ToJArray"/>, or
+/// <see cref="WorkflowBridge.NodeAt(JArray?)"/> to skip the struct entirely when you only need
+/// the node.</para>
 /// </summary>
 public readonly record struct NodeRef(string NodeId, int SlotIndex)
 {
@@ -51,15 +52,4 @@ public readonly record struct NodeRef(string NodeId, int SlotIndex)
     /// <summary>Serialize back to the <c>[nodeId, slotIndex]</c> JArray SwarmUI consumers expect
     /// (e.g. for assigning to a <c>WGNodeData.Path</c>). A fresh array each call.</summary>
     public JArray ToJArray() => new(NodeId, SlotIndex);
-
-    /// <summary>Resolve this ref to a live typed output through <paramref name="bridge"/>, or
-    /// <c>null</c> if the node or slot is absent. Equivalent to
-    /// <see cref="WorkflowBridge.ResolvePath(JArray?)"/> on <see cref="ToJArray"/>, without
-    /// rebuilding the JArray.</summary>
-    public INodeOutput? Resolve(WorkflowBridge bridge)
-    {
-        ArgumentNullException.ThrowIfNull(bridge);
-
-        return bridge.Graph.GetNode(NodeId)?.FindOutput(SlotIndex);
-    }
 }

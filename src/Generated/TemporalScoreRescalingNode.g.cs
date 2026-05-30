@@ -30,10 +30,10 @@ public sealed class TemporalScoreRescalingNode : ComfyNode
     public TemporalScoreRescalingNode()
     {
         PatchedModel = AddOutput<ModelType>(0, "patched_model");
-        Model = AddInput<ModelType>("model", required: true);
-        TsrK = AddInput<FloatType>("tsr_k", required: true);
+        Model = AddInput<ModelType>("model");
+        TsrK = AddInput<FloatType>("tsr_k");
         TsrK.Set(0.95);
-        TsrSigma = AddInput<FloatType>("tsr_sigma", required: true);
+        TsrSigma = AddInput<FloatType>("tsr_sigma");
         TsrSigma.Set(1.0);
     }
 

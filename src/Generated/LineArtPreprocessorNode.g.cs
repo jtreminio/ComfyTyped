@@ -23,10 +23,10 @@ public sealed class LineArtPreprocessorNode : ComfyNode
     public LineArtPreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        Coarse = AddInput<StringType>("coarse", required: false);
+        Image = AddInput<ImageType>("image");
+        Coarse = AddInput<StringType>("coarse");
         Coarse.Set("disable");
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

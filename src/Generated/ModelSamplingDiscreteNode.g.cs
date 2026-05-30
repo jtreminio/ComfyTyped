@@ -23,9 +23,9 @@ public sealed class ModelSamplingDiscreteNode : ComfyNode
     public ModelSamplingDiscreteNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        Sampling = AddInput<StringType>("sampling", required: true);
-        Zsnr = AddInput<BooleanType>("zsnr", required: true);
+        Model = AddInput<ModelType>("model");
+        Sampling = AddInput<StringType>("sampling");
+        Zsnr = AddInput<BooleanType>("zsnr");
         Zsnr.Set(false);
     }
 

@@ -24,10 +24,10 @@ public sealed class SwarmMaskBlurNode : ComfyNode
     public SwarmMaskBlurNode()
     {
         MASK = AddOutput<MaskType>(0, "MASK");
-        Mask = AddInput<MaskType>("mask", required: true);
-        BlurRadius = AddInput<IntType>("blur_radius", required: true);
+        Mask = AddInput<MaskType>("mask");
+        BlurRadius = AddInput<IntType>("blur_radius");
         BlurRadius.Set(1L);
-        Sigma = AddInput<FloatType>("sigma", required: true);
+        Sigma = AddInput<FloatType>("sigma");
         Sigma.Set(1.0);
     }
 

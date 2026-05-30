@@ -26,7 +26,7 @@ public sealed class GetVideoComponentsNode : ComfyNode
         Images = AddOutput<ImageType>(0, "images");
         Audio = AddOutput<AudioType>(1, "audio");
         Fps = AddOutput<FloatType>(2, "fps");
-        Video = AddInput<VideoType>("video", required: true);
+        Video = AddInput<VideoType>("video");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

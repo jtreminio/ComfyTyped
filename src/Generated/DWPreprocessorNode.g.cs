@@ -30,20 +30,20 @@ public sealed class DWPreprocessorNode : ComfyNode
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
         POSEKEYPOINT = AddOutput<PoseKeypointType>(1, "POSE_KEYPOINT");
-        Image = AddInput<ImageType>("image", required: true);
-        DetectHand = AddInput<StringType>("detect_hand", required: false);
+        Image = AddInput<ImageType>("image");
+        DetectHand = AddInput<StringType>("detect_hand");
         DetectHand.Set("enable");
-        DetectBody = AddInput<StringType>("detect_body", required: false);
+        DetectBody = AddInput<StringType>("detect_body");
         DetectBody.Set("enable");
-        DetectFace = AddInput<StringType>("detect_face", required: false);
+        DetectFace = AddInput<StringType>("detect_face");
         DetectFace.Set("enable");
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
-        BboxDetector = AddInput<StringType>("bbox_detector", required: false);
+        BboxDetector = AddInput<StringType>("bbox_detector");
         BboxDetector.Set("yolox_l.onnx");
-        PoseEstimator = AddInput<StringType>("pose_estimator", required: false);
+        PoseEstimator = AddInput<StringType>("pose_estimator");
         PoseEstimator.Set("dw-ll_ucoco_384_bs5.torchscript.pt");
-        ScaleStickForXinsrCn = AddInput<StringType>("scale_stick_for_xinsr_cn", required: false);
+        ScaleStickForXinsrCn = AddInput<StringType>("scale_stick_for_xinsr_cn");
         ScaleStickForXinsrCn.Set("disable");
     }
 

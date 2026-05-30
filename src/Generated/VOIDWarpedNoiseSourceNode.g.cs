@@ -21,7 +21,7 @@ public sealed class VOIDWarpedNoiseSourceNode : ComfyNode
     public VOIDWarpedNoiseSourceNode()
     {
         NOISE = AddOutput<NoiseType>(0, "NOISE");
-        WarpedNoise = AddInput<LatentType>("warped_noise", required: true);
+        WarpedNoise = AddInput<LatentType>("warped_noise");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

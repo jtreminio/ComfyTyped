@@ -24,7 +24,7 @@ public sealed class LTXVSeparateAVLatentNode : ComfyNode
     {
         VideoLatent = AddOutput<LatentType>(0, "video_latent");
         AudioLatent = AddOutput<LatentType>(1, "audio_latent");
-        AvLatent = AddInput<LatentType>("av_latent", required: true);
+        AvLatent = AddInput<LatentType>("av_latent");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

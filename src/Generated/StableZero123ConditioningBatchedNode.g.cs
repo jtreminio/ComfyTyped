@@ -34,22 +34,22 @@ public sealed class StableZero123ConditioningBatchedNode : ComfyNode
         Positive = AddOutput<ConditioningType>(0, "positive");
         Negative = AddOutput<ConditioningType>(1, "negative");
         Latent = AddOutput<LatentType>(2, "latent");
-        ClipVision = AddInput<ClipVisionType>("clip_vision", required: true);
-        InitImage = AddInput<ImageType>("init_image", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        Width = AddInput<IntType>("width", required: true);
+        ClipVision = AddInput<ClipVisionType>("clip_vision");
+        InitImage = AddInput<ImageType>("init_image");
+        Vae = AddInput<VaeType>("vae");
+        Width = AddInput<IntType>("width");
         Width.Set(256L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(256L);
-        BatchSize = AddInput<IntType>("batch_size", required: true);
+        BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
-        Elevation = AddInput<FloatType>("elevation", required: true);
+        Elevation = AddInput<FloatType>("elevation");
         Elevation.Set(0.0);
-        Azimuth = AddInput<FloatType>("azimuth", required: true);
+        Azimuth = AddInput<FloatType>("azimuth");
         Azimuth.Set(0.0);
-        ElevationBatchIncrement = AddInput<FloatType>("elevation_batch_increment", required: true);
+        ElevationBatchIncrement = AddInput<FloatType>("elevation_batch_increment");
         ElevationBatchIncrement.Set(0.0);
-        AzimuthBatchIncrement = AddInput<FloatType>("azimuth_batch_increment", required: true);
+        AzimuthBatchIncrement = AddInput<FloatType>("azimuth_batch_increment");
         AzimuthBatchIncrement.Set(0.0);
     }
 

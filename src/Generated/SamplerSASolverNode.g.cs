@@ -29,21 +29,21 @@ public sealed class SamplerSASolverNode : ComfyNode
     public SamplerSASolverNode()
     {
         SAMPLER = AddOutput<SamplerType>(0, "SAMPLER");
-        Model = AddInput<ModelType>("model", required: true);
-        Eta = AddInput<FloatType>("eta", required: true);
+        Model = AddInput<ModelType>("model");
+        Eta = AddInput<FloatType>("eta");
         Eta.Set(1.0);
-        SdeStartPercent = AddInput<FloatType>("sde_start_percent", required: true);
+        SdeStartPercent = AddInput<FloatType>("sde_start_percent");
         SdeStartPercent.Set(0.2);
-        SdeEndPercent = AddInput<FloatType>("sde_end_percent", required: true);
+        SdeEndPercent = AddInput<FloatType>("sde_end_percent");
         SdeEndPercent.Set(0.8);
-        SNoise = AddInput<FloatType>("s_noise", required: true);
+        SNoise = AddInput<FloatType>("s_noise");
         SNoise.Set(1.0);
-        PredictorOrder = AddInput<IntType>("predictor_order", required: true);
+        PredictorOrder = AddInput<IntType>("predictor_order");
         PredictorOrder.Set(3L);
-        CorrectorOrder = AddInput<IntType>("corrector_order", required: true);
+        CorrectorOrder = AddInput<IntType>("corrector_order");
         CorrectorOrder.Set(4L);
-        UsePece = AddInput<BooleanType>("use_pece", required: true);
-        SimpleOrder2 = AddInput<BooleanType>("simple_order_2", required: true);
+        UsePece = AddInput<BooleanType>("use_pece");
+        SimpleOrder2 = AddInput<BooleanType>("simple_order_2");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

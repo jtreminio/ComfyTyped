@@ -24,10 +24,10 @@ public sealed class StringCompareNode : ComfyNode
     public StringCompareNode()
     {
         BOOLEAN = AddOutput<BooleanType>(0, "BOOLEAN");
-        StringA = AddInput<StringType>("string_a", required: true);
-        StringB = AddInput<StringType>("string_b", required: true);
-        Mode = AddInput<StringType>("mode", required: true);
-        CaseSensitive = AddInput<BooleanType>("case_sensitive", required: true);
+        StringA = AddInput<StringType>("string_a");
+        StringB = AddInput<StringType>("string_b");
+        Mode = AddInput<StringType>("mode");
+        CaseSensitive = AddInput<BooleanType>("case_sensitive");
         CaseSensitive.Set(true);
     }
 

@@ -23,8 +23,8 @@ public sealed class ReferenceLatentNode : ComfyNode
     public ReferenceLatentNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Conditioning = AddInput<ConditioningType>("conditioning", required: true);
-        Latent = AddInput<LatentType>("latent", required: false);
+        Conditioning = AddInput<ConditioningType>("conditioning");
+        Latent = AddInput<LatentType>("latent");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

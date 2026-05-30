@@ -22,8 +22,8 @@ public sealed class FluxGuidanceNode : ComfyNode
     public FluxGuidanceNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Conditioning = AddInput<ConditioningType>("conditioning", required: true);
-        Guidance = AddInput<FloatType>("guidance", required: true);
+        Conditioning = AddInput<ConditioningType>("conditioning");
+        Guidance = AddInput<FloatType>("guidance");
         Guidance.Set(3.5);
     }
 

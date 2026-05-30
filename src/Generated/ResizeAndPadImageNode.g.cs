@@ -25,13 +25,13 @@ public sealed class ResizeAndPadImageNode : ComfyNode
     public ResizeAndPadImageNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        TargetWidth = AddInput<IntType>("target_width", required: true);
+        Image = AddInput<ImageType>("image");
+        TargetWidth = AddInput<IntType>("target_width");
         TargetWidth.Set(512L);
-        TargetHeight = AddInput<IntType>("target_height", required: true);
+        TargetHeight = AddInput<IntType>("target_height");
         TargetHeight.Set(512L);
-        PaddingColor = AddInput<StringType>("padding_color", required: true);
-        Interpolation = AddInput<StringType>("interpolation", required: true);
+        PaddingColor = AddInput<StringType>("padding_color");
+        Interpolation = AddInput<StringType>("interpolation");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

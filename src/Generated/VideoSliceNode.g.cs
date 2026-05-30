@@ -24,12 +24,12 @@ public sealed class VideoSliceNode : ComfyNode
     public VideoSliceNode()
     {
         VIDEO = AddOutput<VideoType>(0, "VIDEO");
-        Video = AddInput<VideoType>("video", required: true);
-        StartTime = AddInput<FloatType>("start_time", required: true);
+        Video = AddInput<VideoType>("video");
+        StartTime = AddInput<FloatType>("start_time");
         StartTime.Set(0.0);
-        Duration = AddInput<FloatType>("duration", required: true);
+        Duration = AddInput<FloatType>("duration");
         Duration.Set(0.0);
-        StrictDuration = AddInput<BooleanType>("strict_duration", required: true);
+        StrictDuration = AddInput<BooleanType>("strict_duration");
         StrictDuration.Set(false);
     }
 

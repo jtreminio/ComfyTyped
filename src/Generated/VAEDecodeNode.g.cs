@@ -23,8 +23,8 @@ public sealed class VAEDecodeNode : ComfyNode, ComfyTyped.Families.IVaeDecode
     public VAEDecodeNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Samples = AddInput<LatentType>("samples", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
+        Samples = AddInput<LatentType>("samples");
+        Vae = AddInput<VaeType>("vae");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

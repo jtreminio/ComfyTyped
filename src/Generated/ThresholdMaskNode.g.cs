@@ -22,8 +22,8 @@ public sealed class ThresholdMaskNode : ComfyNode
     public ThresholdMaskNode()
     {
         MASK = AddOutput<MaskType>(0, "MASK");
-        Mask = AddInput<MaskType>("mask", required: true);
-        Value = AddInput<FloatType>("value", required: true);
+        Mask = AddInput<MaskType>("mask");
+        Value = AddInput<FloatType>("value");
         Value.Set(0.5);
     }
 

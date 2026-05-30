@@ -28,12 +28,12 @@ public sealed class WanDancerPadKeyframesNode : ComfyNode
         KeyframesSequence = AddOutput<ImageType>(0, "keyframes_sequence");
         KeyframesMask = AddOutput<MaskType>(1, "keyframes_mask");
         AudioSegment = AddOutput<AudioType>(2, "audio_segment");
-        Images = AddInput<ImageType>("images", required: true);
-        SegmentLength = AddInput<IntType>("segment_length", required: true);
+        Images = AddInput<ImageType>("images");
+        SegmentLength = AddInput<IntType>("segment_length");
         SegmentLength.Set(149L);
-        SegmentIndex = AddInput<IntType>("segment_index", required: true);
+        SegmentIndex = AddInput<IntType>("segment_index");
         SegmentIndex.Set(0L);
-        Audio = AddInput<AudioType>("audio", required: true);
+        Audio = AddInput<AudioType>("audio");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

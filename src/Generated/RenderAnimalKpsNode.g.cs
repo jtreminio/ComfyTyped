@@ -21,7 +21,7 @@ public sealed class RenderAnimalKpsNode : ComfyNode
     public RenderAnimalKpsNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Kps = AddInput<PoseKeypointType>("kps", required: true);
+        Kps = AddInput<PoseKeypointType>("kps");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

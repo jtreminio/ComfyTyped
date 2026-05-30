@@ -24,9 +24,9 @@ public sealed class ResizeImageMaskNodeNode : ComfyNode
     public ResizeImageMaskNodeNode()
     {
         Resized = AddOutput<ComfyMatchTypeV3>(0, "resized");
-        Input = AddInput<ComfyMatchTypeV3>("input", required: true);
-        ResizeType = AddInput<StringType>("resize_type", required: true);
-        ScaleMethod = AddInput<StringType>("scale_method", required: true);
+        Input = AddInput<ComfyMatchTypeV3>("input");
+        ResizeType = AddInput<StringType>("resize_type");
+        ScaleMethod = AddInput<StringType>("scale_method");
         ScaleMethod.Set("area");
     }
 

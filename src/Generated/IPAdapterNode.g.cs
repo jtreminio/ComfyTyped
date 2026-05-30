@@ -28,17 +28,17 @@ public sealed class IPAdapterNode : ComfyNode
     public IPAdapterNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        Ipadapter = AddInput<IpAdapterType>("ipadapter", required: true);
-        Image = AddInput<ImageType>("image", required: true);
-        Weight = AddInput<FloatType>("weight", required: true);
+        Model = AddInput<ModelType>("model");
+        Ipadapter = AddInput<IpAdapterType>("ipadapter");
+        Image = AddInput<ImageType>("image");
+        Weight = AddInput<FloatType>("weight");
         Weight.Set(1.0);
-        StartAt = AddInput<FloatType>("start_at", required: true);
+        StartAt = AddInput<FloatType>("start_at");
         StartAt.Set(0.0);
-        EndAt = AddInput<FloatType>("end_at", required: true);
+        EndAt = AddInput<FloatType>("end_at");
         EndAt.Set(1.0);
-        WeightType = AddInput<StringType>("weight_type", required: true);
-        AttnMask = AddInput<MaskType>("attn_mask", required: false);
+        WeightType = AddInput<StringType>("weight_type");
+        AttnMask = AddInput<MaskType>("attn_mask");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

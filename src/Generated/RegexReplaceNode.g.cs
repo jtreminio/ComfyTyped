@@ -28,16 +28,16 @@ public sealed class RegexReplaceNode : ComfyNode
     public RegexReplaceNode()
     {
         STRING = AddOutput<StringType>(0, "STRING");
-        String = AddInput<StringType>("string", required: true);
-        RegexPattern = AddInput<StringType>("regex_pattern", required: true);
-        Replace = AddInput<StringType>("replace", required: true);
-        CaseInsensitive = AddInput<BooleanType>("case_insensitive", required: false);
+        String = AddInput<StringType>("string");
+        RegexPattern = AddInput<StringType>("regex_pattern");
+        Replace = AddInput<StringType>("replace");
+        CaseInsensitive = AddInput<BooleanType>("case_insensitive");
         CaseInsensitive.Set(true);
-        Multiline = AddInput<BooleanType>("multiline", required: false);
+        Multiline = AddInput<BooleanType>("multiline");
         Multiline.Set(false);
-        Dotall = AddInput<BooleanType>("dotall", required: false);
+        Dotall = AddInput<BooleanType>("dotall");
         Dotall.Set(false);
-        Count = AddInput<IntType>("count", required: false);
+        Count = AddInput<IntType>("count");
         Count.Set(0L);
     }
 

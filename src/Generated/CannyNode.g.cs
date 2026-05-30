@@ -23,10 +23,10 @@ public sealed class CannyNode : ComfyNode
     public CannyNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        LowThreshold = AddInput<FloatType>("low_threshold", required: true);
+        Image = AddInput<ImageType>("image");
+        LowThreshold = AddInput<FloatType>("low_threshold");
         LowThreshold.Set(0.4);
-        HighThreshold = AddInput<FloatType>("high_threshold", required: true);
+        HighThreshold = AddInput<FloatType>("high_threshold");
         HighThreshold.Set(0.8);
     }
 

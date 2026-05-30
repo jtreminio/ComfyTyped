@@ -24,9 +24,9 @@ public sealed class SwarmClipSegNode : ComfyNode
     public SwarmClipSegNode()
     {
         MASK = AddOutput<MaskType>(0, "MASK");
-        Images = AddInput<ImageType>("images", required: true);
-        MatchText = AddInput<StringType>("match_text", required: true);
-        Threshold = AddInput<FloatType>("threshold", required: true);
+        Images = AddInput<ImageType>("images");
+        MatchText = AddInput<StringType>("match_text");
+        Threshold = AddInput<FloatType>("threshold");
         Threshold.Set(0.5);
     }
 

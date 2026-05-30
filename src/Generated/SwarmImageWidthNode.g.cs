@@ -22,7 +22,7 @@ public sealed class SwarmImageWidthNode : ComfyNode
     public SwarmImageWidthNode()
     {
         INT = AddOutput<IntType>(0, "INT");
-        Image = AddInput<ImageType>("image", required: true);
+        Image = AddInput<ImageType>("image");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

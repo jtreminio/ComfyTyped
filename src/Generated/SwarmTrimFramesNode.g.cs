@@ -24,10 +24,10 @@ public sealed class SwarmTrimFramesNode : ComfyNode
     public SwarmTrimFramesNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        TrimStart = AddInput<IntType>("trim_start", required: true);
+        Image = AddInput<ImageType>("image");
+        TrimStart = AddInput<IntType>("trim_start");
         TrimStart.Set(0L);
-        TrimEnd = AddInput<IntType>("trim_end", required: true);
+        TrimEnd = AddInput<IntType>("trim_end");
         TrimEnd.Set(0L);
     }
 

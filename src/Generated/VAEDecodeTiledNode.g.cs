@@ -26,15 +26,15 @@ public sealed class VAEDecodeTiledNode : ComfyNode, ComfyTyped.Families.IVaeDeco
     public VAEDecodeTiledNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Samples = AddInput<LatentType>("samples", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        TileSize = AddInput<IntType>("tile_size", required: true);
+        Samples = AddInput<LatentType>("samples");
+        Vae = AddInput<VaeType>("vae");
+        TileSize = AddInput<IntType>("tile_size");
         TileSize.Set(512L);
-        Overlap = AddInput<IntType>("overlap", required: true);
+        Overlap = AddInput<IntType>("overlap");
         Overlap.Set(64L);
-        TemporalSize = AddInput<IntType>("temporal_size", required: true);
+        TemporalSize = AddInput<IntType>("temporal_size");
         TemporalSize.Set(64L);
-        TemporalOverlap = AddInput<IntType>("temporal_overlap", required: true);
+        TemporalOverlap = AddInput<IntType>("temporal_overlap");
         TemporalOverlap.Set(8L);
     }
 

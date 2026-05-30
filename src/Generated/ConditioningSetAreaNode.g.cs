@@ -26,16 +26,16 @@ public sealed class ConditioningSetAreaNode : ComfyNode
     public ConditioningSetAreaNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Conditioning = AddInput<ConditioningType>("conditioning", required: true);
-        Width = AddInput<IntType>("width", required: true);
+        Conditioning = AddInput<ConditioningType>("conditioning");
+        Width = AddInput<IntType>("width");
         Width.Set(64L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(64L);
-        X = AddInput<IntType>("x", required: true);
+        X = AddInput<IntType>("x");
         X.Set(0L);
-        Y = AddInput<IntType>("y", required: true);
+        Y = AddInput<IntType>("y");
         Y.Set(0L);
-        Strength = AddInput<FloatType>("strength", required: true);
+        Strength = AddInput<FloatType>("strength");
         Strength.Set(1.0);
     }
 

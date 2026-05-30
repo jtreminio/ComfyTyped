@@ -24,10 +24,10 @@ public sealed class CLIPTextEncodeFluxNode : ComfyNode
     public CLIPTextEncodeFluxNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Clip = AddInput<ClipType>("clip", required: true);
-        ClipL = AddInput<StringType>("clip_l", required: true);
-        T5xxl = AddInput<StringType>("t5xxl", required: true);
-        Guidance = AddInput<FloatType>("guidance", required: true);
+        Clip = AddInput<ClipType>("clip");
+        ClipL = AddInput<StringType>("clip_l");
+        T5xxl = AddInput<StringType>("t5xxl");
+        Guidance = AddInput<FloatType>("guidance");
         Guidance.Set(3.5);
     }
 

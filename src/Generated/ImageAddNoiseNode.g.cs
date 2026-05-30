@@ -23,10 +23,10 @@ public sealed class ImageAddNoiseNode : ComfyNode
     public ImageAddNoiseNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        Seed = AddInput<IntType>("seed", required: true);
+        Image = AddInput<ImageType>("image");
+        Seed = AddInput<IntType>("seed");
         Seed.Set(0L);
-        Strength = AddInput<FloatType>("strength", required: true);
+        Strength = AddInput<FloatType>("strength");
         Strength.Set(0.5);
     }
 

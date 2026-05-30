@@ -21,7 +21,7 @@ public sealed class LoadVideoNode : ComfyNode
     public LoadVideoNode()
     {
         VIDEO = AddOutput<VideoType>(0, "VIDEO");
-        File = AddInput<StringType>("file", required: true);
+        File = AddInput<StringType>("file");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

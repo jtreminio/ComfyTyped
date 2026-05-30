@@ -32,8 +32,8 @@ public sealed class IPAdapterWeightsFromStrategyNode : ComfyNode
         Image1 = AddOutput<ImageType>(3, "image_1");
         Image2 = AddOutput<ImageType>(4, "image_2");
         WeightsStrategy = AddOutput<WeightsStrategyType>(5, "weights_strategy");
-        WeightsStrategyInput = AddInput<WeightsStrategyType>("weights_strategy", required: true);
-        Image = AddInput<ImageType>("image", required: false);
+        WeightsStrategyInput = AddInput<WeightsStrategyType>("weights_strategy");
+        Image = AddInput<ImageType>("image");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -24,12 +24,12 @@ public sealed class PixelPerfectResolutionNode : ComfyNode
     public PixelPerfectResolutionNode()
     {
         RESOLUTIONINT = AddOutput<IntType>(0, "RESOLUTION (INT)");
-        OriginalImage = AddInput<ImageType>("original_image", required: true);
-        ImageGenWidth = AddInput<IntType>("image_gen_width", required: true);
+        OriginalImage = AddInput<ImageType>("original_image");
+        ImageGenWidth = AddInput<IntType>("image_gen_width");
         ImageGenWidth.Set(512L);
-        ImageGenHeight = AddInput<IntType>("image_gen_height", required: true);
+        ImageGenHeight = AddInput<IntType>("image_gen_height");
         ImageGenHeight.Set(512L);
-        ResizeMode = AddInput<StringType>("resize_mode", required: true);
+        ResizeMode = AddInput<StringType>("resize_mode");
         ResizeMode.Set("Just Resize");
     }
 

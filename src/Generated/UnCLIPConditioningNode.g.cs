@@ -24,11 +24,11 @@ public sealed class UnCLIPConditioningNode : ComfyNode
     public UnCLIPConditioningNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Conditioning = AddInput<ConditioningType>("conditioning", required: true);
-        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output", required: true);
-        Strength = AddInput<FloatType>("strength", required: true);
+        Conditioning = AddInput<ConditioningType>("conditioning");
+        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output");
+        Strength = AddInput<FloatType>("strength");
         Strength.Set(1.0);
-        NoiseAugmentation = AddInput<FloatType>("noise_augmentation", required: true);
+        NoiseAugmentation = AddInput<FloatType>("noise_augmentation");
         NoiseAugmentation.Set(0.0);
     }
 

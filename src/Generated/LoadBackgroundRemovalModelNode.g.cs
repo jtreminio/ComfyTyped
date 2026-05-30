@@ -21,7 +21,7 @@ public sealed class LoadBackgroundRemovalModelNode : ComfyNode
     public LoadBackgroundRemovalModelNode()
     {
         BgModel = AddOutput<BackgroundRemovalType>(0, "bg_model");
-        BgRemovalName = AddInput<StringType>("bg_removal_name", required: true);
+        BgRemovalName = AddInput<StringType>("bg_removal_name");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

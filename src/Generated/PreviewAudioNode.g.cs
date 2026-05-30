@@ -17,7 +17,7 @@ public sealed class PreviewAudioNode : ComfyNode
 
     public PreviewAudioNode()
     {
-        Audio = AddInput<AudioType>("audio", required: true);
+        Audio = AddInput<AudioType>("audio");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

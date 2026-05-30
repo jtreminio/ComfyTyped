@@ -22,8 +22,8 @@ public sealed class ImageRotateNode : ComfyNode
     public ImageRotateNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        Rotation = AddInput<StringType>("rotation", required: true);
+        Image = AddInput<ImageType>("image");
+        Rotation = AddInput<StringType>("rotation");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -20,11 +20,11 @@ public sealed class SaveImageTextDataSetToFolderNode : ComfyNode
 
     public SaveImageTextDataSetToFolderNode()
     {
-        Images = AddInput<ImageType>("images", required: true);
-        Texts = AddInput<StringType>("texts", required: true);
-        FolderName = AddInput<StringType>("folder_name", required: true);
+        Images = AddInput<ImageType>("images");
+        Texts = AddInput<StringType>("texts");
+        FolderName = AddInput<StringType>("folder_name");
         FolderName.Set("dataset");
-        FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
+        FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("image");
     }
 

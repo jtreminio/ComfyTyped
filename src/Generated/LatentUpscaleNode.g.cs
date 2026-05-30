@@ -25,13 +25,13 @@ public sealed class LatentUpscaleNode : ComfyNode
     public LatentUpscaleNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Samples = AddInput<LatentType>("samples", required: true);
-        UpscaleMethod = AddInput<StringType>("upscale_method", required: true);
-        Width = AddInput<IntType>("width", required: true);
+        Samples = AddInput<LatentType>("samples");
+        UpscaleMethod = AddInput<StringType>("upscale_method");
+        Width = AddInput<IntType>("width");
         Width.Set(512L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(512L);
-        Crop = AddInput<StringType>("crop", required: true);
+        Crop = AddInput<StringType>("crop");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

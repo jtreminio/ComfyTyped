@@ -24,10 +24,10 @@ public sealed class TextEncodeHunyuanVideoImageToVideoNode : ComfyNode
     public TextEncodeHunyuanVideoImageToVideoNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Clip = AddInput<ClipType>("clip", required: true);
-        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output", required: true);
-        Prompt = AddInput<StringType>("prompt", required: true);
-        ImageInterleave = AddInput<IntType>("image_interleave", required: true);
+        Clip = AddInput<ClipType>("clip");
+        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output");
+        Prompt = AddInput<StringType>("prompt");
+        ImageInterleave = AddInput<IntType>("image_interleave");
         ImageInterleave.Set(2L);
     }
 

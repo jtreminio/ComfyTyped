@@ -20,11 +20,11 @@ public sealed class SaveTrainingDatasetNode : ComfyNode
 
     public SaveTrainingDatasetNode()
     {
-        Latents = AddInput<LatentType>("latents", required: true);
-        Conditioning = AddInput<ConditioningType>("conditioning", required: true);
-        FolderName = AddInput<StringType>("folder_name", required: true);
+        Latents = AddInput<LatentType>("latents");
+        Conditioning = AddInput<ConditioningType>("conditioning");
+        FolderName = AddInput<StringType>("folder_name");
         FolderName.Set("training_dataset");
-        ShardSize = AddInput<IntType>("shard_size", required: true);
+        ShardSize = AddInput<IntType>("shard_size");
         ShardSize.Set(1000L);
     }
 

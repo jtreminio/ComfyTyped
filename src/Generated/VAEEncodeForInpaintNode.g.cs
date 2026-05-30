@@ -24,10 +24,10 @@ public sealed class VAEEncodeForInpaintNode : ComfyNode
     public VAEEncodeForInpaintNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Pixels = AddInput<ImageType>("pixels", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        Mask = AddInput<MaskType>("mask", required: true);
-        GrowMaskBy = AddInput<IntType>("grow_mask_by", required: true);
+        Pixels = AddInput<ImageType>("pixels");
+        Vae = AddInput<VaeType>("vae");
+        Mask = AddInput<MaskType>("mask");
+        GrowMaskBy = AddInput<IntType>("grow_mask_by");
         GrowMaskBy.Set(6L);
     }
 

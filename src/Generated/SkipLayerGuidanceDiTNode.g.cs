@@ -28,18 +28,18 @@ public sealed class SkipLayerGuidanceDiTNode : ComfyNode
     public SkipLayerGuidanceDiTNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        DoubleLayers = AddInput<StringType>("double_layers", required: true);
+        Model = AddInput<ModelType>("model");
+        DoubleLayers = AddInput<StringType>("double_layers");
         DoubleLayers.Set("7, 8, 9");
-        SingleLayers = AddInput<StringType>("single_layers", required: true);
+        SingleLayers = AddInput<StringType>("single_layers");
         SingleLayers.Set("7, 8, 9");
-        Scale = AddInput<FloatType>("scale", required: true);
+        Scale = AddInput<FloatType>("scale");
         Scale.Set(3.0);
-        StartPercent = AddInput<FloatType>("start_percent", required: true);
+        StartPercent = AddInput<FloatType>("start_percent");
         StartPercent.Set(0.01);
-        EndPercent = AddInput<FloatType>("end_percent", required: true);
+        EndPercent = AddInput<FloatType>("end_percent");
         EndPercent.Set(0.15);
-        RescalingScale = AddInput<FloatType>("rescaling_scale", required: true);
+        RescalingScale = AddInput<FloatType>("rescaling_scale");
         RescalingScale.Set(0.0);
     }
 

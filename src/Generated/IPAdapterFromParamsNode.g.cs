@@ -27,13 +27,13 @@ public sealed class IPAdapterFromParamsNode : ComfyNode
     public IPAdapterFromParamsNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        Ipadapter = AddInput<IpAdapterType>("ipadapter", required: true);
-        IpadapterParams = AddInput<IpadapterParamsType>("ipadapter_params", required: true);
-        CombineEmbeds = AddInput<StringType>("combine_embeds", required: true);
-        EmbedsScaling = AddInput<StringType>("embeds_scaling", required: true);
-        ImageNegative = AddInput<ImageType>("image_negative", required: false);
-        ClipVision = AddInput<ClipVisionType>("clip_vision", required: false);
+        Model = AddInput<ModelType>("model");
+        Ipadapter = AddInput<IpAdapterType>("ipadapter");
+        IpadapterParams = AddInput<IpadapterParamsType>("ipadapter_params");
+        CombineEmbeds = AddInput<StringType>("combine_embeds");
+        EmbedsScaling = AddInput<StringType>("embeds_scaling");
+        ImageNegative = AddInput<ImageType>("image_negative");
+        ClipVision = AddInput<ClipVisionType>("clip_vision");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

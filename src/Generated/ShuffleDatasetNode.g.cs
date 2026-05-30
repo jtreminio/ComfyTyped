@@ -22,8 +22,8 @@ public sealed class ShuffleDatasetNode : ComfyNode
     public ShuffleDatasetNode()
     {
         Images = AddOutput<ImageType>(0, "images");
-        ImagesInput = AddInput<ImageType>("images", required: true);
-        Seed = AddInput<IntType>("seed", required: true);
+        ImagesInput = AddInput<ImageType>("images");
+        Seed = AddInput<IntType>("seed");
         Seed.Set(0L);
     }
 

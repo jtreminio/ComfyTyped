@@ -25,14 +25,14 @@ public sealed class ModelSamplingFluxNode : ComfyNode
     public ModelSamplingFluxNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        MaxShift = AddInput<FloatType>("max_shift", required: true);
+        Model = AddInput<ModelType>("model");
+        MaxShift = AddInput<FloatType>("max_shift");
         MaxShift.Set(1.15);
-        BaseShift = AddInput<FloatType>("base_shift", required: true);
+        BaseShift = AddInput<FloatType>("base_shift");
         BaseShift.Set(0.5);
-        Width = AddInput<IntType>("width", required: true);
+        Width = AddInput<IntType>("width");
         Width.Set(1024L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(1024L);
     }
 

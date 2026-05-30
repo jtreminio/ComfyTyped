@@ -26,7 +26,7 @@ public sealed class GetImageSizeNode : ComfyNode
         Width = AddOutput<IntType>(0, "width");
         Height = AddOutput<IntType>(1, "height");
         BatchSize = AddOutput<IntType>(2, "batch_size");
-        Image = AddInput<ImageType>("image", required: true);
+        Image = AddInput<ImageType>("image");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

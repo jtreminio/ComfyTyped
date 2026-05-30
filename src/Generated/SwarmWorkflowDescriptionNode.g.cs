@@ -19,9 +19,9 @@ public sealed class SwarmWorkflowDescriptionNode : ComfyNode
 
     public SwarmWorkflowDescriptionNode()
     {
-        Description = AddInput<StringType>("description", required: true);
+        Description = AddInput<StringType>("description");
         Description.Set("");
-        EnableInSimpleTab = AddInput<BooleanType>("enable_in_simple_tab", required: true);
+        EnableInSimpleTab = AddInput<BooleanType>("enable_in_simple_tab");
         EnableInSimpleTab.Set(false);
     }
 

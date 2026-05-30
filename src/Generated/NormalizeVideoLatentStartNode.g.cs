@@ -24,10 +24,10 @@ public sealed class NormalizeVideoLatentStartNode : ComfyNode
     public NormalizeVideoLatentStartNode()
     {
         Latent = AddOutput<LatentType>(0, "latent");
-        LatentInput = AddInput<LatentType>("latent", required: true);
-        StartFrameCount = AddInput<IntType>("start_frame_count", required: true);
+        LatentInput = AddInput<LatentType>("latent");
+        StartFrameCount = AddInput<IntType>("start_frame_count");
         StartFrameCount.Set(4L);
-        ReferenceFrameCount = AddInput<IntType>("reference_frame_count", required: true);
+        ReferenceFrameCount = AddInput<IntType>("reference_frame_count");
         ReferenceFrameCount.Set(5L);
     }
 

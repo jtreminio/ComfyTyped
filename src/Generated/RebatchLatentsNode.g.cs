@@ -22,8 +22,8 @@ public sealed class RebatchLatentsNode : ComfyNode
     public RebatchLatentsNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Latents = AddInput<LatentType>("latents", required: true);
-        BatchSize = AddInput<IntType>("batch_size", required: true);
+        Latents = AddInput<LatentType>("latents");
+        BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
     }
 

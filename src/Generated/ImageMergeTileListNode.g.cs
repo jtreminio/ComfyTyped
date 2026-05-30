@@ -24,12 +24,12 @@ public sealed class ImageMergeTileListNode : ComfyNode
     public ImageMergeTileListNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        ImageList = AddInput<ImageType>("image_list", required: true);
-        FinalWidth = AddInput<IntType>("final_width", required: true);
+        ImageList = AddInput<ImageType>("image_list");
+        FinalWidth = AddInput<IntType>("final_width");
         FinalWidth.Set(1024L);
-        FinalHeight = AddInput<IntType>("final_height", required: true);
+        FinalHeight = AddInput<IntType>("final_height");
         FinalHeight.Set(1024L);
-        Overlap = AddInput<IntType>("overlap", required: true);
+        Overlap = AddInput<IntType>("overlap");
         Overlap.Set(128L);
     }
 

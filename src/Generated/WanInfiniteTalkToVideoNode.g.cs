@@ -43,26 +43,26 @@ public sealed class WanInfiniteTalkToVideoNode : ComfyNode
         Negative = AddOutput<ConditioningType>(2, "negative");
         Latent = AddOutput<LatentType>(3, "latent");
         TrimImage = AddOutput<IntType>(4, "trim_image");
-        Mode = AddInput<StringType>("mode", required: true);
-        ModelInput = AddInput<ModelType>("model", required: true);
-        ModelPatch = AddInput<ModelPatchType>("model_patch", required: true);
-        PositiveInput = AddInput<ConditioningType>("positive", required: true);
-        NegativeInput = AddInput<ConditioningType>("negative", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        Width = AddInput<IntType>("width", required: true);
+        Mode = AddInput<StringType>("mode");
+        ModelInput = AddInput<ModelType>("model");
+        ModelPatch = AddInput<ModelPatchType>("model_patch");
+        PositiveInput = AddInput<ConditioningType>("positive");
+        NegativeInput = AddInput<ConditioningType>("negative");
+        Vae = AddInput<VaeType>("vae");
+        Width = AddInput<IntType>("width");
         Width.Set(832L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(480L);
-        Length = AddInput<IntType>("length", required: true);
+        Length = AddInput<IntType>("length");
         Length.Set(81L);
-        AudioEncoderOutput1 = AddInput<AudioEncoderOutputType>("audio_encoder_output_1", required: true);
-        MotionFrameCount = AddInput<IntType>("motion_frame_count", required: true);
+        AudioEncoderOutput1 = AddInput<AudioEncoderOutputType>("audio_encoder_output_1");
+        MotionFrameCount = AddInput<IntType>("motion_frame_count");
         MotionFrameCount.Set(9L);
-        AudioScale = AddInput<FloatType>("audio_scale", required: true);
+        AudioScale = AddInput<FloatType>("audio_scale");
         AudioScale.Set(1.0);
-        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output", required: false);
-        StartImage = AddInput<ImageType>("start_image", required: false);
-        PreviousFrames = AddInput<ImageType>("previous_frames", required: false);
+        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output");
+        StartImage = AddInput<ImageType>("start_image");
+        PreviousFrames = AddInput<ImageType>("previous_frames");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

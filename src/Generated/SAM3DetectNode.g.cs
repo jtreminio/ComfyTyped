@@ -31,18 +31,18 @@ public sealed class SAM3DetectNode : ComfyNode
     {
         Masks = AddOutput<MaskType>(0, "masks");
         Bboxes = AddOutput<BoundingBoxType>(1, "bboxes");
-        Model = AddInput<ModelType>("model", required: true);
-        Image = AddInput<ImageType>("image", required: true);
-        Threshold = AddInput<FloatType>("threshold", required: true);
+        Model = AddInput<ModelType>("model");
+        Image = AddInput<ImageType>("image");
+        Threshold = AddInput<FloatType>("threshold");
         Threshold.Set(0.5);
-        RefineIterations = AddInput<IntType>("refine_iterations", required: true);
+        RefineIterations = AddInput<IntType>("refine_iterations");
         RefineIterations.Set(2L);
-        IndividualMasks = AddInput<BooleanType>("individual_masks", required: true);
+        IndividualMasks = AddInput<BooleanType>("individual_masks");
         IndividualMasks.Set(false);
-        Conditioning = AddInput<ConditioningType>("conditioning", required: false);
-        BboxesInput = AddInput<BoundingBoxType>("bboxes", required: false);
-        PositiveCoords = AddInput<StringType>("positive_coords", required: false);
-        NegativeCoords = AddInput<StringType>("negative_coords", required: false);
+        Conditioning = AddInput<ConditioningType>("conditioning");
+        BboxesInput = AddInput<BoundingBoxType>("bboxes");
+        PositiveCoords = AddInput<StringType>("positive_coords");
+        NegativeCoords = AddInput<StringType>("negative_coords");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

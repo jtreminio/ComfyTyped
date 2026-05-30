@@ -26,17 +26,17 @@ public sealed class SwarmExtractLoraNode : ComfyNode
 
     public SwarmExtractLoraNode()
     {
-        BaseModel = AddInput<ModelType>("base_model", required: true);
-        BaseModelClip = AddInput<ClipType>("base_model_clip", required: true);
-        OtherModel = AddInput<ModelType>("other_model", required: true);
-        OtherModelClip = AddInput<ClipType>("other_model_clip", required: true);
-        Rank = AddInput<IntType>("rank", required: true);
+        BaseModel = AddInput<ModelType>("base_model");
+        BaseModelClip = AddInput<ClipType>("base_model_clip");
+        OtherModel = AddInput<ModelType>("other_model");
+        OtherModelClip = AddInput<ClipType>("other_model_clip");
+        Rank = AddInput<IntType>("rank");
         Rank.Set(16L);
-        SaveRawpath = AddInput<StringType>("save_rawpath", required: true);
-        SaveFilename = AddInput<StringType>("save_filename", required: true);
-        SaveClip = AddInput<BooleanType>("save_clip", required: true);
+        SaveRawpath = AddInput<StringType>("save_rawpath");
+        SaveFilename = AddInput<StringType>("save_filename");
+        SaveClip = AddInput<BooleanType>("save_clip");
         SaveClip.Set(true);
-        Metadata = AddInput<StringType>("metadata", required: true);
+        Metadata = AddInput<StringType>("metadata");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

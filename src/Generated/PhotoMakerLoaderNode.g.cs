@@ -21,7 +21,7 @@ public sealed class PhotoMakerLoaderNode : ComfyNode
     public PhotoMakerLoaderNode()
     {
         PHOTOMAKER = AddOutput<PhotomakerType>(0, "PHOTOMAKER");
-        PhotomakerModelName = AddInput<StringType>("photomaker_model_name", required: true);
+        PhotomakerModelName = AddInput<StringType>("photomaker_model_name");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

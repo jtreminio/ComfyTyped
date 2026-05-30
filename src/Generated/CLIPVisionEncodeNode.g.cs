@@ -23,9 +23,9 @@ public sealed class CLIPVisionEncodeNode : ComfyNode
     public CLIPVisionEncodeNode()
     {
         CLIPVISIONOUTPUT = AddOutput<ClipVisionOutputType>(0, "CLIP_VISION_OUTPUT");
-        ClipVision = AddInput<ClipVisionType>("clip_vision", required: true);
-        Image = AddInput<ImageType>("image", required: true);
-        Crop = AddInput<StringType>("crop", required: true);
+        ClipVision = AddInput<ClipVisionType>("clip_vision");
+        Image = AddInput<ImageType>("image");
+        Crop = AddInput<StringType>("crop");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

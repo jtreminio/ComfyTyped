@@ -22,8 +22,8 @@ public sealed class LTXVAudioVAEDecodeNode : ComfyNode
     public LTXVAudioVAEDecodeNode()
     {
         Audio = AddOutput<AudioType>(0, "Audio");
-        Samples = AddInput<LatentType>("samples", required: true);
-        AudioVae = AddInput<VaeType>("audio_vae", required: true);
+        Samples = AddInput<LatentType>("samples");
+        AudioVae = AddInput<VaeType>("audio_vae");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

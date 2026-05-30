@@ -22,8 +22,8 @@ public sealed class RescaleCFGNode : ComfyNode
     public RescaleCFGNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        Multiplier = AddInput<FloatType>("multiplier", required: true);
+        Model = AddInput<ModelType>("model");
+        Multiplier = AddInput<FloatType>("multiplier");
         Multiplier.Set(0.7);
     }
 

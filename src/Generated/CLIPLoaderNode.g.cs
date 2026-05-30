@@ -38,9 +38,9 @@ public sealed class CLIPLoaderNode : ComfyNode
     public CLIPLoaderNode()
     {
         CLIP = AddOutput<ClipType>(0, "CLIP");
-        ClipName = AddInput<StringType>("clip_name", required: true);
-        Type = AddInput<StringType>("type", required: true);
-        Device = AddInput<StringType>("device", required: false);
+        ClipName = AddInput<StringType>("clip_name");
+        Type = AddInput<StringType>("type");
+        Device = AddInput<StringType>("device");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

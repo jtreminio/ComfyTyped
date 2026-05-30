@@ -22,8 +22,8 @@ public sealed class JsonExtractStringNode : ComfyNode
     public JsonExtractStringNode()
     {
         STRING = AddOutput<StringType>(0, "STRING");
-        JsonString = AddInput<StringType>("json_string", required: true);
-        Key = AddInput<StringType>("key", required: true);
+        JsonString = AddInput<StringType>("json_string");
+        Key = AddInput<StringType>("key");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

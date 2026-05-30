@@ -23,8 +23,8 @@ public sealed class SwarmExcludeFromMaskNode : ComfyNode
     public SwarmExcludeFromMaskNode()
     {
         MASK = AddOutput<MaskType>(0, "MASK");
-        MainMask = AddInput<MaskType>("main_mask", required: true);
-        ExcludeMask = AddInput<MaskType>("exclude_mask", required: true);
+        MainMask = AddInput<MaskType>("main_mask");
+        ExcludeMask = AddInput<MaskType>("exclude_mask");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

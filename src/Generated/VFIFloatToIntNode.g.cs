@@ -21,7 +21,7 @@ public sealed class VFIFloatToIntNode : ComfyNode
     public VFIFloatToIntNode()
     {
         INT = AddOutput<IntType>(0, "INT");
-        Float = AddInput<FloatType>("float", required: true);
+        Float = AddInput<FloatType>("float");
         Float.Set(0.0);
     }
 

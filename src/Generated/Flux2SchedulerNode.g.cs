@@ -23,11 +23,11 @@ public sealed class Flux2SchedulerNode : ComfyNode
     public Flux2SchedulerNode()
     {
         SIGMAS = AddOutput<SigmasType>(0, "SIGMAS");
-        Steps = AddInput<IntType>("steps", required: true);
+        Steps = AddInput<IntType>("steps");
         Steps.Set(20L);
-        Width = AddInput<IntType>("width", required: true);
+        Width = AddInput<IntType>("width");
         Width.Set(1024L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(1024L);
     }
 

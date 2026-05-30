@@ -28,19 +28,19 @@ public sealed class SwarmOffsetEmptyLatentImageNode : ComfyNode
     public SwarmOffsetEmptyLatentImageNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Width = AddInput<IntType>("width", required: true);
+        Width = AddInput<IntType>("width");
         Width.Set(512L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(512L);
-        OffA = AddInput<IntType>("off_a", required: true);
+        OffA = AddInput<IntType>("off_a");
         OffA.Set(0L);
-        OffB = AddInput<IntType>("off_b", required: true);
+        OffB = AddInput<IntType>("off_b");
         OffB.Set(0L);
-        OffC = AddInput<IntType>("off_c", required: true);
+        OffC = AddInput<IntType>("off_c");
         OffC.Set(0L);
-        OffD = AddInput<IntType>("off_d", required: true);
+        OffD = AddInput<IntType>("off_d");
         OffD.Set(0L);
-        BatchSize = AddInput<IntType>("batch_size", required: true);
+        BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
     }
 

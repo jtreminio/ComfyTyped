@@ -26,12 +26,12 @@ public sealed class TextEncodeQwenImageEditPlusNode : ComfyNode
     public TextEncodeQwenImageEditPlusNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Clip = AddInput<ClipType>("clip", required: true);
-        Prompt = AddInput<StringType>("prompt", required: true);
-        Vae = AddInput<VaeType>("vae", required: false);
-        Image1 = AddInput<ImageType>("image1", required: false);
-        Image2 = AddInput<ImageType>("image2", required: false);
-        Image3 = AddInput<ImageType>("image3", required: false);
+        Clip = AddInput<ClipType>("clip");
+        Prompt = AddInput<StringType>("prompt");
+        Vae = AddInput<VaeType>("vae");
+        Image1 = AddInput<ImageType>("image1");
+        Image2 = AddInput<ImageType>("image2");
+        Image3 = AddInput<ImageType>("image3");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

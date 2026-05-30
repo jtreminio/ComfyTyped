@@ -25,11 +25,11 @@ public sealed class CLIPTextEncodeSD3Node : ComfyNode
     public CLIPTextEncodeSD3Node()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Clip = AddInput<ClipType>("clip", required: true);
-        ClipL = AddInput<StringType>("clip_l", required: true);
-        ClipG = AddInput<StringType>("clip_g", required: true);
-        T5xxl = AddInput<StringType>("t5xxl", required: true);
-        EmptyPadding = AddInput<StringType>("empty_padding", required: true);
+        Clip = AddInput<ClipType>("clip");
+        ClipL = AddInput<StringType>("clip_l");
+        ClipG = AddInput<StringType>("clip_g");
+        T5xxl = AddInput<StringType>("t5xxl");
+        EmptyPadding = AddInput<StringType>("empty_padding");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

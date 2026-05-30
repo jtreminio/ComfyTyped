@@ -22,8 +22,8 @@ public sealed class ResizeImagesByShorterEdgeNode : ComfyNode
     public ResizeImagesByShorterEdgeNode()
     {
         Images = AddOutput<ImageType>(0, "images");
-        ImagesInput = AddInput<ImageType>("images", required: true);
-        ShorterEdge = AddInput<IntType>("shorter_edge", required: true);
+        ImagesInput = AddInput<ImageType>("images");
+        ShorterEdge = AddInput<IntType>("shorter_edge");
         ShorterEdge.Set(512L);
     }
 

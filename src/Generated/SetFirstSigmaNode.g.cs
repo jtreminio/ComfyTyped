@@ -22,8 +22,8 @@ public sealed class SetFirstSigmaNode : ComfyNode
     public SetFirstSigmaNode()
     {
         SIGMAS = AddOutput<SigmasType>(0, "SIGMAS");
-        Sigmas = AddInput<SigmasType>("sigmas", required: true);
-        Sigma = AddInput<FloatType>("sigma", required: true);
+        Sigmas = AddInput<SigmasType>("sigmas");
+        Sigma = AddInput<FloatType>("sigma");
         Sigma.Set(136.0);
     }
 

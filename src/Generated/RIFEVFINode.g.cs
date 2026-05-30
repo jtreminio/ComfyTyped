@@ -31,26 +31,26 @@ public sealed class RIFEVFINode : ComfyNode
     public RIFEVFINode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        CkptName = AddInput<StringType>("ckpt_name", required: true);
+        CkptName = AddInput<StringType>("ckpt_name");
         CkptName.Set("rife49.pth");
-        Frames = AddInput<ImageType>("frames", required: true);
-        ClearCacheAfterNFrames = AddInput<IntType>("clear_cache_after_n_frames", required: true);
+        Frames = AddInput<ImageType>("frames");
+        ClearCacheAfterNFrames = AddInput<IntType>("clear_cache_after_n_frames");
         ClearCacheAfterNFrames.Set(10L);
-        Multiplier = AddInput<IntType>("multiplier", required: true);
+        Multiplier = AddInput<IntType>("multiplier");
         Multiplier.Set(2L);
-        FastMode = AddInput<BooleanType>("fast_mode", required: true);
+        FastMode = AddInput<BooleanType>("fast_mode");
         FastMode.Set(true);
-        Ensemble = AddInput<BooleanType>("ensemble", required: true);
+        Ensemble = AddInput<BooleanType>("ensemble");
         Ensemble.Set(true);
-        ScaleFactor = AddInput<StringType>("scale_factor", required: true);
+        ScaleFactor = AddInput<StringType>("scale_factor");
         ScaleFactor.Set("1");
-        Dtype = AddInput<StringType>("dtype", required: true);
+        Dtype = AddInput<StringType>("dtype");
         Dtype.Set("float32");
-        TorchCompile = AddInput<BooleanType>("torch_compile", required: true);
+        TorchCompile = AddInput<BooleanType>("torch_compile");
         TorchCompile.Set(false);
-        BatchSize = AddInput<IntType>("batch_size", required: true);
+        BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
-        OptionalInterpolationStates = AddInput<InterpolationStatesType>("optional_interpolation_states", required: false);
+        OptionalInterpolationStates = AddInput<InterpolationStatesType>("optional_interpolation_states");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

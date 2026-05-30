@@ -24,9 +24,9 @@ public sealed class IPAdapterCombineWeightsNode : ComfyNode
     {
         Weights = AddOutput<FloatType>(0, "weights");
         Count = AddOutput<IntType>(1, "count");
-        Weights1 = AddInput<FloatType>("weights_1", required: true);
+        Weights1 = AddInput<FloatType>("weights_1");
         Weights1.Set(0.0);
-        Weights2 = AddInput<FloatType>("weights_2", required: true);
+        Weights2 = AddInput<FloatType>("weights_2");
         Weights2.Set(0.0);
     }
 

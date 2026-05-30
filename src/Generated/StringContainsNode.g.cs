@@ -23,9 +23,9 @@ public sealed class StringContainsNode : ComfyNode
     public StringContainsNode()
     {
         Contains = AddOutput<BooleanType>(0, "contains");
-        String = AddInput<StringType>("string", required: true);
-        Substring = AddInput<StringType>("substring", required: true);
-        CaseSensitive = AddInput<BooleanType>("case_sensitive", required: true);
+        String = AddInput<StringType>("string");
+        Substring = AddInput<StringType>("substring");
+        CaseSensitive = AddInput<BooleanType>("case_sensitive");
         CaseSensitive.Set(true);
     }
 

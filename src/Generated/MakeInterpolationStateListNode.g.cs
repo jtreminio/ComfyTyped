@@ -22,9 +22,9 @@ public sealed class MakeInterpolationStateListNode : ComfyNode
     public MakeInterpolationStateListNode()
     {
         INTERPOLATIONSTATES = AddOutput<InterpolationStatesType>(0, "INTERPOLATION_STATES");
-        FrameIndices = AddInput<StringType>("frame_indices", required: true);
+        FrameIndices = AddInput<StringType>("frame_indices");
         FrameIndices.Set("1,2,3");
-        IsSkipList = AddInput<BooleanType>("is_skip_list", required: true);
+        IsSkipList = AddInput<BooleanType>("is_skip_list");
         IsSkipList.Set(true);
     }
 

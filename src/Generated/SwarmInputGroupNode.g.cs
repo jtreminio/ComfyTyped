@@ -27,17 +27,17 @@ public sealed class SwarmInputGroupNode : ComfyNode
     public SwarmInputGroupNode()
     {
         GROUP = AddOutput<GroupType>(0, "GROUP");
-        Title = AddInput<StringType>("title", required: true);
+        Title = AddInput<StringType>("title");
         Title.Set("My Group");
-        OpenByDefault = AddInput<BooleanType>("open_by_default", required: true);
+        OpenByDefault = AddInput<BooleanType>("open_by_default");
         OpenByDefault.Set(true);
-        Description = AddInput<StringType>("description", required: true);
+        Description = AddInput<StringType>("description");
         Description.Set("");
-        OrderPriority = AddInput<FloatType>("order_priority", required: true);
+        OrderPriority = AddInput<FloatType>("order_priority");
         OrderPriority.Set(0.0);
-        IsAdvanced = AddInput<BooleanType>("is_advanced", required: true);
+        IsAdvanced = AddInput<BooleanType>("is_advanced");
         IsAdvanced.Set(false);
-        CanShrink = AddInput<BooleanType>("can_shrink", required: true);
+        CanShrink = AddInput<BooleanType>("can_shrink");
         CanShrink.Set(true);
     }
 

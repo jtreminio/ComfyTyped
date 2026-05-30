@@ -29,7 +29,7 @@ public sealed class ImageHistogramNode : ComfyNode
         Red = AddOutput<HistogramType>(2, "red");
         Green = AddOutput<HistogramType>(3, "green");
         Blue = AddOutput<HistogramType>(4, "blue");
-        Image = AddInput<ImageType>("image", required: true);
+        Image = AddInput<ImageType>("image");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -26,15 +26,15 @@ public sealed class HunyuanVideo15LatentUpscaleWithModelNode : ComfyNode
     public HunyuanVideo15LatentUpscaleWithModelNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Model = AddInput<LatentUpscaleModelType>("model", required: true);
-        Samples = AddInput<LatentType>("samples", required: true);
-        UpscaleMethod = AddInput<StringType>("upscale_method", required: true);
+        Model = AddInput<LatentUpscaleModelType>("model");
+        Samples = AddInput<LatentType>("samples");
+        UpscaleMethod = AddInput<StringType>("upscale_method");
         UpscaleMethod.Set("bilinear");
-        Width = AddInput<IntType>("width", required: true);
+        Width = AddInput<IntType>("width");
         Width.Set(1280L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(720L);
-        Crop = AddInput<StringType>("crop", required: true);
+        Crop = AddInput<StringType>("crop");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

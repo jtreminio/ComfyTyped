@@ -21,7 +21,7 @@ public sealed class TextToLowercaseNode : ComfyNode
     public TextToLowercaseNode()
     {
         Texts = AddOutput<StringType>(0, "texts");
-        TextsInput = AddInput<StringType>("texts", required: true);
+        TextsInput = AddInput<StringType>("texts");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

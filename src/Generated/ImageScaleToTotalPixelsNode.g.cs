@@ -24,11 +24,11 @@ public sealed class ImageScaleToTotalPixelsNode : ComfyNode
     public ImageScaleToTotalPixelsNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        UpscaleMethod = AddInput<StringType>("upscale_method", required: true);
-        Megapixels = AddInput<FloatType>("megapixels", required: true);
+        Image = AddInput<ImageType>("image");
+        UpscaleMethod = AddInput<StringType>("upscale_method");
+        Megapixels = AddInput<FloatType>("megapixels");
         Megapixels.Set(1.0);
-        ResolutionSteps = AddInput<IntType>("resolution_steps", required: true);
+        ResolutionSteps = AddInput<IntType>("resolution_steps");
         ResolutionSteps.Set(1L);
     }
 

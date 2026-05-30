@@ -22,8 +22,8 @@ public sealed class StringTrimNode : ComfyNode
     public StringTrimNode()
     {
         STRING = AddOutput<StringType>(0, "STRING");
-        String = AddInput<StringType>("string", required: true);
-        Mode = AddInput<StringType>("mode", required: true);
+        String = AddInput<StringType>("string");
+        Mode = AddInput<StringType>("mode");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

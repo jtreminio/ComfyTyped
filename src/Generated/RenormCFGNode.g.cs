@@ -23,10 +23,10 @@ public sealed class RenormCFGNode : ComfyNode
     public RenormCFGNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        CfgTrunc = AddInput<FloatType>("cfg_trunc", required: true);
+        Model = AddInput<ModelType>("model");
+        CfgTrunc = AddInput<FloatType>("cfg_trunc");
         CfgTrunc.Set(100.0);
-        RenormCfg = AddInput<FloatType>("renorm_cfg", required: true);
+        RenormCfg = AddInput<FloatType>("renorm_cfg");
         RenormCfg.Set(1.0);
     }
 

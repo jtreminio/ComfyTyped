@@ -24,12 +24,12 @@ public sealed class SamplerERSDENode : ComfyNode
     public SamplerERSDENode()
     {
         SAMPLER = AddOutput<SamplerType>(0, "SAMPLER");
-        SolverType = AddInput<StringType>("solver_type", required: true);
-        MaxStage = AddInput<IntType>("max_stage", required: true);
+        SolverType = AddInput<StringType>("solver_type");
+        MaxStage = AddInput<IntType>("max_stage");
         MaxStage.Set(3L);
-        Eta = AddInput<FloatType>("eta", required: true);
+        Eta = AddInput<FloatType>("eta");
         Eta.Set(1.0);
-        SNoise = AddInput<FloatType>("s_noise", required: true);
+        SNoise = AddInput<FloatType>("s_noise");
         SNoise.Set(1.0);
     }
 

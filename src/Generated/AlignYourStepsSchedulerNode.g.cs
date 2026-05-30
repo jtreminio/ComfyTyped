@@ -23,10 +23,10 @@ public sealed class AlignYourStepsSchedulerNode : ComfyNode
     public AlignYourStepsSchedulerNode()
     {
         SIGMAS = AddOutput<SigmasType>(0, "SIGMAS");
-        ModelType = AddInput<StringType>("model_type", required: true);
-        Steps = AddInput<IntType>("steps", required: true);
+        ModelType = AddInput<StringType>("model_type");
+        Steps = AddInput<IntType>("steps");
         Steps.Set(10L);
-        Denoise = AddInput<FloatType>("denoise", required: true);
+        Denoise = AddInput<FloatType>("denoise");
         Denoise.Set(1.0);
     }
 

@@ -20,12 +20,12 @@ public sealed class SaveAnimatedPNGNode : ComfyNode
 
     public SaveAnimatedPNGNode()
     {
-        Images = AddInput<ImageType>("images", required: true);
-        FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
+        Images = AddInput<ImageType>("images");
+        FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("ComfyUI");
-        Fps = AddInput<FloatType>("fps", required: true);
+        Fps = AddInput<FloatType>("fps");
         Fps.Set(6.0);
-        CompressLevel = AddInput<IntType>("compress_level", required: true);
+        CompressLevel = AddInput<IntType>("compress_level");
         CompressLevel.Set(4L);
     }
 

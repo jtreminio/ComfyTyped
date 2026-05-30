@@ -20,10 +20,10 @@ public sealed class ImageOnlyCheckpointSaveNode : ComfyNode
 
     public ImageOnlyCheckpointSaveNode()
     {
-        Model = AddInput<ModelType>("model", required: true);
-        ClipVision = AddInput<ClipVisionType>("clip_vision", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
+        Model = AddInput<ModelType>("model");
+        ClipVision = AddInput<ClipVisionType>("clip_vision");
+        Vae = AddInput<VaeType>("vae");
+        FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("checkpoints/ComfyUI");
     }
 

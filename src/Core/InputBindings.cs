@@ -41,7 +41,7 @@ public readonly struct In<T> where T : IComfyType
 
     public static implicit operator In<T>(NodeOutput<T> output) => new(output);
 
-    /// <summary>Apply this binding to a slot. Infrastructure for generated <c>With(...)</c>; prefer <c>With(...)</c>.</summary>
+    /// <summary>Apply this binding to a slot.</summary>
     public void ApplyTo(NodeInput<T> slot) => slot.ConnectTo(_output);
 }
 
@@ -58,7 +58,7 @@ public readonly struct IntArg
     public static implicit operator IntArg(int value) => new((long)value);
     public static implicit operator IntArg(NodeOutput<IntType> output) => new(output);
 
-    /// <summary>Apply this binding to a slot. Infrastructure for generated <c>With(...)</c>; prefer <c>With(...)</c>.</summary>
+    /// <summary>Apply this binding to a slot.</summary>
     public void ApplyTo(NodeInput<IntType> slot)
     {
         if (_conn is not null) slot.ConnectTo(_conn);
@@ -80,7 +80,7 @@ public readonly struct FloatArg
     // of this one, so `Cfg: 8` and `Cfg: 8L` both bind without an explicit cast.
     public static implicit operator FloatArg(NodeOutput<FloatType> output) => new(output);
 
-    /// <summary>Apply this binding to a slot. Infrastructure for generated <c>With(...)</c>; prefer <c>With(...)</c>.</summary>
+    /// <summary>Apply this binding to a slot.</summary>
     public void ApplyTo(NodeInput<FloatType> slot)
     {
         if (_conn is not null) slot.ConnectTo(_conn);
@@ -100,7 +100,7 @@ public readonly struct StringArg
     public static implicit operator StringArg(string value) => new(value);
     public static implicit operator StringArg(NodeOutput<StringType> output) => new(output);
 
-    /// <summary>Apply this binding to a slot. Infrastructure for generated <c>With(...)</c>; prefer <c>With(...)</c>.</summary>
+    /// <summary>Apply this binding to a slot.</summary>
     public void ApplyTo(NodeInput<StringType> slot)
     {
         if (_conn is not null) slot.ConnectTo(_conn);
@@ -120,7 +120,7 @@ public readonly struct BoolArg
     public static implicit operator BoolArg(bool value) => new(value);
     public static implicit operator BoolArg(NodeOutput<BooleanType> output) => new(output);
 
-    /// <summary>Apply this binding to a slot. Infrastructure for generated <c>With(...)</c>; prefer <c>With(...)</c>.</summary>
+    /// <summary>Apply this binding to a slot.</summary>
     public void ApplyTo(NodeInput<BooleanType> slot)
     {
         if (_conn is not null) slot.ConnectTo(_conn);

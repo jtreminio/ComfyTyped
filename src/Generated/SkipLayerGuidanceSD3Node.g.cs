@@ -26,14 +26,14 @@ public sealed class SkipLayerGuidanceSD3Node : ComfyNode
     public SkipLayerGuidanceSD3Node()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        Layers = AddInput<StringType>("layers", required: true);
+        Model = AddInput<ModelType>("model");
+        Layers = AddInput<StringType>("layers");
         Layers.Set("7, 8, 9");
-        Scale = AddInput<FloatType>("scale", required: true);
+        Scale = AddInput<FloatType>("scale");
         Scale.Set(3.0);
-        StartPercent = AddInput<FloatType>("start_percent", required: true);
+        StartPercent = AddInput<FloatType>("start_percent");
         StartPercent.Set(0.01);
-        EndPercent = AddInput<FloatType>("end_percent", required: true);
+        EndPercent = AddInput<FloatType>("end_percent");
         EndPercent.Set(0.15);
     }
 

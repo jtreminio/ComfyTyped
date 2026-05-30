@@ -25,12 +25,12 @@ public sealed class FreScaNode : ComfyNode
     public FreScaNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        ScaleLow = AddInput<FloatType>("scale_low", required: true);
+        Model = AddInput<ModelType>("model");
+        ScaleLow = AddInput<FloatType>("scale_low");
         ScaleLow.Set(1.0);
-        ScaleHigh = AddInput<FloatType>("scale_high", required: true);
+        ScaleHigh = AddInput<FloatType>("scale_high");
         ScaleHigh.Set(1.25);
-        FreqCutoff = AddInput<IntType>("freq_cutoff", required: true);
+        FreqCutoff = AddInput<IntType>("freq_cutoff");
         FreqCutoff.Set(20L);
     }
 

@@ -24,11 +24,11 @@ public sealed class ConditioningSetMaskNode : ComfyNode
     public ConditioningSetMaskNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Conditioning = AddInput<ConditioningType>("conditioning", required: true);
-        Mask = AddInput<MaskType>("mask", required: true);
-        Strength = AddInput<FloatType>("strength", required: true);
+        Conditioning = AddInput<ConditioningType>("conditioning");
+        Mask = AddInput<MaskType>("mask");
+        Strength = AddInput<FloatType>("strength");
         Strength.Set(1.0);
-        SetCondArea = AddInput<StringType>("set_cond_area", required: true);
+        SetCondArea = AddInput<StringType>("set_cond_area");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -25,9 +25,9 @@ public sealed class ShuffleImageTextDatasetNode : ComfyNode
     {
         Images = AddOutput<ImageType>(0, "images");
         Texts = AddOutput<StringType>(1, "texts");
-        ImagesInput = AddInput<ImageType>("images", required: true);
-        TextsInput = AddInput<StringType>("texts", required: true);
-        Seed = AddInput<IntType>("seed", required: true);
+        ImagesInput = AddInput<ImageType>("images");
+        TextsInput = AddInput<StringType>("texts");
+        Seed = AddInput<IntType>("seed");
         Seed.Set(0L);
     }
 

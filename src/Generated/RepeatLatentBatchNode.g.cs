@@ -22,8 +22,8 @@ public sealed class RepeatLatentBatchNode : ComfyNode
     public RepeatLatentBatchNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Samples = AddInput<LatentType>("samples", required: true);
-        Amount = AddInput<IntType>("amount", required: true);
+        Samples = AddInput<LatentType>("samples");
+        Amount = AddInput<IntType>("amount");
         Amount.Set(1L);
     }
 

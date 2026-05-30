@@ -24,12 +24,12 @@ public sealed class MLSDPreprocessorNode : ComfyNode
     public MLSDPreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        ScoreThreshold = AddInput<FloatType>("score_threshold", required: false);
+        Image = AddInput<ImageType>("image");
+        ScoreThreshold = AddInput<FloatType>("score_threshold");
         ScoreThreshold.Set(0.1);
-        DistThreshold = AddInput<FloatType>("dist_threshold", required: false);
+        DistThreshold = AddInput<FloatType>("dist_threshold");
         DistThreshold.Set(0.1);
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

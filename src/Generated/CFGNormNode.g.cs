@@ -22,8 +22,8 @@ public sealed class CFGNormNode : ComfyNode
     public CFGNormNode()
     {
         PatchedModel = AddOutput<ModelType>(0, "patched_model");
-        Model = AddInput<ModelType>("model", required: true);
-        Strength = AddInput<FloatType>("strength", required: true);
+        Model = AddInput<ModelType>("model");
+        Strength = AddInput<FloatType>("strength");
         Strength.Set(1.0);
     }
 

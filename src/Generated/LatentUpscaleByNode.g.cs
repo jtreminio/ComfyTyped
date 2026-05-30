@@ -23,9 +23,9 @@ public sealed class LatentUpscaleByNode : ComfyNode
     public LatentUpscaleByNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Samples = AddInput<LatentType>("samples", required: true);
-        UpscaleMethod = AddInput<StringType>("upscale_method", required: true);
-        ScaleBy = AddInput<FloatType>("scale_by", required: true);
+        Samples = AddInput<LatentType>("samples");
+        UpscaleMethod = AddInput<StringType>("upscale_method");
+        ScaleBy = AddInput<FloatType>("scale_by");
         ScaleBy.Set(1.5);
     }
 

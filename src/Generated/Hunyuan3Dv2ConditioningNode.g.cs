@@ -23,7 +23,7 @@ public sealed class Hunyuan3Dv2ConditioningNode : ComfyNode
     {
         Positive = AddOutput<ConditioningType>(0, "positive");
         Negative = AddOutput<ConditioningType>(1, "negative");
-        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output", required: true);
+        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

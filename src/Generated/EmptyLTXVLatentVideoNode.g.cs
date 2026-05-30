@@ -24,13 +24,13 @@ public sealed class EmptyLTXVLatentVideoNode : ComfyNode
     public EmptyLTXVLatentVideoNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Width = AddInput<IntType>("width", required: true);
+        Width = AddInput<IntType>("width");
         Width.Set(768L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(512L);
-        Length = AddInput<IntType>("length", required: true);
+        Length = AddInput<IntType>("length");
         Length.Set(97L);
-        BatchSize = AddInput<IntType>("batch_size", required: true);
+        BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
     }
 

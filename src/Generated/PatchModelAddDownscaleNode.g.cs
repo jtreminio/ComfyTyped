@@ -28,19 +28,19 @@ public sealed class PatchModelAddDownscaleNode : ComfyNode
     public PatchModelAddDownscaleNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        BlockNumber = AddInput<IntType>("block_number", required: true);
+        Model = AddInput<ModelType>("model");
+        BlockNumber = AddInput<IntType>("block_number");
         BlockNumber.Set(3L);
-        DownscaleFactor = AddInput<FloatType>("downscale_factor", required: true);
+        DownscaleFactor = AddInput<FloatType>("downscale_factor");
         DownscaleFactor.Set(2.0);
-        StartPercent = AddInput<FloatType>("start_percent", required: true);
+        StartPercent = AddInput<FloatType>("start_percent");
         StartPercent.Set(0.0);
-        EndPercent = AddInput<FloatType>("end_percent", required: true);
+        EndPercent = AddInput<FloatType>("end_percent");
         EndPercent.Set(0.35);
-        DownscaleAfterSkip = AddInput<BooleanType>("downscale_after_skip", required: true);
+        DownscaleAfterSkip = AddInput<BooleanType>("downscale_after_skip");
         DownscaleAfterSkip.Set(true);
-        DownscaleMethod = AddInput<StringType>("downscale_method", required: true);
-        UpscaleMethod = AddInput<StringType>("upscale_method", required: true);
+        DownscaleMethod = AddInput<StringType>("downscale_method");
+        UpscaleMethod = AddInput<StringType>("upscale_method");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

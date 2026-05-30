@@ -28,12 +28,12 @@ public sealed class LoraLoaderNode : ComfyNode
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
         CLIP = AddOutput<ClipType>(1, "CLIP");
-        Model = AddInput<ModelType>("model", required: true);
-        Clip = AddInput<ClipType>("clip", required: true);
-        LoraName = AddInput<StringType>("lora_name", required: true);
-        StrengthModel = AddInput<FloatType>("strength_model", required: true);
+        Model = AddInput<ModelType>("model");
+        Clip = AddInput<ClipType>("clip");
+        LoraName = AddInput<StringType>("lora_name");
+        StrengthModel = AddInput<FloatType>("strength_model");
         StrengthModel.Set(1.0);
-        StrengthClip = AddInput<FloatType>("strength_clip", required: true);
+        StrengthClip = AddInput<FloatType>("strength_clip");
         StrengthClip.Set(1.0);
     }
 

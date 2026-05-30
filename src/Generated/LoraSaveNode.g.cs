@@ -22,15 +22,15 @@ public sealed class LoraSaveNode : ComfyNode
 
     public LoraSaveNode()
     {
-        FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
+        FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("loras/ComfyUI_extracted_lora");
-        Rank = AddInput<IntType>("rank", required: true);
+        Rank = AddInput<IntType>("rank");
         Rank.Set(8L);
-        LoraType = AddInput<StringType>("lora_type", required: true);
-        BiasDiff = AddInput<BooleanType>("bias_diff", required: true);
+        LoraType = AddInput<StringType>("lora_type");
+        BiasDiff = AddInput<BooleanType>("bias_diff");
         BiasDiff.Set(true);
-        ModelDiff = AddInput<ModelType>("model_diff", required: false);
-        TextEncoderDiff = AddInput<ClipType>("text_encoder_diff", required: false);
+        ModelDiff = AddInput<ModelType>("model_diff");
+        TextEncoderDiff = AddInput<ClipType>("text_encoder_diff");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

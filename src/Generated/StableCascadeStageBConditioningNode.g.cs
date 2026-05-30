@@ -22,8 +22,8 @@ public sealed class StableCascadeStageBConditioningNode : ComfyNode
     public StableCascadeStageBConditioningNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Conditioning = AddInput<ConditioningType>("conditioning", required: true);
-        StageC = AddInput<LatentType>("stage_c", required: true);
+        Conditioning = AddInput<ConditioningType>("conditioning");
+        StageC = AddInput<LatentType>("stage_c");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

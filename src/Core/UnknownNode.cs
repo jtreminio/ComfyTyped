@@ -24,7 +24,7 @@ public sealed class UnknownNode(string classType) : ComfyNode
             return typed;
         }
 
-        return AddInput<AnyType>(name, required: false);
+        return AddInput<AnyType>(name);
     }
 
     /// <summary>Get or create an AnyType output by slot index.</summary>
@@ -48,27 +48,13 @@ public sealed class UnknownNode(string classType) : ComfyNode
     /// </summary>
     public override INodeOutput FindOutput(int slotIndex) => GetOutput(slotIndex);
 
-    /// <summary>Ensure outputs exist up to the given slot index. Prefer
-    /// <see cref="WithOutputs"/> when you know the slot names.</summary>
-    public void EnsureOutputSlots(int count)
-    {
-        for (int i = 0; i < count; i++)
-        {
-            if (base.FindOutput(i) is null)
-            {
-                AddOutput<AnyType>(i, $"output_{i}");
-            }
-        }
-    }
-
     /// <summary>
     /// Declare AnyType output slots in one chained call, named in slot-index order.
     /// Slot 0 takes <c>slotNames[0]</c>, slot 1 takes <c>slotNames[1]</c>, etc.
     /// If a slot already exists at that index, its <see cref="INodeOutput.SlotName"/>
     /// is renamed in place; otherwise the slot is materialized.
     ///
-    /// <para>Strict superset of <see cref="EnsureOutputSlots"/> — prefer this when
-    /// you know the slot names. Mostly used for stub fixtures and round-tripping
+    /// <para>Mostly used for stub fixtures and round-tripping
     /// custom-class nodes where downstream code (e.g. SwarmUI projection) inspects
     /// <see cref="INodeOutput.SlotName"/>. Returns this node for chaining.</para>
     /// </summary>

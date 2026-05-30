@@ -25,13 +25,13 @@ public sealed class RTDETRDetectNode : ComfyNode
     public RTDETRDetectNode()
     {
         Bboxes = AddOutput<BoundingBoxType>(0, "bboxes");
-        Model = AddInput<ModelType>("model", required: true);
-        Image = AddInput<ImageType>("image", required: true);
-        Threshold = AddInput<FloatType>("threshold", required: true);
+        Model = AddInput<ModelType>("model");
+        Image = AddInput<ImageType>("image");
+        Threshold = AddInput<FloatType>("threshold");
         Threshold.Set(0.5);
-        ClassName = AddInput<StringType>("class_name", required: true);
+        ClassName = AddInput<StringType>("class_name");
         ClassName.Set("all");
-        MaxDetections = AddInput<IntType>("max_detections", required: true);
+        MaxDetections = AddInput<IntType>("max_detections");
         MaxDetections.Set(100L);
     }
 

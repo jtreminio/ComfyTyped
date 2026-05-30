@@ -21,7 +21,7 @@ public sealed class IPAdapterModelLoaderNode : ComfyNode
     public IPAdapterModelLoaderNode()
     {
         IPADAPTER = AddOutput<IpAdapterType>(0, "IPADAPTER");
-        IpadapterFile = AddInput<StringType>("ipadapter_file", required: true);
+        IpadapterFile = AddInput<StringType>("ipadapter_file");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

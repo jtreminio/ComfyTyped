@@ -22,8 +22,8 @@ public sealed class SetHookKeyframesNode : ComfyNode
     public SetHookKeyframesNode()
     {
         HOOKS = AddOutput<HooksType>(0, "HOOKS");
-        Hooks = AddInput<HooksType>("hooks", required: true);
-        HookKf = AddInput<HookKeyframesType>("hook_kf", required: false);
+        Hooks = AddInput<HooksType>("hooks");
+        HookKf = AddInput<HookKeyframesType>("hook_kf");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -20,9 +20,9 @@ public sealed class ImageCompareNode : ComfyNode
 
     public ImageCompareNode()
     {
-        CompareView = AddInput<ImagecompareType>("compare_view", required: true);
-        ImageA = AddInput<ImageType>("image_a", required: false);
-        ImageB = AddInput<ImageType>("image_b", required: false);
+        CompareView = AddInput<ImagecompareType>("compare_view");
+        ImageA = AddInput<ImageType>("image_a");
+        ImageB = AddInput<ImageType>("image_b");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

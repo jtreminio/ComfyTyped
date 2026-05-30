@@ -24,8 +24,8 @@ public sealed class SplitSigmasNode : ComfyNode
     {
         HighSigmas = AddOutput<SigmasType>(0, "high_sigmas");
         LowSigmas = AddOutput<SigmasType>(1, "low_sigmas");
-        Sigmas = AddInput<SigmasType>("sigmas", required: true);
-        Step = AddInput<IntType>("step", required: true);
+        Sigmas = AddInput<SigmasType>("sigmas");
+        Step = AddInput<IntType>("step");
         Step.Set(0L);
     }
 

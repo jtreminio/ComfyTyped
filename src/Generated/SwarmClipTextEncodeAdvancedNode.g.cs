@@ -32,24 +32,24 @@ public sealed class SwarmClipTextEncodeAdvancedNode : ComfyNode
     public SwarmClipTextEncodeAdvancedNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Clip = AddInput<ClipType>("clip", required: true);
-        Steps = AddInput<IntType>("steps", required: true);
+        Clip = AddInput<ClipType>("clip");
+        Steps = AddInput<IntType>("steps");
         Steps.Set(20L);
-        Prompt = AddInput<StringType>("prompt", required: true);
-        Width = AddInput<IntType>("width", required: true);
+        Prompt = AddInput<StringType>("prompt");
+        Width = AddInput<IntType>("width");
         Width.Set(1024L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(1024L);
-        TargetWidth = AddInput<IntType>("target_width", required: true);
+        TargetWidth = AddInput<IntType>("target_width");
         TargetWidth.Set(1024L);
-        TargetHeight = AddInput<IntType>("target_height", required: true);
+        TargetHeight = AddInput<IntType>("target_height");
         TargetHeight.Set(1024L);
-        Guidance = AddInput<FloatType>("guidance", required: false);
+        Guidance = AddInput<FloatType>("guidance");
         Guidance.Set(-1.0);
-        LlamaTemplate = AddInput<StringType>("llama_template", required: false);
+        LlamaTemplate = AddInput<StringType>("llama_template");
         LlamaTemplate.Set("");
-        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output", required: false);
-        Images = AddInput<ImageType>("images", required: false);
+        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output");
+        Images = AddInput<ImageType>("images");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

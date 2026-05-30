@@ -22,8 +22,8 @@ public sealed class LatentBatchSeedBehaviorNode : ComfyNode
     public LatentBatchSeedBehaviorNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Samples = AddInput<LatentType>("samples", required: true);
-        SeedBehavior = AddInput<StringType>("seed_behavior", required: true);
+        Samples = AddInput<LatentType>("samples");
+        SeedBehavior = AddInput<StringType>("seed_behavior");
         SeedBehavior.Set("fixed");
     }
 

@@ -35,30 +35,30 @@ public sealed class TextEncodeAceStepAudio15Node : ComfyNode
     public TextEncodeAceStepAudio15Node()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Clip = AddInput<ClipType>("clip", required: true);
-        Tags = AddInput<StringType>("tags", required: true);
-        Lyrics = AddInput<StringType>("lyrics", required: true);
-        Seed = AddInput<IntType>("seed", required: true);
+        Clip = AddInput<ClipType>("clip");
+        Tags = AddInput<StringType>("tags");
+        Lyrics = AddInput<StringType>("lyrics");
+        Seed = AddInput<IntType>("seed");
         Seed.Set(0L);
-        Bpm = AddInput<IntType>("bpm", required: true);
+        Bpm = AddInput<IntType>("bpm");
         Bpm.Set(120L);
-        Duration = AddInput<FloatType>("duration", required: true);
+        Duration = AddInput<FloatType>("duration");
         Duration.Set(120.0);
-        Timesignature = AddInput<StringType>("timesignature", required: true);
-        Language = AddInput<StringType>("language", required: true);
+        Timesignature = AddInput<StringType>("timesignature");
+        Language = AddInput<StringType>("language");
         Language.Set("en");
-        Keyscale = AddInput<StringType>("keyscale", required: true);
-        GenerateAudioCodes = AddInput<BooleanType>("generate_audio_codes", required: true);
+        Keyscale = AddInput<StringType>("keyscale");
+        GenerateAudioCodes = AddInput<BooleanType>("generate_audio_codes");
         GenerateAudioCodes.Set(true);
-        CfgScale = AddInput<FloatType>("cfg_scale", required: true);
+        CfgScale = AddInput<FloatType>("cfg_scale");
         CfgScale.Set(2.0);
-        Temperature = AddInput<FloatType>("temperature", required: true);
+        Temperature = AddInput<FloatType>("temperature");
         Temperature.Set(0.85);
-        TopP = AddInput<FloatType>("top_p", required: true);
+        TopP = AddInput<FloatType>("top_p");
         TopP.Set(0.9);
-        TopK = AddInput<IntType>("top_k", required: true);
+        TopK = AddInput<IntType>("top_k");
         TopK.Set(0L);
-        MinP = AddInput<FloatType>("min_p", required: true);
+        MinP = AddInput<FloatType>("min_p");
         MinP.Set(0.0);
     }
 

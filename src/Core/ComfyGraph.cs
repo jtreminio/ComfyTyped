@@ -38,7 +38,6 @@ public sealed class ComfyGraph
         return node;
     }
 
-    /// <summary>Get a node by ID.</summary>
     public ComfyNode? GetNode(string id) => _nodes.TryGetValue(id, out ComfyNode? node) ? node : null;
 
     /// <summary>Get a node by ID narrowed to <typeparamref name="T"/> — a node class, or a shared
@@ -57,15 +56,6 @@ public sealed class ComfyGraph
 
     /// <summary>Remove a node from the graph. Does NOT disconnect it — callers should handle that.</summary>
     public bool RemoveNode(string id) => _nodes.Remove(id);
-
-    /// <summary>Remove every node from the graph. Returns the number removed. Does NOT reset the next auto-assigned ID.</summary>
-    public int RemoveAllNodes()
-    {
-        int count = _nodes.Count;
-        _nodes.Clear();
-
-        return count;
-    }
 
     /// <summary>Ensure the next auto-assigned ID is at least this value.</summary>
     internal void EnsureMinNextId(int minNextId)
@@ -467,44 +457,6 @@ public sealed class ComfyGraph
         }
 
         return count;
-    }
-
-    /// <summary>Walk downstream from a node's output to find the nearest node matching a predicate.</summary>
-    public ComfyNode? FindNearestDownstream(INodeOutput output, Func<ComfyNode, bool> predicate)
-    {
-        if (output is null || predicate is null)
-        {
-            return null;
-        }
-
-        Queue<ComfyNode> pending = new();
-        HashSet<string> visited = [];
-        foreach (ComfyNode downstream in FindDownstream(output))
-        {
-            pending.Enqueue(downstream);
-            visited.Add(downstream.Id);
-        }
-
-        while (pending.Count > 0)
-        {
-            ComfyNode current = pending.Dequeue();
-            if (predicate(current))
-            {
-                return current;
-            }
-            foreach (INodeOutput currentOutput in current.Outputs)
-            {
-                foreach (ComfyNode downstream in FindDownstream(currentOutput))
-                {
-                    if (visited.Add(downstream.Id))
-                    {
-                        pending.Enqueue(downstream);
-                    }
-                }
-            }
-        }
-
-        return null;
     }
 
     /// <summary>Walk downstream from a node's output to find the nearest node assignable to

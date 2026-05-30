@@ -23,7 +23,7 @@ public sealed class LoadTrainingDatasetNode : ComfyNode
     {
         Latents = AddOutput<LatentType>(0, "latents");
         Conditioning = AddOutput<ConditioningType>(1, "conditioning");
-        FolderName = AddInput<StringType>("folder_name", required: true);
+        FolderName = AddInput<StringType>("folder_name");
         FolderName.Set("training_dataset");
     }
 

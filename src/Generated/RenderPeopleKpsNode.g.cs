@@ -24,12 +24,12 @@ public sealed class RenderPeopleKpsNode : ComfyNode
     public RenderPeopleKpsNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Kps = AddInput<PoseKeypointType>("kps", required: true);
-        RenderBody = AddInput<BooleanType>("render_body", required: true);
+        Kps = AddInput<PoseKeypointType>("kps");
+        RenderBody = AddInput<BooleanType>("render_body");
         RenderBody.Set(true);
-        RenderHand = AddInput<BooleanType>("render_hand", required: true);
+        RenderHand = AddInput<BooleanType>("render_hand");
         RenderHand.Set(true);
-        RenderFace = AddInput<BooleanType>("render_face", required: true);
+        RenderFace = AddInput<BooleanType>("render_face");
         RenderFace.Set(true);
     }
 

@@ -22,8 +22,8 @@ public sealed class BasicGuiderNode : ComfyNode
     public BasicGuiderNode()
     {
         GUIDER = AddOutput<GuiderType>(0, "GUIDER");
-        Model = AddInput<ModelType>("model", required: true);
-        Conditioning = AddInput<ConditioningType>("conditioning", required: true);
+        Model = AddInput<ModelType>("model");
+        Conditioning = AddInput<ConditioningType>("conditioning");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

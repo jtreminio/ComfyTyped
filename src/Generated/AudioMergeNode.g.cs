@@ -24,9 +24,9 @@ public sealed class AudioMergeNode : ComfyNode
     public AudioMergeNode()
     {
         AUDIO = AddOutput<AudioType>(0, "AUDIO");
-        Audio1 = AddInput<AudioType>("audio1", required: true);
-        Audio2 = AddInput<AudioType>("audio2", required: true);
-        MergeMethod = AddInput<StringType>("merge_method", required: true);
+        Audio1 = AddInput<AudioType>("audio1");
+        Audio2 = AddInput<AudioType>("audio2");
+        MergeMethod = AddInput<StringType>("merge_method");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

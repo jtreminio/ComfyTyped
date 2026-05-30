@@ -22,7 +22,7 @@ public sealed class SwarmLoadAudioB64Node : ComfyNode
     public SwarmLoadAudioB64Node()
     {
         AUDIO = AddOutput<AudioType>(0, "AUDIO");
-        AudioBase64 = AddInput<StringType>("audio_base64", required: true);
+        AudioBase64 = AddInput<StringType>("audio_base64");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

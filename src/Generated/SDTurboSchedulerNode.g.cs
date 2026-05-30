@@ -23,10 +23,10 @@ public sealed class SDTurboSchedulerNode : ComfyNode
     public SDTurboSchedulerNode()
     {
         SIGMAS = AddOutput<SigmasType>(0, "SIGMAS");
-        Model = AddInput<ModelType>("model", required: true);
-        Steps = AddInput<IntType>("steps", required: true);
+        Model = AddInput<ModelType>("model");
+        Steps = AddInput<IntType>("steps");
         Steps.Set(1L);
-        Denoise = AddInput<FloatType>("denoise", required: true);
+        Denoise = AddInput<FloatType>("denoise");
         Denoise.Set(1.0);
     }
 

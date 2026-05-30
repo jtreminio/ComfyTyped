@@ -24,12 +24,12 @@ public sealed class BetaSamplingSchedulerNode : ComfyNode
     public BetaSamplingSchedulerNode()
     {
         SIGMAS = AddOutput<SigmasType>(0, "SIGMAS");
-        Model = AddInput<ModelType>("model", required: true);
-        Steps = AddInput<IntType>("steps", required: true);
+        Model = AddInput<ModelType>("model");
+        Steps = AddInput<IntType>("steps");
         Steps.Set(20L);
-        Alpha = AddInput<FloatType>("alpha", required: true);
+        Alpha = AddInput<FloatType>("alpha");
         Alpha.Set(0.6);
-        Beta = AddInput<FloatType>("beta", required: true);
+        Beta = AddInput<FloatType>("beta");
         Beta.Set(0.6);
     }
 

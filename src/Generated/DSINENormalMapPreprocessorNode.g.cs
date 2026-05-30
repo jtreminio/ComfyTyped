@@ -24,12 +24,12 @@ public sealed class DSINENormalMapPreprocessorNode : ComfyNode
     public DSINENormalMapPreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        Fov = AddInput<FloatType>("fov", required: false);
+        Image = AddInput<ImageType>("image");
+        Fov = AddInput<FloatType>("fov");
         Fov.Set(60.0);
-        Iterations = AddInput<IntType>("iterations", required: false);
+        Iterations = AddInput<IntType>("iterations");
         Iterations.Set(5L);
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

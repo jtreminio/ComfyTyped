@@ -24,10 +24,10 @@ public sealed class CombineHooks4Node : ComfyNode
     public CombineHooks4Node()
     {
         HOOKS = AddOutput<HooksType>(0, "HOOKS");
-        HooksA = AddInput<HooksType>("hooks_A", required: false);
-        HooksB = AddInput<HooksType>("hooks_B", required: false);
-        HooksC = AddInput<HooksType>("hooks_C", required: false);
-        HooksD = AddInput<HooksType>("hooks_D", required: false);
+        HooksA = AddInput<HooksType>("hooks_A");
+        HooksB = AddInput<HooksType>("hooks_B");
+        HooksC = AddInput<HooksType>("hooks_C");
+        HooksD = AddInput<HooksType>("hooks_D");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

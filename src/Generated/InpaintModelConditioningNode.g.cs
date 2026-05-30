@@ -30,12 +30,12 @@ public sealed class InpaintModelConditioningNode : ComfyNode
         Positive = AddOutput<ConditioningType>(0, "positive");
         Negative = AddOutput<ConditioningType>(1, "negative");
         Latent = AddOutput<LatentType>(2, "latent");
-        PositiveInput = AddInput<ConditioningType>("positive", required: true);
-        NegativeInput = AddInput<ConditioningType>("negative", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        Pixels = AddInput<ImageType>("pixels", required: true);
-        Mask = AddInput<MaskType>("mask", required: true);
-        NoiseMask = AddInput<BooleanType>("noise_mask", required: true);
+        PositiveInput = AddInput<ConditioningType>("positive");
+        NegativeInput = AddInput<ConditioningType>("negative");
+        Vae = AddInput<VaeType>("vae");
+        Pixels = AddInput<ImageType>("pixels");
+        Mask = AddInput<MaskType>("mask");
+        NoiseMask = AddInput<BooleanType>("noise_mask");
         NoiseMask.Set(true);
     }
 

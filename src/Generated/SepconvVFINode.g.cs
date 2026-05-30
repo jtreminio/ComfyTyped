@@ -25,13 +25,13 @@ public sealed class SepconvVFINode : ComfyNode
     public SepconvVFINode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        CkptName = AddInput<StringType>("ckpt_name", required: true);
-        Frames = AddInput<ImageType>("frames", required: true);
-        ClearCacheAfterNFrames = AddInput<IntType>("clear_cache_after_n_frames", required: true);
+        CkptName = AddInput<StringType>("ckpt_name");
+        Frames = AddInput<ImageType>("frames");
+        ClearCacheAfterNFrames = AddInput<IntType>("clear_cache_after_n_frames");
         ClearCacheAfterNFrames.Set(10L);
-        Multiplier = AddInput<IntType>("multiplier", required: true);
+        Multiplier = AddInput<IntType>("multiplier");
         Multiplier.Set(2L);
-        OptionalInterpolationStates = AddInput<InterpolationStatesType>("optional_interpolation_states", required: false);
+        OptionalInterpolationStates = AddInput<InterpolationStatesType>("optional_interpolation_states");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

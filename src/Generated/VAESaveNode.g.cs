@@ -18,8 +18,8 @@ public sealed class VAESaveNode : ComfyNode
 
     public VAESaveNode()
     {
-        Vae = AddInput<VaeType>("vae", required: true);
-        FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
+        Vae = AddInput<VaeType>("vae");
+        FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("vae/ComfyUI_vae");
     }
 

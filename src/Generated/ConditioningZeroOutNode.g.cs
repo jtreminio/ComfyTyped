@@ -21,7 +21,7 @@ public sealed class ConditioningZeroOutNode : ComfyNode
     public ConditioningZeroOutNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Conditioning = AddInput<ConditioningType>("conditioning", required: true);
+        Conditioning = AddInput<ConditioningType>("conditioning");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

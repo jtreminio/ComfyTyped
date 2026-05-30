@@ -23,9 +23,9 @@ public sealed class HypernetworkLoaderNode : ComfyNode
     public HypernetworkLoaderNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        HypernetworkName = AddInput<StringType>("hypernetwork_name", required: true);
-        Strength = AddInput<FloatType>("strength", required: true);
+        Model = AddInput<ModelType>("model");
+        HypernetworkName = AddInput<StringType>("hypernetwork_name");
+        Strength = AddInput<FloatType>("strength");
         Strength.Set(1.0);
     }
 

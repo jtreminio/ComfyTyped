@@ -263,8 +263,6 @@ public class WorkflowBridgeTests
         resize.ResizeType.Set("pixels");
         ((INodeInput)resize.Input).ConnectToUntyped(decode.IMAGE);
 
-        bridge.SyncAll();
-
         JArray inputRef = (JArray)bridge.Workflow[resize.Id]!["inputs"]!["input"]!;
         Assert.Equal(decode.Id, (string)inputRef[0]!);
         Assert.Equal(0, (int)inputRef[1]!);
@@ -280,7 +278,6 @@ public class WorkflowBridgeTests
 
         Assert.False(((INodeInput)resize.Input).TryConnectToUntyped(null));
         Assert.False(resize.Input.IsConnected);
-        bridge.SyncAll();
         Assert.Null(bridge.Workflow[resize.Id]!["inputs"]!["input"]);
 
         CheckpointLoaderSimpleNode ckpt = bridge.AddNode(new CheckpointLoaderSimpleNode());
@@ -307,8 +304,6 @@ public class WorkflowBridgeTests
         VAEEncodeNode encode = bridge.AddNode(new VAEEncodeNode());
         encode.Vae.ConnectTo(ckpt.VAE);
         ((INodeInput)encode.Pixels).ConnectToUntyped(resize.Resized);
-
-        bridge.SyncAll();
 
         JArray pixelsRef = (JArray)bridge.Workflow[encode.Id]!["inputs"]!["pixels"]!;
         Assert.Equal(resize.Id, (string)pixelsRef[0]!);
@@ -383,40 +378,6 @@ public class WorkflowBridgeTests
         Assert.True(removed);
         Assert.Null(bridge.Graph.GetNode("4"));
         Assert.Null(bridge.Workflow["4"]);
-    }
-
-    [Fact]
-    public void RemoveAllNodes_RemovesEveryNodeFromBoth()
-    {
-        JObject workflow = BuildSimpleWorkflow();
-        WorkflowBridge bridge = WorkflowBridge.Create(workflow);
-
-        int removed = bridge.RemoveAllNodes();
-
-        Assert.Equal(4, removed);
-        Assert.Empty(bridge.Graph.Nodes);
-        Assert.Null(bridge.Workflow["1"]);
-        Assert.Null(bridge.Workflow["4"]);
-    }
-
-    [Fact]
-    public void RemoveAllNodes_PreservesNonNodeProperties()
-    {
-        JObject workflow = BuildSimpleWorkflow();
-        workflow["_meta"] = new JObject { ["version"] = "1.0" };
-        WorkflowBridge bridge = WorkflowBridge.Create(workflow);
-
-        bridge.RemoveAllNodes();
-
-        Assert.NotNull(bridge.Workflow["_meta"]);
-        Assert.Equal("1.0", bridge.Workflow["_meta"]!.Value<string>("version"));
-    }
-
-    [Fact]
-    public void RemoveAllNodes_OnEmptyBridge_ReturnsZero()
-    {
-        WorkflowBridge bridge = WorkflowBridge.Create(new JObject());
-        Assert.Equal(0, bridge.RemoveAllNodes());
     }
 
     [Fact]
@@ -772,86 +733,6 @@ public class WorkflowBridgeTests
     }
 
     [Fact]
-    public void SyncAll_AfterMultipleMutations_UpdatesAll()
-    {
-        JObject workflow = BuildSimpleWorkflow();
-        WorkflowBridge bridge = WorkflowBridge.Create(workflow);
-
-        CheckpointLoaderSimpleNode ckpt = bridge.Graph.GetNode<CheckpointLoaderSimpleNode>("1")!;
-        ckpt.CkptName.Set("other_model.safetensors");
-
-        KSamplerNode ksampler = bridge.Graph.GetNode<KSamplerNode>("3")!;
-        ksampler.Seed.Set(999L);
-        ksampler.SamplerName.Set("dpmpp_2m");
-
-        bridge.SyncAll();
-
-        Assert.Equal("other_model.safetensors", bridge.Workflow["1"]!["inputs"]!.Value<string>("ckpt_name"));
-        Assert.Equal(999L, (long)bridge.Workflow["3"]!["inputs"]!["seed"]!);
-        Assert.Equal("dpmpp_2m", bridge.Workflow["3"]!["inputs"]!.Value<string>("sampler_name"));
-    }
-
-    [Fact]
-    public void SyncAll_PreservesNonNodeProperties()
-    {
-        JObject workflow = BuildSimpleWorkflow();
-        workflow["_meta"] = new JObject { ["version"] = "2.0" };
-        workflow["prompt_id"] = "xyz-789";
-        WorkflowBridge bridge = WorkflowBridge.Create(workflow);
-
-        bridge.SyncAll();
-
-        Assert.Equal("2.0", bridge.Workflow["_meta"]!.Value<string>("version"));
-        Assert.Equal("xyz-789", bridge.Workflow.Value<string>("prompt_id"));
-    }
-
-    [Fact]
-    public void SyncAll_RemovesDeletedNodes()
-    {
-        JObject workflow = BuildSimpleWorkflow();
-        WorkflowBridge bridge = WorkflowBridge.Create(workflow);
-
-        bridge.Graph.RemoveNode("4");
-        Assert.NotNull(bridge.Workflow["4"]);
-
-        bridge.SyncAll();
-
-        Assert.Null(bridge.Workflow["4"]);
-    }
-
-    [Fact]
-    public void SyncAll_AddsNewNodes()
-    {
-        JObject workflow = BuildSimpleWorkflow();
-        WorkflowBridge bridge = WorkflowBridge.Create(workflow);
-
-        VAEDecodeNode newNode = new VAEDecodeNode();
-        bridge.Graph.AddNode(newNode);
-
-        Assert.Null(bridge.Workflow[newNode.Id]);
-
-        bridge.SyncAll();
-
-        Assert.NotNull(bridge.Workflow[newNode.Id]);
-        Assert.Equal("VAEDecode", bridge.Workflow[newNode.Id]!.Value<string>("class_type"));
-    }
-
-    [Fact]
-    public void SyncAll_Idempotent()
-    {
-        JObject workflow = BuildSimpleWorkflow();
-        WorkflowBridge bridge = WorkflowBridge.Create(workflow);
-
-        bridge.SyncAll();
-        string after1 = bridge.Workflow.ToString();
-
-        bridge.SyncAll();
-        string after2 = bridge.Workflow.ToString();
-
-        Assert.Equal(after1, after2);
-    }
-
-    [Fact]
     public void ToPath_ReturnsCorrectJArray()
     {
         WorkflowBridge bridge = WorkflowBridge.Create(new JObject());
@@ -998,49 +879,8 @@ public class WorkflowBridgeTests
     }
 
     [Fact]
-    public void ResolvePathT_MatchingType_ReturnsTypedOutput()
+    public void ResolvePath_UnknownNodeOutput_ResolvesAsWildcard()
     {
-        JObject workflow = BuildSimpleWorkflow();
-        WorkflowBridge bridge = WorkflowBridge.Create(workflow);
-
-        NodeOutput<VaeType>? vae = bridge.ResolvePath<VaeType>(new JArray("1", 2));
-
-        Assert.NotNull(vae);
-        Assert.Equal("1", vae.Node.Id);
-        Assert.Equal(2, vae.SlotIndex);
-        VAEDecodeNode decode = bridge.AddNode(new VAEDecodeNode());
-        decode.Vae.ConnectTo(vae);
-        Assert.Same(vae, decode.Vae.TypedConnection);
-    }
-
-    [Fact]
-    public void ResolvePathT_TypeMismatch_Throws()
-    {
-        JObject workflow = BuildSimpleWorkflow();
-        WorkflowBridge bridge = WorkflowBridge.Create(workflow);
-
-        InvalidOperationException ex = Assert.Throws<InvalidOperationException>(
-            () => bridge.ResolvePath<VaeType>(new JArray("1", 0)));
-
-        Assert.Contains("MODEL", ex.Message);
-        Assert.Contains("VAE", ex.Message);
-    }
-
-    [Fact]
-    public void ResolvePathT_NullOrUnresolvedPath_ReturnsNull()
-    {
-        WorkflowBridge bridge = WorkflowBridge.Create(BuildSimpleWorkflow());
-
-        Assert.Null(bridge.ResolvePath<VaeType>(null));
-        Assert.Null(bridge.ResolvePath<VaeType>(new JArray()));
-        Assert.Null(bridge.ResolvePath<VaeType>(new JArray("nonexistent", 0)));
-        Assert.Null(bridge.ResolvePath<VaeType>(new JArray("1", 99)));
-    }
-
-    [Fact]
-    public void ResolvePathT_UnknownNodeOutput_ThrowsForConcreteT()
-    {
-        // ResolvePath<T> rejects AnyType/wildcard outputs; use non-generic ResolvePath + untyped connect.
         JObject workflow = new()
         {
             ["50"] = new JObject
@@ -1051,38 +891,9 @@ public class WorkflowBridgeTests
         };
         WorkflowBridge bridge = WorkflowBridge.Create(workflow);
 
-        Assert.Throws<InvalidOperationException>(
-            () => bridge.ResolvePath<ImageType>(new JArray("50", 0)));
-
         INodeOutput? wildcard = bridge.ResolvePath(new JArray("50", 0));
         Assert.NotNull(wildcard);
         Assert.Equal("*", wildcard.TypeName);
-    }
-
-    [Fact]
-    public void RoundTrip_CreateThenSyncAll_DeepEquality()
-    {
-        JObject original = BuildSimpleWorkflow();
-        WorkflowBridge bridge = WorkflowBridge.Create(original);
-
-        bridge.SyncAll();
-
-        Assert.Equal("CheckpointLoaderSimple", bridge.Workflow["1"]!.Value<string>("class_type"));
-        Assert.Equal("model.safetensors", bridge.Workflow["1"]!["inputs"]!.Value<string>("ckpt_name"));
-
-        Assert.Equal("CLIPTextEncode", bridge.Workflow["2"]!.Value<string>("class_type"));
-        Assert.Equal("a cat", bridge.Workflow["2"]!["inputs"]!.Value<string>("text"));
-        JArray clipConn = (JArray)bridge.Workflow["2"]!["inputs"]!["clip"]!;
-        Assert.Equal("1", (string)clipConn[0]!);
-        Assert.Equal(1, (int)clipConn[1]!);
-
-        Assert.Equal("KSampler", bridge.Workflow["3"]!.Value<string>("class_type"));
-        Assert.Equal(42L, (long)bridge.Workflow["3"]!["inputs"]!["seed"]!);
-        JArray modelConn = (JArray)bridge.Workflow["3"]!["inputs"]!["model"]!;
-        Assert.Equal("1", (string)modelConn[0]!);
-        Assert.Equal(0, (int)modelConn[1]!);
-
-        Assert.Equal("EmptyLatentImage", bridge.Workflow["4"]!.Value<string>("class_type"));
     }
 
     [Fact]
@@ -1108,7 +919,8 @@ public class WorkflowBridgeTests
         };
 
         WorkflowBridge bridge = WorkflowBridge.Create(workflow);
-        bridge.SyncAll();
+        bridge.SyncNode("1");
+        bridge.SyncNode("2");
 
         Assert.Equal("SomeCustomWidget", bridge.Workflow["1"]!.Value<string>("class_type"));
         Assert.Equal("hello", bridge.Workflow["1"]!["inputs"]!.Value<string>("text"));
@@ -1129,7 +941,6 @@ public class WorkflowBridgeTests
 
         WorkflowBridge bridge = WorkflowBridge.Create(workflow);
         bridge.AddNode(new VAEDecodeNode());
-        bridge.SyncAll();
 
         Assert.Equal(originalNode1, bridge.Workflow["1"]!.ToString());
         Assert.Equal("KSampler", bridge.Workflow["3"]!.Value<string>("class_type"));

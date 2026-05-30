@@ -18,7 +18,7 @@ public sealed class MaskPreviewNode : ComfyNode
 
     public MaskPreviewNode()
     {
-        Mask = AddInput<MaskType>("mask", required: true);
+        Mask = AddInput<MaskType>("mask");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

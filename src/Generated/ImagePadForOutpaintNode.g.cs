@@ -28,16 +28,16 @@ public sealed class ImagePadForOutpaintNode : ComfyNode
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
         MASK = AddOutput<MaskType>(1, "MASK");
-        Image = AddInput<ImageType>("image", required: true);
-        Left = AddInput<IntType>("left", required: true);
+        Image = AddInput<ImageType>("image");
+        Left = AddInput<IntType>("left");
         Left.Set(0L);
-        Top = AddInput<IntType>("top", required: true);
+        Top = AddInput<IntType>("top");
         Top.Set(0L);
-        Right = AddInput<IntType>("right", required: true);
+        Right = AddInput<IntType>("right");
         Right.Set(0L);
-        Bottom = AddInput<IntType>("bottom", required: true);
+        Bottom = AddInput<IntType>("bottom");
         Bottom.Set(0L);
-        Feathering = AddInput<IntType>("feathering", required: true);
+        Feathering = AddInput<IntType>("feathering");
         Feathering.Set(40L);
     }
 

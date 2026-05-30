@@ -22,8 +22,8 @@ public sealed class ConditioningConcatNode : ComfyNode
     public ConditioningConcatNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        ConditioningTo = AddInput<ConditioningType>("conditioning_to", required: true);
-        ConditioningFrom = AddInput<ConditioningType>("conditioning_from", required: true);
+        ConditioningTo = AddInput<ConditioningType>("conditioning_to");
+        ConditioningFrom = AddInput<ConditioningType>("conditioning_from");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

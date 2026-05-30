@@ -25,15 +25,15 @@ public sealed class LaplaceSchedulerNode : ComfyNode
     public LaplaceSchedulerNode()
     {
         SIGMAS = AddOutput<SigmasType>(0, "SIGMAS");
-        Steps = AddInput<IntType>("steps", required: true);
+        Steps = AddInput<IntType>("steps");
         Steps.Set(20L);
-        SigmaMax = AddInput<FloatType>("sigma_max", required: true);
+        SigmaMax = AddInput<FloatType>("sigma_max");
         SigmaMax.Set(14.614642);
-        SigmaMin = AddInput<FloatType>("sigma_min", required: true);
+        SigmaMin = AddInput<FloatType>("sigma_min");
         SigmaMin.Set(0.0291675);
-        Mu = AddInput<FloatType>("mu", required: true);
+        Mu = AddInput<FloatType>("mu");
         Mu.Set(0.0);
-        Beta = AddInput<FloatType>("beta", required: true);
+        Beta = AddInput<FloatType>("beta");
         Beta.Set(0.5);
     }
 

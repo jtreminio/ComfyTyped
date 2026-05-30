@@ -22,7 +22,7 @@ public sealed class ColorToRGBIntNode : ComfyNode
     public ColorToRGBIntNode()
     {
         RgbInt = AddOutput<IntType>(0, "rgb_int");
-        Color = AddInput<ColorType>("color", required: true);
+        Color = AddInput<ColorType>("color");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

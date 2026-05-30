@@ -23,10 +23,10 @@ public sealed class ReplaceVideoLatentFramesNode : ComfyNode
     public ReplaceVideoLatentFramesNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Destination = AddInput<LatentType>("destination", required: true);
-        Index = AddInput<IntType>("index", required: true);
+        Destination = AddInput<LatentType>("destination");
+        Index = AddInput<IntType>("index");
         Index.Set(0L);
-        Source = AddInput<LatentType>("source", required: false);
+        Source = AddInput<LatentType>("source");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

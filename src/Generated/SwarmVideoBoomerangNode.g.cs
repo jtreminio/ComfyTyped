@@ -22,7 +22,7 @@ public sealed class SwarmVideoBoomerangNode : ComfyNode
     public SwarmVideoBoomerangNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Images = AddInput<ImageType>("images", required: true);
+        Images = AddInput<ImageType>("images");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

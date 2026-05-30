@@ -23,9 +23,9 @@ public sealed class FrameInterpolateNode : ComfyNode
     public FrameInterpolateNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        InterpModel = AddInput<InterpModelType>("interp_model", required: true);
-        Images = AddInput<ImageType>("images", required: true);
-        Multiplier = AddInput<IntType>("multiplier", required: true);
+        InterpModel = AddInput<InterpModelType>("interp_model");
+        Images = AddInput<ImageType>("images");
+        Multiplier = AddInput<IntType>("multiplier");
         Multiplier.Set(2L);
     }
 

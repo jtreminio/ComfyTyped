@@ -24,7 +24,7 @@ public sealed class SwarmLoadImageB64Node : ComfyNode
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
         MASK = AddOutput<MaskType>(1, "MASK");
-        ImageBase64 = AddInput<StringType>("image_base64", required: true);
+        ImageBase64 = AddInput<StringType>("image_base64");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

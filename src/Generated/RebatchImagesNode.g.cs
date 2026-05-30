@@ -22,8 +22,8 @@ public sealed class RebatchImagesNode : ComfyNode
     public RebatchImagesNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Images = AddInput<ImageType>("images", required: true);
-        BatchSize = AddInput<IntType>("batch_size", required: true);
+        Images = AddInput<ImageType>("images");
+        BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
     }
 

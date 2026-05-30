@@ -24,11 +24,11 @@ public sealed class VAEDecodeAudioTiledNode : ComfyNode
     public VAEDecodeAudioTiledNode()
     {
         AUDIO = AddOutput<AudioType>(0, "AUDIO");
-        Samples = AddInput<LatentType>("samples", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        TileSize = AddInput<IntType>("tile_size", required: true);
+        Samples = AddInput<LatentType>("samples");
+        Vae = AddInput<VaeType>("vae");
+        TileSize = AddInput<IntType>("tile_size");
         TileSize.Set(512L);
-        Overlap = AddInput<IntType>("overlap", required: true);
+        Overlap = AddInput<IntType>("overlap");
         Overlap.Set(64L);
     }
 

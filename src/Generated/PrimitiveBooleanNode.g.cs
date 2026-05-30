@@ -21,7 +21,7 @@ public sealed class PrimitiveBooleanNode : ComfyNode
     public PrimitiveBooleanNode()
     {
         BOOLEAN = AddOutput<BooleanType>(0, "BOOLEAN");
-        Value = AddInput<BooleanType>("value", required: true);
+        Value = AddInput<BooleanType>("value");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

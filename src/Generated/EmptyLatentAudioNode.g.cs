@@ -22,9 +22,9 @@ public sealed class EmptyLatentAudioNode : ComfyNode
     public EmptyLatentAudioNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Seconds = AddInput<FloatType>("seconds", required: true);
+        Seconds = AddInput<FloatType>("seconds");
         Seconds.Set(47.6);
-        BatchSize = AddInput<IntType>("batch_size", required: true);
+        BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
     }
 

@@ -66,7 +66,7 @@ To ship typed bindings for nodes the consumer code does not reference yet (custo
 
 The library is laid out as four conceptual layers under `src/`:
 
-- **`src/Core/`** — generic graph machinery. `ComfyNode` is the base class for every node; `NodeSlot.cs` holds `NodeInput<T>`/`NodeOutput<T>` (statically type-checked connections); `ComfyGraph` is the typed graph (nodes by ID, traversal helpers, `RetargetConnections`); `WorkflowBridge` keeps a `ComfyGraph` and the original `JObject` workflow in sync (`AddNode`, `RemoveNode`, `SyncNode`, `SyncAll`, `ResolvePath`, `ToPath`); `NodeRegistry` maps `class_type` → `Type` so `ComfyGraph.FromWorkflow` can deserialize; `UnknownNode` is the lossless fallback for unrecognized `class_type` strings (preserves raw inputs so unknown nodes round-trip cleanly).
+- **`src/Core/`** — generic graph machinery. `ComfyNode` is the base class for every node; `NodeSlot.cs` holds `NodeInput<T>`/`NodeOutput<T>` (statically type-checked connections); `ComfyGraph` is the typed graph (nodes by ID, traversal helpers, `RetargetConnections`); `WorkflowBridge` keeps a `ComfyGraph` and the original `JObject` workflow in sync (`AddNode`, `RemoveNode`, `SyncNode`, `ResolvePath`, `ToPath`); `NodeRegistry` maps `class_type` → `Type` so `ComfyGraph.FromWorkflow` can deserialize; `UnknownNode` is the lossless fallback for unrecognized `class_type` strings (preserves raw inputs so unknown nodes round-trip cleanly).
 
 - **`src/Types/`** — hand-written `IComfyType` marker classes (`ModelType`, `LatentType`, `VaeType`, `ConditioningType`, primitives, etc.) used as the generic parameters on `NodeInput<T>`/`NodeOutput<T>`. Connecting a `LatentType` output to a `ModelType` input fails at compile time, not at ComfyUI runtime.
 

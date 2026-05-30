@@ -25,12 +25,12 @@ public sealed class SwarmImageNoiseNode : ComfyNode
     public SwarmImageNoiseNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        Amount = AddInput<FloatType>("amount", required: true);
+        Image = AddInput<ImageType>("image");
+        Amount = AddInput<FloatType>("amount");
         Amount.Set(0.25);
-        Seed = AddInput<IntType>("seed", required: true);
+        Seed = AddInput<IntType>("seed");
         Seed.Set(0L);
-        Mask = AddInput<MaskType>("mask", required: false);
+        Mask = AddInput<MaskType>("mask");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

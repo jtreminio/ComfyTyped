@@ -25,12 +25,12 @@ public sealed class SwarmImageScaleForMPNode : ComfyNode
     public SwarmImageScaleForMPNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        Width = AddInput<IntType>("width", required: true);
+        Image = AddInput<ImageType>("image");
+        Width = AddInput<IntType>("width");
         Width.Set(0L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(0L);
-        CanShrink = AddInput<BooleanType>("can_shrink", required: true);
+        CanShrink = AddInput<BooleanType>("can_shrink");
         CanShrink.Set(true);
     }
 

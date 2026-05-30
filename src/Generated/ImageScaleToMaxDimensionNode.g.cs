@@ -23,9 +23,9 @@ public sealed class ImageScaleToMaxDimensionNode : ComfyNode
     public ImageScaleToMaxDimensionNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        UpscaleMethod = AddInput<StringType>("upscale_method", required: true);
-        LargestSize = AddInput<IntType>("largest_size", required: true);
+        Image = AddInput<ImageType>("image");
+        UpscaleMethod = AddInput<StringType>("upscale_method");
+        LargestSize = AddInput<IntType>("largest_size");
         LargestSize.Set(512L);
     }
 

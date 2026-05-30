@@ -33,19 +33,19 @@ public sealed class IPAdapterRegionalConditioningNode : ComfyNode
         IPADAPTERPARAMS = AddOutput<IpadapterParamsType>(0, "IPADAPTER_PARAMS");
         POSITIVE = AddOutput<ConditioningType>(1, "POSITIVE");
         NEGATIVE = AddOutput<ConditioningType>(2, "NEGATIVE");
-        Image = AddInput<ImageType>("image", required: true);
-        ImageWeight = AddInput<FloatType>("image_weight", required: true);
+        Image = AddInput<ImageType>("image");
+        ImageWeight = AddInput<FloatType>("image_weight");
         ImageWeight.Set(1.0);
-        PromptWeight = AddInput<FloatType>("prompt_weight", required: true);
+        PromptWeight = AddInput<FloatType>("prompt_weight");
         PromptWeight.Set(1.0);
-        WeightType = AddInput<StringType>("weight_type", required: true);
-        StartAt = AddInput<FloatType>("start_at", required: true);
+        WeightType = AddInput<StringType>("weight_type");
+        StartAt = AddInput<FloatType>("start_at");
         StartAt.Set(0.0);
-        EndAt = AddInput<FloatType>("end_at", required: true);
+        EndAt = AddInput<FloatType>("end_at");
         EndAt.Set(1.0);
-        Mask = AddInput<MaskType>("mask", required: false);
-        Positive = AddInput<ConditioningType>("positive", required: false);
-        Negative = AddInput<ConditioningType>("negative", required: false);
+        Mask = AddInput<MaskType>("mask");
+        Positive = AddInput<ConditioningType>("positive");
+        Negative = AddInput<ConditioningType>("negative");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

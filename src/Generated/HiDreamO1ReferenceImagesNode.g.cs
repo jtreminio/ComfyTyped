@@ -28,9 +28,9 @@ public sealed class HiDreamO1ReferenceImagesNode : ComfyNode
     {
         Positive = AddOutput<ConditioningType>(0, "positive");
         Negative = AddOutput<ConditioningType>(1, "negative");
-        PositiveInput = AddInput<ConditioningType>("positive", required: true);
-        NegativeInput = AddInput<ConditioningType>("negative", required: true);
-        Images = AddInputList<ImageType>("images", names: new string[] { "image_1", "image_2", "image_3", "image_4", "image_5", "image_6", "image_7", "image_8", "image_9", "image_10" }, min: 1, max: 10, required: true);
+        PositiveInput = AddInput<ConditioningType>("positive");
+        NegativeInput = AddInput<ConditioningType>("negative");
+        Images = AddInputList<ImageType>("images", names: new string[] { "image_1", "image_2", "image_3", "image_4", "image_5", "image_6", "image_7", "image_8", "image_9", "image_10" }, max: 10);
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

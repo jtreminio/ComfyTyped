@@ -23,9 +23,9 @@ public sealed class ConditioningAverageNode : ComfyNode
     public ConditioningAverageNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        ConditioningTo = AddInput<ConditioningType>("conditioning_to", required: true);
-        ConditioningFrom = AddInput<ConditioningType>("conditioning_from", required: true);
-        ConditioningToStrength = AddInput<FloatType>("conditioning_to_strength", required: true);
+        ConditioningTo = AddInput<ConditioningType>("conditioning_to");
+        ConditioningFrom = AddInput<ConditioningType>("conditioning_from");
+        ConditioningToStrength = AddInput<FloatType>("conditioning_to_strength");
         ConditioningToStrength.Set(1.0);
     }
 

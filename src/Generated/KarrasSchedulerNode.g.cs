@@ -24,13 +24,13 @@ public sealed class KarrasSchedulerNode : ComfyNode
     public KarrasSchedulerNode()
     {
         SIGMAS = AddOutput<SigmasType>(0, "SIGMAS");
-        Steps = AddInput<IntType>("steps", required: true);
+        Steps = AddInput<IntType>("steps");
         Steps.Set(20L);
-        SigmaMax = AddInput<FloatType>("sigma_max", required: true);
+        SigmaMax = AddInput<FloatType>("sigma_max");
         SigmaMax.Set(14.614642);
-        SigmaMin = AddInput<FloatType>("sigma_min", required: true);
+        SigmaMin = AddInput<FloatType>("sigma_min");
         SigmaMin.Set(0.0291675);
-        Rho = AddInput<FloatType>("rho", required: true);
+        Rho = AddInput<FloatType>("rho");
         Rho.Set(7.0);
     }
 

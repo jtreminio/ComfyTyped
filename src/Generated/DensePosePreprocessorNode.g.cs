@@ -24,12 +24,12 @@ public sealed class DensePosePreprocessorNode : ComfyNode
     public DensePosePreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        Model = AddInput<StringType>("model", required: false);
+        Image = AddInput<ImageType>("image");
+        Model = AddInput<StringType>("model");
         Model.Set("densepose_r50_fpn_dl.torchscript");
-        Cmap = AddInput<StringType>("cmap", required: false);
+        Cmap = AddInput<StringType>("cmap");
         Cmap.Set("Viridis (MagicAnimate)");
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

@@ -19,10 +19,10 @@ public sealed class Preview3DNode : ComfyNode
 
     public Preview3DNode()
     {
-        ModelFile = AddInput<StringType>("model_file", required: true);
+        ModelFile = AddInput<StringType>("model_file");
         ModelFile.Set("");
-        CameraInfo = AddInput<Load3dCameraType>("camera_info", required: false);
-        BgImage = AddInput<ImageType>("bg_image", required: false);
+        CameraInfo = AddInput<Load3dCameraType>("camera_info");
+        BgImage = AddInput<ImageType>("bg_image");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

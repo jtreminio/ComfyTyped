@@ -26,12 +26,12 @@ public sealed class UnimatchOptFlowPreprocessorNode : ComfyNode
     {
         OPTICALFLOW = AddOutput<OpticalFlowType>(0, "OPTICAL_FLOW");
         PREVIEWIMAGE = AddOutput<ImageType>(1, "PREVIEW_IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        CkptName = AddInput<StringType>("ckpt_name", required: true);
+        Image = AddInput<ImageType>("image");
+        CkptName = AddInput<StringType>("ckpt_name");
         CkptName.Set("gmflow-scale2-regrefine6-mixdata.pth");
-        BackwardFlow = AddInput<BooleanType>("backward_flow", required: true);
+        BackwardFlow = AddInput<BooleanType>("backward_flow");
         BackwardFlow.Set(false);
-        BidirectionalFlow = AddInput<BooleanType>("bidirectional_flow", required: true);
+        BidirectionalFlow = AddInput<BooleanType>("bidirectional_flow");
         BidirectionalFlow.Set(false);
     }
 

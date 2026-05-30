@@ -23,10 +23,10 @@ public sealed class ImageBlurNode : ComfyNode
     public ImageBlurNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        BlurRadius = AddInput<IntType>("blur_radius", required: true);
+        Image = AddInput<ImageType>("image");
+        BlurRadius = AddInput<IntType>("blur_radius");
         BlurRadius.Set(1L);
-        Sigma = AddInput<FloatType>("sigma", required: true);
+        Sigma = AddInput<FloatType>("sigma");
         Sigma.Set(1.0);
     }
 

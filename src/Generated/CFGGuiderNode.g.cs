@@ -24,10 +24,10 @@ public sealed class CFGGuiderNode : ComfyNode
     public CFGGuiderNode()
     {
         GUIDER = AddOutput<GuiderType>(0, "GUIDER");
-        Model = AddInput<ModelType>("model", required: true);
-        Positive = AddInput<ConditioningType>("positive", required: true);
-        Negative = AddInput<ConditioningType>("negative", required: true);
-        Cfg = AddInput<FloatType>("cfg", required: true);
+        Model = AddInput<ModelType>("model");
+        Positive = AddInput<ConditioningType>("positive");
+        Negative = AddInput<ConditioningType>("negative");
+        Cfg = AddInput<FloatType>("cfg");
         Cfg.Set(8.0);
     }
 

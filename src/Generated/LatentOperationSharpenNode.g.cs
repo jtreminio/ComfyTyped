@@ -23,11 +23,11 @@ public sealed class LatentOperationSharpenNode : ComfyNode
     public LatentOperationSharpenNode()
     {
         LATENTOPERATION = AddOutput<LatentOperationType>(0, "LATENT_OPERATION");
-        SharpenRadius = AddInput<IntType>("sharpen_radius", required: true);
+        SharpenRadius = AddInput<IntType>("sharpen_radius");
         SharpenRadius.Set(9L);
-        Sigma = AddInput<FloatType>("sigma", required: true);
+        Sigma = AddInput<FloatType>("sigma");
         Sigma.Set(1.0);
-        Alpha = AddInput<FloatType>("alpha", required: true);
+        Alpha = AddInput<FloatType>("alpha");
         Alpha.Set(0.1);
     }
 

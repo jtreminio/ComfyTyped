@@ -473,8 +473,8 @@ public static partial class Program
               --marker-namespace <ns>          Namespace for auto-generated IComfyType marker
                                                classes (defaults to --namespace). Markers for
                                                ComfyUI types not already covered by the codegen's
-                                               built-in mapping or core's IOTypeMap are emitted
-                                               automatically.
+                                               built-in mapping or core's existing marker types
+                                               are emitted automatically.
               --registrations-class <name>     Static class name for node registrations
                                                (default: {{RootRegistrationsClass}}).
 
@@ -1284,9 +1284,8 @@ public static partial class Program
         }
         foreach (InputDef inp in singularInputs)
         {
-            string req = inp.Required ? "true" : "false";
             sb.AppendLine(
-                $"        {inp.PropertyName} = AddInput<{inp.Marker.ShortName}>(\"{inp.Name}\", required: {req});");
+                $"        {inp.PropertyName} = AddInput<{inp.Marker.ShortName}>(\"{inp.Name}\");");
             if (inp.IsPrimitive && inp.DefaultValue is not null)
             {
                 sb.AppendLine($"        {inp.PropertyName}.Set({FormatLiteral(inp.DefaultValue, inp.CSharpType!)});");
@@ -1294,7 +1293,6 @@ public static partial class Program
         }
         foreach (InputDef inp in listInputs)
         {
-            string req = inp.Required ? "true" : "false";
             string maxLit = inp.Max == int.MaxValue ? "int.MaxValue" : inp.Max.ToString();
             if (inp.Names is not null)
             {
@@ -1303,15 +1301,13 @@ public static partial class Program
                     inp.Names.Select(n => $"\"{EscapeCSharpString(n)}\""));
                 sb.AppendLine(
                     $"        {inp.PropertyName} = AddInputList<{inp.ElementMarker!.ShortName}>("
-                    + $"\"{inp.Name}\", names: new string[] {{ {namesLit} }}, "
-                    + $"min: {inp.Min}, max: {maxLit}, required: {req});");
+                    + $"\"{inp.Name}\", names: new string[] {{ {namesLit} }}, max: {maxLit});");
             }
             else
             {
                 sb.AppendLine(
                     $"        {inp.PropertyName} = AddInputList<{inp.ElementMarker!.ShortName}>("
-                    + $"\"{inp.Name}\", prefix: \"{EscapeCSharpString(inp.Prefix!)}\", "
-                    + $"min: {inp.Min}, max: {maxLit}, required: {req});");
+                    + $"\"{inp.Name}\", prefix: \"{EscapeCSharpString(inp.Prefix!)}\", max: {maxLit});");
             }
         }
         sb.AppendLine("    }");
@@ -1739,8 +1735,7 @@ public static partial class Program
 
         HashSet<string> manifestAlwaysKeep = ReadPruneManifestKeepSet(opts.GeneratedDir);
 
-        // Enumerate every generated *.g.cs as a candidate. Both ComfyNode subclasses
-        // and IComfyType marker classes are eligible for pruning.
+        // Both ComfyNode subclasses and IComfyType marker classes are eligible for pruning.
         List<PruneCandidate> candidates = [];
         foreach (string file in Directory.EnumerateFiles(opts.GeneratedDir, "*.g.cs", SearchOption.TopDirectoryOnly))
         {

@@ -22,8 +22,8 @@ public sealed class CLIPSetLastLayerNode : ComfyNode
     public CLIPSetLastLayerNode()
     {
         CLIP = AddOutput<ClipType>(0, "CLIP");
-        Clip = AddInput<ClipType>("clip", required: true);
-        StopAtClipLayer = AddInput<IntType>("stop_at_clip_layer", required: true);
+        Clip = AddInput<ClipType>("clip");
+        StopAtClipLayer = AddInput<IntType>("stop_at_clip_layer");
         StopAtClipLayer.Set(-1L);
     }
 

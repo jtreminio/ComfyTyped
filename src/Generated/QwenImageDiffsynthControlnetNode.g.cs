@@ -26,13 +26,13 @@ public sealed class QwenImageDiffsynthControlnetNode : ComfyNode
     public QwenImageDiffsynthControlnetNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        ModelPatch = AddInput<ModelPatchType>("model_patch", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        Image = AddInput<ImageType>("image", required: true);
-        Strength = AddInput<FloatType>("strength", required: true);
+        Model = AddInput<ModelType>("model");
+        ModelPatch = AddInput<ModelPatchType>("model_patch");
+        Vae = AddInput<VaeType>("vae");
+        Image = AddInput<ImageType>("image");
+        Strength = AddInput<FloatType>("strength");
         Strength.Set(1.0);
-        Mask = AddInput<MaskType>("mask", required: false);
+        Mask = AddInput<MaskType>("mask");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

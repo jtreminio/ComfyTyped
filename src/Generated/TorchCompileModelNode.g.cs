@@ -22,8 +22,8 @@ public sealed class TorchCompileModelNode : ComfyNode
     public TorchCompileModelNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        Backend = AddInput<StringType>("backend", required: true);
+        Model = AddInput<ModelType>("model");
+        Backend = AddInput<StringType>("backend");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

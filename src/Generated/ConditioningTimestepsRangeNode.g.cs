@@ -26,9 +26,9 @@ public sealed class ConditioningTimestepsRangeNode : ComfyNode
         TIMESTEPSRANGE = AddOutput<TimestepsRangeType>(0, "TIMESTEPS_RANGE");
         BEFORERANGE = AddOutput<TimestepsRangeType>(1, "BEFORE_RANGE");
         AFTERRANGE = AddOutput<TimestepsRangeType>(2, "AFTER_RANGE");
-        StartPercent = AddInput<FloatType>("start_percent", required: true);
+        StartPercent = AddInput<FloatType>("start_percent");
         StartPercent.Set(0.0);
-        EndPercent = AddInput<FloatType>("end_percent", required: true);
+        EndPercent = AddInput<FloatType>("end_percent");
         EndPercent.Set(1.0);
     }
 

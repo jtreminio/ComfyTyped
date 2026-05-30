@@ -14,12 +14,6 @@ public static class NodeRegistry
     private static readonly HashSet<Assembly> ScannedAssemblies = [];
     private static readonly object ScanLock = new();
 
-    /// <summary>Register a single node type. Available for callers that need explicit control.</summary>
-    public static void Register<T>(string classType) where T : ComfyNode, new()
-    {
-        Factories[classType] = () => new T();
-    }
-
     /// <summary>Register a node type with a custom factory.</summary>
     public static void Register(string classType, Func<ComfyNode> factory)
     {
@@ -31,8 +25,8 @@ public static class NodeRegistry
     /// <paramref name="asm"/>. Candidates must be non-abstract classes with a
     /// parameterless constructor; the constructor is invoked once on a probe
     /// instance to read <see cref="ComfyNode.ClassTypeName"/> as the registry key.
-    /// Idempotent per assembly. Safe to call concurrently — readers (Create,
-    /// IsKnown) block until the scan finishes the first time.
+    /// Idempotent per assembly. Safe to call concurrently — readers (Create)
+    /// block until the scan finishes the first time.
     /// </summary>
     public static void RegisterAssembly(Assembly asm)
     {
@@ -83,9 +77,6 @@ public static class NodeRegistry
 
         return new UnknownNode(classType);
     }
-
-    /// <summary>Check whether a class_type has a registered typed node.</summary>
-    public static bool IsKnown(string classType) => Factories.ContainsKey(classType);
 
     /// <summary>All registered class_type strings.</summary>
     public static IEnumerable<string> RegisteredTypes => Factories.Keys;

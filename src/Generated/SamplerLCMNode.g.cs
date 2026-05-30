@@ -24,11 +24,11 @@ public sealed class SamplerLCMNode : ComfyNode
     public SamplerLCMNode()
     {
         SAMPLER = AddOutput<SamplerType>(0, "SAMPLER");
-        SNoise = AddInput<FloatType>("s_noise", required: true);
+        SNoise = AddInput<FloatType>("s_noise");
         SNoise.Set(1.0);
-        SNoiseEnd = AddInput<FloatType>("s_noise_end", required: true);
+        SNoiseEnd = AddInput<FloatType>("s_noise_end");
         SNoiseEnd.Set(1.0);
-        NoiseClipStd = AddInput<FloatType>("noise_clip_std", required: true);
+        NoiseClipStd = AddInput<FloatType>("noise_clip_std");
         NoiseClipStd.Set(0.0);
     }
 

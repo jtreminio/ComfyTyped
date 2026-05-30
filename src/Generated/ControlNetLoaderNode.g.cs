@@ -21,7 +21,7 @@ public sealed class ControlNetLoaderNode : ComfyNode
     public ControlNetLoaderNode()
     {
         CONTROLNET = AddOutput<ControlNetType>(0, "CONTROL_NET");
-        ControlNetName = AddInput<StringType>("control_net_name", required: true);
+        ControlNetName = AddInput<StringType>("control_net_name");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

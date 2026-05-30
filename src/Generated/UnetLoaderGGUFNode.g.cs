@@ -21,7 +21,7 @@ public sealed class UnetLoaderGGUFNode : ComfyNode
     public UnetLoaderGGUFNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        UnetName = AddInput<StringType>("unet_name", required: true);
+        UnetName = AddInput<StringType>("unet_name");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

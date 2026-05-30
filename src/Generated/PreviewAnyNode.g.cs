@@ -21,7 +21,7 @@ public sealed class PreviewAnyNode : ComfyNode
     public PreviewAnyNode()
     {
         STRING = AddOutput<StringType>(0, "STRING");
-        Source = AddInput<AnyType>("source", required: true);
+        Source = AddInput<AnyType>("source");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

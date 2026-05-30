@@ -22,8 +22,8 @@ public sealed class CLIPLoaderGGUFNode : ComfyNode
     public CLIPLoaderGGUFNode()
     {
         CLIP = AddOutput<ClipType>(0, "CLIP");
-        ClipName = AddInput<StringType>("clip_name", required: true);
-        Type = AddInput<StringType>("type", required: true);
+        ClipName = AddInput<StringType>("clip_name");
+        Type = AddInput<StringType>("type");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

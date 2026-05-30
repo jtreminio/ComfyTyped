@@ -20,10 +20,10 @@ public sealed class CheckpointSaveNode : ComfyNode
 
     public CheckpointSaveNode()
     {
-        Model = AddInput<ModelType>("model", required: true);
-        Clip = AddInput<ClipType>("clip", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
+        Model = AddInput<ModelType>("model");
+        Clip = AddInput<ClipType>("clip");
+        Vae = AddInput<VaeType>("vae");
+        FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("checkpoints/ComfyUI");
     }
 

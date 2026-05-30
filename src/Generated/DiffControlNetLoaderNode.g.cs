@@ -22,8 +22,8 @@ public sealed class DiffControlNetLoaderNode : ComfyNode
     public DiffControlNetLoaderNode()
     {
         CONTROLNET = AddOutput<ControlNetType>(0, "CONTROL_NET");
-        Model = AddInput<ModelType>("model", required: true);
-        ControlNetName = AddInput<StringType>("control_net_name", required: true);
+        Model = AddInput<ModelType>("model");
+        ControlNetName = AddInput<StringType>("control_net_name");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

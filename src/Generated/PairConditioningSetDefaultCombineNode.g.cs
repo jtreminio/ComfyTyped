@@ -27,11 +27,11 @@ public sealed class PairConditioningSetDefaultCombineNode : ComfyNode
     {
         Positive = AddOutput<ConditioningType>(0, "positive");
         Negative = AddOutput<ConditioningType>(1, "negative");
-        PositiveInput = AddInput<ConditioningType>("positive", required: true);
-        NegativeInput = AddInput<ConditioningType>("negative", required: true);
-        PositiveDEFAULT = AddInput<ConditioningType>("positive_DEFAULT", required: true);
-        NegativeDEFAULT = AddInput<ConditioningType>("negative_DEFAULT", required: true);
-        Hooks = AddInput<HooksType>("hooks", required: false);
+        PositiveInput = AddInput<ConditioningType>("positive");
+        NegativeInput = AddInput<ConditioningType>("negative");
+        PositiveDEFAULT = AddInput<ConditioningType>("positive_DEFAULT");
+        NegativeDEFAULT = AddInput<ConditioningType>("negative_DEFAULT");
+        Hooks = AddInput<HooksType>("hooks");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

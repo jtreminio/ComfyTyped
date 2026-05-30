@@ -23,9 +23,9 @@ public sealed class LatentCutToBatchNode : ComfyNode
     public LatentCutToBatchNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Samples = AddInput<LatentType>("samples", required: true);
-        Dim = AddInput<StringType>("dim", required: true);
-        SliceSize = AddInput<IntType>("slice_size", required: true);
+        Samples = AddInput<LatentType>("samples");
+        Dim = AddInput<StringType>("dim");
+        SliceSize = AddInput<IntType>("slice_size");
         SliceSize.Set(1L);
     }
 

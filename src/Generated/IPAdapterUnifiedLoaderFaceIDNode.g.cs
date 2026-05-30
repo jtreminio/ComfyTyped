@@ -27,12 +27,12 @@ public sealed class IPAdapterUnifiedLoaderFaceIDNode : ComfyNode
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
         Ipadapter = AddOutput<IpAdapterType>(1, "ipadapter");
-        Model = AddInput<ModelType>("model", required: true);
-        Preset = AddInput<StringType>("preset", required: true);
-        LoraStrength = AddInput<FloatType>("lora_strength", required: true);
+        Model = AddInput<ModelType>("model");
+        Preset = AddInput<StringType>("preset");
+        LoraStrength = AddInput<FloatType>("lora_strength");
         LoraStrength.Set(0.6);
-        Provider = AddInput<StringType>("provider", required: true);
-        IpadapterInput = AddInput<IpAdapterType>("ipadapter", required: false);
+        Provider = AddInput<StringType>("provider");
+        IpadapterInput = AddInput<IpAdapterType>("ipadapter");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

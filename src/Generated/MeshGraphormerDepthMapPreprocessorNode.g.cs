@@ -30,20 +30,20 @@ public sealed class MeshGraphormerDepthMapPreprocessorNode : ComfyNode
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
         INPAINTINGMASK = AddOutput<MaskType>(1, "INPAINTING_MASK");
-        Image = AddInput<ImageType>("image", required: true);
-        MaskBboxPadding = AddInput<IntType>("mask_bbox_padding", required: false);
+        Image = AddInput<ImageType>("image");
+        MaskBboxPadding = AddInput<IntType>("mask_bbox_padding");
         MaskBboxPadding.Set(30L);
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
-        MaskType = AddInput<StringType>("mask_type", required: false);
+        MaskType = AddInput<StringType>("mask_type");
         MaskType.Set("based_on_depth");
-        MaskExpand = AddInput<IntType>("mask_expand", required: false);
+        MaskExpand = AddInput<IntType>("mask_expand");
         MaskExpand.Set(5L);
-        RandSeed = AddInput<IntType>("rand_seed", required: false);
+        RandSeed = AddInput<IntType>("rand_seed");
         RandSeed.Set(88L);
-        DetectThr = AddInput<FloatType>("detect_thr", required: false);
+        DetectThr = AddInput<FloatType>("detect_thr");
         DetectThr.Set(0.6);
-        PresenceThr = AddInput<FloatType>("presence_thr", required: false);
+        PresenceThr = AddInput<FloatType>("presence_thr");
         PresenceThr.Set(0.6);
     }
 

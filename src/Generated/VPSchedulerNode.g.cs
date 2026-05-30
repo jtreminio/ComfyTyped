@@ -24,13 +24,13 @@ public sealed class VPSchedulerNode : ComfyNode
     public VPSchedulerNode()
     {
         SIGMAS = AddOutput<SigmasType>(0, "SIGMAS");
-        Steps = AddInput<IntType>("steps", required: true);
+        Steps = AddInput<IntType>("steps");
         Steps.Set(20L);
-        BetaD = AddInput<FloatType>("beta_d", required: true);
+        BetaD = AddInput<FloatType>("beta_d");
         BetaD.Set(19.9);
-        BetaMin = AddInput<FloatType>("beta_min", required: true);
+        BetaMin = AddInput<FloatType>("beta_min");
         BetaMin.Set(0.1);
-        EpsS = AddInput<FloatType>("eps_s", required: true);
+        EpsS = AddInput<FloatType>("eps_s");
         EpsS.Set(0.001);
     }
 

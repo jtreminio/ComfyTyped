@@ -28,18 +28,18 @@ public sealed class HiDreamO1PatchSeamSmoothingNode : ComfyNode
     public HiDreamO1PatchSeamSmoothingNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        StartPercent = AddInput<FloatType>("start_percent", required: true);
+        Model = AddInput<ModelType>("model");
+        StartPercent = AddInput<FloatType>("start_percent");
         StartPercent.Set(0.8);
-        EndPercent = AddInput<FloatType>("end_percent", required: true);
+        EndPercent = AddInput<FloatType>("end_percent");
         EndPercent.Set(1.0);
-        Pattern = AddInput<StringType>("pattern", required: true);
+        Pattern = AddInput<StringType>("pattern");
         Pattern.Set("single_shift");
-        Passes = AddInput<StringType>("passes", required: true);
+        Passes = AddInput<StringType>("passes");
         Passes.Set("2");
-        Blend = AddInput<StringType>("blend", required: true);
+        Blend = AddInput<StringType>("blend");
         Blend.Set("average");
-        Strength = AddInput<FloatType>("strength", required: true);
+        Strength = AddInput<FloatType>("strength");
         Strength.Set(1.0);
     }
 

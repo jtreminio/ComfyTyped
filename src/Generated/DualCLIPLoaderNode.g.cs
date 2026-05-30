@@ -34,10 +34,10 @@ public sealed class DualCLIPLoaderNode : ComfyNode
     public DualCLIPLoaderNode()
     {
         CLIP = AddOutput<ClipType>(0, "CLIP");
-        ClipName1 = AddInput<StringType>("clip_name1", required: true);
-        ClipName2 = AddInput<StringType>("clip_name2", required: true);
-        Type = AddInput<StringType>("type", required: true);
-        Device = AddInput<StringType>("device", required: false);
+        ClipName1 = AddInput<StringType>("clip_name1");
+        ClipName2 = AddInput<StringType>("clip_name2");
+        Type = AddInput<StringType>("type");
+        Device = AddInput<StringType>("device");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

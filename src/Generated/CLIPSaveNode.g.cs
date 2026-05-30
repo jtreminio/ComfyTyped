@@ -18,8 +18,8 @@ public sealed class CLIPSaveNode : ComfyNode
 
     public CLIPSaveNode()
     {
-        Clip = AddInput<ClipType>("clip", required: true);
-        FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
+        Clip = AddInput<ClipType>("clip");
+        FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("clip/ComfyUI");
     }
 

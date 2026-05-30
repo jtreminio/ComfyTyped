@@ -23,11 +23,11 @@ public sealed class GITSSchedulerNode : ComfyNode
     public GITSSchedulerNode()
     {
         SIGMAS = AddOutput<SigmasType>(0, "SIGMAS");
-        Coeff = AddInput<FloatType>("coeff", required: true);
+        Coeff = AddInput<FloatType>("coeff");
         Coeff.Set(1.2);
-        Steps = AddInput<IntType>("steps", required: true);
+        Steps = AddInput<IntType>("steps");
         Steps.Set(10L);
-        Denoise = AddInput<FloatType>("denoise", required: true);
+        Denoise = AddInput<FloatType>("denoise");
         Denoise.Set(1.0);
     }
 

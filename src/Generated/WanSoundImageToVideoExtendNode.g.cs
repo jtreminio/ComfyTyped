@@ -32,15 +32,15 @@ public sealed class WanSoundImageToVideoExtendNode : ComfyNode
         Positive = AddOutput<ConditioningType>(0, "positive");
         Negative = AddOutput<ConditioningType>(1, "negative");
         Latent = AddOutput<LatentType>(2, "latent");
-        PositiveInput = AddInput<ConditioningType>("positive", required: true);
-        NegativeInput = AddInput<ConditioningType>("negative", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        Length = AddInput<IntType>("length", required: true);
+        PositiveInput = AddInput<ConditioningType>("positive");
+        NegativeInput = AddInput<ConditioningType>("negative");
+        Vae = AddInput<VaeType>("vae");
+        Length = AddInput<IntType>("length");
         Length.Set(77L);
-        VideoLatent = AddInput<LatentType>("video_latent", required: true);
-        AudioEncoderOutput = AddInput<AudioEncoderOutputType>("audio_encoder_output", required: false);
-        RefImage = AddInput<ImageType>("ref_image", required: false);
-        ControlVideo = AddInput<ImageType>("control_video", required: false);
+        VideoLatent = AddInput<LatentType>("video_latent");
+        AudioEncoderOutput = AddInput<AudioEncoderOutputType>("audio_encoder_output");
+        RefImage = AddInput<ImageType>("ref_image");
+        ControlVideo = AddInput<ImageType>("control_video");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

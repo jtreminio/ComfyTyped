@@ -23,9 +23,9 @@ public sealed class ComfySwitchNodeNode : ComfyNode
     public ComfySwitchNodeNode()
     {
         Output = AddOutput<ComfyMatchTypeV3>(0, "output");
-        Switch = AddInput<BooleanType>("switch", required: true);
-        OnFalse = AddInput<ComfyMatchTypeV3>("on_false", required: true);
-        OnTrue = AddInput<ComfyMatchTypeV3>("on_true", required: true);
+        Switch = AddInput<BooleanType>("switch");
+        OnFalse = AddInput<ComfyMatchTypeV3>("on_false");
+        OnTrue = AddInput<ComfyMatchTypeV3>("on_true");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

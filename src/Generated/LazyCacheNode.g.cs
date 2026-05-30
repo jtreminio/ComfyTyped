@@ -26,14 +26,14 @@ public sealed class LazyCacheNode : ComfyNode
     public LazyCacheNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        ReuseThreshold = AddInput<FloatType>("reuse_threshold", required: true);
+        Model = AddInput<ModelType>("model");
+        ReuseThreshold = AddInput<FloatType>("reuse_threshold");
         ReuseThreshold.Set(0.2);
-        StartPercent = AddInput<FloatType>("start_percent", required: true);
+        StartPercent = AddInput<FloatType>("start_percent");
         StartPercent.Set(0.15);
-        EndPercent = AddInput<FloatType>("end_percent", required: true);
+        EndPercent = AddInput<FloatType>("end_percent");
         EndPercent.Set(0.95);
-        Verbose = AddInput<BooleanType>("verbose", required: true);
+        Verbose = AddInput<BooleanType>("verbose");
         Verbose.Set(false);
     }
 

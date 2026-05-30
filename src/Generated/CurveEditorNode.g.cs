@@ -22,8 +22,8 @@ public sealed class CurveEditorNode : ComfyNode
     public CurveEditorNode()
     {
         Curve = AddOutput<CurveType>(0, "curve");
-        CurveInput = AddInput<CurveType>("curve", required: true);
-        Histogram = AddInput<HistogramType>("histogram", required: false);
+        CurveInput = AddInput<CurveType>("curve");
+        Histogram = AddInput<HistogramType>("histogram");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

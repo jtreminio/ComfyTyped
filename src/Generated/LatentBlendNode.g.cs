@@ -23,9 +23,9 @@ public sealed class LatentBlendNode : ComfyNode
     public LatentBlendNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Samples1 = AddInput<LatentType>("samples1", required: true);
-        Samples2 = AddInput<LatentType>("samples2", required: true);
-        BlendFactor = AddInput<FloatType>("blend_factor", required: true);
+        Samples1 = AddInput<LatentType>("samples1");
+        Samples2 = AddInput<LatentType>("samples2");
+        BlendFactor = AddInput<FloatType>("blend_factor");
         BlendFactor.Set(0.5);
     }
 

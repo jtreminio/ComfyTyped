@@ -22,8 +22,8 @@ public sealed class WanMoveConcatTrackNode : ComfyNode
     public WanMoveConcatTrackNode()
     {
         TRACKS = AddOutput<TracksType>(0, "TRACKS");
-        Tracks1 = AddInput<TracksType>("tracks_1", required: true);
-        Tracks2 = AddInput<TracksType>("tracks_2", required: false);
+        Tracks1 = AddInput<TracksType>("tracks_1");
+        Tracks2 = AddInput<TracksType>("tracks_2");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

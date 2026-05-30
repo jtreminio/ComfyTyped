@@ -23,10 +23,10 @@ public sealed class TilePreprocessorNode : ComfyNode
     public TilePreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        PyrUpIters = AddInput<IntType>("pyrUp_iters", required: false);
+        Image = AddInput<ImageType>("image");
+        PyrUpIters = AddInput<IntType>("pyrUp_iters");
         PyrUpIters.Set(3L);
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

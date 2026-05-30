@@ -29,21 +29,21 @@ public sealed class CLIPTextEncodeSDXLNode : ComfyNode
     public CLIPTextEncodeSDXLNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Clip = AddInput<ClipType>("clip", required: true);
-        Width = AddInput<IntType>("width", required: true);
+        Clip = AddInput<ClipType>("clip");
+        Width = AddInput<IntType>("width");
         Width.Set(1024L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(1024L);
-        CropW = AddInput<IntType>("crop_w", required: true);
+        CropW = AddInput<IntType>("crop_w");
         CropW.Set(0L);
-        CropH = AddInput<IntType>("crop_h", required: true);
+        CropH = AddInput<IntType>("crop_h");
         CropH.Set(0L);
-        TargetWidth = AddInput<IntType>("target_width", required: true);
+        TargetWidth = AddInput<IntType>("target_width");
         TargetWidth.Set(1024L);
-        TargetHeight = AddInput<IntType>("target_height", required: true);
+        TargetHeight = AddInput<IntType>("target_height");
         TargetHeight.Set(1024L);
-        TextG = AddInput<StringType>("text_g", required: true);
-        TextL = AddInput<StringType>("text_l", required: true);
+        TextG = AddInput<StringType>("text_g");
+        TextL = AddInput<StringType>("text_l");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

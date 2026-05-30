@@ -23,9 +23,9 @@ public sealed class InpaintPreprocessorNode : ComfyNode
     public InpaintPreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        Mask = AddInput<MaskType>("mask", required: true);
-        BlackPixelForXinsirCn = AddInput<BooleanType>("black_pixel_for_xinsir_cn", required: false);
+        Image = AddInput<ImageType>("image");
+        Mask = AddInput<MaskType>("mask");
+        BlackPixelForXinsirCn = AddInput<BooleanType>("black_pixel_for_xinsir_cn");
         BlackPixelForXinsirCn.Set(false);
     }
 

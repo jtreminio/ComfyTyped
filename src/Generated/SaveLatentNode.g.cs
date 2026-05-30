@@ -18,8 +18,8 @@ public sealed class SaveLatentNode : ComfyNode
 
     public SaveLatentNode()
     {
-        Samples = AddInput<LatentType>("samples", required: true);
-        FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
+        Samples = AddInput<LatentType>("samples");
+        FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("latents/ComfyUI");
     }
 

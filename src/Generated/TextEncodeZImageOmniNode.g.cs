@@ -28,15 +28,15 @@ public sealed class TextEncodeZImageOmniNode : ComfyNode
     public TextEncodeZImageOmniNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Clip = AddInput<ClipType>("clip", required: true);
-        Prompt = AddInput<StringType>("prompt", required: true);
-        AutoResizeImages = AddInput<BooleanType>("auto_resize_images", required: true);
+        Clip = AddInput<ClipType>("clip");
+        Prompt = AddInput<StringType>("prompt");
+        AutoResizeImages = AddInput<BooleanType>("auto_resize_images");
         AutoResizeImages.Set(true);
-        ImageEncoder = AddInput<ClipVisionType>("image_encoder", required: false);
-        Vae = AddInput<VaeType>("vae", required: false);
-        Image1 = AddInput<ImageType>("image1", required: false);
-        Image2 = AddInput<ImageType>("image2", required: false);
-        Image3 = AddInput<ImageType>("image3", required: false);
+        ImageEncoder = AddInput<ClipVisionType>("image_encoder");
+        Vae = AddInput<VaeType>("vae");
+        Image1 = AddInput<ImageType>("image1");
+        Image2 = AddInput<ImageType>("image2");
+        Image3 = AddInput<ImageType>("image3");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

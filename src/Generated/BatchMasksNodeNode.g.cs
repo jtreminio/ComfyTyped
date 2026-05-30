@@ -21,6 +21,6 @@ public sealed class BatchMasksNodeNode : ComfyNode
     public BatchMasksNodeNode()
     {
         MASK = AddOutput<MaskType>(0, "MASK");
-        Masks = AddInputList<MaskType>("masks", prefix: "mask", min: 2, max: 50, required: true);
+        Masks = AddInputList<MaskType>("masks", prefix: "mask", max: 50);
     }
 }

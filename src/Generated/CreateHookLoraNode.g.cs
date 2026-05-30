@@ -24,12 +24,12 @@ public sealed class CreateHookLoraNode : ComfyNode
     public CreateHookLoraNode()
     {
         HOOKS = AddOutput<HooksType>(0, "HOOKS");
-        LoraName = AddInput<StringType>("lora_name", required: true);
-        StrengthModel = AddInput<FloatType>("strength_model", required: true);
+        LoraName = AddInput<StringType>("lora_name");
+        StrengthModel = AddInput<FloatType>("strength_model");
         StrengthModel.Set(1.0);
-        StrengthClip = AddInput<FloatType>("strength_clip", required: true);
+        StrengthClip = AddInput<FloatType>("strength_clip");
         StrengthClip.Set(1.0);
-        PrevHooks = AddInput<HooksType>("prev_hooks", required: false);
+        PrevHooks = AddInput<HooksType>("prev_hooks");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -16,8 +16,7 @@ namespace ComfyTyped.Core;
 /// </para>
 ///
 /// <para>
-/// <b>Not auto-synced.</b> The following still require an explicit <see cref="SyncNode(ComfyNode)"/>
-/// or <see cref="SyncAll"/>:
+/// <b>Not auto-synced.</b> The following still require an explicit <see cref="SyncNode(ComfyNode)"/>:
 /// <list type="bullet">
 ///   <item>Edits to <see cref="ComfyNode.ExtraInputs"/> (raw JObject; no events). A typed-slot mutation
 ///         on the same node also won't pick up new ExtraInputs keys — only the changed slot is written.</item>
@@ -31,8 +30,8 @@ namespace ComfyTyped.Core;
 /// <list type="bullet">
 ///   <item>An <see cref="UnknownNode"/>'s first typed mutation replaces the inner <c>inputs</c> JObject
 ///         (it was a clone of <c>RawInputs</c>); the outer node JObject ref remains stable.</item>
-///   <item><see cref="SyncNode(ComfyNode)"/> and <see cref="SyncAll"/> rebuild from the typed graph and
-///         <em>do</em> replace the outer <c>Workflow[id]</c> JObject — held references become detached.</item>
+///   <item><see cref="SyncNode(ComfyNode)"/> rebuilds from the typed graph and
+///         <em>does</em> replace the outer <c>Workflow[id]</c> JObject — held references become detached.</item>
 ///   <item>A <see cref="NodeInput{T}.Clear"/> followed by <see cref="NodeInput{T}.Set"/> on the same input
 ///         appends the property to the end of <c>inputs</c> rather than restoring its original position.
 ///         Semantically irrelevant to ComfyUI but visible to anyone diffing/hashing serialized workflows.</item>
@@ -143,11 +142,7 @@ public sealed class WorkflowBridge : IDisposable
         return node;
     }
 
-    /// <summary>
-    /// Add a typed node with a specific ID.
-    /// Updates both the typed graph and the JObject workflow, and starts auto-syncing
-    /// future typed mutations on the node into the JObject.
-    /// </summary>
+    /// <summary>As <see cref="AddNode{T}(T)"/>, but with a caller-supplied ID.</summary>
     public T AddNode<T>(T node, string id) where T : ComfyNode
     {
         Graph.AddNode(node, id);
@@ -166,12 +161,6 @@ public sealed class WorkflowBridge : IDisposable
     /// </summary>
     public UnknownNode AddStub(string classType, string id) =>
         AddNode(new UnknownNode(classType), id);
-
-    /// <summary>
-    /// Add an <see cref="UnknownNode"/> with an auto-assigned ID.
-    /// </summary>
-    public UnknownNode AddStub(string classType) =>
-        AddNode(new UnknownNode(classType));
 
     /// <summary>Raise the host ID-counter (if any) past a node's ID, keeping it in lockstep so
     /// host-minted IDs (e.g. SwarmUI <c>g.CreateNode()</c>) never collide with bridge-assigned ones.
@@ -203,35 +192,8 @@ public sealed class WorkflowBridge : IDisposable
         return removed;
     }
 
-    /// <summary>Remove a node from both the typed graph and the JObject workflow.</summary>
+    /// <inheritdoc cref="RemoveNode(string)"/>
     public bool RemoveNode(ComfyNode node) => RemoveNode(node.Id);
-
-    /// <summary>
-    /// Remove every node from both the typed graph and the JObject workflow.
-    /// Non-node JObject properties (those without <c>class_type</c>, e.g. <c>_meta</c>) are preserved.
-    /// Returns the number of nodes removed.
-    /// </summary>
-    public int RemoveAllNodes()
-    {
-        foreach (ComfyNode node in Graph.Nodes.Values.ToList())
-        {
-            Unsubscribe(node);
-        }
-        List<string> toRemove = [];
-        foreach (JProperty prop in Workflow.Properties())
-        {
-            if (prop.Value is JObject obj && obj["class_type"] is not null)
-            {
-                toRemove.Add(prop.Name);
-            }
-        }
-        foreach (string key in toRemove)
-        {
-            Workflow.Remove(key);
-        }
-
-        return Graph.RemoveAllNodes();
-    }
 
     // ── Sync ────────────────────────────────────────────────────────
 
@@ -257,38 +219,6 @@ public sealed class WorkflowBridge : IDisposable
             unknown.RawInputs = null;
         }
         Workflow[id] = node.ToWorkflowNode();
-    }
-
-    /// <summary>
-    /// Re-serialize all nodes from the typed graph to the JObject.
-    /// Nodes removed from the graph are removed from the JObject.
-    /// Non-node JObject properties (those without class_type) are preserved.
-    /// </summary>
-    public void SyncAll()
-    {
-        // Remove existing node entries from JObject (will be rewritten from graph)
-        List<string> toRemove = [];
-        foreach (JProperty prop in Workflow.Properties())
-        {
-            if (prop.Value is JObject obj && obj["class_type"] is not null)
-            {
-                toRemove.Add(prop.Name);
-            }
-        }
-        foreach (string key in toRemove)
-        {
-            Workflow.Remove(key);
-        }
-
-        // Write all graph nodes
-        foreach ((string id, ComfyNode node) in Graph.Nodes)
-        {
-            if (node is UnknownNode unknown)
-            {
-                unknown.RawInputs = null;
-            }
-            Workflow[id] = node.ToWorkflowNode();
-        }
     }
 
     // ── Path conversion ─────────────────────────────────────────────
@@ -334,39 +264,6 @@ public sealed class WorkflowBridge : IDisposable
         ComfyNode? node = Graph.GetNode(nodeId);
 
         return node?.FindOutput(slotIndex);
-    }
-
-    /// <summary>
-    /// Typed sibling of <see cref="ResolvePath(JArray?)"/>. Returns the resolved output as
-    /// <see cref="NodeOutput{T}"/> when the type matches, <c>null</c> when the path does not
-    /// resolve (malformed, unknown node, or — for typed nodes only — unregistered slot index).
-    /// Throws <see cref="InvalidOperationException"/> on type mismatch.
-    /// <para>
-    /// Wildcard outputs (<see cref="AnyType"/> from <see cref="UnknownNode"/>,
-    /// <see cref="ComfyMatchTypeV3"/> from V3 wildcard slots) do <em>not</em> auto-coerce to a
-    /// concrete <typeparamref name="T"/> here — they would require returning a wrapper that
-    /// pretends to be <c>NodeOutput&lt;T&gt;</c>. Use the non-generic
-    /// <see cref="ResolvePath(JArray?)"/> + <see cref="NodeInput{T}.ConnectToUntyped"/> when the
-    /// source may be a wildcard, or use
-    /// <see cref="NodeInputExtensions.ConnectFromPath{T}(NodeInput{T}, WorkflowBridge, JArray?, string?)"/>
-    /// — both routes preserve wildcard compatibility through the connection layer.
-    /// </para>
-    /// </summary>
-    public NodeOutput<T>? ResolvePath<T>(JArray? path) where T : IComfyType
-    {
-        INodeOutput? output = ResolvePath(path);
-        if (output is null)
-        {
-            return null;
-        }
-        if (output is NodeOutput<T> typed)
-        {
-            return typed;
-        }
-
-        throw new InvalidOperationException(
-            $"Path [{path![0]}, {path[1]}] resolves to output of type '{output.TypeName}', "
-            + $"expected '{T.TypeName}'.");
     }
 
     /// <summary>

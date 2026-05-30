@@ -33,27 +33,27 @@ public sealed class ContextWindowsManualNode : ComfyNode
     public ContextWindowsManualNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        ContextLength = AddInput<IntType>("context_length", required: true);
+        Model = AddInput<ModelType>("model");
+        ContextLength = AddInput<IntType>("context_length");
         ContextLength.Set(16L);
-        ContextOverlap = AddInput<IntType>("context_overlap", required: true);
+        ContextOverlap = AddInput<IntType>("context_overlap");
         ContextOverlap.Set(4L);
-        ContextSchedule = AddInput<StringType>("context_schedule", required: true);
-        ContextStride = AddInput<IntType>("context_stride", required: true);
+        ContextSchedule = AddInput<StringType>("context_schedule");
+        ContextStride = AddInput<IntType>("context_stride");
         ContextStride.Set(1L);
-        ClosedLoop = AddInput<BooleanType>("closed_loop", required: true);
+        ClosedLoop = AddInput<BooleanType>("closed_loop");
         ClosedLoop.Set(false);
-        FuseMethod = AddInput<StringType>("fuse_method", required: true);
+        FuseMethod = AddInput<StringType>("fuse_method");
         FuseMethod.Set("pyramid");
-        Dim = AddInput<IntType>("dim", required: true);
+        Dim = AddInput<IntType>("dim");
         Dim.Set(0L);
-        Freenoise = AddInput<BooleanType>("freenoise", required: true);
+        Freenoise = AddInput<BooleanType>("freenoise");
         Freenoise.Set(false);
-        CondRetainIndexList = AddInput<StringType>("cond_retain_index_list", required: true);
+        CondRetainIndexList = AddInput<StringType>("cond_retain_index_list");
         CondRetainIndexList.Set("");
-        SplitCondsToWindows = AddInput<BooleanType>("split_conds_to_windows", required: true);
+        SplitCondsToWindows = AddInput<BooleanType>("split_conds_to_windows");
         SplitCondsToWindows.Set(false);
-        CausalWindowFix = AddInput<BooleanType>("causal_window_fix", required: true);
+        CausalWindowFix = AddInput<BooleanType>("causal_window_fix");
         CausalWindowFix.Set(true);
     }
 

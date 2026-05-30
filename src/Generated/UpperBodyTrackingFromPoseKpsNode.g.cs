@@ -32,24 +32,24 @@ public sealed class UpperBodyTrackingFromPoseKpsNode : ComfyNode
     {
         Tracking = AddOutput<TrackingType>(0, "tracking");
         Prompt = AddOutput<StringType>(1, "prompt");
-        PoseKps = AddInput<PoseKeypointType>("pose_kps", required: true);
-        IdInclude = AddInput<StringType>("id_include", required: true);
+        PoseKps = AddInput<PoseKeypointType>("pose_kps");
+        IdInclude = AddInput<StringType>("id_include");
         IdInclude.Set("");
-        HeadWidthHeight = AddInput<StringType>("Head_width_height", required: true);
+        HeadWidthHeight = AddInput<StringType>("Head_width_height");
         HeadWidthHeight.Set("256, 256");
-        NeckWidthHeight = AddInput<StringType>("Neck_width_height", required: true);
+        NeckWidthHeight = AddInput<StringType>("Neck_width_height");
         NeckWidthHeight.Set("100, 100");
-        ShoulderWidthHeight = AddInput<StringType>("Shoulder_width_height", required: true);
+        ShoulderWidthHeight = AddInput<StringType>("Shoulder_width_height");
         ShoulderWidthHeight.Set("");
-        TorsoWidthHeight = AddInput<StringType>("Torso_width_height", required: true);
+        TorsoWidthHeight = AddInput<StringType>("Torso_width_height");
         TorsoWidthHeight.Set("350, 450");
-        RArmWidthHeight = AddInput<StringType>("RArm_width_height", required: true);
+        RArmWidthHeight = AddInput<StringType>("RArm_width_height");
         RArmWidthHeight.Set("128, 256");
-        RForearmWidthHeight = AddInput<StringType>("RForearm_width_height", required: true);
+        RForearmWidthHeight = AddInput<StringType>("RForearm_width_height");
         RForearmWidthHeight.Set("128, 256");
-        LArmWidthHeight = AddInput<StringType>("LArm_width_height", required: true);
+        LArmWidthHeight = AddInput<StringType>("LArm_width_height");
         LArmWidthHeight.Set("128, 256");
-        LForearmWidthHeight = AddInput<StringType>("LForearm_width_height", required: true);
+        LForearmWidthHeight = AddInput<StringType>("LForearm_width_height");
         LForearmWidthHeight.Set("128, 256");
     }
 

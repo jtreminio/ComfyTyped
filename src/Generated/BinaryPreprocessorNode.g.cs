@@ -23,10 +23,10 @@ public sealed class BinaryPreprocessorNode : ComfyNode
     public BinaryPreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        BinThreshold = AddInput<IntType>("bin_threshold", required: false);
+        Image = AddInput<ImageType>("image");
+        BinThreshold = AddInput<IntType>("bin_threshold");
         BinThreshold.Set(100L);
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

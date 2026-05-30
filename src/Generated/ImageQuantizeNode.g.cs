@@ -23,10 +23,10 @@ public sealed class ImageQuantizeNode : ComfyNode
     public ImageQuantizeNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        Colors = AddInput<IntType>("colors", required: true);
+        Image = AddInput<ImageType>("image");
+        Colors = AddInput<IntType>("colors");
         Colors.Set(256L);
-        Dither = AddInput<StringType>("dither", required: true);
+        Dither = AddInput<StringType>("dither");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

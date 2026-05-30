@@ -25,10 +25,10 @@ public sealed class WanDancerEncodeAudioNode : ComfyNode
     {
         AudioEncoderOutput = AddOutput<AudioEncoderOutputType>(0, "audio_encoder_output");
         FpsString = AddOutput<StringType>(1, "fps_string");
-        Audio = AddInput<AudioType>("audio", required: true);
-        VideoFrames = AddInput<IntType>("video_frames", required: true);
+        Audio = AddInput<AudioType>("audio");
+        VideoFrames = AddInput<IntType>("video_frames");
         VideoFrames.Set(149L);
-        AudioInjectScale = AddInput<FloatType>("audio_inject_scale", required: true);
+        AudioInjectScale = AddInput<FloatType>("audio_inject_scale");
         AudioInjectScale.Set(1.0);
     }
 

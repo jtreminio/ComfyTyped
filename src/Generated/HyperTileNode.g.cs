@@ -25,14 +25,14 @@ public sealed class HyperTileNode : ComfyNode
     public HyperTileNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        TileSize = AddInput<IntType>("tile_size", required: true);
+        Model = AddInput<ModelType>("model");
+        TileSize = AddInput<IntType>("tile_size");
         TileSize.Set(256L);
-        SwapSize = AddInput<IntType>("swap_size", required: true);
+        SwapSize = AddInput<IntType>("swap_size");
         SwapSize.Set(2L);
-        MaxDepth = AddInput<IntType>("max_depth", required: true);
+        MaxDepth = AddInput<IntType>("max_depth");
         MaxDepth.Set(0L);
-        ScaleDepth = AddInput<BooleanType>("scale_depth", required: true);
+        ScaleDepth = AddInput<BooleanType>("scale_depth");
         ScaleDepth.Set(false);
     }
 

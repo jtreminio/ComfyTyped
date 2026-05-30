@@ -22,8 +22,8 @@ public sealed class ModelSamplingStableCascadeNode : ComfyNode
     public ModelSamplingStableCascadeNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        Shift = AddInput<FloatType>("shift", required: true);
+        Model = AddInput<ModelType>("model");
+        Shift = AddInput<FloatType>("shift");
         Shift.Set(2.0);
     }
 

@@ -23,8 +23,8 @@ public sealed class SwarmModelTilingNode : ComfyNode
     public SwarmModelTilingNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        TileAxis = AddInput<StringType>("tile_axis", required: false);
+        Model = AddInput<ModelType>("model");
+        TileAxis = AddInput<StringType>("tile_axis");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

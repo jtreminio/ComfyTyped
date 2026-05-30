@@ -21,7 +21,7 @@ public sealed class ControlNetPreprocessorSelectorNode : ComfyNode
     public ControlNetPreprocessorSelectorNode()
     {
         Preprocessor = AddOutput<AnyType>(0, "preprocessor");
-        PreprocessorInput = AddInput<StringType>("preprocessor", required: true);
+        PreprocessorInput = AddInput<StringType>("preprocessor");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

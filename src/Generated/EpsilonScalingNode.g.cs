@@ -22,8 +22,8 @@ public sealed class EpsilonScalingNode : ComfyNode
     public EpsilonScalingNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        ScalingFactor = AddInput<FloatType>("scaling_factor", required: true);
+        Model = AddInput<ModelType>("model");
+        ScalingFactor = AddInput<FloatType>("scaling_factor");
         ScalingFactor.Set(1.005);
     }
 

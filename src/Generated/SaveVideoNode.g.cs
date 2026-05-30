@@ -21,12 +21,12 @@ public sealed class SaveVideoNode : ComfyNode
 
     public SaveVideoNode()
     {
-        Video = AddInput<VideoType>("video", required: true);
-        FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
+        Video = AddInput<VideoType>("video");
+        FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("video/ComfyUI");
-        Format = AddInput<StringType>("format", required: true);
+        Format = AddInput<StringType>("format");
         Format.Set("auto");
-        Codec = AddInput<StringType>("codec", required: true);
+        Codec = AddInput<StringType>("codec");
         Codec.Set("auto");
     }
 

@@ -23,7 +23,7 @@ public sealed class ImageGenResolutionFromImageNode : ComfyNode
     {
         IMAGEGENWIDTHINT = AddOutput<IntType>(0, "IMAGE_GEN_WIDTH (INT)");
         IMAGEGENHEIGHTINT = AddOutput<IntType>(1, "IMAGE_GEN_HEIGHT (INT)");
-        Image = AddInput<ImageType>("image", required: true);
+        Image = AddInput<ImageType>("image");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

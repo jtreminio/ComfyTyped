@@ -22,8 +22,8 @@ public sealed class DifferentialDiffusionNode : ComfyNode
     public DifferentialDiffusionNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        Strength = AddInput<FloatType>("strength", required: false);
+        Model = AddInput<ModelType>("model");
+        Strength = AddInput<FloatType>("strength");
         Strength.Set(1.0);
     }
 

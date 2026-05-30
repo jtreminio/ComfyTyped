@@ -46,28 +46,28 @@ public sealed class WanAnimateToVideoNode : ComfyNode
         TrimLatent = AddOutput<IntType>(3, "trim_latent");
         TrimImage = AddOutput<IntType>(4, "trim_image");
         VideoFrameOffset = AddOutput<IntType>(5, "video_frame_offset");
-        PositiveInput = AddInput<ConditioningType>("positive", required: true);
-        NegativeInput = AddInput<ConditioningType>("negative", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        Width = AddInput<IntType>("width", required: true);
+        PositiveInput = AddInput<ConditioningType>("positive");
+        NegativeInput = AddInput<ConditioningType>("negative");
+        Vae = AddInput<VaeType>("vae");
+        Width = AddInput<IntType>("width");
         Width.Set(832L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(480L);
-        Length = AddInput<IntType>("length", required: true);
+        Length = AddInput<IntType>("length");
         Length.Set(77L);
-        BatchSize = AddInput<IntType>("batch_size", required: true);
+        BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
-        ContinueMotionMaxFrames = AddInput<IntType>("continue_motion_max_frames", required: true);
+        ContinueMotionMaxFrames = AddInput<IntType>("continue_motion_max_frames");
         ContinueMotionMaxFrames.Set(5L);
-        VideoFrameOffsetInput = AddInput<IntType>("video_frame_offset", required: true);
+        VideoFrameOffsetInput = AddInput<IntType>("video_frame_offset");
         VideoFrameOffsetInput.Set(0L);
-        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output", required: false);
-        ReferenceImage = AddInput<ImageType>("reference_image", required: false);
-        FaceVideo = AddInput<ImageType>("face_video", required: false);
-        PoseVideo = AddInput<ImageType>("pose_video", required: false);
-        BackgroundVideo = AddInput<ImageType>("background_video", required: false);
-        CharacterMask = AddInput<MaskType>("character_mask", required: false);
-        ContinueMotion = AddInput<ImageType>("continue_motion", required: false);
+        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output");
+        ReferenceImage = AddInput<ImageType>("reference_image");
+        FaceVideo = AddInput<ImageType>("face_video");
+        PoseVideo = AddInput<ImageType>("pose_video");
+        BackgroundVideo = AddInput<ImageType>("background_video");
+        CharacterMask = AddInput<MaskType>("character_mask");
+        ContinueMotion = AddInput<ImageType>("continue_motion");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

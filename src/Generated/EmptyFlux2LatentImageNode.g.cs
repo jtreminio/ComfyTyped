@@ -23,11 +23,11 @@ public sealed class EmptyFlux2LatentImageNode : ComfyNode
     public EmptyFlux2LatentImageNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Width = AddInput<IntType>("width", required: true);
+        Width = AddInput<IntType>("width");
         Width.Set(1024L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(1024L);
-        BatchSize = AddInput<IntType>("batch_size", required: true);
+        BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
     }
 

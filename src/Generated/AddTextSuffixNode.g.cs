@@ -22,8 +22,8 @@ public sealed class AddTextSuffixNode : ComfyNode
     public AddTextSuffixNode()
     {
         Texts = AddOutput<StringType>(0, "texts");
-        TextsInput = AddInput<StringType>("texts", required: true);
-        Suffix = AddInput<StringType>("suffix", required: true);
+        TextsInput = AddInput<StringType>("texts");
+        Suffix = AddInput<StringType>("suffix");
         Suffix.Set("");
     }
 

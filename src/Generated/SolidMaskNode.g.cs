@@ -23,11 +23,11 @@ public sealed class SolidMaskNode : ComfyNode
     public SolidMaskNode()
     {
         MASK = AddOutput<MaskType>(0, "MASK");
-        Value = AddInput<FloatType>("value", required: true);
+        Value = AddInput<FloatType>("value");
         Value.Set(1.0);
-        Width = AddInput<IntType>("width", required: true);
+        Width = AddInput<IntType>("width");
         Width.Set(512L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(512L);
     }
 

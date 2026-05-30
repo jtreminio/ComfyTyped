@@ -22,8 +22,8 @@ public sealed class JoinImageWithAlphaNode : ComfyNode
     public JoinImageWithAlphaNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        Alpha = AddInput<MaskType>("alpha", required: true);
+        Image = AddInput<ImageType>("image");
+        Alpha = AddInput<MaskType>("alpha");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

@@ -23,9 +23,9 @@ public sealed class StringConcatenateNode : ComfyNode
     public StringConcatenateNode()
     {
         STRING = AddOutput<StringType>(0, "STRING");
-        StringA = AddInput<StringType>("string_a", required: true);
-        StringB = AddInput<StringType>("string_b", required: true);
-        Delimiter = AddInput<StringType>("delimiter", required: true);
+        StringA = AddInput<StringType>("string_a");
+        StringB = AddInput<StringType>("string_b");
+        Delimiter = AddInput<StringType>("delimiter");
         Delimiter.Set("");
     }
 

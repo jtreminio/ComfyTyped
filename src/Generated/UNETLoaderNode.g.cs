@@ -22,8 +22,8 @@ public sealed class UNETLoaderNode : ComfyNode
     public UNETLoaderNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        UnetName = AddInput<StringType>("unet_name", required: true);
-        WeightDtype = AddInput<StringType>("weight_dtype", required: true);
+        UnetName = AddInput<StringType>("unet_name");
+        WeightDtype = AddInput<StringType>("weight_dtype");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

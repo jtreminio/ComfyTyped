@@ -23,10 +23,10 @@ public sealed class ConditioningSetTimestepRangeNode : ComfyNode
     public ConditioningSetTimestepRangeNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Conditioning = AddInput<ConditioningType>("conditioning", required: true);
-        Start = AddInput<FloatType>("start", required: true);
+        Conditioning = AddInput<ConditioningType>("conditioning");
+        Start = AddInput<FloatType>("start");
         Start.Set(0.0);
-        End = AddInput<FloatType>("end", required: true);
+        End = AddInput<FloatType>("end");
         End.Set(1.0);
     }
 

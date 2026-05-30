@@ -25,12 +25,12 @@ public sealed class CLIPTextEncodePixArtAlphaNode : ComfyNode
     public CLIPTextEncodePixArtAlphaNode()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        Width = AddInput<IntType>("width", required: true);
+        Width = AddInput<IntType>("width");
         Width.Set(1024L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(1024L);
-        Text = AddInput<StringType>("text", required: true);
-        Clip = AddInput<ClipType>("clip", required: true);
+        Text = AddInput<StringType>("text");
+        Clip = AddInput<ClipType>("clip");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

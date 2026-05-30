@@ -25,14 +25,14 @@ public sealed class Metric3DNormalMapPreprocessorNode : ComfyNode
     public Metric3DNormalMapPreprocessorNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        Backbone = AddInput<StringType>("backbone", required: false);
+        Image = AddInput<ImageType>("image");
+        Backbone = AddInput<StringType>("backbone");
         Backbone.Set("vit-small");
-        Fx = AddInput<IntType>("fx", required: false);
+        Fx = AddInput<IntType>("fx");
         Fx.Set(1000L);
-        Fy = AddInput<IntType>("fy", required: false);
+        Fy = AddInput<IntType>("fy");
         Fy.Set(1000L);
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(512L);
     }
 

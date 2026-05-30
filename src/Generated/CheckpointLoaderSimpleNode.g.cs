@@ -26,7 +26,7 @@ public sealed class CheckpointLoaderSimpleNode : ComfyNode
         MODEL = AddOutput<ModelType>(0, "MODEL");
         CLIP = AddOutput<ClipType>(1, "CLIP");
         VAE = AddOutput<VaeType>(2, "VAE");
-        CkptName = AddInput<StringType>("ckpt_name", required: true);
+        CkptName = AddInput<StringType>("ckpt_name");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

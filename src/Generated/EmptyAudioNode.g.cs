@@ -23,11 +23,11 @@ public sealed class EmptyAudioNode : ComfyNode
     public EmptyAudioNode()
     {
         AUDIO = AddOutput<AudioType>(0, "AUDIO");
-        Duration = AddInput<FloatType>("duration", required: true);
+        Duration = AddInput<FloatType>("duration");
         Duration.Set(60.0);
-        SampleRate = AddInput<IntType>("sample_rate", required: true);
+        SampleRate = AddInput<IntType>("sample_rate");
         SampleRate.Set(44100L);
-        Channels = AddInput<IntType>("channels", required: true);
+        Channels = AddInput<IntType>("channels");
         Channels.Set(2L);
     }
 

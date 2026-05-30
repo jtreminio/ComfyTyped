@@ -35,20 +35,20 @@ public sealed class WanDancerVideoNode : ComfyNode
         Positive = AddOutput<ConditioningType>(0, "positive");
         Negative = AddOutput<ConditioningType>(1, "negative");
         Latent = AddOutput<LatentType>(2, "latent");
-        PositiveInput = AddInput<ConditioningType>("positive", required: true);
-        NegativeInput = AddInput<ConditioningType>("negative", required: true);
-        Vae = AddInput<VaeType>("vae", required: true);
-        Width = AddInput<IntType>("width", required: true);
+        PositiveInput = AddInput<ConditioningType>("positive");
+        NegativeInput = AddInput<ConditioningType>("negative");
+        Vae = AddInput<VaeType>("vae");
+        Width = AddInput<IntType>("width");
         Width.Set(480L);
-        Height = AddInput<IntType>("height", required: true);
+        Height = AddInput<IntType>("height");
         Height.Set(832L);
-        Length = AddInput<IntType>("length", required: true);
+        Length = AddInput<IntType>("length");
         Length.Set(149L);
-        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output", required: false);
-        ClipVisionOutputRef = AddInput<ClipVisionOutputType>("clip_vision_output_ref", required: false);
-        StartImage = AddInput<ImageType>("start_image", required: false);
-        Mask = AddInput<MaskType>("mask", required: false);
-        AudioEncoderOutput = AddInput<AudioEncoderOutputType>("audio_encoder_output", required: false);
+        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output");
+        ClipVisionOutputRef = AddInput<ClipVisionOutputType>("clip_vision_output_ref");
+        StartImage = AddInput<ImageType>("start_image");
+        Mask = AddInput<MaskType>("mask");
+        AudioEncoderOutput = AddInput<AudioEncoderOutputType>("audio_encoder_output");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

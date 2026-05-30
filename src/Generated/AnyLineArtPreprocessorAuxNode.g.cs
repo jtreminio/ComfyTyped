@@ -27,18 +27,18 @@ public sealed class AnyLineArtPreprocessorAuxNode : ComfyNode
     public AnyLineArtPreprocessorAuxNode()
     {
         Image = AddOutput<ImageType>(0, "image");
-        ImageInput = AddInput<ImageType>("image", required: true);
-        MergeWithLineart = AddInput<StringType>("merge_with_lineart", required: false);
+        ImageInput = AddInput<ImageType>("image");
+        MergeWithLineart = AddInput<StringType>("merge_with_lineart");
         MergeWithLineart.Set("lineart_standard");
-        Resolution = AddInput<IntType>("resolution", required: false);
+        Resolution = AddInput<IntType>("resolution");
         Resolution.Set(1280L);
-        LineartLowerBound = AddInput<FloatType>("lineart_lower_bound", required: false);
+        LineartLowerBound = AddInput<FloatType>("lineart_lower_bound");
         LineartLowerBound.Set(0.0);
-        LineartUpperBound = AddInput<FloatType>("lineart_upper_bound", required: false);
+        LineartUpperBound = AddInput<FloatType>("lineart_upper_bound");
         LineartUpperBound.Set(1.0);
-        ObjectMinSize = AddInput<IntType>("object_min_size", required: false);
+        ObjectMinSize = AddInput<IntType>("object_min_size");
         ObjectMinSize.Set(36L);
-        ObjectConnectivity = AddInput<IntType>("object_connectivity", required: false);
+        ObjectConnectivity = AddInput<IntType>("object_connectivity");
         ObjectConnectivity.Set(1L);
     }
 

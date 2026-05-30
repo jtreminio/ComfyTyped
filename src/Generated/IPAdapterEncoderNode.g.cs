@@ -27,12 +27,12 @@ public sealed class IPAdapterEncoderNode : ComfyNode
     {
         PosEmbed = AddOutput<EmbedsType>(0, "pos_embed");
         NegEmbed = AddOutput<EmbedsType>(1, "neg_embed");
-        Ipadapter = AddInput<IpAdapterType>("ipadapter", required: true);
-        Image = AddInput<ImageType>("image", required: true);
-        Weight = AddInput<FloatType>("weight", required: true);
+        Ipadapter = AddInput<IpAdapterType>("ipadapter");
+        Image = AddInput<ImageType>("image");
+        Weight = AddInput<FloatType>("weight");
         Weight.Set(1.0);
-        Mask = AddInput<MaskType>("mask", required: false);
-        ClipVision = AddInput<ClipVisionType>("clip_vision", required: false);
+        Mask = AddInput<MaskType>("mask");
+        ClipVision = AddInput<ClipVisionType>("clip_vision");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

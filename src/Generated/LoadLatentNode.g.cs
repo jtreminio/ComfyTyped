@@ -21,7 +21,7 @@ public sealed class LoadLatentNode : ComfyNode
     public LoadLatentNode()
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
-        Latent = AddInput<StringType>("latent", required: true);
+        Latent = AddInput<StringType>("latent");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

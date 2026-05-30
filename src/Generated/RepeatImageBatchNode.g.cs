@@ -22,8 +22,8 @@ public sealed class RepeatImageBatchNode : ComfyNode
     public RepeatImageBatchNode()
     {
         IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        Image = AddInput<ImageType>("image", required: true);
-        Amount = AddInput<IntType>("amount", required: true);
+        Image = AddInput<ImageType>("image");
+        Amount = AddInput<IntType>("amount");
         Amount.Set(1L);
     }
 

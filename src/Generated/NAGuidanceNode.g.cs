@@ -25,12 +25,12 @@ public sealed class NAGuidanceNode : ComfyNode
     public NAGuidanceNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        NagScale = AddInput<FloatType>("nag_scale", required: true);
+        Model = AddInput<ModelType>("model");
+        NagScale = AddInput<FloatType>("nag_scale");
         NagScale.Set(5.0);
-        NagAlpha = AddInput<FloatType>("nag_alpha", required: true);
+        NagAlpha = AddInput<FloatType>("nag_alpha");
         NagAlpha.Set(0.5);
-        NagTau = AddInput<FloatType>("nag_tau", required: true);
+        NagTau = AddInput<FloatType>("nag_tau");
         NagTau.Set(1.5);
     }
 

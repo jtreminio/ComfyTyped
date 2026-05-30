@@ -24,9 +24,9 @@ public sealed class CLIPTextEncodeLumina2Node : ComfyNode
     public CLIPTextEncodeLumina2Node()
     {
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
-        SystemPrompt = AddInput<StringType>("system_prompt", required: true);
-        UserPrompt = AddInput<StringType>("user_prompt", required: true);
-        Clip = AddInput<ClipType>("clip", required: true);
+        SystemPrompt = AddInput<StringType>("system_prompt");
+        UserPrompt = AddInput<StringType>("user_prompt");
+        Clip = AddInput<ClipType>("clip");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

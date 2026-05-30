@@ -26,10 +26,10 @@ public sealed class Hunyuan3Dv2ConditioningMultiViewNode : ComfyNode
     {
         Positive = AddOutput<ConditioningType>(0, "positive");
         Negative = AddOutput<ConditioningType>(1, "negative");
-        Front = AddInput<ClipVisionOutputType>("front", required: false);
-        Left = AddInput<ClipVisionOutputType>("left", required: false);
-        Back = AddInput<ClipVisionOutputType>("back", required: false);
-        Right = AddInput<ClipVisionOutputType>("right", required: false);
+        Front = AddInput<ClipVisionOutputType>("front");
+        Left = AddInput<ClipVisionOutputType>("left");
+        Back = AddInput<ClipVisionOutputType>("back");
+        Right = AddInput<ClipVisionOutputType>("right");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

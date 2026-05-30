@@ -25,12 +25,12 @@ public sealed class LTXVImgToVideoInplaceNode : ComfyNode
     public LTXVImgToVideoInplaceNode()
     {
         Latent = AddOutput<LatentType>(0, "latent");
-        Vae = AddInput<VaeType>("vae", required: true);
-        Image = AddInput<ImageType>("image", required: true);
-        LatentInput = AddInput<LatentType>("latent", required: true);
-        Strength = AddInput<FloatType>("strength", required: true);
+        Vae = AddInput<VaeType>("vae");
+        Image = AddInput<ImageType>("image");
+        LatentInput = AddInput<LatentType>("latent");
+        Strength = AddInput<FloatType>("strength");
         Strength.Set(1.0);
-        Bypass = AddInput<BooleanType>("bypass", required: true);
+        Bypass = AddInput<BooleanType>("bypass");
         Bypass.Set(false);
     }
 

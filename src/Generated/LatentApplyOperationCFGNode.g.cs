@@ -22,8 +22,8 @@ public sealed class LatentApplyOperationCFGNode : ComfyNode
     public LatentApplyOperationCFGNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model", required: true);
-        Operation = AddInput<LatentOperationType>("operation", required: true);
+        Model = AddInput<ModelType>("model");
+        Operation = AddInput<LatentOperationType>("operation");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

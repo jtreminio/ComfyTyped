@@ -28,20 +28,20 @@ public sealed class AudioEqualizer3BandNode : ComfyNode
     public AudioEqualizer3BandNode()
     {
         AUDIO = AddOutput<AudioType>(0, "AUDIO");
-        Audio = AddInput<AudioType>("audio", required: true);
-        LowGainDB = AddInput<FloatType>("low_gain_dB", required: true);
+        Audio = AddInput<AudioType>("audio");
+        LowGainDB = AddInput<FloatType>("low_gain_dB");
         LowGainDB.Set(0.0);
-        LowFreq = AddInput<IntType>("low_freq", required: true);
+        LowFreq = AddInput<IntType>("low_freq");
         LowFreq.Set(100L);
-        MidGainDB = AddInput<FloatType>("mid_gain_dB", required: true);
+        MidGainDB = AddInput<FloatType>("mid_gain_dB");
         MidGainDB.Set(0.0);
-        MidFreq = AddInput<IntType>("mid_freq", required: true);
+        MidFreq = AddInput<IntType>("mid_freq");
         MidFreq.Set(1000L);
-        MidQ = AddInput<FloatType>("mid_q", required: true);
+        MidQ = AddInput<FloatType>("mid_q");
         MidQ.Set(0.707);
-        HighGainDB = AddInput<FloatType>("high_gain_dB", required: true);
+        HighGainDB = AddInput<FloatType>("high_gain_dB");
         HighGainDB.Set(0.0);
-        HighFreq = AddInput<IntType>("high_freq", required: true);
+        HighFreq = AddInput<IntType>("high_freq");
         HighFreq.Set(5000L);
     }
 
