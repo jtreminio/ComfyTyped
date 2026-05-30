@@ -40,4 +40,12 @@ public sealed class SwarmModelTilingNode : ComfyNode
         TileAxis?.ApplyTo(this.TileAxis);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>tile_axis</c> (suggestions — any string is also accepted).</summary>
+    public static class TileAxisValues
+    {
+        public const string Both = "Both";
+        public const string X = "X";
+        public const string Y = "Y";
+    }
 }

@@ -55,4 +55,11 @@ public sealed class LeReSDepthMapPreprocessorNode : ComfyNode
         Resolution?.ApplyTo(this.Resolution);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>boost</c> (suggestions — any string is also accepted).</summary>
+    public static class BoostValues
+    {
+        public const string Disable = "disable";
+        public const string Enable = "enable";
+    }
 }

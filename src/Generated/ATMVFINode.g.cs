@@ -57,4 +57,12 @@ public sealed class ATMVFINode : ComfyNode
         OptionalInterpolationStates?.ApplyTo(this.OptionalInterpolationStates);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>global_motion</c> (suggestions — any string is also accepted).</summary>
+    public static class GlobalMotionValues
+    {
+        public const string On = "On";
+        public const string OnWithEnsembleSlowest = "On with Ensemble (slowest)";
+        public const string OffFastest = "Off (fastest)";
+    }
 }

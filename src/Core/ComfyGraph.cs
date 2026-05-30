@@ -354,6 +354,42 @@ public sealed class ComfyGraph
         return null;
     }
 
+    /// <summary>Walk upstream from a node to find the nearest node matching <paramref name="predicate"/>.
+    /// Upstream peer of <see cref="FindNearestDownstream(INodeOutput, Func{ComfyNode, bool})"/>; like
+    /// <see cref="FindNearestUpstream{T}(ComfyNode)"/> this excludes <paramref name="startNode"/> itself
+    /// — test it separately if you need start-inclusive behavior.</summary>
+    public ComfyNode? FindNearestUpstream(ComfyNode startNode, Func<ComfyNode, bool> predicate)
+    {
+        if (startNode is null || predicate is null)
+        {
+            return null;
+        }
+
+        Queue<ComfyNode> pending = new();
+        HashSet<string> visited = [];
+        pending.Enqueue(startNode);
+        visited.Add(startNode.Id);
+
+        while (pending.Count > 0)
+        {
+            ComfyNode current = pending.Dequeue();
+            foreach (INodeInput input in AllInputs(current))
+            {
+                if (input.Connection?.Node is not ComfyNode upstream || !visited.Add(upstream.Id))
+                {
+                    continue;
+                }
+                if (predicate(upstream))
+                {
+                    return upstream;
+                }
+                pending.Enqueue(upstream);
+            }
+        }
+
+        return null;
+    }
+
     /// <summary>Check whether a node with the given ID is reachable by walking upstream from startNode.</summary>
     public bool IsReachableUpstream(ComfyNode startNode, string targetNodeId)
     {

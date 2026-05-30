@@ -85,4 +85,23 @@ public sealed class IPAdapterWeightsNode : ComfyNode
         Image?.ApplyTo(this.Image);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>timing</c> (suggestions — any string is also accepted).</summary>
+    public static class TimingValues
+    {
+        public const string Custom = "custom";
+        public const string Linear = "linear";
+        public const string EaseInOut = "ease_in_out";
+        public const string EaseIn = "ease_in";
+        public const string EaseOut = "ease_out";
+        public const string Random = "random";
+    }
+
+    /// <summary>Known ComfyUI values for <c>method</c> (suggestions — any string is also accepted).</summary>
+    public static class MethodValues
+    {
+        public const string FullBatch = "full batch";
+        public const string ShiftBatches = "shift batches";
+        public const string AlternateBatches = "alternate batches";
+    }
 }

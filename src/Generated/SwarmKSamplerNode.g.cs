@@ -128,4 +128,97 @@ public sealed class SwarmKSamplerNode : ComfyNode
         TileSize?.ApplyTo(this.TileSize);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>sampler_name</c> (suggestions — any string is also accepted).</summary>
+    public static class SamplerNameValues
+    {
+        public const string Euler = "euler";
+        public const string EulerCfgPp = "euler_cfg_pp";
+        public const string EulerAncestral = "euler_ancestral";
+        public const string EulerAncestralCfgPp = "euler_ancestral_cfg_pp";
+        public const string Heun = "heun";
+        public const string Heunpp2 = "heunpp2";
+        public const string ExpHeun2X0 = "exp_heun_2_x0";
+        public const string ExpHeun2X0Sde = "exp_heun_2_x0_sde";
+        public const string Dpm2 = "dpm_2";
+        public const string Dpm2Ancestral = "dpm_2_ancestral";
+        public const string Lms = "lms";
+        public const string DpmFast = "dpm_fast";
+        public const string DpmAdaptive = "dpm_adaptive";
+        public const string Dpmpp2sAncestral = "dpmpp_2s_ancestral";
+        public const string Dpmpp2sAncestralCfgPp = "dpmpp_2s_ancestral_cfg_pp";
+        public const string DpmppSde = "dpmpp_sde";
+        public const string DpmppSdeGpu = "dpmpp_sde_gpu";
+        public const string Dpmpp2m = "dpmpp_2m";
+        public const string Dpmpp2mCfgPp = "dpmpp_2m_cfg_pp";
+        public const string Dpmpp2mSde = "dpmpp_2m_sde";
+        public const string Dpmpp2mSdeGpu = "dpmpp_2m_sde_gpu";
+        public const string Dpmpp2mSdeHeun = "dpmpp_2m_sde_heun";
+        public const string Dpmpp2mSdeHeunGpu = "dpmpp_2m_sde_heun_gpu";
+        public const string Dpmpp3mSde = "dpmpp_3m_sde";
+        public const string Dpmpp3mSdeGpu = "dpmpp_3m_sde_gpu";
+        public const string Ddpm = "ddpm";
+        public const string Lcm = "lcm";
+        public const string Ipndm = "ipndm";
+        public const string IpndmV = "ipndm_v";
+        public const string Deis = "deis";
+        public const string ResMultistep = "res_multistep";
+        public const string ResMultistepCfgPp = "res_multistep_cfg_pp";
+        public const string ResMultistepAncestral = "res_multistep_ancestral";
+        public const string ResMultistepAncestralCfgPp = "res_multistep_ancestral_cfg_pp";
+        public const string GradientEstimation = "gradient_estimation";
+        public const string GradientEstimationCfgPp = "gradient_estimation_cfg_pp";
+        public const string ErSde = "er_sde";
+        public const string Seeds2 = "seeds_2";
+        public const string Seeds3 = "seeds_3";
+        public const string SaSolver = "sa_solver";
+        public const string SaSolverPece = "sa_solver_pece";
+        public const string Ddim = "ddim";
+        public const string UniPc = "uni_pc";
+        public const string UniPcBh2 = "uni_pc_bh2";
+    }
+
+    /// <summary>Known ComfyUI values for <c>scheduler</c> (suggestions — any string is also accepted).</summary>
+    public static class SchedulerValues
+    {
+        public const string Turbo = "turbo";
+        public const string AlignYourSteps = "align_your_steps";
+        public const string Ltxv = "ltxv";
+        public const string LtxvImage = "ltxv-image";
+        public const string Flux2 = "flux2";
+        public const string Simple = "simple";
+        public const string SgmUniform = "sgm_uniform";
+        public const string Karras = "karras";
+        public const string Exponential = "exponential";
+        public const string DdimUniform = "ddim_uniform";
+        public const string Beta = "beta";
+        public const string Normal = "normal";
+        public const string LinearQuadratic = "linear_quadratic";
+        public const string KlOptimal = "kl_optimal";
+    }
+
+    /// <summary>Known ComfyUI values for <c>add_noise</c> (suggestions — any string is also accepted).</summary>
+    public static class AddNoiseValues
+    {
+        public const string Enable = "enable";
+        public const string Disable = "disable";
+    }
+
+    /// <summary>Known ComfyUI values for <c>return_with_leftover_noise</c> (suggestions — any string is also accepted).</summary>
+    public static class ReturnWithLeftoverNoiseValues
+    {
+        public const string Disable = "disable";
+        public const string Enable = "enable";
+    }
+
+    /// <summary>Known ComfyUI values for <c>previews</c> (suggestions — any string is also accepted).</summary>
+    public static class PreviewsValues
+    {
+        public const string Default = "default";
+        public const string None = "none";
+        public const string One = "one";
+        public const string Second = "second";
+        public const string Iterate = "iterate";
+        public const string Animate = "animate";
+    }
 }

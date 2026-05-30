@@ -45,4 +45,11 @@ public sealed class LineArtPreprocessorNode : ComfyNode
         Resolution?.ApplyTo(this.Resolution);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>coarse</c> (suggestions — any string is also accepted).</summary>
+    public static class CoarseValues
+    {
+        public const string Disable = "disable";
+        public const string Enable = "enable";
+    }
 }

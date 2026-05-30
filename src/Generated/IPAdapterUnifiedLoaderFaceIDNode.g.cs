@@ -54,4 +54,25 @@ public sealed class IPAdapterUnifiedLoaderFaceIDNode : ComfyNode
         IpadapterInput?.ApplyTo(this.IpadapterInput);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>preset</c> (suggestions — any string is also accepted).</summary>
+    public static class PresetValues
+    {
+        public const string FACEID = "FACEID";
+        public const string FACEIDPLUSSD15Only = "FACEID PLUS - SD1.5 only";
+        public const string FACEIDPLUSV2 = "FACEID PLUS V2";
+        public const string FACEIDPORTRAITStyleTransfer = "FACEID PORTRAIT (style transfer)";
+        public const string FACEIDPORTRAITUNNORMSDXLOnlyStrong = "FACEID PORTRAIT UNNORM - SDXL only (strong)";
+    }
+
+    /// <summary>Known ComfyUI values for <c>provider</c> (suggestions — any string is also accepted).</summary>
+    public static class ProviderValues
+    {
+        public const string CPU = "CPU";
+        public const string CUDA = "CUDA";
+        public const string ROCM = "ROCM";
+        public const string DirectML = "DirectML";
+        public const string OpenVINO = "OpenVINO";
+        public const string CoreML = "CoreML";
+    }
 }

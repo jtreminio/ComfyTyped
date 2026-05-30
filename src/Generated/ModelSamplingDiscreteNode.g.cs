@@ -44,4 +44,15 @@ public sealed class ModelSamplingDiscreteNode : ComfyNode
         Zsnr?.ApplyTo(this.Zsnr);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>sampling</c> (suggestions — any string is also accepted).</summary>
+    public static class SamplingValues
+    {
+        public const string Eps = "eps";
+        public const string VPrediction = "v_prediction";
+        public const string Lcm = "lcm";
+        public const string X0 = "x0";
+        public const string ImgToImg = "img_to_img";
+        public const string ImgToImgFlow = "img_to_img_flow";
+    }
 }

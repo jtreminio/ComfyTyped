@@ -55,4 +55,12 @@ public sealed class Metric3DNormalMapPreprocessorNode : ComfyNode
         Resolution?.ApplyTo(this.Resolution);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>backbone</c> (suggestions — any string is also accepted).</summary>
+    public static class BackboneValues
+    {
+        public const string VitSmall = "vit-small";
+        public const string VitLarge = "vit-large";
+        public const string VitGiant2 = "vit-giant2";
+    }
 }

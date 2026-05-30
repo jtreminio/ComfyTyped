@@ -50,4 +50,12 @@ public sealed class HintImageEnchanceNode : ComfyNode
         ResizeMode?.ApplyTo(this.ResizeMode);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>resize_mode</c> (suggestions — any string is also accepted).</summary>
+    public static class ResizeModeValues
+    {
+        public const string JustResize = "Just Resize";
+        public const string CropAndResize = "Crop and Resize";
+        public const string ResizeAndFill = "Resize and Fill";
+    }
 }

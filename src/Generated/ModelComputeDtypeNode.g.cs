@@ -39,4 +39,13 @@ public sealed class ModelComputeDtypeNode : ComfyNode
         Dtype?.ApplyTo(this.Dtype);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>dtype</c> (suggestions — any string is also accepted).</summary>
+    public static class DtypeValues
+    {
+        public const string Default = "default";
+        public const string Fp32 = "fp32";
+        public const string Fp16 = "fp16";
+        public const string Bf16 = "bf16";
+    }
 }

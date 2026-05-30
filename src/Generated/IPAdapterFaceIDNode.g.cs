@@ -93,4 +93,34 @@ public sealed class IPAdapterFaceIDNode : ComfyNode
         Insightface?.ApplyTo(this.Insightface);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>weight_type</c> (suggestions — any string is also accepted).</summary>
+    public static class WeightTypeValues
+    {
+        public const string Linear = "linear";
+        public const string EaseIn = "ease in";
+        public const string EaseOut = "ease out";
+        public const string EaseInOut = "ease in-out";
+        public const string ReverseInOut = "reverse in-out";
+        public const string WeakInput = "weak input";
+        public const string WeakOutput = "weak output";
+        public const string WeakMiddle = "weak middle";
+        public const string StrongMiddle = "strong middle";
+        public const string StyleTransfer = "style transfer";
+        public const string Composition = "composition";
+        public const string StrongStyleTransfer = "strong style transfer";
+        public const string StyleAndComposition = "style and composition";
+        public const string StyleTransferPrecise = "style transfer precise";
+        public const string CompositionPrecise = "composition precise";
+    }
+
+    /// <summary>Known ComfyUI values for <c>combine_embeds</c> (suggestions — any string is also accepted).</summary>
+    public static class CombineEmbedsValues
+    {
+        public const string Concat = "concat";
+        public const string Add = "add";
+        public const string Subtract = "subtract";
+        public const string Average = "average";
+        public const string NormAverage = "norm average";
+    }
 }

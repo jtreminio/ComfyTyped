@@ -84,4 +84,12 @@ public sealed class RIFEVFINode : ComfyNode
         OptionalInterpolationStates?.ApplyTo(this.OptionalInterpolationStates);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>dtype</c> (suggestions — any string is also accepted).</summary>
+    public static class DtypeValues
+    {
+        public const string Float32 = "float32";
+        public const string Float16 = "float16";
+        public const string Bfloat16 = "bfloat16";
+    }
 }

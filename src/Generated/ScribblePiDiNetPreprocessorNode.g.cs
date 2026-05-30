@@ -44,4 +44,11 @@ public sealed class ScribblePiDiNetPreprocessorNode : ComfyNode
         Resolution?.ApplyTo(this.Resolution);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>safe</c> (suggestions — any string is also accepted).</summary>
+    public static class SafeValues
+    {
+        public const string Enable = "enable";
+        public const string Disable = "disable";
+    }
 }

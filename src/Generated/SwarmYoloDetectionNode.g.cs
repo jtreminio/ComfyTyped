@@ -58,4 +58,15 @@ public sealed class SwarmYoloDetectionNode : ComfyNode
         Threshold?.ApplyTo(this.Threshold);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>sort_order</c> (suggestions — any string is also accepted).</summary>
+    public static class SortOrderValues
+    {
+        public const string LeftRight = "left-right";
+        public const string RightLeft = "right-left";
+        public const string TopBottom = "top-bottom";
+        public const string BottomTop = "bottom-top";
+        public const string LargestSmallest = "largest-smallest";
+        public const string SmallestLargest = "smallest-largest";
+    }
 }

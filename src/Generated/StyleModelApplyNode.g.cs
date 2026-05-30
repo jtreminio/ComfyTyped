@@ -52,4 +52,11 @@ public sealed class StyleModelApplyNode : ComfyNode
         StrengthType?.ApplyTo(this.StrengthType);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>strength_type</c> (suggestions — any string is also accepted).</summary>
+    public static class StrengthTypeValues
+    {
+        public const string Multiply = "multiply";
+        public const string AttnBias = "attn_bias";
+    }
 }

@@ -60,4 +60,11 @@ public sealed class ConditioningSetPropertiesAndCombineNode : ComfyNode
         Timesteps?.ApplyTo(this.Timesteps);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>set_cond_area</c> (suggestions — any string is also accepted).</summary>
+    public static class SetCondAreaValues
+    {
+        public const string Default = "default";
+        public const string MaskBounds = "mask bounds";
+    }
 }

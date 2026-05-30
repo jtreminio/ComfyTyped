@@ -39,4 +39,11 @@ public sealed class LatentFlipNode : ComfyNode
         FlipMethod?.ApplyTo(this.FlipMethod);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>flip_method</c> (suggestions — any string is also accepted).</summary>
+    public static class FlipMethodValues
+    {
+        public const string XAxisVertically = "x-axis: vertically";
+        public const string YAxisHorizontally = "y-axis: horizontally";
+    }
 }

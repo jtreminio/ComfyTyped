@@ -83,4 +83,14 @@ public sealed class IPAdapterPreciseStyleTransferBatchNode : ComfyNode
         ClipVision?.ApplyTo(this.ClipVision);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>combine_embeds</c> (suggestions — any string is also accepted).</summary>
+    public static class CombineEmbedsValues
+    {
+        public const string Concat = "concat";
+        public const string Add = "add";
+        public const string Subtract = "subtract";
+        public const string Average = "average";
+        public const string NormAverage = "norm average";
+    }
 }

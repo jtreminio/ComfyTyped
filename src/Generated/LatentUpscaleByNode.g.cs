@@ -44,4 +44,14 @@ public sealed class LatentUpscaleByNode : ComfyNode
         ScaleBy?.ApplyTo(this.ScaleBy);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>upscale_method</c> (suggestions — any string is also accepted).</summary>
+    public static class UpscaleMethodValues
+    {
+        public const string NearestExact = "nearest-exact";
+        public const string Bilinear = "bilinear";
+        public const string Area = "area";
+        public const string Bicubic = "bicubic";
+        public const string Bislerp = "bislerp";
+    }
 }

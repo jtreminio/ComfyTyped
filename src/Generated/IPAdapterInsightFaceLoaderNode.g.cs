@@ -39,4 +39,19 @@ public sealed class IPAdapterInsightFaceLoaderNode : ComfyNode
         ModelName?.ApplyTo(this.ModelName);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>provider</c> (suggestions — any string is also accepted).</summary>
+    public static class ProviderValues
+    {
+        public const string CPU = "CPU";
+        public const string CUDA = "CUDA";
+        public const string ROCM = "ROCM";
+    }
+
+    /// <summary>Known ComfyUI values for <c>model_name</c> (suggestions — any string is also accepted).</summary>
+    public static class ModelNameValues
+    {
+        public const string BuffaloL = "buffalo_l";
+        public const string Antelopev2 = "antelopev2";
+    }
 }

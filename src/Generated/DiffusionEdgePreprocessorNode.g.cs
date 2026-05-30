@@ -50,4 +50,12 @@ public sealed class DiffusionEdgePreprocessorNode : ComfyNode
         Resolution?.ApplyTo(this.Resolution);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>environment</c> (suggestions — any string is also accepted).</summary>
+    public static class EnvironmentValues
+    {
+        public const string Indoor = "indoor";
+        public const string Urban = "urban";
+        public const string Natrual = "natrual";
+    }
 }

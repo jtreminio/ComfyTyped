@@ -70,4 +70,15 @@ public sealed class SwarmInputModelNameNode : ComfyNode
         Group?.ApplyTo(this.Group);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>subtype</c> (suggestions — any string is also accepted).</summary>
+    public static class SubtypeValues
+    {
+        public const string StableDiffusion = "Stable-Diffusion";
+        public const string VAE = "VAE";
+        public const string LoRA = "LoRA";
+        public const string Embedding = "Embedding";
+        public const string ControlNet = "ControlNet";
+        public const string ClipVision = "ClipVision";
+    }
 }

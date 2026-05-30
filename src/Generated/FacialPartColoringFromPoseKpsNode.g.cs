@@ -75,4 +75,11 @@ public sealed class FacialPartColoringFromPoseKpsNode : ComfyNode
         LowerLip?.ApplyTo(this.LowerLip);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>mode</c> (suggestions — any string is also accepted).</summary>
+    public static class ModeValues
+    {
+        public const string Point = "point";
+        public const string Polygon = "polygon";
+    }
 }

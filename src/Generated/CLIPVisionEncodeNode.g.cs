@@ -43,4 +43,11 @@ public sealed class CLIPVisionEncodeNode : ComfyNode
         Crop?.ApplyTo(this.Crop);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>crop</c> (suggestions — any string is also accepted).</summary>
+    public static class CropValues
+    {
+        public const string Center = "center";
+        public const string None = "none";
+    }
 }

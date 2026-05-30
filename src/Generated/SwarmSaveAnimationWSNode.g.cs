@@ -58,4 +58,24 @@ public sealed class SwarmSaveAnimationWSNode : ComfyNode
         Audio?.ApplyTo(this.Audio);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>method</c> (suggestions — any string is also accepted).</summary>
+    public static class MethodValues
+    {
+        public const string Default = "default";
+        public const string Fastest = "fastest";
+        public const string Slowest = "slowest";
+    }
+
+    /// <summary>Known ComfyUI values for <c>format</c> (suggestions — any string is also accepted).</summary>
+    public static class FormatValues
+    {
+        public const string Webp = "webp";
+        public const string Gif = "gif";
+        public const string GifHd = "gif-hd";
+        public const string H264Mp4 = "h264-mp4";
+        public const string H265Mp4 = "h265-mp4";
+        public const string Webm = "webm";
+        public const string Prores = "prores";
+    }
 }

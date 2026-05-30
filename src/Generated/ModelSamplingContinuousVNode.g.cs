@@ -49,4 +49,10 @@ public sealed class ModelSamplingContinuousVNode : ComfyNode
         SigmaMin?.ApplyTo(this.SigmaMin);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>sampling</c> (suggestions — any string is also accepted).</summary>
+    public static class SamplingValues
+    {
+        public const string VPrediction = "v_prediction";
+    }
 }

@@ -53,4 +53,11 @@ public sealed class GMFSSFortunaVFINode : ComfyNode
         OptionalInterpolationStates?.ApplyTo(this.OptionalInterpolationStates);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>ckpt_name</c> (suggestions — any string is also accepted).</summary>
+    public static class CkptNameValues
+    {
+        public const string GMFSSFortunaUnion = "GMFSS_fortuna_union";
+        public const string GMFSSFortuna = "GMFSS_fortuna";
+    }
 }

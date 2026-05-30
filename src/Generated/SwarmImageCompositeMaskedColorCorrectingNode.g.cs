@@ -58,4 +58,13 @@ public sealed class SwarmImageCompositeMaskedColorCorrectingNode : ComfyNode
         CorrectionMethod?.ApplyTo(this.CorrectionMethod);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>correction_method</c> (suggestions — any string is also accepted).</summary>
+    public static class CorrectionMethodValues
+    {
+        public const string None = "None";
+        public const string Uniform = "Uniform";
+        public const string Linear = "Linear";
+        public const string Linear2 = "Linear2";
+    }
 }

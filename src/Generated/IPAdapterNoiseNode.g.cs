@@ -49,4 +49,13 @@ public sealed class IPAdapterNoiseNode : ComfyNode
         ImageOptional?.ApplyTo(this.ImageOptional);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>type</c> (suggestions — any string is also accepted).</summary>
+    public static class TypeValues
+    {
+        public const string Fade = "fade";
+        public const string Dissolve = "dissolve";
+        public const string Gaussian = "gaussian";
+        public const string Shuffle = "shuffle";
+    }
 }

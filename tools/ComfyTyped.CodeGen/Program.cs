@@ -861,7 +861,8 @@ public static partial class Program
         IReadOnlyList<string>? Names = null,
         int Min = 0,
         int Max = 0,
-        MarkerInfo? ElementMarker = null);
+        MarkerInfo? ElementMarker = null,
+        IReadOnlyList<string>? ComboValues = null);
 
     private sealed record OutputDef(
         string Name,
@@ -946,6 +947,13 @@ public static partial class Program
 
             string comfyType = spec[0] is JArray ? "COMBO" : spec[0]?.ToString() ?? "*";
 
+            // A COMBO's spec[0] is the JArray of allowed values; capture the all-string ones so
+            // codegen can surface them as discoverable constants (see EmitComboConstants).
+            IReadOnlyList<string>? comboValues =
+                spec[0] is JArray comboArr && comboArr.Count > 0 && comboArr.All(v => v.Type == JTokenType.String)
+                    ? comboArr.Select(v => v.ToString()).ToList()
+                    : null;
+
             // COMFY_AUTOGROW_V3: typed list of element type. Two shapes:
             //   prefix → child wire keys are "{slot}.{prefix}{i}" (BatchImagesNode).
             //   names  → child wire keys are "{slot}.{names[i]}" (HiDreamO1ReferenceImages).
@@ -993,7 +1001,8 @@ public static partial class Program
             string propName = SanitizeInputPropertyName(inputProp.Name, inputs, outputs);
 
             inputs.Add(new InputDef(
-                inputProp.Name, propName, comfyType, marker, required, isPrimitive, csharpType, defaultValue));
+                inputProp.Name, propName, comfyType, marker, required, isPrimitive, csharpType, defaultValue,
+                ComboValues: comboValues));
         }
     }
 
@@ -1335,6 +1344,8 @@ public static partial class Program
             sb.AppendLine("    }");
         }
 
+        EmitComboConstants(sb, singularInputs);
+
         sb.AppendLine("}");
 
         return sb.ToString();
@@ -1496,6 +1507,90 @@ public static partial class Program
             "volatile" or "while" => "@" + name,
             _ => name
         };
+    }
+
+    /// <summary>Max number of allowed-value constants to emit for one COMBO. Above this a combo is
+    /// treated as a large/dynamic picker and left value-only.</summary>
+    private const int MaxComboConstants = 64;
+
+    private static readonly string[] ModelFileExtensions =
+        [".safetensors", ".ckpt", ".pt", ".pth", ".bin", ".gguf", ".onnx", ".sft", ".engine", ".vae", ".yaml", ".json"];
+
+    /// <summary>Emit nested <c>{Input}Values</c> classes of <c>public const string</c> for small,
+    /// static COMBO inputs — discoverable suggestions while the input stays a plain string so any
+    /// value still compiles (the C# analogue of TS <c>"a" | "b" | (string &amp; {})</c>).</summary>
+    private static void EmitComboConstants(StringBuilder sb, List<InputDef> singularInputs)
+    {
+        foreach (InputDef inp in singularInputs)
+        {
+            IReadOnlyList<(string Name, string Value)> consts = ComboConstants(inp);
+            if (consts.Count == 0)
+            {
+                continue;
+            }
+            sb.AppendLine();
+            sb.AppendLine(
+                $"    /// <summary>Known ComfyUI values for <c>{EscapeXml(inp.Name)}</c> "
+                + "(suggestions — any string is also accepted).</summary>");
+            sb.AppendLine($"    public static class {inp.PropertyName}Values");
+            sb.AppendLine("    {");
+            foreach ((string name, string value) in consts)
+            {
+                sb.AppendLine($"        public const string {name} = \"{EscapeCSharpString(value)}\";");
+            }
+            sb.AppendLine("    }");
+        }
+    }
+
+    /// <summary>Resolve a COMBO input's allowed values to identifier→literal pairs (deduped), or an
+    /// empty list when the combo should stay value-only: too large, or a per-environment model/file
+    /// picker (path-like values) that would otherwise bake one machine's installed files into
+    /// committed generated code.</summary>
+    private static IReadOnlyList<(string Name, string Value)> ComboConstants(InputDef inp)
+    {
+        if (inp.ComboValues is not { Count: > 0 } values || values.Count > MaxComboConstants)
+        {
+            return [];
+        }
+        foreach (string v in values)
+        {
+            if (string.IsNullOrWhiteSpace(v) || v.Contains('/') || v.Contains('\\') || LooksLikeModelFile(v))
+            {
+                return [];
+            }
+        }
+        List<(string Name, string Value)> result = [];
+        HashSet<string> used = [];
+        foreach (string v in values)
+        {
+            string name = SanitizeConstName(v);
+            string baseName = name;
+            int suffix = 2;
+            while (!used.Add(name))
+            {
+                name = baseName + "_" + suffix++;
+            }
+            result.Add((name, v));
+        }
+        return result;
+    }
+
+    private static bool LooksLikeModelFile(string value)
+    {
+        foreach (string ext in ModelFileExtensions)
+        {
+            if (value.EndsWith(ext, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static string SanitizeConstName(string value)
+    {
+        string name = ToPascalCase(value);
+        return EnsureValidIdentifier(string.IsNullOrEmpty(name) ? "Value" : name);
     }
 
     private static MarkerInfo ResolveMarkerType(

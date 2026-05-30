@@ -45,4 +45,15 @@ public sealed class IPAdapterUnifiedLoaderNode : ComfyNode
         IpadapterInput?.ApplyTo(this.IpadapterInput);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>preset</c> (suggestions — any string is also accepted).</summary>
+    public static class PresetValues
+    {
+        public const string LIGHTSD15OnlyLowStrength = "LIGHT - SD1.5 only (low strength)";
+        public const string STANDARDMediumStrength = "STANDARD (medium strength)";
+        public const string VITGMediumStrength = "VIT-G (medium strength)";
+        public const string PLUSHighStrength = "PLUS (high strength)";
+        public const string PLUSFACEPortraits = "PLUS FACE (portraits)";
+        public const string FULLFACESD15OnlyPortraitsStronger = "FULL FACE - SD1.5 only (portraits stronger)";
+    }
 }

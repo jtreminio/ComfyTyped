@@ -50,4 +50,24 @@ public sealed class UnetLoaderGGUFAdvancedNode : ComfyNode
         PatchOnDevice?.ApplyTo(this.PatchOnDevice);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>dequant_dtype</c> (suggestions — any string is also accepted).</summary>
+    public static class DequantDtypeValues
+    {
+        public const string Default = "default";
+        public const string Target = "target";
+        public const string Float32 = "float32";
+        public const string Float16 = "float16";
+        public const string Bfloat16 = "bfloat16";
+    }
+
+    /// <summary>Known ComfyUI values for <c>patch_dtype</c> (suggestions — any string is also accepted).</summary>
+    public static class PatchDtypeValues
+    {
+        public const string Default = "default";
+        public const string Target = "target";
+        public const string Float32 = "float32";
+        public const string Float16 = "float16";
+        public const string Bfloat16 = "bfloat16";
+    }
 }

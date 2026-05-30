@@ -66,4 +66,12 @@ public sealed class IPAdapterNode : ComfyNode
         AttnMask?.ApplyTo(this.AttnMask);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>weight_type</c> (suggestions — any string is also accepted).</summary>
+    public static class WeightTypeValues
+    {
+        public const string Standard = "standard";
+        public const string PromptIsMoreImportant = "prompt is more important";
+        public const string StyleTransfer = "style transfer";
+    }
 }

@@ -57,4 +57,28 @@ public sealed class DualCLIPLoaderNode : ComfyNode
         Device?.ApplyTo(this.Device);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>type</c> (suggestions — any string is also accepted).</summary>
+    public static class TypeValues
+    {
+        public const string Sdxl = "sdxl";
+        public const string Sd3 = "sd3";
+        public const string Flux = "flux";
+        public const string HunyuanVideo = "hunyuan_video";
+        public const string Hidream = "hidream";
+        public const string HunyuanImage = "hunyuan_image";
+        public const string HunyuanVideo15 = "hunyuan_video_15";
+        public const string Kandinsky5 = "kandinsky5";
+        public const string Kandinsky5Image = "kandinsky5_image";
+        public const string Ltxv = "ltxv";
+        public const string Newbie = "newbie";
+        public const string Ace = "ace";
+    }
+
+    /// <summary>Known ComfyUI values for <c>device</c> (suggestions — any string is also accepted).</summary>
+    public static class DeviceValues
+    {
+        public const string Default = "default";
+        public const string Cpu = "cpu";
+    }
 }

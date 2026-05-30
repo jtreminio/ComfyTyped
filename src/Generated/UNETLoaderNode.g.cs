@@ -39,4 +39,13 @@ public sealed class UNETLoaderNode : ComfyNode
         WeightDtype?.ApplyTo(this.WeightDtype);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>weight_dtype</c> (suggestions — any string is also accepted).</summary>
+    public static class WeightDtypeValues
+    {
+        public const string Default = "default";
+        public const string Fp8E4m3fn = "fp8_e4m3fn";
+        public const string Fp8E4m3fnFast = "fp8_e4m3fn_fast";
+        public const string Fp8E5m2 = "fp8_e5m2";
+    }
 }

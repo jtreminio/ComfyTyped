@@ -62,4 +62,32 @@ public sealed class OpenposePreprocessorNode : ComfyNode
         ScaleStickForXinsrCn?.ApplyTo(this.ScaleStickForXinsrCn);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>detect_hand</c> (suggestions — any string is also accepted).</summary>
+    public static class DetectHandValues
+    {
+        public const string Enable = "enable";
+        public const string Disable = "disable";
+    }
+
+    /// <summary>Known ComfyUI values for <c>detect_body</c> (suggestions — any string is also accepted).</summary>
+    public static class DetectBodyValues
+    {
+        public const string Enable = "enable";
+        public const string Disable = "disable";
+    }
+
+    /// <summary>Known ComfyUI values for <c>detect_face</c> (suggestions — any string is also accepted).</summary>
+    public static class DetectFaceValues
+    {
+        public const string Enable = "enable";
+        public const string Disable = "disable";
+    }
+
+    /// <summary>Known ComfyUI values for <c>scale_stick_for_xinsr_cn</c> (suggestions — any string is also accepted).</summary>
+    public static class ScaleStickForXinsrCnValues
+    {
+        public const string Disable = "disable";
+        public const string Enable = "enable";
+    }
 }

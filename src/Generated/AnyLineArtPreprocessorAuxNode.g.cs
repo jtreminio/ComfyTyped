@@ -65,4 +65,13 @@ public sealed class AnyLineArtPreprocessorAuxNode : ComfyNode
         ObjectConnectivity?.ApplyTo(this.ObjectConnectivity);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>merge_with_lineart</c> (suggestions — any string is also accepted).</summary>
+    public static class MergeWithLineartValues
+    {
+        public const string LineartStandard = "lineart_standard";
+        public const string LineartRealisitic = "lineart_realisitic";
+        public const string LineartAnime = "lineart_anime";
+        public const string MangaLine = "manga_line";
+    }
 }

@@ -51,4 +51,12 @@ public sealed class SwarmSaveAnimatedWebpWSNode : ComfyNode
         Method?.ApplyTo(this.Method);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>method</c> (suggestions — any string is also accepted).</summary>
+    public static class MethodValues
+    {
+        public const string Default = "default";
+        public const string Fastest = "fastest";
+        public const string Slowest = "slowest";
+    }
 }

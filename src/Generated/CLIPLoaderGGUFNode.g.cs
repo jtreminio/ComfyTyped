@@ -39,4 +39,29 @@ public sealed class CLIPLoaderGGUFNode : ComfyNode
         Type?.ApplyTo(this.Type);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>type</c> (suggestions — any string is also accepted).</summary>
+    public static class TypeValues
+    {
+        public const string StableDiffusion = "stable_diffusion";
+        public const string StableCascade = "stable_cascade";
+        public const string Sd3 = "sd3";
+        public const string StableAudio = "stable_audio";
+        public const string Mochi = "mochi";
+        public const string Ltxv = "ltxv";
+        public const string Pixart = "pixart";
+        public const string Cosmos = "cosmos";
+        public const string Lumina2 = "lumina2";
+        public const string Wan = "wan";
+        public const string Hidream = "hidream";
+        public const string Chroma = "chroma";
+        public const string Ace = "ace";
+        public const string Omnigen2 = "omnigen2";
+        public const string QwenImage = "qwen_image";
+        public const string HunyuanImage = "hunyuan_image";
+        public const string Flux2 = "flux2";
+        public const string Ovis = "ovis";
+        public const string LongcatImage = "longcat_image";
+        public const string Cogvideox = "cogvideox";
+    }
 }

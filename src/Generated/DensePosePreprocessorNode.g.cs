@@ -50,4 +50,18 @@ public sealed class DensePosePreprocessorNode : ComfyNode
         Resolution?.ApplyTo(this.Resolution);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>model</c> (suggestions — any string is also accepted).</summary>
+    public static class ModelValues
+    {
+        public const string DenseposeR50FpnDlTorchscript = "densepose_r50_fpn_dl.torchscript";
+        public const string DenseposeR101FpnDlTorchscript = "densepose_r101_fpn_dl.torchscript";
+    }
+
+    /// <summary>Known ComfyUI values for <c>cmap</c> (suggestions — any string is also accepted).</summary>
+    public static class CmapValues
+    {
+        public const string ViridisMagicAnimate = "Viridis (MagicAnimate)";
+        public const string ParulaCivitAI = "Parula (CivitAI)";
+    }
 }

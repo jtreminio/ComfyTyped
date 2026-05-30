@@ -70,4 +70,12 @@ public sealed class SwarmInputTextNode : ComfyNode
         Group?.ApplyTo(this.Group);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>view_type</c> (suggestions — any string is also accepted).</summary>
+    public static class ViewTypeValues
+    {
+        public const string Normal = "normal";
+        public const string Prompt = "prompt";
+        public const string Big = "big";
+    }
 }

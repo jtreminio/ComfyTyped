@@ -86,4 +86,12 @@ public sealed class MeshGraphormerImpactDetectorDepthMapPreprocessorNode : Comfy
         Resolution?.ApplyTo(this.Resolution);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>mask_type</c> (suggestions — any string is also accepted).</summary>
+    public static class MaskTypeValues
+    {
+        public const string BasedOnDepth = "based_on_depth";
+        public const string TightBboxes = "tight_bboxes";
+        public const string Original = "original";
+    }
 }

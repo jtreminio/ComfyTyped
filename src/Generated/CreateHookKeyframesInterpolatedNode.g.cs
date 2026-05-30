@@ -69,4 +69,13 @@ public sealed class CreateHookKeyframesInterpolatedNode : ComfyNode
         PrevHookKf?.ApplyTo(this.PrevHookKf);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>interpolation</c> (suggestions — any string is also accepted).</summary>
+    public static class InterpolationValues
+    {
+        public const string Linear = "linear";
+        public const string EaseIn = "ease_in";
+        public const string EaseOut = "ease_out";
+        public const string EaseInOut = "ease_in_out";
+    }
 }

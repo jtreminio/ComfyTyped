@@ -90,4 +90,14 @@ public sealed class SwarmInputIntegerNode : ComfyNode
         Group?.ApplyTo(this.Group);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>view_type</c> (suggestions — any string is also accepted).</summary>
+    public static class ViewTypeValues
+    {
+        public const string Big = "big";
+        public const string Small = "small";
+        public const string Seed = "seed";
+        public const string Slider = "slider";
+        public const string PotSlider = "pot_slider";
+    }
 }

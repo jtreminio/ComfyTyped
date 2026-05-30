@@ -39,4 +39,19 @@ public sealed class LoadImageMaskNode : ComfyNode
         Channel?.ApplyTo(this.Channel);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>image</c> (suggestions — any string is also accepted).</summary>
+    public static class ImageValues
+    {
+        public const string ExamplePng = "example.png";
+    }
+
+    /// <summary>Known ComfyUI values for <c>channel</c> (suggestions — any string is also accepted).</summary>
+    public static class ChannelValues
+    {
+        public const string Alpha = "alpha";
+        public const string Red = "red";
+        public const string Green = "green";
+        public const string Blue = "blue";
+    }
 }

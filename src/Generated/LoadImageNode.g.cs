@@ -37,4 +37,10 @@ public sealed class LoadImageNode : ComfyNode
         Image?.ApplyTo(this.Image);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>image</c> (suggestions — any string is also accepted).</summary>
+    public static class ImageValues
+    {
+        public const string ExamplePng = "example.png";
+    }
 }

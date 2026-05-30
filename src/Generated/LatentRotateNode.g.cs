@@ -39,4 +39,13 @@ public sealed class LatentRotateNode : ComfyNode
         Rotation?.ApplyTo(this.Rotation);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>rotation</c> (suggestions — any string is also accepted).</summary>
+    public static class RotationValues
+    {
+        public const string None = "none";
+        public const string _90Degrees = "90 degrees";
+        public const string _180Degrees = "180 degrees";
+        public const string _270Degrees = "270 degrees";
+    }
 }

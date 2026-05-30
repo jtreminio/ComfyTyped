@@ -49,4 +49,14 @@ public sealed class ModelSamplingContinuousEDMNode : ComfyNode
         SigmaMin?.ApplyTo(this.SigmaMin);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>sampling</c> (suggestions — any string is also accepted).</summary>
+    public static class SamplingValues
+    {
+        public const string VPrediction = "v_prediction";
+        public const string Edm = "edm";
+        public const string EdmPlaygroundV25 = "edm_playground_v2.5";
+        public const string Eps = "eps";
+        public const string CosmosRflow = "cosmos_rflow";
+    }
 }

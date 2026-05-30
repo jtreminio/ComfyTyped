@@ -48,4 +48,26 @@ public sealed class PrepImageForClipVisionNode : ComfyNode
         Sharpening?.ApplyTo(this.Sharpening);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>interpolation</c> (suggestions — any string is also accepted).</summary>
+    public static class InterpolationValues
+    {
+        public const string LANCZOS = "LANCZOS";
+        public const string BICUBIC = "BICUBIC";
+        public const string HAMMING = "HAMMING";
+        public const string BILINEAR = "BILINEAR";
+        public const string BOX = "BOX";
+        public const string NEAREST = "NEAREST";
+    }
+
+    /// <summary>Known ComfyUI values for <c>crop_position</c> (suggestions — any string is also accepted).</summary>
+    public static class CropPositionValues
+    {
+        public const string Top = "top";
+        public const string Bottom = "bottom";
+        public const string Left = "left";
+        public const string Right = "right";
+        public const string Center = "center";
+        public const string Pad = "pad";
+    }
 }

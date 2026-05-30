@@ -37,4 +37,12 @@ public sealed class SwarmSaveImageWSNode : ComfyNode
         BitDepth?.ApplyTo(this.BitDepth);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>bit_depth</c> (suggestions — any string is also accepted).</summary>
+    public static class BitDepthValues
+    {
+        public const string _8bit = "8bit";
+        public const string _16bit = "16bit";
+        public const string Raw = "raw";
+    }
 }

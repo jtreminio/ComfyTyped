@@ -53,4 +53,21 @@ public sealed class ImageScaleNode : ComfyNode
         Crop?.ApplyTo(this.Crop);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>upscale_method</c> (suggestions — any string is also accepted).</summary>
+    public static class UpscaleMethodValues
+    {
+        public const string NearestExact = "nearest-exact";
+        public const string Bilinear = "bilinear";
+        public const string Area = "area";
+        public const string Bicubic = "bicubic";
+        public const string Lanczos = "lanczos";
+    }
+
+    /// <summary>Known ComfyUI values for <c>crop</c> (suggestions — any string is also accepted).</summary>
+    public static class CropValues
+    {
+        public const string Disabled = "disabled";
+        public const string Center = "center";
+    }
 }

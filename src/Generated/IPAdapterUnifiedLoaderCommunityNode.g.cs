@@ -45,4 +45,11 @@ public sealed class IPAdapterUnifiedLoaderCommunityNode : ComfyNode
         IpadapterInput?.ApplyTo(this.IpadapterInput);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>preset</c> (suggestions — any string is also accepted).</summary>
+    public static class PresetValues
+    {
+        public const string Composition = "Composition";
+        public const string Kolors = "Kolors";
+    }
 }

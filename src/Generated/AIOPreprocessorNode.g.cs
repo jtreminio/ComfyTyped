@@ -45,4 +45,56 @@ public sealed class AIOPreprocessorNode : ComfyNode
         Resolution?.ApplyTo(this.Resolution);
         return this;
     }
+
+    /// <summary>Known ComfyUI values for <c>preprocessor</c> (suggestions — any string is also accepted).</summary>
+    public static class PreprocessorValues
+    {
+        public const string None = "none";
+        public const string OpenposePreprocessor = "OpenposePreprocessor";
+        public const string Manga2AnimeLineArtPreprocessor = "Manga2Anime_LineArt_Preprocessor";
+        public const string BAENormalMapPreprocessor = "BAE-NormalMapPreprocessor";
+        public const string AnimeFaceSemSegPreprocessor = "AnimeFace_SemSegPreprocessor";
+        public const string UniFormerSemSegPreprocessor = "UniFormer-SemSegPreprocessor";
+        public const string SemSegPreprocessor = "SemSegPreprocessor";
+        public const string PyraCannyPreprocessor = "PyraCannyPreprocessor";
+        public const string TEEDPreprocessor = "TEEDPreprocessor";
+        public const string BinaryPreprocessor = "BinaryPreprocessor";
+        public const string LineArtPreprocessor = "LineArtPreprocessor";
+        public const string SAMPreprocessor = "SAMPreprocessor";
+        public const string DensePosePreprocessor = "DensePosePreprocessor";
+        public const string DepthAnythingV2Preprocessor = "DepthAnythingV2Preprocessor";
+        public const string ShufflePreprocessor = "ShufflePreprocessor";
+        public const string TilePreprocessor = "TilePreprocessor";
+        public const string TTPlanetTileGFPreprocessor = "TTPlanet_TileGF_Preprocessor";
+        public const string TTPlanetTileSimplePreprocessor = "TTPlanet_TileSimple_Preprocessor";
+        public const string ColorPreprocessor = "ColorPreprocessor";
+        public const string DWPreprocessor = "DWPreprocessor";
+        public const string AnimalPosePreprocessor = "AnimalPosePreprocessor";
+        public const string OneFormerCOCOSemSegPreprocessor = "OneFormer-COCO-SemSegPreprocessor";
+        public const string OneFormerADE20KSemSegPreprocessor = "OneFormer-ADE20K-SemSegPreprocessor";
+        public const string ScribblePreprocessor = "ScribblePreprocessor";
+        public const string ScribbleXDoGPreprocessor = "Scribble_XDoG_Preprocessor";
+        public const string ScribblePiDiNetPreprocessor = "Scribble_PiDiNet_Preprocessor";
+        public const string HEDPreprocessor = "HEDPreprocessor";
+        public const string FakeScribblePreprocessor = "FakeScribblePreprocessor";
+        public const string MeshGraphormerDepthMapPreprocessor = "MeshGraphormer-DepthMapPreprocessor";
+        public const string MLSDPreprocessor = "M-LSDPreprocessor";
+        public const string DSINENormalMapPreprocessor = "DSINE-NormalMapPreprocessor";
+        public const string Metric3DDepthMapPreprocessor = "Metric3D-DepthMapPreprocessor";
+        public const string Metric3DNormalMapPreprocessor = "Metric3D-NormalMapPreprocessor";
+        public const string LineartStandardPreprocessor = "LineartStandardPreprocessor";
+        public const string CannyEdgePreprocessor = "CannyEdgePreprocessor";
+        public const string DepthAnythingPreprocessor = "DepthAnythingPreprocessor";
+        public const string ZoeDepthAnythingPreprocessor = "Zoe_DepthAnythingPreprocessor";
+        public const string LeReSDepthMapPreprocessor = "LeReS-DepthMapPreprocessor";
+        public const string PiDiNetPreprocessor = "PiDiNetPreprocessor";
+        public const string ImageLuminanceDetector = "ImageLuminanceDetector";
+        public const string ImageIntensityDetector = "ImageIntensityDetector";
+        public const string MediaPipeFaceMeshPreprocessor = "MediaPipe-FaceMeshPreprocessor";
+        public const string AnimeLineArtPreprocessor = "AnimeLineArtPreprocessor";
+        public const string AnyLineArtPreprocessorAux = "AnyLineArtPreprocessor_aux";
+        public const string ZoeDepthMapPreprocessor = "Zoe-DepthMapPreprocessor";
+        public const string MiDaSNormalMapPreprocessor = "MiDaS-NormalMapPreprocessor";
+        public const string MiDaSDepthMapPreprocessor = "MiDaS-DepthMapPreprocessor";
+    }
 }
