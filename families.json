@@ -1,5 +1,6 @@
 {
   "_comment": "Maps a fully-qualified C# interface (hand-written under src/Families/) to the ComfyUI class_types that should implement it. Codegen appends the interface to each member node's base list when run with --families families.json. Keys starting with '_' are ignored (comments). See src/Families/IVaeDecode.cs and the regen command in CLAUDE.md.",
   "ComfyTyped.Families.IVaeDecode": ["VAEDecode", "VAEDecodeTiled"],
-  "ComfyTyped.Families.IVaeEncode": ["VAEEncode", "VAEEncodeTiled"]
+  "ComfyTyped.Families.IVaeEncode": ["VAEEncode", "VAEEncodeTiled"],
+  "ComfyTyped.Families.IConditioningPairNode": ["LTXVConditioning", "LTXVAddGuide", "LTXVCropGuides", "WanImageToVideo", "WanFirstLastFrameToVideo"]
 }

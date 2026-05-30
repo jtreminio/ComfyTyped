@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <remarks>Category: conditioning/video_models</remarks>
-public sealed class LTXVCropGuidesNode : ComfyNode
+public sealed class LTXVCropGuidesNode : ComfyNode, ComfyTyped.Families.IConditioningPairNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
     public const string ClassType = "LTXVCropGuides";

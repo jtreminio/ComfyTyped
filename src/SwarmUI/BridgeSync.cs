@@ -105,16 +105,36 @@ public sealed class SyncingWorkflowBridge : IDisposable
     public JObject Workflow => Bridge.Workflow;
 
     /// <inheritdoc cref="WorkflowBridge.AddNode{T}(T)"/>
-    public T AddNode<T>(T node) where T : ComfyNode => Bridge.AddNode(node);
+    public T AddNode<T>(T node) where T : ComfyNode => AdvanceLastId(Bridge.AddNode(node));
 
     /// <inheritdoc cref="WorkflowBridge.AddNode{T}(T, string)"/>
-    public T AddNode<T>(T node, string id) where T : ComfyNode => Bridge.AddNode(node, id);
+    public T AddNode<T>(T node, string id) where T : ComfyNode => AdvanceLastId(Bridge.AddNode(node, id));
 
     /// <inheritdoc cref="WorkflowBridge.AddStub(string, string)"/>
-    public UnknownNode AddStub(string classType, string id) => Bridge.AddStub(classType, id);
+    public UnknownNode AddStub(string classType, string id) => AdvanceLastId(Bridge.AddStub(classType, id));
 
     /// <inheritdoc cref="WorkflowBridge.AddStub(string)"/>
-    public UnknownNode AddStub(string classType) => Bridge.AddStub(classType);
+    public UnknownNode AddStub(string classType) => AdvanceLastId(Bridge.AddStub(classType));
+
+    /// <summary>
+    /// Advance <c>g.LastID</c> past the just-added node's ID, keeping SwarmUI's ID counter in
+    /// lockstep with bridge-assigned IDs at the moment of each add. This is the primary
+    /// collision-avoidance mechanism — same formula as <see cref="BridgeSync.SyncLastId"/>, but
+    /// applied per-add instead of in a dispose sweep. Because <c>g.LastID</c> is already advanced
+    /// when control returns to the caller, a <c>g.CreateNode()</c> (e.g. inside a
+    /// <see cref="MediaRef"/>/<c>WGNodeData</c> transform) issued <em>before</em> this wrapper is
+    /// disposed can no longer collide with a node this bridge added. The dispose-time
+    /// <see cref="BridgeSync.SyncLastId"/> remains as an idempotent safety net for any add made
+    /// directly against the inner <see cref="Bridge"/>.
+    /// </summary>
+    private T AdvanceLastId<T>(T node) where T : ComfyNode
+    {
+        if (int.TryParse(node.Id, out int n) && n >= _g.LastID)
+        {
+            _g.LastID = n + 1;
+        }
+        return node;
+    }
 
     /// <inheritdoc cref="WorkflowBridge.RemoveNode(string)"/>
     public bool RemoveNode(string id) => Bridge.RemoveNode(id);
