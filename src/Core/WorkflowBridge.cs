@@ -84,6 +84,11 @@ public sealed class WorkflowBridge : IDisposable
     /// double-subscribe when a caller adds the same node instance twice (e.g.
     /// via <c>bridge.AddNode(graph.GetNode(id))</c>).</summary>
     private readonly HashSet<ComfyNode> _subscribed = [];
+
+    /// <summary>Optional host ID-counter kept in lockstep with bridge-assigned IDs; null in
+    /// host-agnostic / read-only uses (then ID bookkeeping is skipped). The SwarmUI layer supplies an
+    /// adapter over <c>WorkflowGenerator.LastID</c> — Core never references the host type.</summary>
+    private readonly INodeIdCounter? _idCounter;
     private bool _disposed;
 
     /// <summary>The typed graph view, deserialized from the workflow at creation time.</summary>
@@ -92,17 +97,19 @@ public sealed class WorkflowBridge : IDisposable
     /// <summary>The original JObject workflow (same reference, not a clone).</summary>
     public JObject Workflow => _workflow;
 
-    public WorkflowBridge(ComfyGraph graph, JObject workflow)
+    public WorkflowBridge(ComfyGraph graph, JObject workflow, INodeIdCounter? idCounter = null)
     {
         ArgumentNullException.ThrowIfNull(graph);
         ArgumentNullException.ThrowIfNull(workflow);
         _graph = graph;
         _workflow = workflow;
+        _idCounter = idCounter;
         _onInputChanged = OnInputChanged;
         _onInputListChanged = OnInputListChanged;
         foreach (ComfyNode node in graph.Nodes.Values)
         {
             Subscribe(node);
+            AdvanceIdCounter(node);
         }
     }
 
@@ -110,12 +117,12 @@ public sealed class WorkflowBridge : IDisposable
     /// Create a bridge from an existing JObject workflow.
     /// The typed graph is deserialized from the JObject and kept in sync going forward.
     /// </summary>
-    public static WorkflowBridge Create(JObject workflow)
+    public static WorkflowBridge Create(JObject workflow, INodeIdCounter? idCounter = null)
     {
         ArgumentNullException.ThrowIfNull(workflow);
         ComfyGraph graph = ComfyGraph.FromWorkflow(workflow);
 
-        return new WorkflowBridge(graph, workflow);
+        return new WorkflowBridge(graph, workflow, idCounter);
     }
 
     // ── Add ─────────────────────────────────────────────────────────
@@ -131,6 +138,7 @@ public sealed class WorkflowBridge : IDisposable
         Graph.AddNode(node);
         Workflow[node.Id] = node.ToWorkflowNode();
         Subscribe(node);
+        AdvanceIdCounter(node);
 
         return node;
     }
@@ -145,6 +153,7 @@ public sealed class WorkflowBridge : IDisposable
         Graph.AddNode(node, id);
         Workflow[node.Id] = node.ToWorkflowNode();
         Subscribe(node);
+        AdvanceIdCounter(node);
 
         return node;
     }
@@ -163,6 +172,17 @@ public sealed class WorkflowBridge : IDisposable
     /// </summary>
     public UnknownNode AddStub(string classType) =>
         AddNode(new UnknownNode(classType));
+
+    /// <summary>Raise the host ID-counter (if any) past a node's ID, keeping it in lockstep so
+    /// host-minted IDs (e.g. SwarmUI <c>g.CreateNode()</c>) never collide with bridge-assigned ones.
+    /// No-op when the bridge has no counter or the ID is non-numeric.</summary>
+    private void AdvanceIdCounter(ComfyNode node)
+    {
+        if (_idCounter is not null && int.TryParse(node.Id, out int n) && n >= _idCounter.LastID)
+        {
+            _idCounter.LastID = n + 1;
+        }
+    }
 
     // ── Remove ──────────────────────────────────────────────────────
 

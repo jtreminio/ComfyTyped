@@ -1,21 +1,40 @@
 using ComfyTyped.Core;
-using ComfyTyped.Types;
 using Newtonsoft.Json.Linq;
 using SwarmUI.Builtin_ComfyUIBackend;
 
 namespace ComfyTyped.SwarmUI;
 
 /// <summary>
-/// Synchronizes SwarmUI's <see cref="WorkflowGenerator.LastID"/> counter
-/// after bridge operations that may have added nodes with IDs beyond
-/// the generator's current counter.
+/// SwarmUI-side glue for keeping <see cref="WorkflowGenerator.LastID"/> in step with the node IDs a
+/// <see cref="WorkflowBridge"/> assigns, so bridge-added nodes never collide with IDs the generator
+/// mints separately (e.g. <c>g.CreateNode()</c>).
 /// </summary>
 public static class BridgeSync
 {
     /// <summary>
-    /// Ensure g.LastID is at least max(numeric JObject keys) + 1.
-    /// Call this after bridge.SyncAll() or bridge.AddNode() to prevent
-    /// subsequent g.CreateNode() calls from colliding with bridge-assigned IDs.
+    /// Create a <see cref="WorkflowBridge"/> over <c>g.Workflow</c> that keeps
+    /// <see cref="WorkflowGenerator.LastID"/> advanced past every node it adds — automatically, on each
+    /// <c>AddNode</c>/<c>AddStub</c> (and once up front for any pre-existing IDs), with no wrapper type
+    /// and no trailing <see cref="SyncLastId"/> to remember. The default bridge factory for SwarmUI
+    /// seed steps:
+    /// <code>
+    /// using var bridge = BridgeSync.For(g);
+    /// var node = bridge.AddNode(new SwarmTrimFramesNode().With(TrimStart: a, TrimEnd: b));
+    /// node.Image.TryConnectFromPath(bridge, imagePath);
+    /// return node.Id;
+    /// </code>
+    /// The result is a plain <see cref="WorkflowBridge"/>, so it drops into any helper typed against one
+    /// — passing it through a <c>(WorkflowBridge bridge, …)</c> parameter keeps the same instance (and
+    /// its live counter), with none of the old wrapper's conversion caveats.
+    /// </summary>
+    public static WorkflowBridge For(WorkflowGenerator g) =>
+        WorkflowBridge.Create(g.Workflow, new GeneratorIdCounter(g));
+
+    /// <summary>
+    /// Ensure <c>g.LastID</c> is at least <c>max(numeric workflow keys) + 1</c>. Rarely needed now that
+    /// <see cref="For"/> keeps the counter live; reach for it only when nodes were added through a
+    /// counter-less bridge (<see cref="WorkflowBridge.Create(JObject, INodeIdCounter?)"/> with no
+    /// counter) and a later <c>g.CreateNode()</c> must not collide.
     /// </summary>
     public static void SyncLastId(WorkflowGenerator g)
     {
@@ -28,153 +47,15 @@ public static class BridgeSync
         }
     }
 
-    /// <summary>
-    /// Create a <see cref="SyncingWorkflowBridge"/> over <c>g.Workflow</c> that
-    /// calls <see cref="SyncLastId"/> when disposed. Use as the default bridge
-    /// factory in SwarmUI seed steps so callers don't have to remember the
-    /// trailing <c>BridgeSync.SyncLastId(g);</c> line.
-    ///
-    /// <para>Implemented as a wrapper, not a subclass —
-    /// <see cref="WorkflowBridge.Dispose"/> remains pure (subscription teardown
-    /// only). The wrapper's <see cref="SyncingWorkflowBridge.Dispose"/> calls
-    /// <see cref="SyncLastId"/> first, then disposes the inner bridge.</para>
-    /// </summary>
-    public static SyncingWorkflowBridge For(WorkflowGenerator g) =>
-        new(WorkflowBridge.Create(g.Workflow), g);
-}
-
-/// <summary>
-/// A disposable wrapper around <see cref="WorkflowBridge"/> that calls
-/// <see cref="BridgeSync.SyncLastId"/> on dispose, then forwards to the inner
-/// bridge's own <see cref="WorkflowBridge.Dispose"/>. Construct via
-/// <see cref="BridgeSync.For"/>.
-///
-/// <para>Forwards the most common <see cref="WorkflowBridge"/> surface
-/// (<c>AddNode</c>, <c>AddStub</c>, <c>RemoveNode</c>, <c>SyncNode</c>,
-/// <c>SyncAll</c>, <c>Graph</c>, <c>Workflow</c>, <c>ResolvePath</c>) so callers
-/// don't have to dot through <see cref="Bridge"/>. For less common operations,
-/// use the inner <see cref="Bridge"/> directly.</para>
-///
-/// <para>An <b>implicit conversion</b> to <see cref="WorkflowBridge"/> makes this
-/// wrapper a drop-in anywhere a bare bridge is expected — e.g.
-/// <see cref="NodeInputExtensions.ConnectFromPath{T}(NodeInput{T}, WorkflowBridge, JArray?, string?)"/>
-/// or <see cref="MediaRef.FromWGNodeData"/> accept it directly with no
-/// <c>.Bridge</c> hop. The conversion hands back the inner bridge (whose own
-/// <see cref="WorkflowBridge.Dispose"/> is pure); the deferred
-/// <see cref="BridgeSync.SyncLastId"/> still fires when <em>this</em> wrapper is
-/// disposed, so converting does not skip the sync.</para>
-///
-/// <para>Typical use collapses the
-/// <c>WorkflowBridge.Create</c> + <c>SyncNode</c> + <c>BridgeSync.SyncLastId</c>
-/// ritual into a single <c>using</c>:
-/// <code>
-/// using var bridge = BridgeSync.For(g);
-/// SwarmTrimFramesNode node = bridge.AddNode(new SwarmTrimFramesNode().With(TrimStart: a, TrimEnd: b));
-/// node.Image.TryConnectFromPath(bridge, imagePath); // auto-syncs into the JObject
-/// return node.Id;                                    // SyncLastId fires on dispose
-/// </code>
-/// The explicit <c>SyncNode</c> is unnecessary for pure typed mutations (the bridge
-/// auto-syncs subscribed nodes); keep an explicit <c>SyncNode</c> only after editing
-/// <see cref="ComfyNode.ExtraInputs"/> or <see cref="UnknownNode.RawInputs"/>.</para>
-/// </summary>
-public sealed class SyncingWorkflowBridge : IDisposable
-{
-    private readonly WorkflowGenerator _g;
-    private bool _disposed;
-
-    /// <summary>The wrapped <see cref="WorkflowBridge"/>. Use for any operation
-    /// not exposed directly on this wrapper.</summary>
-    public WorkflowBridge Bridge { get; }
-
-    internal SyncingWorkflowBridge(WorkflowBridge inner, WorkflowGenerator g)
+    /// <summary>Adapter exposing SwarmUI's <see cref="WorkflowGenerator.LastID"/> as the Core-side
+    /// <see cref="INodeIdCounter"/> — the single point where the host ID-counter meets the bridge, so
+    /// Core never names <see cref="WorkflowGenerator"/>.</summary>
+    private sealed class GeneratorIdCounter(WorkflowGenerator g) : INodeIdCounter
     {
-        Bridge = inner;
-        _g = g;
-    }
-
-    /// <summary>Implicitly unwrap to the inner <see cref="WorkflowBridge"/> so this
-    /// wrapper drops into any API typed against a bare bridge. Safe: the inner
-    /// bridge's <see cref="WorkflowBridge.Dispose"/> is pure, and the deferred
-    /// <see cref="BridgeSync.SyncLastId"/> still runs when the wrapper is disposed.</summary>
-    public static implicit operator WorkflowBridge(SyncingWorkflowBridge syncing) => syncing.Bridge;
-
-    /// <inheritdoc cref="WorkflowBridge.Graph"/>
-    public ComfyGraph Graph => Bridge.Graph;
-
-    /// <inheritdoc cref="WorkflowBridge.Workflow"/>
-    public JObject Workflow => Bridge.Workflow;
-
-    /// <inheritdoc cref="WorkflowBridge.AddNode{T}(T)"/>
-    public T AddNode<T>(T node) where T : ComfyNode => AdvanceLastId(Bridge.AddNode(node));
-
-    /// <inheritdoc cref="WorkflowBridge.AddNode{T}(T, string)"/>
-    public T AddNode<T>(T node, string id) where T : ComfyNode => AdvanceLastId(Bridge.AddNode(node, id));
-
-    /// <inheritdoc cref="WorkflowBridge.AddStub(string, string)"/>
-    public UnknownNode AddStub(string classType, string id) => AdvanceLastId(Bridge.AddStub(classType, id));
-
-    /// <inheritdoc cref="WorkflowBridge.AddStub(string)"/>
-    public UnknownNode AddStub(string classType) => AdvanceLastId(Bridge.AddStub(classType));
-
-    /// <summary>
-    /// Advance <c>g.LastID</c> past the just-added node's ID, keeping SwarmUI's ID counter in
-    /// lockstep with bridge-assigned IDs at the moment of each add. This is the primary
-    /// collision-avoidance mechanism — same formula as <see cref="BridgeSync.SyncLastId"/>, but
-    /// applied per-add instead of in a dispose sweep. Because <c>g.LastID</c> is already advanced
-    /// when control returns to the caller, a <c>g.CreateNode()</c> (e.g. inside a
-    /// <see cref="MediaRef"/>/<c>WGNodeData</c> transform) issued <em>before</em> this wrapper is
-    /// disposed can no longer collide with a node this bridge added. The dispose-time
-    /// <see cref="BridgeSync.SyncLastId"/> remains as an idempotent safety net for any add made
-    /// directly against the inner <see cref="Bridge"/>.
-    /// </summary>
-    private T AdvanceLastId<T>(T node) where T : ComfyNode
-    {
-        if (int.TryParse(node.Id, out int n) && n >= _g.LastID)
+        public int LastID
         {
-            _g.LastID = n + 1;
+            get => g.LastID;
+            set => g.LastID = value;
         }
-        return node;
-    }
-
-    /// <inheritdoc cref="WorkflowBridge.RemoveNode(string)"/>
-    public bool RemoveNode(string id) => Bridge.RemoveNode(id);
-
-    /// <inheritdoc cref="WorkflowBridge.RemoveNode(ComfyNode)"/>
-    public bool RemoveNode(ComfyNode node) => Bridge.RemoveNode(node);
-
-    /// <inheritdoc cref="WorkflowBridge.ResolvePath(JArray?)"/>
-    public INodeOutput? ResolvePath(JArray? path) => Bridge.ResolvePath(path);
-
-    /// <inheritdoc cref="WorkflowBridge.ResolvePath{T}(JArray?)"/>
-    public NodeOutput<T>? ResolvePath<T>(JArray? path) where T : IComfyType => Bridge.ResolvePath<T>(path);
-
-    /// <inheritdoc cref="WorkflowBridge.NodeAt(JArray?)"/>
-    public ComfyNode? NodeAt(JArray? path) => Bridge.NodeAt(path);
-
-    /// <inheritdoc cref="WorkflowBridge.NodeAt{T}(JArray?)"/>
-    public T? NodeAt<T>(JArray? path) where T : class => Bridge.NodeAt<T>(path);
-
-    /// <inheritdoc cref="WorkflowBridge.SyncNode(ComfyNode)"/>
-    public void SyncNode(ComfyNode node) => Bridge.SyncNode(node);
-
-    /// <inheritdoc cref="WorkflowBridge.SyncNode(string)"/>
-    public void SyncNode(string id) => Bridge.SyncNode(id);
-
-    /// <inheritdoc cref="WorkflowBridge.SyncAll"/>
-    public void SyncAll() => Bridge.SyncAll();
-
-    /// <summary>
-    /// Calls <see cref="BridgeSync.SyncLastId"/> on the wrapped generator, then
-    /// disposes the inner <see cref="WorkflowBridge"/>. Idempotent.
-    /// </summary>
-    public void Dispose()
-    {
-        if (_disposed)
-        {
-            return;
-        }
-        _disposed = true;
-        BridgeSync.SyncLastId(_g);
-        Bridge.Dispose();
     }
 }
