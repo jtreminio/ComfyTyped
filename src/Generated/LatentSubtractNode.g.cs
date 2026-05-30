@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: latent/advanced</remarks>
+/// <remarks>Category: model/latent/advanced</remarks>
 public sealed class LatentSubtractNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -24,5 +24,19 @@ public sealed class LatentSubtractNode : ComfyNode
         LATENT = AddOutput<LatentType>(0, "LATENT");
         Samples1 = AddInput<LatentType>("samples1", required: true);
         Samples2 = AddInput<LatentType>("samples2", required: true);
+    }
+
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
+    public LatentSubtractNode With(
+        In<LatentType>? Samples1 = null,
+        In<LatentType>? Samples2 = null
+    )
+    {
+        Samples1?.ApplyTo(this.Samples1);
+        Samples2?.ApplyTo(this.Samples2);
+        return this;
     }
 }

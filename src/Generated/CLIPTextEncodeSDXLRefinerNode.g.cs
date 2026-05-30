@@ -35,20 +35,23 @@ public sealed class CLIPTextEncodeSDXLRefinerNode : ComfyNode
         Clip = AddInput<ClipType>("clip", required: true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public CLIPTextEncodeSDXLRefinerNode With(
-        double? Ascore = null,
-        long? Width = null,
-        long? Height = null,
-        string? Text = null
+        FloatArg? Ascore = null,
+        IntArg? Width = null,
+        IntArg? Height = null,
+        StringArg? Text = null,
+        In<ClipType>? Clip = null
     )
     {
-        if (Ascore is { } v_Ascore) this.Ascore.Set(v_Ascore);
-        if (Width is { } v_Width) this.Width.Set(v_Width);
-        if (Height is { } v_Height) this.Height.Set(v_Height);
-        if (Text is { } v_Text) this.Text.Set(v_Text);
+        Ascore?.ApplyTo(this.Ascore);
+        Width?.ApplyTo(this.Width);
+        Height?.ApplyTo(this.Height);
+        Text?.ApplyTo(this.Text);
+        Clip?.ApplyTo(this.Clip);
         return this;
     }
 }

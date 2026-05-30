@@ -47,26 +47,29 @@ public sealed class MeshGraphormerDepthMapPreprocessorNode : ComfyNode
         PresenceThr.Set(0.6);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public MeshGraphormerDepthMapPreprocessorNode With(
-        long? MaskBboxPadding = null,
-        long? Resolution = null,
-        string? MaskType = null,
-        long? MaskExpand = null,
-        long? RandSeed = null,
-        double? DetectThr = null,
-        double? PresenceThr = null
+        In<ImageType>? Image = null,
+        IntArg? MaskBboxPadding = null,
+        IntArg? Resolution = null,
+        StringArg? MaskType = null,
+        IntArg? MaskExpand = null,
+        IntArg? RandSeed = null,
+        FloatArg? DetectThr = null,
+        FloatArg? PresenceThr = null
     )
     {
-        if (MaskBboxPadding is { } v_MaskBboxPadding) this.MaskBboxPadding.Set(v_MaskBboxPadding);
-        if (Resolution is { } v_Resolution) this.Resolution.Set(v_Resolution);
-        if (MaskType is { } v_MaskType) this.MaskType.Set(v_MaskType);
-        if (MaskExpand is { } v_MaskExpand) this.MaskExpand.Set(v_MaskExpand);
-        if (RandSeed is { } v_RandSeed) this.RandSeed.Set(v_RandSeed);
-        if (DetectThr is { } v_DetectThr) this.DetectThr.Set(v_DetectThr);
-        if (PresenceThr is { } v_PresenceThr) this.PresenceThr.Set(v_PresenceThr);
+        Image?.ApplyTo(this.Image);
+        MaskBboxPadding?.ApplyTo(this.MaskBboxPadding);
+        Resolution?.ApplyTo(this.Resolution);
+        MaskType?.ApplyTo(this.MaskType);
+        MaskExpand?.ApplyTo(this.MaskExpand);
+        RandSeed?.ApplyTo(this.RandSeed);
+        DetectThr?.ApplyTo(this.DetectThr);
+        PresenceThr?.ApplyTo(this.PresenceThr);
         return this;
     }
 }

@@ -31,4 +31,22 @@ public sealed class PairConditioningCombineNode : ComfyNode
         PositiveB = AddInput<ConditioningType>("positive_B", required: true);
         NegativeB = AddInput<ConditioningType>("negative_B", required: true);
     }
+
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
+    public PairConditioningCombineNode With(
+        In<ConditioningType>? PositiveA = null,
+        In<ConditioningType>? NegativeA = null,
+        In<ConditioningType>? PositiveB = null,
+        In<ConditioningType>? NegativeB = null
+    )
+    {
+        PositiveA?.ApplyTo(this.PositiveA);
+        NegativeA?.ApplyTo(this.NegativeA);
+        PositiveB?.ApplyTo(this.PositiveB);
+        NegativeB?.ApplyTo(this.NegativeB);
+        return this;
+    }
 }

@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: conditioning/video_models</remarks>
+/// <remarks>Category: model/conditioning/video_models</remarks>
 public sealed class WanCameraEmbeddingNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -55,30 +55,31 @@ public sealed class WanCameraEmbeddingNode : ComfyNode
         Cy.Set(0.5);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public WanCameraEmbeddingNode With(
-        string? CameraPose = null,
-        long? WidthInput = null,
-        long? HeightInput = null,
-        long? LengthInput = null,
-        double? Speed = null,
-        double? Fx = null,
-        double? Fy = null,
-        double? Cx = null,
-        double? Cy = null
+        StringArg? CameraPose = null,
+        IntArg? WidthInput = null,
+        IntArg? HeightInput = null,
+        IntArg? LengthInput = null,
+        FloatArg? Speed = null,
+        FloatArg? Fx = null,
+        FloatArg? Fy = null,
+        FloatArg? Cx = null,
+        FloatArg? Cy = null
     )
     {
-        if (CameraPose is { } v_CameraPose) this.CameraPose.Set(v_CameraPose);
-        if (WidthInput is { } v_WidthInput) this.WidthInput.Set(v_WidthInput);
-        if (HeightInput is { } v_HeightInput) this.HeightInput.Set(v_HeightInput);
-        if (LengthInput is { } v_LengthInput) this.LengthInput.Set(v_LengthInput);
-        if (Speed is { } v_Speed) this.Speed.Set(v_Speed);
-        if (Fx is { } v_Fx) this.Fx.Set(v_Fx);
-        if (Fy is { } v_Fy) this.Fy.Set(v_Fy);
-        if (Cx is { } v_Cx) this.Cx.Set(v_Cx);
-        if (Cy is { } v_Cy) this.Cy.Set(v_Cy);
+        CameraPose?.ApplyTo(this.CameraPose);
+        WidthInput?.ApplyTo(this.WidthInput);
+        HeightInput?.ApplyTo(this.HeightInput);
+        LengthInput?.ApplyTo(this.LengthInput);
+        Speed?.ApplyTo(this.Speed);
+        Fx?.ApplyTo(this.Fx);
+        Fy?.ApplyTo(this.Fy);
+        Cx?.ApplyTo(this.Cx);
+        Cy?.ApplyTo(this.Cy);
         return this;
     }
 }

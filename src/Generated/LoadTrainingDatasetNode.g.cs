@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Load encoded training dataset (latents + conditioning) from disk for use in training.</summary>
-/// <remarks>Category: training</remarks>
+/// <remarks>Category: model/training</remarks>
 public sealed class LoadTrainingDatasetNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -28,14 +28,15 @@ public sealed class LoadTrainingDatasetNode : ComfyNode
         FolderName.Set("training_dataset");
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public LoadTrainingDatasetNode With(
-        string? FolderName = null
+        StringArg? FolderName = null
     )
     {
-        if (FolderName is { } v_FolderName) this.FolderName.Set(v_FolderName);
+        FolderName?.ApplyTo(this.FolderName);
         return this;
     }
 }

@@ -30,16 +30,19 @@ public sealed class CreateHookKeyframeNode : ComfyNode
         PrevHookKf = AddInput<HookKeyframesType>("prev_hook_kf", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public CreateHookKeyframeNode With(
-        double? StrengthMult = null,
-        double? StartPercent = null
+        FloatArg? StrengthMult = null,
+        FloatArg? StartPercent = null,
+        In<HookKeyframesType>? PrevHookKf = null
     )
     {
-        if (StrengthMult is { } v_StrengthMult) this.StrengthMult.Set(v_StrengthMult);
-        if (StartPercent is { } v_StartPercent) this.StartPercent.Set(v_StartPercent);
+        StrengthMult?.ApplyTo(this.StrengthMult);
+        StartPercent?.ApplyTo(this.StartPercent);
+        PrevHookKf?.ApplyTo(this.PrevHookKf);
         return this;
     }
 }

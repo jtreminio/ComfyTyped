@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: conditioning/video_models</remarks>
+/// <remarks>Category: model/conditioning/video_models</remarks>
 public sealed class LTXVCropGuidesNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -30,5 +30,21 @@ public sealed class LTXVCropGuidesNode : ComfyNode
         PositiveInput = AddInput<ConditioningType>("positive", required: true);
         NegativeInput = AddInput<ConditioningType>("negative", required: true);
         LatentInput = AddInput<LatentType>("latent", required: true);
+    }
+
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
+    public LTXVCropGuidesNode With(
+        In<ConditioningType>? PositiveInput = null,
+        In<ConditioningType>? NegativeInput = null,
+        In<LatentType>? LatentInput = null
+    )
+    {
+        PositiveInput?.ApplyTo(this.PositiveInput);
+        NegativeInput?.ApplyTo(this.NegativeInput);
+        LatentInput?.ApplyTo(this.LatentInput);
+        return this;
     }
 }

@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Normalizes the initial frames of a video latent to match the mean and standard deviation of subsequent reference frames. Helps reduce differences between the starting frames and the rest of the video.</summary>
-/// <remarks>Category: conditioning/video_models</remarks>
+/// <remarks>Category: model/conditioning/video_models</remarks>
 public sealed class NormalizeVideoLatentStartNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -31,16 +31,19 @@ public sealed class NormalizeVideoLatentStartNode : ComfyNode
         ReferenceFrameCount.Set(5L);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public NormalizeVideoLatentStartNode With(
-        long? StartFrameCount = null,
-        long? ReferenceFrameCount = null
+        In<LatentType>? LatentInput = null,
+        IntArg? StartFrameCount = null,
+        IntArg? ReferenceFrameCount = null
     )
     {
-        if (StartFrameCount is { } v_StartFrameCount) this.StartFrameCount.Set(v_StartFrameCount);
-        if (ReferenceFrameCount is { } v_ReferenceFrameCount) this.ReferenceFrameCount.Set(v_ReferenceFrameCount);
+        LatentInput?.ApplyTo(this.LatentInput);
+        StartFrameCount?.ApplyTo(this.StartFrameCount);
+        ReferenceFrameCount?.ApplyTo(this.ReferenceFrameCount);
         return this;
     }
 }

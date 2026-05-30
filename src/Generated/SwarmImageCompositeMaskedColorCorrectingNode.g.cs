@@ -37,18 +37,25 @@ public sealed class SwarmImageCompositeMaskedColorCorrectingNode : ComfyNode
         CorrectionMethod = AddInput<StringType>("correction_method", required: true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SwarmImageCompositeMaskedColorCorrectingNode With(
-        long? X = null,
-        long? Y = null,
-        string? CorrectionMethod = null
+        In<ImageType>? Destination = null,
+        In<ImageType>? Source = null,
+        IntArg? X = null,
+        IntArg? Y = null,
+        In<MaskType>? Mask = null,
+        StringArg? CorrectionMethod = null
     )
     {
-        if (X is { } v_X) this.X.Set(v_X);
-        if (Y is { } v_Y) this.Y.Set(v_Y);
-        if (CorrectionMethod is { } v_CorrectionMethod) this.CorrectionMethod.Set(v_CorrectionMethod);
+        Destination?.ApplyTo(this.Destination);
+        Source?.ApplyTo(this.Source);
+        X?.ApplyTo(this.X);
+        Y?.ApplyTo(this.Y);
+        Mask?.ApplyTo(this.Mask);
+        CorrectionMethod?.ApplyTo(this.CorrectionMethod);
         return this;
     }
 }

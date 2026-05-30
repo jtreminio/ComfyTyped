@@ -33,16 +33,21 @@ public sealed class SwarmImageNoiseNode : ComfyNode
         Mask = AddInput<MaskType>("mask", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SwarmImageNoiseNode With(
-        double? Amount = null,
-        long? Seed = null
+        In<ImageType>? Image = null,
+        FloatArg? Amount = null,
+        IntArg? Seed = null,
+        In<MaskType>? Mask = null
     )
     {
-        if (Amount is { } v_Amount) this.Amount.Set(v_Amount);
-        if (Seed is { } v_Seed) this.Seed.Set(v_Seed);
+        Image?.ApplyTo(this.Image);
+        Amount?.ApplyTo(this.Amount);
+        Seed?.ApplyTo(this.Seed);
+        Mask?.ApplyTo(this.Mask);
         return this;
     }
 }

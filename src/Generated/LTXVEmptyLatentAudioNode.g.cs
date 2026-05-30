@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: latent/audio</remarks>
+/// <remarks>Category: model/latent/audio</remarks>
 public sealed class LTXVEmptyLatentAudioNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -33,18 +33,21 @@ public sealed class LTXVEmptyLatentAudioNode : ComfyNode
         AudioVae = AddInput<VaeType>("audio_vae", required: true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public LTXVEmptyLatentAudioNode With(
-        long? FramesNumber = null,
-        long? FrameRate = null,
-        long? BatchSize = null
+        IntArg? FramesNumber = null,
+        IntArg? FrameRate = null,
+        IntArg? BatchSize = null,
+        In<VaeType>? AudioVae = null
     )
     {
-        if (FramesNumber is { } v_FramesNumber) this.FramesNumber.Set(v_FramesNumber);
-        if (FrameRate is { } v_FrameRate) this.FrameRate.Set(v_FrameRate);
-        if (BatchSize is { } v_BatchSize) this.BatchSize.Set(v_BatchSize);
+        FramesNumber?.ApplyTo(this.FramesNumber);
+        FrameRate?.ApplyTo(this.FrameRate);
+        BatchSize?.ApplyTo(this.BatchSize);
+        AudioVae?.ApplyTo(this.AudioVae);
         return this;
     }
 }

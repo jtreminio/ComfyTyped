@@ -37,22 +37,25 @@ public sealed class SwarmYoloDetectionNode : ComfyNode
         Threshold.Set(0.25);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SwarmYoloDetectionNode With(
-        string? ModelName = null,
-        long? Index = null,
-        string? ClassFilter = null,
-        string? SortOrder = null,
-        double? Threshold = null
+        In<ImageType>? Image = null,
+        StringArg? ModelName = null,
+        IntArg? Index = null,
+        StringArg? ClassFilter = null,
+        StringArg? SortOrder = null,
+        FloatArg? Threshold = null
     )
     {
-        if (ModelName is { } v_ModelName) this.ModelName.Set(v_ModelName);
-        if (Index is { } v_Index) this.Index.Set(v_Index);
-        if (ClassFilter is { } v_ClassFilter) this.ClassFilter.Set(v_ClassFilter);
-        if (SortOrder is { } v_SortOrder) this.SortOrder.Set(v_SortOrder);
-        if (Threshold is { } v_Threshold) this.Threshold.Set(v_Threshold);
+        Image?.ApplyTo(this.Image);
+        ModelName?.ApplyTo(this.ModelName);
+        Index?.ApplyTo(this.Index);
+        ClassFilter?.ApplyTo(this.ClassFilter);
+        SortOrder?.ApplyTo(this.SortOrder);
+        Threshold?.ApplyTo(this.Threshold);
         return this;
     }
 }

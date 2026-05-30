@@ -48,28 +48,31 @@ public sealed class FacialPartColoringFromPoseKpsNode : ComfyNode
         LowerLip.Set("rgb(255, 0, 102)");
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public FacialPartColoringFromPoseKpsNode With(
-        string? Mode = null,
-        string? Skin = null,
-        string? LeftEye = null,
-        string? RightEye = null,
-        string? Nose = null,
-        string? UpperLip = null,
-        string? InnerMouth = null,
-        string? LowerLip = null
+        In<PoseKeypointType>? PoseKps = null,
+        StringArg? Mode = null,
+        StringArg? Skin = null,
+        StringArg? LeftEye = null,
+        StringArg? RightEye = null,
+        StringArg? Nose = null,
+        StringArg? UpperLip = null,
+        StringArg? InnerMouth = null,
+        StringArg? LowerLip = null
     )
     {
-        if (Mode is { } v_Mode) this.Mode.Set(v_Mode);
-        if (Skin is { } v_Skin) this.Skin.Set(v_Skin);
-        if (LeftEye is { } v_LeftEye) this.LeftEye.Set(v_LeftEye);
-        if (RightEye is { } v_RightEye) this.RightEye.Set(v_RightEye);
-        if (Nose is { } v_Nose) this.Nose.Set(v_Nose);
-        if (UpperLip is { } v_UpperLip) this.UpperLip.Set(v_UpperLip);
-        if (InnerMouth is { } v_InnerMouth) this.InnerMouth.Set(v_InnerMouth);
-        if (LowerLip is { } v_LowerLip) this.LowerLip.Set(v_LowerLip);
+        PoseKps?.ApplyTo(this.PoseKps);
+        Mode?.ApplyTo(this.Mode);
+        Skin?.ApplyTo(this.Skin);
+        LeftEye?.ApplyTo(this.LeftEye);
+        RightEye?.ApplyTo(this.RightEye);
+        Nose?.ApplyTo(this.Nose);
+        UpperLip?.ApplyTo(this.UpperLip);
+        InnerMouth?.ApplyTo(this.InnerMouth);
+        LowerLip?.ApplyTo(this.LowerLip);
         return this;
     }
 }

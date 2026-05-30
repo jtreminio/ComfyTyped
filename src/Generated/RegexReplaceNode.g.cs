@@ -41,26 +41,27 @@ public sealed class RegexReplaceNode : ComfyNode
         Count.Set(0L);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public RegexReplaceNode With(
-        string? String = null,
-        string? RegexPattern = null,
-        string? Replace = null,
-        bool? CaseInsensitive = null,
-        bool? Multiline = null,
-        bool? Dotall = null,
-        long? Count = null
+        StringArg? String = null,
+        StringArg? RegexPattern = null,
+        StringArg? Replace = null,
+        BoolArg? CaseInsensitive = null,
+        BoolArg? Multiline = null,
+        BoolArg? Dotall = null,
+        IntArg? Count = null
     )
     {
-        if (String is { } v_String) this.String.Set(v_String);
-        if (RegexPattern is { } v_RegexPattern) this.RegexPattern.Set(v_RegexPattern);
-        if (Replace is { } v_Replace) this.Replace.Set(v_Replace);
-        if (CaseInsensitive is { } v_CaseInsensitive) this.CaseInsensitive.Set(v_CaseInsensitive);
-        if (Multiline is { } v_Multiline) this.Multiline.Set(v_Multiline);
-        if (Dotall is { } v_Dotall) this.Dotall.Set(v_Dotall);
-        if (Count is { } v_Count) this.Count.Set(v_Count);
+        String?.ApplyTo(this.String);
+        RegexPattern?.ApplyTo(this.RegexPattern);
+        Replace?.ApplyTo(this.Replace);
+        CaseInsensitive?.ApplyTo(this.CaseInsensitive);
+        Multiline?.ApplyTo(this.Multiline);
+        Dotall?.ApplyTo(this.Dotall);
+        Count?.ApplyTo(this.Count);
         return this;
     }
 }

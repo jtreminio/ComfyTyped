@@ -27,14 +27,21 @@ public sealed class CheckpointSaveNode : ComfyNode
         FilenamePrefix.Set("checkpoints/ComfyUI");
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public CheckpointSaveNode With(
-        string? FilenamePrefix = null
+        In<ModelType>? Model = null,
+        In<ClipType>? Clip = null,
+        In<VaeType>? Vae = null,
+        StringArg? FilenamePrefix = null
     )
     {
-        if (FilenamePrefix is { } v_FilenamePrefix) this.FilenamePrefix.Set(v_FilenamePrefix);
+        Model?.ApplyTo(this.Model);
+        Clip?.ApplyTo(this.Clip);
+        Vae?.ApplyTo(this.Vae);
+        FilenamePrefix?.ApplyTo(this.FilenamePrefix);
         return this;
     }
 }

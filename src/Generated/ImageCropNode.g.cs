@@ -36,20 +36,23 @@ public sealed class ImageCropNode : ComfyNode
         Y.Set(0L);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public ImageCropNode With(
-        long? Width = null,
-        long? Height = null,
-        long? X = null,
-        long? Y = null
+        In<ImageType>? Image = null,
+        IntArg? Width = null,
+        IntArg? Height = null,
+        IntArg? X = null,
+        IntArg? Y = null
     )
     {
-        if (Width is { } v_Width) this.Width.Set(v_Width);
-        if (Height is { } v_Height) this.Height.Set(v_Height);
-        if (X is { } v_X) this.X.Set(v_X);
-        if (Y is { } v_Y) this.Y.Set(v_Y);
+        Image?.ApplyTo(this.Image);
+        Width?.ApplyTo(this.Width);
+        Height?.ApplyTo(this.Height);
+        X?.ApplyTo(this.X);
+        Y?.ApplyTo(this.Y);
         return this;
     }
 }

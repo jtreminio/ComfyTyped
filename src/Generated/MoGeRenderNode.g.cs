@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Render a depth map or normal map from geometry data</summary>
-/// <remarks>Category: image/geometry_estimation</remarks>
+/// <remarks>Category: image/geometry estimation</remarks>
 public sealed class MoGeRenderNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -28,14 +28,17 @@ public sealed class MoGeRenderNode : ComfyNode
         Output.Set("depth");
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public MoGeRenderNode With(
-        string? Output = null
+        In<MogeGeometryType>? MogeGeometry = null,
+        StringArg? Output = null
     )
     {
-        if (Output is { } v_Output) this.Output.Set(v_Output);
+        MogeGeometry?.ApplyTo(this.MogeGeometry);
+        Output?.ApplyTo(this.Output);
         return this;
     }
 }

@@ -33,20 +33,25 @@ public sealed class LoraSaveNode : ComfyNode
         TextEncoderDiff = AddInput<ClipType>("text_encoder_diff", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public LoraSaveNode With(
-        string? FilenamePrefix = null,
-        long? Rank = null,
-        string? LoraType = null,
-        bool? BiasDiff = null
+        StringArg? FilenamePrefix = null,
+        IntArg? Rank = null,
+        StringArg? LoraType = null,
+        BoolArg? BiasDiff = null,
+        In<ModelType>? ModelDiff = null,
+        In<ClipType>? TextEncoderDiff = null
     )
     {
-        if (FilenamePrefix is { } v_FilenamePrefix) this.FilenamePrefix.Set(v_FilenamePrefix);
-        if (Rank is { } v_Rank) this.Rank.Set(v_Rank);
-        if (LoraType is { } v_LoraType) this.LoraType.Set(v_LoraType);
-        if (BiasDiff is { } v_BiasDiff) this.BiasDiff.Set(v_BiasDiff);
+        FilenamePrefix?.ApplyTo(this.FilenamePrefix);
+        Rank?.ApplyTo(this.Rank);
+        LoraType?.ApplyTo(this.LoraType);
+        BiasDiff?.ApplyTo(this.BiasDiff);
+        ModelDiff?.ApplyTo(this.ModelDiff);
+        TextEncoderDiff?.ApplyTo(this.TextEncoderDiff);
         return this;
     }
 }

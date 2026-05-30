@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: conditioning/inpaint</remarks>
+/// <remarks>Category: model/conditioning/inpaint</remarks>
 public sealed class InpaintModelConditioningNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -39,14 +39,25 @@ public sealed class InpaintModelConditioningNode : ComfyNode
         NoiseMask.Set(true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public InpaintModelConditioningNode With(
-        bool? NoiseMask = null
+        In<ConditioningType>? PositiveInput = null,
+        In<ConditioningType>? NegativeInput = null,
+        In<VaeType>? Vae = null,
+        In<ImageType>? Pixels = null,
+        In<MaskType>? Mask = null,
+        BoolArg? NoiseMask = null
     )
     {
-        if (NoiseMask is { } v_NoiseMask) this.NoiseMask.Set(v_NoiseMask);
+        PositiveInput?.ApplyTo(this.PositiveInput);
+        NegativeInput?.ApplyTo(this.NegativeInput);
+        Vae?.ApplyTo(this.Vae);
+        Pixels?.ApplyTo(this.Pixels);
+        Mask?.ApplyTo(this.Mask);
+        NoiseMask?.ApplyTo(this.NoiseMask);
         return this;
     }
 }

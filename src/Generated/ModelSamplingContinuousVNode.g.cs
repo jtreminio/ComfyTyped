@@ -32,18 +32,21 @@ public sealed class ModelSamplingContinuousVNode : ComfyNode
         SigmaMin.Set(0.03);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public ModelSamplingContinuousVNode With(
-        string? Sampling = null,
-        double? SigmaMax = null,
-        double? SigmaMin = null
+        In<ModelType>? Model = null,
+        StringArg? Sampling = null,
+        FloatArg? SigmaMax = null,
+        FloatArg? SigmaMin = null
     )
     {
-        if (Sampling is { } v_Sampling) this.Sampling.Set(v_Sampling);
-        if (SigmaMax is { } v_SigmaMax) this.SigmaMax.Set(v_SigmaMax);
-        if (SigmaMin is { } v_SigmaMin) this.SigmaMin.Set(v_SigmaMin);
+        Model?.ApplyTo(this.Model);
+        Sampling?.ApplyTo(this.Sampling);
+        SigmaMax?.ApplyTo(this.SigmaMax);
+        SigmaMin?.ApplyTo(this.SigmaMin);
         return this;
     }
 }

@@ -33,18 +33,21 @@ public sealed class ImageSharpenNode : ComfyNode
         Alpha.Set(1.0);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public ImageSharpenNode With(
-        long? SharpenRadius = null,
-        double? Sigma = null,
-        double? Alpha = null
+        In<ImageType>? Image = null,
+        IntArg? SharpenRadius = null,
+        FloatArg? Sigma = null,
+        FloatArg? Alpha = null
     )
     {
-        if (SharpenRadius is { } v_SharpenRadius) this.SharpenRadius.Set(v_SharpenRadius);
-        if (Sigma is { } v_Sigma) this.Sigma.Set(v_Sigma);
-        if (Alpha is { } v_Alpha) this.Alpha.Set(v_Alpha);
+        Image?.ApplyTo(this.Image);
+        SharpenRadius?.ApplyTo(this.SharpenRadius);
+        Sigma?.ApplyTo(this.Sigma);
+        Alpha?.ApplyTo(this.Alpha);
         return this;
     }
 }

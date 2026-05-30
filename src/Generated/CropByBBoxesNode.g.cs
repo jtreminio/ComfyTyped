@@ -39,20 +39,25 @@ public sealed class CropByBBoxesNode : ComfyNode
         KeepAspect.Set("stretch");
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public CropByBBoxesNode With(
-        long? OutputWidth = null,
-        long? OutputHeight = null,
-        long? Padding = null,
-        string? KeepAspect = null
+        In<ImageType>? Image = null,
+        In<BoundingBoxType>? Bboxes = null,
+        IntArg? OutputWidth = null,
+        IntArg? OutputHeight = null,
+        IntArg? Padding = null,
+        StringArg? KeepAspect = null
     )
     {
-        if (OutputWidth is { } v_OutputWidth) this.OutputWidth.Set(v_OutputWidth);
-        if (OutputHeight is { } v_OutputHeight) this.OutputHeight.Set(v_OutputHeight);
-        if (Padding is { } v_Padding) this.Padding.Set(v_Padding);
-        if (KeepAspect is { } v_KeepAspect) this.KeepAspect.Set(v_KeepAspect);
+        Image?.ApplyTo(this.Image);
+        Bboxes?.ApplyTo(this.Bboxes);
+        OutputWidth?.ApplyTo(this.OutputWidth);
+        OutputHeight?.ApplyTo(this.OutputHeight);
+        Padding?.ApplyTo(this.Padding);
+        KeepAspect?.ApplyTo(this.KeepAspect);
         return this;
     }
 }

@@ -31,20 +31,23 @@ public sealed class SaveWEBMNode : ComfyNode
         Crf.Set(32.0);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SaveWEBMNode With(
-        string? FilenamePrefix = null,
-        string? Codec = null,
-        double? Fps = null,
-        double? Crf = null
+        In<ImageType>? Images = null,
+        StringArg? FilenamePrefix = null,
+        StringArg? Codec = null,
+        FloatArg? Fps = null,
+        FloatArg? Crf = null
     )
     {
-        if (FilenamePrefix is { } v_FilenamePrefix) this.FilenamePrefix.Set(v_FilenamePrefix);
-        if (Codec is { } v_Codec) this.Codec.Set(v_Codec);
-        if (Fps is { } v_Fps) this.Fps.Set(v_Fps);
-        if (Crf is { } v_Crf) this.Crf.Set(v_Crf);
+        Images?.ApplyTo(this.Images);
+        FilenamePrefix?.ApplyTo(this.FilenamePrefix);
+        Codec?.ApplyTo(this.Codec);
+        Fps?.ApplyTo(this.Fps);
+        Crf?.ApplyTo(this.Crf);
         return this;
     }
 }

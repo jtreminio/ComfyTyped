@@ -41,20 +41,25 @@ public sealed class MediaPipeFaceLandmarkerNode : ComfyNode
         MissingFrameFallback.Set("empty");
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public MediaPipeFaceLandmarkerNode With(
-        string? DetectorVariant = null,
-        long? NumFaces = null,
-        double? MinConfidence = null,
-        string? MissingFrameFallback = null
+        In<FaceDetectionModelType>? FaceDetectionModel = null,
+        In<ImageType>? Image = null,
+        StringArg? DetectorVariant = null,
+        IntArg? NumFaces = null,
+        FloatArg? MinConfidence = null,
+        StringArg? MissingFrameFallback = null
     )
     {
-        if (DetectorVariant is { } v_DetectorVariant) this.DetectorVariant.Set(v_DetectorVariant);
-        if (NumFaces is { } v_NumFaces) this.NumFaces.Set(v_NumFaces);
-        if (MinConfidence is { } v_MinConfidence) this.MinConfidence.Set(v_MinConfidence);
-        if (MissingFrameFallback is { } v_MissingFrameFallback) this.MissingFrameFallback.Set(v_MissingFrameFallback);
+        FaceDetectionModel?.ApplyTo(this.FaceDetectionModel);
+        Image?.ApplyTo(this.Image);
+        DetectorVariant?.ApplyTo(this.DetectorVariant);
+        NumFaces?.ApplyTo(this.NumFaces);
+        MinConfidence?.ApplyTo(this.MinConfidence);
+        MissingFrameFallback?.ApplyTo(this.MissingFrameFallback);
         return this;
     }
 }

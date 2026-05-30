@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: logic</remarks>
+/// <remarks>Category: utilities/logic</remarks>
 public sealed class ComfySwitchNodeNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -28,14 +28,19 @@ public sealed class ComfySwitchNodeNode : ComfyNode
         OnTrue = AddInput<ComfyMatchTypeV3>("on_true", required: true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public ComfySwitchNodeNode With(
-        bool? Switch = null
+        BoolArg? Switch = null,
+        In<ComfyMatchTypeV3>? OnFalse = null,
+        In<ComfyMatchTypeV3>? OnTrue = null
     )
     {
-        if (Switch is { } v_Switch) this.Switch.Set(v_Switch);
+        Switch?.ApplyTo(this.Switch);
+        OnFalse?.ApplyTo(this.OnFalse);
+        OnTrue?.ApplyTo(this.OnTrue);
         return this;
     }
 }

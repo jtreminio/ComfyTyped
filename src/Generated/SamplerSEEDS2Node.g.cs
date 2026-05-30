@@ -17,7 +17,7 @@ namespace ComfyTyped.Generated;
 /// exp_heun_2_x0_sde
 /// - solver_type=phi_2, r=1.0, eta=1.0, s_noise=1.0
 /// </summary>
-/// <remarks>Category: sampling/samplers</remarks>
+/// <remarks>Category: model/sampling/samplers</remarks>
 public sealed class SamplerSEEDS2Node : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -45,20 +45,21 @@ public sealed class SamplerSEEDS2Node : ComfyNode
         R.Set(0.5);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SamplerSEEDS2Node With(
-        string? SolverType = null,
-        double? Eta = null,
-        double? SNoise = null,
-        double? R = null
+        StringArg? SolverType = null,
+        FloatArg? Eta = null,
+        FloatArg? SNoise = null,
+        FloatArg? R = null
     )
     {
-        if (SolverType is { } v_SolverType) this.SolverType.Set(v_SolverType);
-        if (Eta is { } v_Eta) this.Eta.Set(v_Eta);
-        if (SNoise is { } v_SNoise) this.SNoise.Set(v_SNoise);
-        if (R is { } v_R) this.R.Set(v_R);
+        SolverType?.ApplyTo(this.SolverType);
+        Eta?.ApplyTo(this.Eta);
+        SNoise?.ApplyTo(this.SNoise);
+        R?.ApplyTo(this.R);
         return this;
     }
 }

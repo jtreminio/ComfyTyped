@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: sampling</remarks>
+/// <remarks>Category: model/sampling</remarks>
 public sealed class KSamplerAdvancedNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -53,30 +53,39 @@ public sealed class KSamplerAdvancedNode : ComfyNode
         ReturnWithLeftoverNoise = AddInput<StringType>("return_with_leftover_noise", required: true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public KSamplerAdvancedNode With(
-        string? AddNoise = null,
-        long? NoiseSeed = null,
-        long? Steps = null,
-        double? Cfg = null,
-        string? SamplerName = null,
-        string? Scheduler = null,
-        long? StartAtStep = null,
-        long? EndAtStep = null,
-        string? ReturnWithLeftoverNoise = null
+        In<ModelType>? Model = null,
+        StringArg? AddNoise = null,
+        IntArg? NoiseSeed = null,
+        IntArg? Steps = null,
+        FloatArg? Cfg = null,
+        StringArg? SamplerName = null,
+        StringArg? Scheduler = null,
+        In<ConditioningType>? Positive = null,
+        In<ConditioningType>? Negative = null,
+        In<LatentType>? LatentImage = null,
+        IntArg? StartAtStep = null,
+        IntArg? EndAtStep = null,
+        StringArg? ReturnWithLeftoverNoise = null
     )
     {
-        if (AddNoise is { } v_AddNoise) this.AddNoise.Set(v_AddNoise);
-        if (NoiseSeed is { } v_NoiseSeed) this.NoiseSeed.Set(v_NoiseSeed);
-        if (Steps is { } v_Steps) this.Steps.Set(v_Steps);
-        if (Cfg is { } v_Cfg) this.Cfg.Set(v_Cfg);
-        if (SamplerName is { } v_SamplerName) this.SamplerName.Set(v_SamplerName);
-        if (Scheduler is { } v_Scheduler) this.Scheduler.Set(v_Scheduler);
-        if (StartAtStep is { } v_StartAtStep) this.StartAtStep.Set(v_StartAtStep);
-        if (EndAtStep is { } v_EndAtStep) this.EndAtStep.Set(v_EndAtStep);
-        if (ReturnWithLeftoverNoise is { } v_ReturnWithLeftoverNoise) this.ReturnWithLeftoverNoise.Set(v_ReturnWithLeftoverNoise);
+        Model?.ApplyTo(this.Model);
+        AddNoise?.ApplyTo(this.AddNoise);
+        NoiseSeed?.ApplyTo(this.NoiseSeed);
+        Steps?.ApplyTo(this.Steps);
+        Cfg?.ApplyTo(this.Cfg);
+        SamplerName?.ApplyTo(this.SamplerName);
+        Scheduler?.ApplyTo(this.Scheduler);
+        Positive?.ApplyTo(this.Positive);
+        Negative?.ApplyTo(this.Negative);
+        LatentImage?.ApplyTo(this.LatentImage);
+        StartAtStep?.ApplyTo(this.StartAtStep);
+        EndAtStep?.ApplyTo(this.EndAtStep);
+        ReturnWithLeftoverNoise?.ApplyTo(this.ReturnWithLeftoverNoise);
         return this;
     }
 }

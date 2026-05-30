@@ -25,4 +25,16 @@ public sealed class ImageGenResolutionFromLatentNode : ComfyNode
         IMAGEGENHEIGHTINT = AddOutput<IntType>(1, "IMAGE_GEN_HEIGHT (INT)");
         Latent = AddInput<LatentType>("latent", required: true);
     }
+
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
+    public ImageGenResolutionFromLatentNode With(
+        In<LatentType>? Latent = null
+    )
+    {
+        Latent?.ApplyTo(this.Latent);
+        return this;
+    }
 }

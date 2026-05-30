@@ -27,14 +27,17 @@ public sealed class SAM3TrackToMaskNode : ComfyNode
         ObjectIndices.Set("");
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SAM3TrackToMaskNode With(
-        string? ObjectIndices = null
+        In<Sam3TrackDataType>? TrackData = null,
+        StringArg? ObjectIndices = null
     )
     {
-        if (ObjectIndices is { } v_ObjectIndices) this.ObjectIndices.Set(v_ObjectIndices);
+        TrackData?.ApplyTo(this.TrackData);
+        ObjectIndices?.ApplyTo(this.ObjectIndices);
         return this;
     }
 }

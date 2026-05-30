@@ -58,28 +58,31 @@ public sealed class IPAdapterWeightsNode : ComfyNode
         Image = AddInput<ImageType>("image", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public IPAdapterWeightsNode With(
-        string? WeightsInput = null,
-        string? Timing = null,
-        long? Frames = null,
-        long? StartFrame = null,
-        long? EndFrame = null,
-        long? AddStartingFrames = null,
-        long? AddEndingFrames = null,
-        string? Method = null
+        StringArg? WeightsInput = null,
+        StringArg? Timing = null,
+        IntArg? Frames = null,
+        IntArg? StartFrame = null,
+        IntArg? EndFrame = null,
+        IntArg? AddStartingFrames = null,
+        IntArg? AddEndingFrames = null,
+        StringArg? Method = null,
+        In<ImageType>? Image = null
     )
     {
-        if (WeightsInput is { } v_WeightsInput) this.WeightsInput.Set(v_WeightsInput);
-        if (Timing is { } v_Timing) this.Timing.Set(v_Timing);
-        if (Frames is { } v_Frames) this.Frames.Set(v_Frames);
-        if (StartFrame is { } v_StartFrame) this.StartFrame.Set(v_StartFrame);
-        if (EndFrame is { } v_EndFrame) this.EndFrame.Set(v_EndFrame);
-        if (AddStartingFrames is { } v_AddStartingFrames) this.AddStartingFrames.Set(v_AddStartingFrames);
-        if (AddEndingFrames is { } v_AddEndingFrames) this.AddEndingFrames.Set(v_AddEndingFrames);
-        if (Method is { } v_Method) this.Method.Set(v_Method);
+        WeightsInput?.ApplyTo(this.WeightsInput);
+        Timing?.ApplyTo(this.Timing);
+        Frames?.ApplyTo(this.Frames);
+        StartFrame?.ApplyTo(this.StartFrame);
+        EndFrame?.ApplyTo(this.EndFrame);
+        AddStartingFrames?.ApplyTo(this.AddStartingFrames);
+        AddEndingFrames?.ApplyTo(this.AddEndingFrames);
+        Method?.ApplyTo(this.Method);
+        Image?.ApplyTo(this.Image);
         return this;
     }
 }

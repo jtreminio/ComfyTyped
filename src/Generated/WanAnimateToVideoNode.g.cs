@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: conditioning/video_models</remarks>
+/// <remarks>Category: model/conditioning/video_models</remarks>
 public sealed class WanAnimateToVideoNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -70,24 +70,45 @@ public sealed class WanAnimateToVideoNode : ComfyNode
         ContinueMotion = AddInput<ImageType>("continue_motion", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public WanAnimateToVideoNode With(
-        long? Width = null,
-        long? Height = null,
-        long? Length = null,
-        long? BatchSize = null,
-        long? ContinueMotionMaxFrames = null,
-        long? VideoFrameOffsetInput = null
+        In<ConditioningType>? PositiveInput = null,
+        In<ConditioningType>? NegativeInput = null,
+        In<VaeType>? Vae = null,
+        IntArg? Width = null,
+        IntArg? Height = null,
+        IntArg? Length = null,
+        IntArg? BatchSize = null,
+        IntArg? ContinueMotionMaxFrames = null,
+        IntArg? VideoFrameOffsetInput = null,
+        In<ClipVisionOutputType>? ClipVisionOutput = null,
+        In<ImageType>? ReferenceImage = null,
+        In<ImageType>? FaceVideo = null,
+        In<ImageType>? PoseVideo = null,
+        In<ImageType>? BackgroundVideo = null,
+        In<MaskType>? CharacterMask = null,
+        In<ImageType>? ContinueMotion = null
     )
     {
-        if (Width is { } v_Width) this.Width.Set(v_Width);
-        if (Height is { } v_Height) this.Height.Set(v_Height);
-        if (Length is { } v_Length) this.Length.Set(v_Length);
-        if (BatchSize is { } v_BatchSize) this.BatchSize.Set(v_BatchSize);
-        if (ContinueMotionMaxFrames is { } v_ContinueMotionMaxFrames) this.ContinueMotionMaxFrames.Set(v_ContinueMotionMaxFrames);
-        if (VideoFrameOffsetInput is { } v_VideoFrameOffsetInput) this.VideoFrameOffsetInput.Set(v_VideoFrameOffsetInput);
+        PositiveInput?.ApplyTo(this.PositiveInput);
+        NegativeInput?.ApplyTo(this.NegativeInput);
+        Vae?.ApplyTo(this.Vae);
+        Width?.ApplyTo(this.Width);
+        Height?.ApplyTo(this.Height);
+        Length?.ApplyTo(this.Length);
+        BatchSize?.ApplyTo(this.BatchSize);
+        ContinueMotionMaxFrames?.ApplyTo(this.ContinueMotionMaxFrames);
+        VideoFrameOffsetInput?.ApplyTo(this.VideoFrameOffsetInput);
+        ClipVisionOutput?.ApplyTo(this.ClipVisionOutput);
+        ReferenceImage?.ApplyTo(this.ReferenceImage);
+        FaceVideo?.ApplyTo(this.FaceVideo);
+        PoseVideo?.ApplyTo(this.PoseVideo);
+        BackgroundVideo?.ApplyTo(this.BackgroundVideo);
+        CharacterMask?.ApplyTo(this.CharacterMask);
+        ContinueMotion?.ApplyTo(this.ContinueMotion);
         return this;
     }
 }

@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: conditioning/video_models</remarks>
+/// <remarks>Category: model/conditioning/video_models</remarks>
 public sealed class WanDancerEncodeAudioNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -32,16 +32,19 @@ public sealed class WanDancerEncodeAudioNode : ComfyNode
         AudioInjectScale.Set(1.0);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public WanDancerEncodeAudioNode With(
-        long? VideoFrames = null,
-        double? AudioInjectScale = null
+        In<AudioType>? Audio = null,
+        IntArg? VideoFrames = null,
+        FloatArg? AudioInjectScale = null
     )
     {
-        if (VideoFrames is { } v_VideoFrames) this.VideoFrames.Set(v_VideoFrames);
-        if (AudioInjectScale is { } v_AudioInjectScale) this.AudioInjectScale.Set(v_AudioInjectScale);
+        Audio?.ApplyTo(this.Audio);
+        VideoFrames?.ApplyTo(this.VideoFrames);
+        AudioInjectScale?.ApplyTo(this.AudioInjectScale);
         return this;
     }
 }

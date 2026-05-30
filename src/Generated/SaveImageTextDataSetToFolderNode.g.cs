@@ -17,6 +17,7 @@ public sealed class SaveImageTextDataSetToFolderNode : ComfyNode
     public NodeInput<ImageType> Images { get; }
     public NodeInput<StringType> FolderName { get; }
     public NodeInput<StringType> FilenamePrefix { get; }
+    public NodeInput<StringType> Mode { get; }
     public NodeInput<StringType> Texts { get; } // optional
 
     public SaveImageTextDataSetToFolderNode()
@@ -26,21 +27,28 @@ public sealed class SaveImageTextDataSetToFolderNode : ComfyNode
         FolderName.Set("dataset");
         FilenamePrefix = AddInput<StringType>("filename_prefix", required: true);
         FilenamePrefix.Set("image");
+        Mode = AddInput<StringType>("mode", required: true);
+        Mode.Set("overwrite");
         Texts = AddInput<StringType>("texts", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SaveImageTextDataSetToFolderNode With(
-        string? FolderName = null,
-        string? FilenamePrefix = null,
-        string? Texts = null
+        In<ImageType>? Images = null,
+        StringArg? FolderName = null,
+        StringArg? FilenamePrefix = null,
+        StringArg? Mode = null,
+        StringArg? Texts = null
     )
     {
-        if (FolderName is { } v_FolderName) this.FolderName.Set(v_FolderName);
-        if (FilenamePrefix is { } v_FilenamePrefix) this.FilenamePrefix.Set(v_FilenamePrefix);
-        if (Texts is { } v_Texts) this.Texts.Set(v_Texts);
+        Images?.ApplyTo(this.Images);
+        FolderName?.ApplyTo(this.FolderName);
+        FilenamePrefix?.ApplyTo(this.FilenamePrefix);
+        Mode?.ApplyTo(this.Mode);
+        Texts?.ApplyTo(this.Texts);
         return this;
     }
 }

@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Group latents and conditionings into buckets</summary>
-/// <remarks>Category: training</remarks>
+/// <remarks>Category: model/training</remarks>
 public sealed class ResolutionBucketNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -27,5 +27,19 @@ public sealed class ResolutionBucketNode : ComfyNode
         Conditioning = AddOutput<ConditioningType>(1, "conditioning");
         LatentsInput = AddInput<LatentType>("latents", required: true);
         ConditioningInput = AddInput<ConditioningType>("conditioning", required: true);
+    }
+
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
+    public ResolutionBucketNode With(
+        In<LatentType>? LatentsInput = null,
+        In<ConditioningType>? ConditioningInput = null
+    )
+    {
+        LatentsInput?.ApplyTo(this.LatentsInput);
+        ConditioningInput?.ApplyTo(this.ConditioningInput);
+        return this;
     }
 }

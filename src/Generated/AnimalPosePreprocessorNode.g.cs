@@ -35,18 +35,21 @@ public sealed class AnimalPosePreprocessorNode : ComfyNode
         Resolution.Set(512L);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public AnimalPosePreprocessorNode With(
-        string? BboxDetector = null,
-        string? PoseEstimator = null,
-        long? Resolution = null
+        In<ImageType>? Image = null,
+        StringArg? BboxDetector = null,
+        StringArg? PoseEstimator = null,
+        IntArg? Resolution = null
     )
     {
-        if (BboxDetector is { } v_BboxDetector) this.BboxDetector.Set(v_BboxDetector);
-        if (PoseEstimator is { } v_PoseEstimator) this.PoseEstimator.Set(v_PoseEstimator);
-        if (Resolution is { } v_Resolution) this.Resolution.Set(v_Resolution);
+        Image?.ApplyTo(this.Image);
+        BboxDetector?.ApplyTo(this.BboxDetector);
+        PoseEstimator?.ApplyTo(this.PoseEstimator);
+        Resolution?.ApplyTo(this.Resolution);
         return this;
     }
 }

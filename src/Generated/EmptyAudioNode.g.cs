@@ -31,18 +31,19 @@ public sealed class EmptyAudioNode : ComfyNode
         Channels.Set(2L);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public EmptyAudioNode With(
-        double? Duration = null,
-        long? SampleRate = null,
-        long? Channels = null
+        FloatArg? Duration = null,
+        IntArg? SampleRate = null,
+        IntArg? Channels = null
     )
     {
-        if (Duration is { } v_Duration) this.Duration.Set(v_Duration);
-        if (SampleRate is { } v_SampleRate) this.SampleRate.Set(v_SampleRate);
-        if (Channels is { } v_Channels) this.Channels.Set(v_Channels);
+        Duration?.ApplyTo(this.Duration);
+        SampleRate?.ApplyTo(this.SampleRate);
+        Channels?.ApplyTo(this.Channels);
         return this;
     }
 }

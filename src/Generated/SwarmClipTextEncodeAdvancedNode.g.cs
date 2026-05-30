@@ -52,28 +52,35 @@ public sealed class SwarmClipTextEncodeAdvancedNode : ComfyNode
         Images = AddInput<ImageType>("images", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SwarmClipTextEncodeAdvancedNode With(
-        long? Steps = null,
-        string? Prompt = null,
-        long? Width = null,
-        long? Height = null,
-        long? TargetWidth = null,
-        long? TargetHeight = null,
-        double? Guidance = null,
-        string? LlamaTemplate = null
+        In<ClipType>? Clip = null,
+        IntArg? Steps = null,
+        StringArg? Prompt = null,
+        IntArg? Width = null,
+        IntArg? Height = null,
+        IntArg? TargetWidth = null,
+        IntArg? TargetHeight = null,
+        FloatArg? Guidance = null,
+        StringArg? LlamaTemplate = null,
+        In<ClipVisionOutputType>? ClipVisionOutput = null,
+        In<ImageType>? Images = null
     )
     {
-        if (Steps is { } v_Steps) this.Steps.Set(v_Steps);
-        if (Prompt is { } v_Prompt) this.Prompt.Set(v_Prompt);
-        if (Width is { } v_Width) this.Width.Set(v_Width);
-        if (Height is { } v_Height) this.Height.Set(v_Height);
-        if (TargetWidth is { } v_TargetWidth) this.TargetWidth.Set(v_TargetWidth);
-        if (TargetHeight is { } v_TargetHeight) this.TargetHeight.Set(v_TargetHeight);
-        if (Guidance is { } v_Guidance) this.Guidance.Set(v_Guidance);
-        if (LlamaTemplate is { } v_LlamaTemplate) this.LlamaTemplate.Set(v_LlamaTemplate);
+        Clip?.ApplyTo(this.Clip);
+        Steps?.ApplyTo(this.Steps);
+        Prompt?.ApplyTo(this.Prompt);
+        Width?.ApplyTo(this.Width);
+        Height?.ApplyTo(this.Height);
+        TargetWidth?.ApplyTo(this.TargetWidth);
+        TargetHeight?.ApplyTo(this.TargetHeight);
+        Guidance?.ApplyTo(this.Guidance);
+        LlamaTemplate?.ApplyTo(this.LlamaTemplate);
+        ClipVisionOutput?.ApplyTo(this.ClipVisionOutput);
+        Images?.ApplyTo(this.Images);
         return this;
     }
 }

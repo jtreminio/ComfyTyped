@@ -23,16 +23,17 @@ public sealed class SwarmAddSaveMetadataWSNode : ComfyNode
         Value = AddInput<StringType>("value", required: true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SwarmAddSaveMetadataWSNode With(
-        string? Key = null,
-        string? Value = null
+        StringArg? Key = null,
+        StringArg? Value = null
     )
     {
-        if (Key is { } v_Key) this.Key.Set(v_Key);
-        if (Value is { } v_Value) this.Value.Set(v_Value);
+        Key?.ApplyTo(this.Key);
+        Value?.ApplyTo(this.Value);
         return this;
     }
 }

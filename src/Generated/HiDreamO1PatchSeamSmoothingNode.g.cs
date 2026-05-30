@@ -43,24 +43,27 @@ public sealed class HiDreamO1PatchSeamSmoothingNode : ComfyNode
         Strength.Set(1.0);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public HiDreamO1PatchSeamSmoothingNode With(
-        double? StartPercent = null,
-        double? EndPercent = null,
-        string? Pattern = null,
-        string? Passes = null,
-        string? Blend = null,
-        double? Strength = null
+        In<ModelType>? Model = null,
+        FloatArg? StartPercent = null,
+        FloatArg? EndPercent = null,
+        StringArg? Pattern = null,
+        StringArg? Passes = null,
+        StringArg? Blend = null,
+        FloatArg? Strength = null
     )
     {
-        if (StartPercent is { } v_StartPercent) this.StartPercent.Set(v_StartPercent);
-        if (EndPercent is { } v_EndPercent) this.EndPercent.Set(v_EndPercent);
-        if (Pattern is { } v_Pattern) this.Pattern.Set(v_Pattern);
-        if (Passes is { } v_Passes) this.Passes.Set(v_Passes);
-        if (Blend is { } v_Blend) this.Blend.Set(v_Blend);
-        if (Strength is { } v_Strength) this.Strength.Set(v_Strength);
+        Model?.ApplyTo(this.Model);
+        StartPercent?.ApplyTo(this.StartPercent);
+        EndPercent?.ApplyTo(this.EndPercent);
+        Pattern?.ApplyTo(this.Pattern);
+        Passes?.ApplyTo(this.Passes);
+        Blend?.ApplyTo(this.Blend);
+        Strength?.ApplyTo(this.Strength);
         return this;
     }
 }

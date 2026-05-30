@@ -36,16 +36,25 @@ public sealed class PerpNegGuiderNode : ComfyNode
         NegScale.Set(1.0);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public PerpNegGuiderNode With(
-        double? Cfg = null,
-        double? NegScale = null
+        In<ModelType>? Model = null,
+        In<ConditioningType>? Positive = null,
+        In<ConditioningType>? Negative = null,
+        In<ConditioningType>? EmptyConditioning = null,
+        FloatArg? Cfg = null,
+        FloatArg? NegScale = null
     )
     {
-        if (Cfg is { } v_Cfg) this.Cfg.Set(v_Cfg);
-        if (NegScale is { } v_NegScale) this.NegScale.Set(v_NegScale);
+        Model?.ApplyTo(this.Model);
+        Positive?.ApplyTo(this.Positive);
+        Negative?.ApplyTo(this.Negative);
+        EmptyConditioning?.ApplyTo(this.EmptyConditioning);
+        Cfg?.ApplyTo(this.Cfg);
+        NegScale?.ApplyTo(this.NegScale);
         return this;
     }
 }

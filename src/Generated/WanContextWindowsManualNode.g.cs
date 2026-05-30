@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Manually set context windows for WAN-like models (dim=2).</summary>
-/// <remarks>Category: model_patches</remarks>
+/// <remarks>Category: model/patch</remarks>
 public sealed class WanContextWindowsManualNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -45,26 +45,29 @@ public sealed class WanContextWindowsManualNode : ComfyNode
         Freenoise.Set(false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public WanContextWindowsManualNode With(
-        long? ContextLength = null,
-        long? ContextOverlap = null,
-        string? ContextSchedule = null,
-        long? ContextStride = null,
-        bool? ClosedLoop = null,
-        string? FuseMethod = null,
-        bool? Freenoise = null
+        In<ModelType>? Model = null,
+        IntArg? ContextLength = null,
+        IntArg? ContextOverlap = null,
+        StringArg? ContextSchedule = null,
+        IntArg? ContextStride = null,
+        BoolArg? ClosedLoop = null,
+        StringArg? FuseMethod = null,
+        BoolArg? Freenoise = null
     )
     {
-        if (ContextLength is { } v_ContextLength) this.ContextLength.Set(v_ContextLength);
-        if (ContextOverlap is { } v_ContextOverlap) this.ContextOverlap.Set(v_ContextOverlap);
-        if (ContextSchedule is { } v_ContextSchedule) this.ContextSchedule.Set(v_ContextSchedule);
-        if (ContextStride is { } v_ContextStride) this.ContextStride.Set(v_ContextStride);
-        if (ClosedLoop is { } v_ClosedLoop) this.ClosedLoop.Set(v_ClosedLoop);
-        if (FuseMethod is { } v_FuseMethod) this.FuseMethod.Set(v_FuseMethod);
-        if (Freenoise is { } v_Freenoise) this.Freenoise.Set(v_Freenoise);
+        Model?.ApplyTo(this.Model);
+        ContextLength?.ApplyTo(this.ContextLength);
+        ContextOverlap?.ApplyTo(this.ContextOverlap);
+        ContextSchedule?.ApplyTo(this.ContextSchedule);
+        ContextStride?.ApplyTo(this.ContextStride);
+        ClosedLoop?.ApplyTo(this.ClosedLoop);
+        FuseMethod?.ApplyTo(this.FuseMethod);
+        Freenoise?.ApplyTo(this.Freenoise);
         return this;
     }
 }

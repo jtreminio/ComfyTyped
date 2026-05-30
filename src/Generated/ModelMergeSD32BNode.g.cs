@@ -116,72 +116,77 @@ public sealed class ModelMergeSD32BNode : ComfyNode
         FinalLayer.Set(1.0);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public ModelMergeSD32BNode With(
-        double? PosEmbed = null,
-        double? XEmbedder = null,
-        double? ContextEmbedder = null,
-        double? YEmbedder = null,
-        double? TEmbedder = null,
-        double? JointBlocks0 = null,
-        double? JointBlocks1 = null,
-        double? JointBlocks2 = null,
-        double? JointBlocks3 = null,
-        double? JointBlocks4 = null,
-        double? JointBlocks5 = null,
-        double? JointBlocks6 = null,
-        double? JointBlocks7 = null,
-        double? JointBlocks8 = null,
-        double? JointBlocks9 = null,
-        double? JointBlocks10 = null,
-        double? JointBlocks11 = null,
-        double? JointBlocks12 = null,
-        double? JointBlocks13 = null,
-        double? JointBlocks14 = null,
-        double? JointBlocks15 = null,
-        double? JointBlocks16 = null,
-        double? JointBlocks17 = null,
-        double? JointBlocks18 = null,
-        double? JointBlocks19 = null,
-        double? JointBlocks20 = null,
-        double? JointBlocks21 = null,
-        double? JointBlocks22 = null,
-        double? JointBlocks23 = null,
-        double? FinalLayer = null
+        In<ModelType>? Model1 = null,
+        In<ModelType>? Model2 = null,
+        FloatArg? PosEmbed = null,
+        FloatArg? XEmbedder = null,
+        FloatArg? ContextEmbedder = null,
+        FloatArg? YEmbedder = null,
+        FloatArg? TEmbedder = null,
+        FloatArg? JointBlocks0 = null,
+        FloatArg? JointBlocks1 = null,
+        FloatArg? JointBlocks2 = null,
+        FloatArg? JointBlocks3 = null,
+        FloatArg? JointBlocks4 = null,
+        FloatArg? JointBlocks5 = null,
+        FloatArg? JointBlocks6 = null,
+        FloatArg? JointBlocks7 = null,
+        FloatArg? JointBlocks8 = null,
+        FloatArg? JointBlocks9 = null,
+        FloatArg? JointBlocks10 = null,
+        FloatArg? JointBlocks11 = null,
+        FloatArg? JointBlocks12 = null,
+        FloatArg? JointBlocks13 = null,
+        FloatArg? JointBlocks14 = null,
+        FloatArg? JointBlocks15 = null,
+        FloatArg? JointBlocks16 = null,
+        FloatArg? JointBlocks17 = null,
+        FloatArg? JointBlocks18 = null,
+        FloatArg? JointBlocks19 = null,
+        FloatArg? JointBlocks20 = null,
+        FloatArg? JointBlocks21 = null,
+        FloatArg? JointBlocks22 = null,
+        FloatArg? JointBlocks23 = null,
+        FloatArg? FinalLayer = null
     )
     {
-        if (PosEmbed is { } v_PosEmbed) this.PosEmbed.Set(v_PosEmbed);
-        if (XEmbedder is { } v_XEmbedder) this.XEmbedder.Set(v_XEmbedder);
-        if (ContextEmbedder is { } v_ContextEmbedder) this.ContextEmbedder.Set(v_ContextEmbedder);
-        if (YEmbedder is { } v_YEmbedder) this.YEmbedder.Set(v_YEmbedder);
-        if (TEmbedder is { } v_TEmbedder) this.TEmbedder.Set(v_TEmbedder);
-        if (JointBlocks0 is { } v_JointBlocks0) this.JointBlocks0.Set(v_JointBlocks0);
-        if (JointBlocks1 is { } v_JointBlocks1) this.JointBlocks1.Set(v_JointBlocks1);
-        if (JointBlocks2 is { } v_JointBlocks2) this.JointBlocks2.Set(v_JointBlocks2);
-        if (JointBlocks3 is { } v_JointBlocks3) this.JointBlocks3.Set(v_JointBlocks3);
-        if (JointBlocks4 is { } v_JointBlocks4) this.JointBlocks4.Set(v_JointBlocks4);
-        if (JointBlocks5 is { } v_JointBlocks5) this.JointBlocks5.Set(v_JointBlocks5);
-        if (JointBlocks6 is { } v_JointBlocks6) this.JointBlocks6.Set(v_JointBlocks6);
-        if (JointBlocks7 is { } v_JointBlocks7) this.JointBlocks7.Set(v_JointBlocks7);
-        if (JointBlocks8 is { } v_JointBlocks8) this.JointBlocks8.Set(v_JointBlocks8);
-        if (JointBlocks9 is { } v_JointBlocks9) this.JointBlocks9.Set(v_JointBlocks9);
-        if (JointBlocks10 is { } v_JointBlocks10) this.JointBlocks10.Set(v_JointBlocks10);
-        if (JointBlocks11 is { } v_JointBlocks11) this.JointBlocks11.Set(v_JointBlocks11);
-        if (JointBlocks12 is { } v_JointBlocks12) this.JointBlocks12.Set(v_JointBlocks12);
-        if (JointBlocks13 is { } v_JointBlocks13) this.JointBlocks13.Set(v_JointBlocks13);
-        if (JointBlocks14 is { } v_JointBlocks14) this.JointBlocks14.Set(v_JointBlocks14);
-        if (JointBlocks15 is { } v_JointBlocks15) this.JointBlocks15.Set(v_JointBlocks15);
-        if (JointBlocks16 is { } v_JointBlocks16) this.JointBlocks16.Set(v_JointBlocks16);
-        if (JointBlocks17 is { } v_JointBlocks17) this.JointBlocks17.Set(v_JointBlocks17);
-        if (JointBlocks18 is { } v_JointBlocks18) this.JointBlocks18.Set(v_JointBlocks18);
-        if (JointBlocks19 is { } v_JointBlocks19) this.JointBlocks19.Set(v_JointBlocks19);
-        if (JointBlocks20 is { } v_JointBlocks20) this.JointBlocks20.Set(v_JointBlocks20);
-        if (JointBlocks21 is { } v_JointBlocks21) this.JointBlocks21.Set(v_JointBlocks21);
-        if (JointBlocks22 is { } v_JointBlocks22) this.JointBlocks22.Set(v_JointBlocks22);
-        if (JointBlocks23 is { } v_JointBlocks23) this.JointBlocks23.Set(v_JointBlocks23);
-        if (FinalLayer is { } v_FinalLayer) this.FinalLayer.Set(v_FinalLayer);
+        Model1?.ApplyTo(this.Model1);
+        Model2?.ApplyTo(this.Model2);
+        PosEmbed?.ApplyTo(this.PosEmbed);
+        XEmbedder?.ApplyTo(this.XEmbedder);
+        ContextEmbedder?.ApplyTo(this.ContextEmbedder);
+        YEmbedder?.ApplyTo(this.YEmbedder);
+        TEmbedder?.ApplyTo(this.TEmbedder);
+        JointBlocks0?.ApplyTo(this.JointBlocks0);
+        JointBlocks1?.ApplyTo(this.JointBlocks1);
+        JointBlocks2?.ApplyTo(this.JointBlocks2);
+        JointBlocks3?.ApplyTo(this.JointBlocks3);
+        JointBlocks4?.ApplyTo(this.JointBlocks4);
+        JointBlocks5?.ApplyTo(this.JointBlocks5);
+        JointBlocks6?.ApplyTo(this.JointBlocks6);
+        JointBlocks7?.ApplyTo(this.JointBlocks7);
+        JointBlocks8?.ApplyTo(this.JointBlocks8);
+        JointBlocks9?.ApplyTo(this.JointBlocks9);
+        JointBlocks10?.ApplyTo(this.JointBlocks10);
+        JointBlocks11?.ApplyTo(this.JointBlocks11);
+        JointBlocks12?.ApplyTo(this.JointBlocks12);
+        JointBlocks13?.ApplyTo(this.JointBlocks13);
+        JointBlocks14?.ApplyTo(this.JointBlocks14);
+        JointBlocks15?.ApplyTo(this.JointBlocks15);
+        JointBlocks16?.ApplyTo(this.JointBlocks16);
+        JointBlocks17?.ApplyTo(this.JointBlocks17);
+        JointBlocks18?.ApplyTo(this.JointBlocks18);
+        JointBlocks19?.ApplyTo(this.JointBlocks19);
+        JointBlocks20?.ApplyTo(this.JointBlocks20);
+        JointBlocks21?.ApplyTo(this.JointBlocks21);
+        JointBlocks22?.ApplyTo(this.JointBlocks22);
+        JointBlocks23?.ApplyTo(this.JointBlocks23);
+        FinalLayer?.ApplyTo(this.FinalLayer);
         return this;
     }
 }

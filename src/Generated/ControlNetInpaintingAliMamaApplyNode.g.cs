@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: conditioning/controlnet</remarks>
+/// <remarks>Category: model/conditioning/controlnet</remarks>
 public sealed class ControlNetInpaintingAliMamaApplyNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -45,18 +45,31 @@ public sealed class ControlNetInpaintingAliMamaApplyNode : ComfyNode
         EndPercent.Set(1.0);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public ControlNetInpaintingAliMamaApplyNode With(
-        double? Strength = null,
-        double? StartPercent = null,
-        double? EndPercent = null
+        In<ConditioningType>? PositiveInput = null,
+        In<ConditioningType>? NegativeInput = null,
+        In<ControlNetType>? ControlNet = null,
+        In<VaeType>? Vae = null,
+        In<ImageType>? Image = null,
+        In<MaskType>? Mask = null,
+        FloatArg? Strength = null,
+        FloatArg? StartPercent = null,
+        FloatArg? EndPercent = null
     )
     {
-        if (Strength is { } v_Strength) this.Strength.Set(v_Strength);
-        if (StartPercent is { } v_StartPercent) this.StartPercent.Set(v_StartPercent);
-        if (EndPercent is { } v_EndPercent) this.EndPercent.Set(v_EndPercent);
+        PositiveInput?.ApplyTo(this.PositiveInput);
+        NegativeInput?.ApplyTo(this.NegativeInput);
+        ControlNet?.ApplyTo(this.ControlNet);
+        Vae?.ApplyTo(this.Vae);
+        Image?.ApplyTo(this.Image);
+        Mask?.ApplyTo(this.Mask);
+        Strength?.ApplyTo(this.Strength);
+        StartPercent?.ApplyTo(this.StartPercent);
+        EndPercent?.ApplyTo(this.EndPercent);
         return this;
     }
 }

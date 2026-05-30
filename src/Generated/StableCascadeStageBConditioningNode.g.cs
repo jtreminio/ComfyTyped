@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: conditioning/stable_cascade</remarks>
+/// <remarks>Category: model/conditioning/stable_cascade</remarks>
 public sealed class StableCascadeStageBConditioningNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -24,5 +24,19 @@ public sealed class StableCascadeStageBConditioningNode : ComfyNode
         CONDITIONING = AddOutput<ConditioningType>(0, "CONDITIONING");
         Conditioning = AddInput<ConditioningType>("conditioning", required: true);
         StageC = AddInput<LatentType>("stage_c", required: true);
+    }
+
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
+    public StableCascadeStageBConditioningNode With(
+        In<ConditioningType>? Conditioning = null,
+        In<LatentType>? StageC = null
+    )
+    {
+        Conditioning?.ApplyTo(this.Conditioning);
+        StageC?.ApplyTo(this.StageC);
+        return this;
     }
 }

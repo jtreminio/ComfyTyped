@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>This LoRA loader is used to modify both diffusion and CLIP models, altering the way in which latents are denoised such as applying styles. Multiple LoRA nodes can be linked together.</summary>
-/// <remarks>Category: loaders</remarks>
+/// <remarks>Category: model/loaders</remarks>
 public sealed class LoraLoaderNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -37,18 +37,23 @@ public sealed class LoraLoaderNode : ComfyNode
         StrengthClip.Set(1.0);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public LoraLoaderNode With(
-        string? LoraName = null,
-        double? StrengthModel = null,
-        double? StrengthClip = null
+        In<ModelType>? Model = null,
+        In<ClipType>? Clip = null,
+        StringArg? LoraName = null,
+        FloatArg? StrengthModel = null,
+        FloatArg? StrengthClip = null
     )
     {
-        if (LoraName is { } v_LoraName) this.LoraName.Set(v_LoraName);
-        if (StrengthModel is { } v_StrengthModel) this.StrengthModel.Set(v_StrengthModel);
-        if (StrengthClip is { } v_StrengthClip) this.StrengthClip.Set(v_StrengthClip);
+        Model?.ApplyTo(this.Model);
+        Clip?.ApplyTo(this.Clip);
+        LoraName?.ApplyTo(this.LoraName);
+        StrengthModel?.ApplyTo(this.StrengthModel);
+        StrengthClip?.ApplyTo(this.StrengthClip);
         return this;
     }
 }

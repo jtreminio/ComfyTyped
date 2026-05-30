@@ -30,14 +30,15 @@ public sealed class StringFormatNode : ComfyNode
         Values = AddInputList<AnyType>("values", names: new string[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" }, min: 0, max: 26, required: true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public StringFormatNode With(
-        string? FString = null
+        StringArg? FString = null
     )
     {
-        if (FString is { } v_FString) this.FString.Set(v_FString);
+        FString?.ApplyTo(this.FString);
         return this;
     }
 }

@@ -53,30 +53,33 @@ public sealed class UpperBodyTrackingFromPoseKpsNode : ComfyNode
         LForearmWidthHeight.Set("128, 256");
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public UpperBodyTrackingFromPoseKpsNode With(
-        string? IdInclude = null,
-        string? HeadWidthHeight = null,
-        string? NeckWidthHeight = null,
-        string? ShoulderWidthHeight = null,
-        string? TorsoWidthHeight = null,
-        string? RArmWidthHeight = null,
-        string? RForearmWidthHeight = null,
-        string? LArmWidthHeight = null,
-        string? LForearmWidthHeight = null
+        In<PoseKeypointType>? PoseKps = null,
+        StringArg? IdInclude = null,
+        StringArg? HeadWidthHeight = null,
+        StringArg? NeckWidthHeight = null,
+        StringArg? ShoulderWidthHeight = null,
+        StringArg? TorsoWidthHeight = null,
+        StringArg? RArmWidthHeight = null,
+        StringArg? RForearmWidthHeight = null,
+        StringArg? LArmWidthHeight = null,
+        StringArg? LForearmWidthHeight = null
     )
     {
-        if (IdInclude is { } v_IdInclude) this.IdInclude.Set(v_IdInclude);
-        if (HeadWidthHeight is { } v_HeadWidthHeight) this.HeadWidthHeight.Set(v_HeadWidthHeight);
-        if (NeckWidthHeight is { } v_NeckWidthHeight) this.NeckWidthHeight.Set(v_NeckWidthHeight);
-        if (ShoulderWidthHeight is { } v_ShoulderWidthHeight) this.ShoulderWidthHeight.Set(v_ShoulderWidthHeight);
-        if (TorsoWidthHeight is { } v_TorsoWidthHeight) this.TorsoWidthHeight.Set(v_TorsoWidthHeight);
-        if (RArmWidthHeight is { } v_RArmWidthHeight) this.RArmWidthHeight.Set(v_RArmWidthHeight);
-        if (RForearmWidthHeight is { } v_RForearmWidthHeight) this.RForearmWidthHeight.Set(v_RForearmWidthHeight);
-        if (LArmWidthHeight is { } v_LArmWidthHeight) this.LArmWidthHeight.Set(v_LArmWidthHeight);
-        if (LForearmWidthHeight is { } v_LForearmWidthHeight) this.LForearmWidthHeight.Set(v_LForearmWidthHeight);
+        PoseKps?.ApplyTo(this.PoseKps);
+        IdInclude?.ApplyTo(this.IdInclude);
+        HeadWidthHeight?.ApplyTo(this.HeadWidthHeight);
+        NeckWidthHeight?.ApplyTo(this.NeckWidthHeight);
+        ShoulderWidthHeight?.ApplyTo(this.ShoulderWidthHeight);
+        TorsoWidthHeight?.ApplyTo(this.TorsoWidthHeight);
+        RArmWidthHeight?.ApplyTo(this.RArmWidthHeight);
+        RForearmWidthHeight?.ApplyTo(this.RForearmWidthHeight);
+        LArmWidthHeight?.ApplyTo(this.LArmWidthHeight);
+        LForearmWidthHeight?.ApplyTo(this.LForearmWidthHeight);
         return this;
     }
 }

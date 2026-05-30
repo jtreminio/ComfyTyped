@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: latent/3d</remarks>
+/// <remarks>Category: model/latent/3d</remarks>
 public sealed class EmptyLatentHunyuan3Dv2Node : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -28,16 +28,17 @@ public sealed class EmptyLatentHunyuan3Dv2Node : ComfyNode
         BatchSize.Set(1L);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public EmptyLatentHunyuan3Dv2Node With(
-        long? Resolution = null,
-        long? BatchSize = null
+        IntArg? Resolution = null,
+        IntArg? BatchSize = null
     )
     {
-        if (Resolution is { } v_Resolution) this.Resolution.Set(v_Resolution);
-        if (BatchSize is { } v_BatchSize) this.BatchSize.Set(v_BatchSize);
+        Resolution?.ApplyTo(this.Resolution);
+        BatchSize?.ApplyTo(this.BatchSize);
         return this;
     }
 }

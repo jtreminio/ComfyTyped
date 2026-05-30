@@ -45,22 +45,31 @@ public sealed class SAM3DetectNode : ComfyNode
         NegativeCoords = AddInput<StringType>("negative_coords", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SAM3DetectNode With(
-        double? Threshold = null,
-        long? RefineIterations = null,
-        bool? IndividualMasks = null,
-        string? PositiveCoords = null,
-        string? NegativeCoords = null
+        In<ModelType>? Model = null,
+        In<ImageType>? Image = null,
+        FloatArg? Threshold = null,
+        IntArg? RefineIterations = null,
+        BoolArg? IndividualMasks = null,
+        In<ConditioningType>? Conditioning = null,
+        In<BoundingBoxType>? BboxesInput = null,
+        StringArg? PositiveCoords = null,
+        StringArg? NegativeCoords = null
     )
     {
-        if (Threshold is { } v_Threshold) this.Threshold.Set(v_Threshold);
-        if (RefineIterations is { } v_RefineIterations) this.RefineIterations.Set(v_RefineIterations);
-        if (IndividualMasks is { } v_IndividualMasks) this.IndividualMasks.Set(v_IndividualMasks);
-        if (PositiveCoords is { } v_PositiveCoords) this.PositiveCoords.Set(v_PositiveCoords);
-        if (NegativeCoords is { } v_NegativeCoords) this.NegativeCoords.Set(v_NegativeCoords);
+        Model?.ApplyTo(this.Model);
+        Image?.ApplyTo(this.Image);
+        Threshold?.ApplyTo(this.Threshold);
+        RefineIterations?.ApplyTo(this.RefineIterations);
+        IndividualMasks?.ApplyTo(this.IndividualMasks);
+        Conditioning?.ApplyTo(this.Conditioning);
+        BboxesInput?.ApplyTo(this.BboxesInput);
+        PositiveCoords?.ApplyTo(this.PositiveCoords);
+        NegativeCoords?.ApplyTo(this.NegativeCoords);
         return this;
     }
 }

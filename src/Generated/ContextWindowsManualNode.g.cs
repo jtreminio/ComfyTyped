@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Manually set context windows.</summary>
-/// <remarks>Category: model_patches</remarks>
+/// <remarks>Category: model/patch</remarks>
 public sealed class ContextWindowsManualNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -57,34 +57,37 @@ public sealed class ContextWindowsManualNode : ComfyNode
         CausalWindowFix.Set(true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public ContextWindowsManualNode With(
-        long? ContextLength = null,
-        long? ContextOverlap = null,
-        string? ContextSchedule = null,
-        long? ContextStride = null,
-        bool? ClosedLoop = null,
-        string? FuseMethod = null,
-        long? Dim = null,
-        bool? Freenoise = null,
-        string? CondRetainIndexList = null,
-        bool? SplitCondsToWindows = null,
-        bool? CausalWindowFix = null
+        In<ModelType>? Model = null,
+        IntArg? ContextLength = null,
+        IntArg? ContextOverlap = null,
+        StringArg? ContextSchedule = null,
+        IntArg? ContextStride = null,
+        BoolArg? ClosedLoop = null,
+        StringArg? FuseMethod = null,
+        IntArg? Dim = null,
+        BoolArg? Freenoise = null,
+        StringArg? CondRetainIndexList = null,
+        BoolArg? SplitCondsToWindows = null,
+        BoolArg? CausalWindowFix = null
     )
     {
-        if (ContextLength is { } v_ContextLength) this.ContextLength.Set(v_ContextLength);
-        if (ContextOverlap is { } v_ContextOverlap) this.ContextOverlap.Set(v_ContextOverlap);
-        if (ContextSchedule is { } v_ContextSchedule) this.ContextSchedule.Set(v_ContextSchedule);
-        if (ContextStride is { } v_ContextStride) this.ContextStride.Set(v_ContextStride);
-        if (ClosedLoop is { } v_ClosedLoop) this.ClosedLoop.Set(v_ClosedLoop);
-        if (FuseMethod is { } v_FuseMethod) this.FuseMethod.Set(v_FuseMethod);
-        if (Dim is { } v_Dim) this.Dim.Set(v_Dim);
-        if (Freenoise is { } v_Freenoise) this.Freenoise.Set(v_Freenoise);
-        if (CondRetainIndexList is { } v_CondRetainIndexList) this.CondRetainIndexList.Set(v_CondRetainIndexList);
-        if (SplitCondsToWindows is { } v_SplitCondsToWindows) this.SplitCondsToWindows.Set(v_SplitCondsToWindows);
-        if (CausalWindowFix is { } v_CausalWindowFix) this.CausalWindowFix.Set(v_CausalWindowFix);
+        Model?.ApplyTo(this.Model);
+        ContextLength?.ApplyTo(this.ContextLength);
+        ContextOverlap?.ApplyTo(this.ContextOverlap);
+        ContextSchedule?.ApplyTo(this.ContextSchedule);
+        ContextStride?.ApplyTo(this.ContextStride);
+        ClosedLoop?.ApplyTo(this.ClosedLoop);
+        FuseMethod?.ApplyTo(this.FuseMethod);
+        Dim?.ApplyTo(this.Dim);
+        Freenoise?.ApplyTo(this.Freenoise);
+        CondRetainIndexList?.ApplyTo(this.CondRetainIndexList);
+        SplitCondsToWindows?.ApplyTo(this.SplitCondsToWindows);
+        CausalWindowFix?.ApplyTo(this.CausalWindowFix);
         return this;
     }
 }

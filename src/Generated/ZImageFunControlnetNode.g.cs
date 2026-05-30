@@ -37,14 +37,27 @@ public sealed class ZImageFunControlnetNode : ComfyNode
         Mask = AddInput<MaskType>("mask", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public ZImageFunControlnetNode With(
-        double? Strength = null
+        In<ModelType>? Model = null,
+        In<ModelPatchType>? ModelPatch = null,
+        In<VaeType>? Vae = null,
+        FloatArg? Strength = null,
+        In<ImageType>? Image = null,
+        In<ImageType>? InpaintImage = null,
+        In<MaskType>? Mask = null
     )
     {
-        if (Strength is { } v_Strength) this.Strength.Set(v_Strength);
+        Model?.ApplyTo(this.Model);
+        ModelPatch?.ApplyTo(this.ModelPatch);
+        Vae?.ApplyTo(this.Vae);
+        Strength?.ApplyTo(this.Strength);
+        Image?.ApplyTo(this.Image);
+        InpaintImage?.ApplyTo(this.InpaintImage);
+        Mask?.ApplyTo(this.Mask);
         return this;
     }
 }

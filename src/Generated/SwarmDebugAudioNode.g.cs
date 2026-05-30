@@ -20,4 +20,16 @@ public sealed class SwarmDebugAudioNode : ComfyNode
     {
         Audio = AddInput<AudioType>("audio", required: true);
     }
+
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
+    public SwarmDebugAudioNode With(
+        In<AudioType>? Audio = null
+    )
+    {
+        Audio?.ApplyTo(this.Audio);
+        return this;
+    }
 }

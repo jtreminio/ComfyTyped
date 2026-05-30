@@ -43,20 +43,25 @@ public sealed class ImageStitchNode : ComfyNode
         Image2 = AddInput<ImageType>("image2", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public ImageStitchNode With(
-        string? Direction = null,
-        bool? MatchImageSize = null,
-        long? SpacingWidth = null,
-        string? SpacingColor = null
+        In<ImageType>? Image1 = null,
+        StringArg? Direction = null,
+        BoolArg? MatchImageSize = null,
+        IntArg? SpacingWidth = null,
+        StringArg? SpacingColor = null,
+        In<ImageType>? Image2 = null
     )
     {
-        if (Direction is { } v_Direction) this.Direction.Set(v_Direction);
-        if (MatchImageSize is { } v_MatchImageSize) this.MatchImageSize.Set(v_MatchImageSize);
-        if (SpacingWidth is { } v_SpacingWidth) this.SpacingWidth.Set(v_SpacingWidth);
-        if (SpacingColor is { } v_SpacingColor) this.SpacingColor.Set(v_SpacingColor);
+        Image1?.ApplyTo(this.Image1);
+        Direction?.ApplyTo(this.Direction);
+        MatchImageSize?.ApplyTo(this.MatchImageSize);
+        SpacingWidth?.ApplyTo(this.SpacingWidth);
+        SpacingColor?.ApplyTo(this.SpacingColor);
+        Image2?.ApplyTo(this.Image2);
         return this;
     }
 }

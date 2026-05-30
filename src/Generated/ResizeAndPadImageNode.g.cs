@@ -34,20 +34,23 @@ public sealed class ResizeAndPadImageNode : ComfyNode
         Interpolation = AddInput<StringType>("interpolation", required: true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public ResizeAndPadImageNode With(
-        long? TargetWidth = null,
-        long? TargetHeight = null,
-        string? PaddingColor = null,
-        string? Interpolation = null
+        In<ImageType>? Image = null,
+        IntArg? TargetWidth = null,
+        IntArg? TargetHeight = null,
+        StringArg? PaddingColor = null,
+        StringArg? Interpolation = null
     )
     {
-        if (TargetWidth is { } v_TargetWidth) this.TargetWidth.Set(v_TargetWidth);
-        if (TargetHeight is { } v_TargetHeight) this.TargetHeight.Set(v_TargetHeight);
-        if (PaddingColor is { } v_PaddingColor) this.PaddingColor.Set(v_PaddingColor);
-        if (Interpolation is { } v_Interpolation) this.Interpolation.Set(v_Interpolation);
+        Image?.ApplyTo(this.Image);
+        TargetWidth?.ApplyTo(this.TargetWidth);
+        TargetHeight?.ApplyTo(this.TargetHeight);
+        PaddingColor?.ApplyTo(this.PaddingColor);
+        Interpolation?.ApplyTo(this.Interpolation);
         return this;
     }
 }

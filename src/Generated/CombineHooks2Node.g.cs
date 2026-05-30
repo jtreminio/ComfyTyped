@@ -25,4 +25,18 @@ public sealed class CombineHooks2Node : ComfyNode
         HooksA = AddInput<HooksType>("hooks_A", required: false);
         HooksB = AddInput<HooksType>("hooks_B", required: false);
     }
+
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
+    public CombineHooks2Node With(
+        In<HooksType>? HooksA = null,
+        In<HooksType>? HooksB = null
+    )
+    {
+        HooksA?.ApplyTo(this.HooksA);
+        HooksB?.ApplyTo(this.HooksB);
+        return this;
+    }
 }

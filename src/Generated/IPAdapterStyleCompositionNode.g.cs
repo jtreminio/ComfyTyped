@@ -56,26 +56,41 @@ public sealed class IPAdapterStyleCompositionNode : ComfyNode
         ClipVision = AddInput<ClipVisionType>("clip_vision", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public IPAdapterStyleCompositionNode With(
-        double? WeightStyle = null,
-        double? WeightComposition = null,
-        bool? ExpandStyle = null,
-        string? CombineEmbeds = null,
-        double? StartAt = null,
-        double? EndAt = null,
-        string? EmbedsScaling = null
+        In<ModelType>? Model = null,
+        In<IpAdapterType>? Ipadapter = null,
+        In<ImageType>? ImageStyle = null,
+        In<ImageType>? ImageComposition = null,
+        FloatArg? WeightStyle = null,
+        FloatArg? WeightComposition = null,
+        BoolArg? ExpandStyle = null,
+        StringArg? CombineEmbeds = null,
+        FloatArg? StartAt = null,
+        FloatArg? EndAt = null,
+        StringArg? EmbedsScaling = null,
+        In<ImageType>? ImageNegative = null,
+        In<MaskType>? AttnMask = null,
+        In<ClipVisionType>? ClipVision = null
     )
     {
-        if (WeightStyle is { } v_WeightStyle) this.WeightStyle.Set(v_WeightStyle);
-        if (WeightComposition is { } v_WeightComposition) this.WeightComposition.Set(v_WeightComposition);
-        if (ExpandStyle is { } v_ExpandStyle) this.ExpandStyle.Set(v_ExpandStyle);
-        if (CombineEmbeds is { } v_CombineEmbeds) this.CombineEmbeds.Set(v_CombineEmbeds);
-        if (StartAt is { } v_StartAt) this.StartAt.Set(v_StartAt);
-        if (EndAt is { } v_EndAt) this.EndAt.Set(v_EndAt);
-        if (EmbedsScaling is { } v_EmbedsScaling) this.EmbedsScaling.Set(v_EmbedsScaling);
+        Model?.ApplyTo(this.Model);
+        Ipadapter?.ApplyTo(this.Ipadapter);
+        ImageStyle?.ApplyTo(this.ImageStyle);
+        ImageComposition?.ApplyTo(this.ImageComposition);
+        WeightStyle?.ApplyTo(this.WeightStyle);
+        WeightComposition?.ApplyTo(this.WeightComposition);
+        ExpandStyle?.ApplyTo(this.ExpandStyle);
+        CombineEmbeds?.ApplyTo(this.CombineEmbeds);
+        StartAt?.ApplyTo(this.StartAt);
+        EndAt?.ApplyTo(this.EndAt);
+        EmbedsScaling?.ApplyTo(this.EmbedsScaling);
+        ImageNegative?.ApplyTo(this.ImageNegative);
+        AttnMask?.ApplyTo(this.AttnMask);
+        ClipVision?.ApplyTo(this.ClipVision);
         return this;
     }
 }

@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: model_patches/unet</remarks>
+/// <remarks>Category: model/patch/unet</remarks>
 public sealed class PatchModelAddDownscaleNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -43,26 +43,29 @@ public sealed class PatchModelAddDownscaleNode : ComfyNode
         UpscaleMethod = AddInput<StringType>("upscale_method", required: true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public PatchModelAddDownscaleNode With(
-        long? BlockNumber = null,
-        double? DownscaleFactor = null,
-        double? StartPercent = null,
-        double? EndPercent = null,
-        bool? DownscaleAfterSkip = null,
-        string? DownscaleMethod = null,
-        string? UpscaleMethod = null
+        In<ModelType>? Model = null,
+        IntArg? BlockNumber = null,
+        FloatArg? DownscaleFactor = null,
+        FloatArg? StartPercent = null,
+        FloatArg? EndPercent = null,
+        BoolArg? DownscaleAfterSkip = null,
+        StringArg? DownscaleMethod = null,
+        StringArg? UpscaleMethod = null
     )
     {
-        if (BlockNumber is { } v_BlockNumber) this.BlockNumber.Set(v_BlockNumber);
-        if (DownscaleFactor is { } v_DownscaleFactor) this.DownscaleFactor.Set(v_DownscaleFactor);
-        if (StartPercent is { } v_StartPercent) this.StartPercent.Set(v_StartPercent);
-        if (EndPercent is { } v_EndPercent) this.EndPercent.Set(v_EndPercent);
-        if (DownscaleAfterSkip is { } v_DownscaleAfterSkip) this.DownscaleAfterSkip.Set(v_DownscaleAfterSkip);
-        if (DownscaleMethod is { } v_DownscaleMethod) this.DownscaleMethod.Set(v_DownscaleMethod);
-        if (UpscaleMethod is { } v_UpscaleMethod) this.UpscaleMethod.Set(v_UpscaleMethod);
+        Model?.ApplyTo(this.Model);
+        BlockNumber?.ApplyTo(this.BlockNumber);
+        DownscaleFactor?.ApplyTo(this.DownscaleFactor);
+        StartPercent?.ApplyTo(this.StartPercent);
+        EndPercent?.ApplyTo(this.EndPercent);
+        DownscaleAfterSkip?.ApplyTo(this.DownscaleAfterSkip);
+        DownscaleMethod?.ApplyTo(this.DownscaleMethod);
+        UpscaleMethod?.ApplyTo(this.UpscaleMethod);
         return this;
     }
 }

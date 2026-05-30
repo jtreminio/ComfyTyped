@@ -15,7 +15,6 @@ public sealed class SwarmVideoResampleFPSNode : ComfyNode
 
     // ── Outputs ──
     public NodeOutput<ImageType> Images { get; }
-    public NodeOutput<FloatType> Fps { get; }
 
     // ── Inputs ──
     public NodeInput<ImageType> ImagesInput { get; }
@@ -26,7 +25,6 @@ public sealed class SwarmVideoResampleFPSNode : ComfyNode
     public SwarmVideoResampleFPSNode()
     {
         Images = AddOutput<ImageType>(0, "images");
-        Fps = AddOutput<FloatType>(1, "fps");
         ImagesInput = AddInput<ImageType>("images", required: true);
         FpsIn = AddInput<FloatType>("fps_in", required: true);
         FpsOut = AddInput<FloatType>("fps_out", required: true);
@@ -35,18 +33,21 @@ public sealed class SwarmVideoResampleFPSNode : ComfyNode
         Method.Set("linear");
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SwarmVideoResampleFPSNode With(
-        double? FpsIn = null,
-        double? FpsOut = null,
-        string? Method = null
+        In<ImageType>? ImagesInput = null,
+        FloatArg? FpsIn = null,
+        FloatArg? FpsOut = null,
+        StringArg? Method = null
     )
     {
-        if (FpsIn is { } v_FpsIn) this.FpsIn.Set(v_FpsIn);
-        if (FpsOut is { } v_FpsOut) this.FpsOut.Set(v_FpsOut);
-        if (Method is { } v_Method) this.Method.Set(v_Method);
+        ImagesInput?.ApplyTo(this.ImagesInput);
+        FpsIn?.ApplyTo(this.FpsIn);
+        FpsOut?.ApplyTo(this.FpsOut);
+        Method?.ApplyTo(this.Method);
         return this;
     }
 }

@@ -45,26 +45,29 @@ public sealed class SDPoseDrawKeypointsNode : ComfyNode
         ScoreThreshold.Set(0.3);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SDPoseDrawKeypointsNode With(
-        bool? DrawBody = null,
-        bool? DrawHands = null,
-        bool? DrawFace = null,
-        bool? DrawFeet = null,
-        long? StickWidth = null,
-        long? FacePointSize = null,
-        double? ScoreThreshold = null
+        In<PoseKeypointType>? Keypoints = null,
+        BoolArg? DrawBody = null,
+        BoolArg? DrawHands = null,
+        BoolArg? DrawFace = null,
+        BoolArg? DrawFeet = null,
+        IntArg? StickWidth = null,
+        IntArg? FacePointSize = null,
+        FloatArg? ScoreThreshold = null
     )
     {
-        if (DrawBody is { } v_DrawBody) this.DrawBody.Set(v_DrawBody);
-        if (DrawHands is { } v_DrawHands) this.DrawHands.Set(v_DrawHands);
-        if (DrawFace is { } v_DrawFace) this.DrawFace.Set(v_DrawFace);
-        if (DrawFeet is { } v_DrawFeet) this.DrawFeet.Set(v_DrawFeet);
-        if (StickWidth is { } v_StickWidth) this.StickWidth.Set(v_StickWidth);
-        if (FacePointSize is { } v_FacePointSize) this.FacePointSize.Set(v_FacePointSize);
-        if (ScoreThreshold is { } v_ScoreThreshold) this.ScoreThreshold.Set(v_ScoreThreshold);
+        Keypoints?.ApplyTo(this.Keypoints);
+        DrawBody?.ApplyTo(this.DrawBody);
+        DrawHands?.ApplyTo(this.DrawHands);
+        DrawFace?.ApplyTo(this.DrawFace);
+        DrawFeet?.ApplyTo(this.DrawFeet);
+        StickWidth?.ApplyTo(this.StickWidth);
+        FacePointSize?.ApplyTo(this.FacePointSize);
+        ScoreThreshold?.ApplyTo(this.ScoreThreshold);
         return this;
     }
 }

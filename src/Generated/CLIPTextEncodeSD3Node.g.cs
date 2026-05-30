@@ -32,20 +32,23 @@ public sealed class CLIPTextEncodeSD3Node : ComfyNode
         EmptyPadding = AddInput<StringType>("empty_padding", required: true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public CLIPTextEncodeSD3Node With(
-        string? ClipL = null,
-        string? ClipG = null,
-        string? T5xxl = null,
-        string? EmptyPadding = null
+        In<ClipType>? Clip = null,
+        StringArg? ClipL = null,
+        StringArg? ClipG = null,
+        StringArg? T5xxl = null,
+        StringArg? EmptyPadding = null
     )
     {
-        if (ClipL is { } v_ClipL) this.ClipL.Set(v_ClipL);
-        if (ClipG is { } v_ClipG) this.ClipG.Set(v_ClipG);
-        if (T5xxl is { } v_T5xxl) this.T5xxl.Set(v_T5xxl);
-        if (EmptyPadding is { } v_EmptyPadding) this.EmptyPadding.Set(v_EmptyPadding);
+        Clip?.ApplyTo(this.Clip);
+        ClipL?.ApplyTo(this.ClipL);
+        ClipG?.ApplyTo(this.ClipG);
+        T5xxl?.ApplyTo(this.T5xxl);
+        EmptyPadding?.ApplyTo(this.EmptyPadding);
         return this;
     }
 }

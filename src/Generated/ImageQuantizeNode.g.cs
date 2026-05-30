@@ -29,16 +29,19 @@ public sealed class ImageQuantizeNode : ComfyNode
         Dither = AddInput<StringType>("dither", required: true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public ImageQuantizeNode With(
-        long? Colors = null,
-        string? Dither = null
+        In<ImageType>? Image = null,
+        IntArg? Colors = null,
+        StringArg? Dither = null
     )
     {
-        if (Colors is { } v_Colors) this.Colors.Set(v_Colors);
-        if (Dither is { } v_Dither) this.Dither.Set(v_Dither);
+        Image?.ApplyTo(this.Image);
+        Colors?.ApplyTo(this.Colors);
+        Dither?.ApplyTo(this.Dither);
         return this;
     }
 }

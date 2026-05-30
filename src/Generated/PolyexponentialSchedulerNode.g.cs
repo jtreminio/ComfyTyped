@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: sampling/schedulers</remarks>
+/// <remarks>Category: model/sampling/schedulers</remarks>
 public sealed class PolyexponentialSchedulerNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -34,20 +34,21 @@ public sealed class PolyexponentialSchedulerNode : ComfyNode
         Rho.Set(1.0);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public PolyexponentialSchedulerNode With(
-        long? Steps = null,
-        double? SigmaMax = null,
-        double? SigmaMin = null,
-        double? Rho = null
+        IntArg? Steps = null,
+        FloatArg? SigmaMax = null,
+        FloatArg? SigmaMin = null,
+        FloatArg? Rho = null
     )
     {
-        if (Steps is { } v_Steps) this.Steps.Set(v_Steps);
-        if (SigmaMax is { } v_SigmaMax) this.SigmaMax.Set(v_SigmaMax);
-        if (SigmaMin is { } v_SigmaMin) this.SigmaMin.Set(v_SigmaMin);
-        if (Rho is { } v_Rho) this.Rho.Set(v_Rho);
+        Steps?.ApplyTo(this.Steps);
+        SigmaMax?.ApplyTo(this.SigmaMax);
+        SigmaMin?.ApplyTo(this.SigmaMin);
+        Rho?.ApplyTo(this.Rho);
         return this;
     }
 }

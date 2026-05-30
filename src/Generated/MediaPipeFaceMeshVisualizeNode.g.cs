@@ -37,18 +37,25 @@ public sealed class MediaPipeFaceMeshVisualizeNode : ComfyNode
         Image = AddInput<ImageType>("image", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public MediaPipeFaceMeshVisualizeNode With(
-        string? Connections = null,
-        long? Thickness = null,
-        long? PointSize = null
+        In<FaceLandmarksType>? FaceLandmarks = null,
+        StringArg? Connections = null,
+        In<ColorType>? Color = null,
+        IntArg? Thickness = null,
+        IntArg? PointSize = null,
+        In<ImageType>? Image = null
     )
     {
-        if (Connections is { } v_Connections) this.Connections.Set(v_Connections);
-        if (Thickness is { } v_Thickness) this.Thickness.Set(v_Thickness);
-        if (PointSize is { } v_PointSize) this.PointSize.Set(v_PointSize);
+        FaceLandmarks?.ApplyTo(this.FaceLandmarks);
+        Connections?.ApplyTo(this.Connections);
+        Color?.ApplyTo(this.Color);
+        Thickness?.ApplyTo(this.Thickness);
+        PointSize?.ApplyTo(this.PointSize);
+        Image?.ApplyTo(this.Image);
         return this;
     }
 }

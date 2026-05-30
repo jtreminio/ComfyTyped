@@ -34,14 +34,25 @@ public sealed class IPAdapterCombineEmbedsNode : ComfyNode
         Embed5 = AddInput<EmbedsType>("embed5", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public IPAdapterCombineEmbedsNode With(
-        string? Method = null
+        In<EmbedsType>? Embed1 = null,
+        StringArg? Method = null,
+        In<EmbedsType>? Embed2 = null,
+        In<EmbedsType>? Embed3 = null,
+        In<EmbedsType>? Embed4 = null,
+        In<EmbedsType>? Embed5 = null
     )
     {
-        if (Method is { } v_Method) this.Method.Set(v_Method);
+        Embed1?.ApplyTo(this.Embed1);
+        Method?.ApplyTo(this.Method);
+        Embed2?.ApplyTo(this.Embed2);
+        Embed3?.ApplyTo(this.Embed3);
+        Embed4?.ApplyTo(this.Embed4);
+        Embed5?.ApplyTo(this.Embed5);
         return this;
     }
 }

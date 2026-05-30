@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: latent</remarks>
+/// <remarks>Category: model/latent</remarks>
 public sealed class LatentCompositeMaskedNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -37,18 +37,25 @@ public sealed class LatentCompositeMaskedNode : ComfyNode
         Mask = AddInput<MaskType>("mask", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public LatentCompositeMaskedNode With(
-        long? X = null,
-        long? Y = null,
-        bool? ResizeSource = null
+        In<LatentType>? Destination = null,
+        In<LatentType>? Source = null,
+        IntArg? X = null,
+        IntArg? Y = null,
+        BoolArg? ResizeSource = null,
+        In<MaskType>? Mask = null
     )
     {
-        if (X is { } v_X) this.X.Set(v_X);
-        if (Y is { } v_Y) this.Y.Set(v_Y);
-        if (ResizeSource is { } v_ResizeSource) this.ResizeSource.Set(v_ResizeSource);
+        Destination?.ApplyTo(this.Destination);
+        Source?.ApplyTo(this.Source);
+        X?.ApplyTo(this.X);
+        Y?.ApplyTo(this.Y);
+        ResizeSource?.ApplyTo(this.ResizeSource);
+        Mask?.ApplyTo(this.Mask);
         return this;
     }
 }

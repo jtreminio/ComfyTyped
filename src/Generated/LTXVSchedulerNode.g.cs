@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: sampling/schedulers</remarks>
+/// <remarks>Category: model/sampling/schedulers</remarks>
 public sealed class LTXVSchedulerNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -39,22 +39,25 @@ public sealed class LTXVSchedulerNode : ComfyNode
         Latent = AddInput<LatentType>("latent", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public LTXVSchedulerNode With(
-        long? Steps = null,
-        double? MaxShift = null,
-        double? BaseShift = null,
-        bool? Stretch = null,
-        double? Terminal = null
+        IntArg? Steps = null,
+        FloatArg? MaxShift = null,
+        FloatArg? BaseShift = null,
+        BoolArg? Stretch = null,
+        FloatArg? Terminal = null,
+        In<LatentType>? Latent = null
     )
     {
-        if (Steps is { } v_Steps) this.Steps.Set(v_Steps);
-        if (MaxShift is { } v_MaxShift) this.MaxShift.Set(v_MaxShift);
-        if (BaseShift is { } v_BaseShift) this.BaseShift.Set(v_BaseShift);
-        if (Stretch is { } v_Stretch) this.Stretch.Set(v_Stretch);
-        if (Terminal is { } v_Terminal) this.Terminal.Set(v_Terminal);
+        Steps?.ApplyTo(this.Steps);
+        MaxShift?.ApplyTo(this.MaxShift);
+        BaseShift?.ApplyTo(this.BaseShift);
+        Stretch?.ApplyTo(this.Stretch);
+        Terminal?.ApplyTo(this.Terminal);
+        Latent?.ApplyTo(this.Latent);
         return this;
     }
 }

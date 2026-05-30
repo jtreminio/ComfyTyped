@@ -98,60 +98,65 @@ public sealed class ModelMergeSDXLNode : ComfyNode
         Out.Set(1.0);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public ModelMergeSDXLNode With(
-        double? TimeEmbed = null,
-        double? LabelEmb = null,
-        double? InputBlocks0 = null,
-        double? InputBlocks1 = null,
-        double? InputBlocks2 = null,
-        double? InputBlocks3 = null,
-        double? InputBlocks4 = null,
-        double? InputBlocks5 = null,
-        double? InputBlocks6 = null,
-        double? InputBlocks7 = null,
-        double? InputBlocks8 = null,
-        double? MiddleBlock0 = null,
-        double? MiddleBlock1 = null,
-        double? MiddleBlock2 = null,
-        double? OutputBlocks0 = null,
-        double? OutputBlocks1 = null,
-        double? OutputBlocks2 = null,
-        double? OutputBlocks3 = null,
-        double? OutputBlocks4 = null,
-        double? OutputBlocks5 = null,
-        double? OutputBlocks6 = null,
-        double? OutputBlocks7 = null,
-        double? OutputBlocks8 = null,
-        double? Out = null
+        In<ModelType>? Model1 = null,
+        In<ModelType>? Model2 = null,
+        FloatArg? TimeEmbed = null,
+        FloatArg? LabelEmb = null,
+        FloatArg? InputBlocks0 = null,
+        FloatArg? InputBlocks1 = null,
+        FloatArg? InputBlocks2 = null,
+        FloatArg? InputBlocks3 = null,
+        FloatArg? InputBlocks4 = null,
+        FloatArg? InputBlocks5 = null,
+        FloatArg? InputBlocks6 = null,
+        FloatArg? InputBlocks7 = null,
+        FloatArg? InputBlocks8 = null,
+        FloatArg? MiddleBlock0 = null,
+        FloatArg? MiddleBlock1 = null,
+        FloatArg? MiddleBlock2 = null,
+        FloatArg? OutputBlocks0 = null,
+        FloatArg? OutputBlocks1 = null,
+        FloatArg? OutputBlocks2 = null,
+        FloatArg? OutputBlocks3 = null,
+        FloatArg? OutputBlocks4 = null,
+        FloatArg? OutputBlocks5 = null,
+        FloatArg? OutputBlocks6 = null,
+        FloatArg? OutputBlocks7 = null,
+        FloatArg? OutputBlocks8 = null,
+        FloatArg? Out = null
     )
     {
-        if (TimeEmbed is { } v_TimeEmbed) this.TimeEmbed.Set(v_TimeEmbed);
-        if (LabelEmb is { } v_LabelEmb) this.LabelEmb.Set(v_LabelEmb);
-        if (InputBlocks0 is { } v_InputBlocks0) this.InputBlocks0.Set(v_InputBlocks0);
-        if (InputBlocks1 is { } v_InputBlocks1) this.InputBlocks1.Set(v_InputBlocks1);
-        if (InputBlocks2 is { } v_InputBlocks2) this.InputBlocks2.Set(v_InputBlocks2);
-        if (InputBlocks3 is { } v_InputBlocks3) this.InputBlocks3.Set(v_InputBlocks3);
-        if (InputBlocks4 is { } v_InputBlocks4) this.InputBlocks4.Set(v_InputBlocks4);
-        if (InputBlocks5 is { } v_InputBlocks5) this.InputBlocks5.Set(v_InputBlocks5);
-        if (InputBlocks6 is { } v_InputBlocks6) this.InputBlocks6.Set(v_InputBlocks6);
-        if (InputBlocks7 is { } v_InputBlocks7) this.InputBlocks7.Set(v_InputBlocks7);
-        if (InputBlocks8 is { } v_InputBlocks8) this.InputBlocks8.Set(v_InputBlocks8);
-        if (MiddleBlock0 is { } v_MiddleBlock0) this.MiddleBlock0.Set(v_MiddleBlock0);
-        if (MiddleBlock1 is { } v_MiddleBlock1) this.MiddleBlock1.Set(v_MiddleBlock1);
-        if (MiddleBlock2 is { } v_MiddleBlock2) this.MiddleBlock2.Set(v_MiddleBlock2);
-        if (OutputBlocks0 is { } v_OutputBlocks0) this.OutputBlocks0.Set(v_OutputBlocks0);
-        if (OutputBlocks1 is { } v_OutputBlocks1) this.OutputBlocks1.Set(v_OutputBlocks1);
-        if (OutputBlocks2 is { } v_OutputBlocks2) this.OutputBlocks2.Set(v_OutputBlocks2);
-        if (OutputBlocks3 is { } v_OutputBlocks3) this.OutputBlocks3.Set(v_OutputBlocks3);
-        if (OutputBlocks4 is { } v_OutputBlocks4) this.OutputBlocks4.Set(v_OutputBlocks4);
-        if (OutputBlocks5 is { } v_OutputBlocks5) this.OutputBlocks5.Set(v_OutputBlocks5);
-        if (OutputBlocks6 is { } v_OutputBlocks6) this.OutputBlocks6.Set(v_OutputBlocks6);
-        if (OutputBlocks7 is { } v_OutputBlocks7) this.OutputBlocks7.Set(v_OutputBlocks7);
-        if (OutputBlocks8 is { } v_OutputBlocks8) this.OutputBlocks8.Set(v_OutputBlocks8);
-        if (Out is { } v_Out) this.Out.Set(v_Out);
+        Model1?.ApplyTo(this.Model1);
+        Model2?.ApplyTo(this.Model2);
+        TimeEmbed?.ApplyTo(this.TimeEmbed);
+        LabelEmb?.ApplyTo(this.LabelEmb);
+        InputBlocks0?.ApplyTo(this.InputBlocks0);
+        InputBlocks1?.ApplyTo(this.InputBlocks1);
+        InputBlocks2?.ApplyTo(this.InputBlocks2);
+        InputBlocks3?.ApplyTo(this.InputBlocks3);
+        InputBlocks4?.ApplyTo(this.InputBlocks4);
+        InputBlocks5?.ApplyTo(this.InputBlocks5);
+        InputBlocks6?.ApplyTo(this.InputBlocks6);
+        InputBlocks7?.ApplyTo(this.InputBlocks7);
+        InputBlocks8?.ApplyTo(this.InputBlocks8);
+        MiddleBlock0?.ApplyTo(this.MiddleBlock0);
+        MiddleBlock1?.ApplyTo(this.MiddleBlock1);
+        MiddleBlock2?.ApplyTo(this.MiddleBlock2);
+        OutputBlocks0?.ApplyTo(this.OutputBlocks0);
+        OutputBlocks1?.ApplyTo(this.OutputBlocks1);
+        OutputBlocks2?.ApplyTo(this.OutputBlocks2);
+        OutputBlocks3?.ApplyTo(this.OutputBlocks3);
+        OutputBlocks4?.ApplyTo(this.OutputBlocks4);
+        OutputBlocks5?.ApplyTo(this.OutputBlocks5);
+        OutputBlocks6?.ApplyTo(this.OutputBlocks6);
+        OutputBlocks7?.ApplyTo(this.OutputBlocks7);
+        OutputBlocks8?.ApplyTo(this.OutputBlocks8);
+        Out?.ApplyTo(this.Out);
         return this;
     }
 }

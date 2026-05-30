@@ -37,20 +37,23 @@ public sealed class ImageGridNode : ComfyNode
         Padding.Set(4L);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public ImageGridNode With(
-        long? Columns = null,
-        long? CellWidth = null,
-        long? CellHeight = null,
-        long? Padding = null
+        In<ImageType>? ImagesInput = null,
+        IntArg? Columns = null,
+        IntArg? CellWidth = null,
+        IntArg? CellHeight = null,
+        IntArg? Padding = null
     )
     {
-        if (Columns is { } v_Columns) this.Columns.Set(v_Columns);
-        if (CellWidth is { } v_CellWidth) this.CellWidth.Set(v_CellWidth);
-        if (CellHeight is { } v_CellHeight) this.CellHeight.Set(v_CellHeight);
-        if (Padding is { } v_Padding) this.Padding.Set(v_Padding);
+        ImagesInput?.ApplyTo(this.ImagesInput);
+        Columns?.ApplyTo(this.Columns);
+        CellWidth?.ApplyTo(this.CellWidth);
+        CellHeight?.ApplyTo(this.CellHeight);
+        Padding?.ApplyTo(this.Padding);
         return this;
     }
 }

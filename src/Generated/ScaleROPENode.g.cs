@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Scale and shift the ROPE of the model.</summary>
-/// <remarks>Category: advanced/model_patches</remarks>
+/// <remarks>Category: model/patch</remarks>
 public sealed class ScaleROPENode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -43,24 +43,27 @@ public sealed class ScaleROPENode : ComfyNode
         ShiftT.Set(0.0);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public ScaleROPENode With(
-        double? ScaleX = null,
-        double? ShiftX = null,
-        double? ScaleY = null,
-        double? ShiftY = null,
-        double? ScaleT = null,
-        double? ShiftT = null
+        In<ModelType>? Model = null,
+        FloatArg? ScaleX = null,
+        FloatArg? ShiftX = null,
+        FloatArg? ScaleY = null,
+        FloatArg? ShiftY = null,
+        FloatArg? ScaleT = null,
+        FloatArg? ShiftT = null
     )
     {
-        if (ScaleX is { } v_ScaleX) this.ScaleX.Set(v_ScaleX);
-        if (ShiftX is { } v_ShiftX) this.ShiftX.Set(v_ShiftX);
-        if (ScaleY is { } v_ScaleY) this.ScaleY.Set(v_ScaleY);
-        if (ShiftY is { } v_ShiftY) this.ShiftY.Set(v_ShiftY);
-        if (ScaleT is { } v_ScaleT) this.ScaleT.Set(v_ScaleT);
-        if (ShiftT is { } v_ShiftT) this.ShiftT.Set(v_ShiftT);
+        Model?.ApplyTo(this.Model);
+        ScaleX?.ApplyTo(this.ScaleX);
+        ShiftX?.ApplyTo(this.ShiftX);
+        ScaleY?.ApplyTo(this.ScaleY);
+        ShiftY?.ApplyTo(this.ShiftY);
+        ScaleT?.ApplyTo(this.ScaleT);
+        ShiftT?.ApplyTo(this.ShiftT);
         return this;
     }
 }

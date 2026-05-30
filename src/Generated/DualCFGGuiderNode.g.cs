@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: sampling/guiders</remarks>
+/// <remarks>Category: model/sampling/guiders</remarks>
 public sealed class DualCFGGuiderNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -38,18 +38,27 @@ public sealed class DualCFGGuiderNode : ComfyNode
         Style = AddInput<StringType>("style", required: true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public DualCFGGuiderNode With(
-        double? CfgConds = null,
-        double? CfgCond2Negative = null,
-        string? Style = null
+        In<ModelType>? Model = null,
+        In<ConditioningType>? Cond1 = null,
+        In<ConditioningType>? Cond2 = null,
+        In<ConditioningType>? Negative = null,
+        FloatArg? CfgConds = null,
+        FloatArg? CfgCond2Negative = null,
+        StringArg? Style = null
     )
     {
-        if (CfgConds is { } v_CfgConds) this.CfgConds.Set(v_CfgConds);
-        if (CfgCond2Negative is { } v_CfgCond2Negative) this.CfgCond2Negative.Set(v_CfgCond2Negative);
-        if (Style is { } v_Style) this.Style.Set(v_Style);
+        Model?.ApplyTo(this.Model);
+        Cond1?.ApplyTo(this.Cond1);
+        Cond2?.ApplyTo(this.Cond2);
+        Negative?.ApplyTo(this.Negative);
+        CfgConds?.ApplyTo(this.CfgConds);
+        CfgCond2Negative?.ApplyTo(this.CfgCond2Negative);
+        Style?.ApplyTo(this.Style);
         return this;
     }
 }

@@ -40,26 +40,27 @@ public sealed class RegexExtractNode : ComfyNode
         GroupIndex.Set(1L);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public RegexExtractNode With(
-        string? String = null,
-        string? RegexPattern = null,
-        string? Mode = null,
-        bool? CaseInsensitive = null,
-        bool? Multiline = null,
-        bool? Dotall = null,
-        long? GroupIndex = null
+        StringArg? String = null,
+        StringArg? RegexPattern = null,
+        StringArg? Mode = null,
+        BoolArg? CaseInsensitive = null,
+        BoolArg? Multiline = null,
+        BoolArg? Dotall = null,
+        IntArg? GroupIndex = null
     )
     {
-        if (String is { } v_String) this.String.Set(v_String);
-        if (RegexPattern is { } v_RegexPattern) this.RegexPattern.Set(v_RegexPattern);
-        if (Mode is { } v_Mode) this.Mode.Set(v_Mode);
-        if (CaseInsensitive is { } v_CaseInsensitive) this.CaseInsensitive.Set(v_CaseInsensitive);
-        if (Multiline is { } v_Multiline) this.Multiline.Set(v_Multiline);
-        if (Dotall is { } v_Dotall) this.Dotall.Set(v_Dotall);
-        if (GroupIndex is { } v_GroupIndex) this.GroupIndex.Set(v_GroupIndex);
+        String?.ApplyTo(this.String);
+        RegexPattern?.ApplyTo(this.RegexPattern);
+        Mode?.ApplyTo(this.Mode);
+        CaseInsensitive?.ApplyTo(this.CaseInsensitive);
+        Multiline?.ApplyTo(this.Multiline);
+        Dotall?.ApplyTo(this.Dotall);
+        GroupIndex?.ApplyTo(this.GroupIndex);
         return this;
     }
 }

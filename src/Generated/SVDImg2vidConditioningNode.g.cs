@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: conditioning/video_models</remarks>
+/// <remarks>Category: model/conditioning/video_models</remarks>
 public sealed class SVDImg2vidConditioningNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -50,24 +50,31 @@ public sealed class SVDImg2vidConditioningNode : ComfyNode
         AugmentationLevel.Set(0.0);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SVDImg2vidConditioningNode With(
-        long? Width = null,
-        long? Height = null,
-        long? VideoFrames = null,
-        long? MotionBucketId = null,
-        long? Fps = null,
-        double? AugmentationLevel = null
+        In<ClipVisionType>? ClipVision = null,
+        In<ImageType>? InitImage = null,
+        In<VaeType>? Vae = null,
+        IntArg? Width = null,
+        IntArg? Height = null,
+        IntArg? VideoFrames = null,
+        IntArg? MotionBucketId = null,
+        IntArg? Fps = null,
+        FloatArg? AugmentationLevel = null
     )
     {
-        if (Width is { } v_Width) this.Width.Set(v_Width);
-        if (Height is { } v_Height) this.Height.Set(v_Height);
-        if (VideoFrames is { } v_VideoFrames) this.VideoFrames.Set(v_VideoFrames);
-        if (MotionBucketId is { } v_MotionBucketId) this.MotionBucketId.Set(v_MotionBucketId);
-        if (Fps is { } v_Fps) this.Fps.Set(v_Fps);
-        if (AugmentationLevel is { } v_AugmentationLevel) this.AugmentationLevel.Set(v_AugmentationLevel);
+        ClipVision?.ApplyTo(this.ClipVision);
+        InitImage?.ApplyTo(this.InitImage);
+        Vae?.ApplyTo(this.Vae);
+        Width?.ApplyTo(this.Width);
+        Height?.ApplyTo(this.Height);
+        VideoFrames?.ApplyTo(this.VideoFrames);
+        MotionBucketId?.ApplyTo(this.MotionBucketId);
+        Fps?.ApplyTo(this.Fps);
+        AugmentationLevel?.ApplyTo(this.AugmentationLevel);
         return this;
     }
 }

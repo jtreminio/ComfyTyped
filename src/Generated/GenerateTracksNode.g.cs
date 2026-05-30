@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: conditioning/video_models</remarks>
+/// <remarks>Category: model/conditioning/video_models</remarks>
 public sealed class GenerateTracksNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -64,38 +64,41 @@ public sealed class GenerateTracksNode : ComfyNode
         TrackMask = AddInput<MaskType>("track_mask", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public GenerateTracksNode With(
-        long? Width = null,
-        long? Height = null,
-        double? StartX = null,
-        double? StartY = null,
-        double? EndX = null,
-        double? EndY = null,
-        long? NumFrames = null,
-        long? NumTracks = null,
-        double? TrackSpread = null,
-        bool? Bezier = null,
-        double? MidX = null,
-        double? MidY = null,
-        string? Interpolation = null
+        IntArg? Width = null,
+        IntArg? Height = null,
+        FloatArg? StartX = null,
+        FloatArg? StartY = null,
+        FloatArg? EndX = null,
+        FloatArg? EndY = null,
+        IntArg? NumFrames = null,
+        IntArg? NumTracks = null,
+        FloatArg? TrackSpread = null,
+        BoolArg? Bezier = null,
+        FloatArg? MidX = null,
+        FloatArg? MidY = null,
+        StringArg? Interpolation = null,
+        In<MaskType>? TrackMask = null
     )
     {
-        if (Width is { } v_Width) this.Width.Set(v_Width);
-        if (Height is { } v_Height) this.Height.Set(v_Height);
-        if (StartX is { } v_StartX) this.StartX.Set(v_StartX);
-        if (StartY is { } v_StartY) this.StartY.Set(v_StartY);
-        if (EndX is { } v_EndX) this.EndX.Set(v_EndX);
-        if (EndY is { } v_EndY) this.EndY.Set(v_EndY);
-        if (NumFrames is { } v_NumFrames) this.NumFrames.Set(v_NumFrames);
-        if (NumTracks is { } v_NumTracks) this.NumTracks.Set(v_NumTracks);
-        if (TrackSpread is { } v_TrackSpread) this.TrackSpread.Set(v_TrackSpread);
-        if (Bezier is { } v_Bezier) this.Bezier.Set(v_Bezier);
-        if (MidX is { } v_MidX) this.MidX.Set(v_MidX);
-        if (MidY is { } v_MidY) this.MidY.Set(v_MidY);
-        if (Interpolation is { } v_Interpolation) this.Interpolation.Set(v_Interpolation);
+        Width?.ApplyTo(this.Width);
+        Height?.ApplyTo(this.Height);
+        StartX?.ApplyTo(this.StartX);
+        StartY?.ApplyTo(this.StartY);
+        EndX?.ApplyTo(this.EndX);
+        EndY?.ApplyTo(this.EndY);
+        NumFrames?.ApplyTo(this.NumFrames);
+        NumTracks?.ApplyTo(this.NumTracks);
+        TrackSpread?.ApplyTo(this.TrackSpread);
+        Bezier?.ApplyTo(this.Bezier);
+        MidX?.ApplyTo(this.MidX);
+        MidY?.ApplyTo(this.MidY);
+        Interpolation?.ApplyTo(this.Interpolation);
+        TrackMask?.ApplyTo(this.TrackMask);
         return this;
     }
 }

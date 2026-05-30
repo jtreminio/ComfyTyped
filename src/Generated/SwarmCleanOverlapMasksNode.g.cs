@@ -28,4 +28,18 @@ public sealed class SwarmCleanOverlapMasksNode : ComfyNode
         MaskA = AddInput<MaskType>("mask_a", required: true);
         MaskB = AddInput<MaskType>("mask_b", required: true);
     }
+
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
+    public SwarmCleanOverlapMasksNode With(
+        In<MaskType>? MaskA = null,
+        In<MaskType>? MaskB = null
+    )
+    {
+        MaskA?.ApplyTo(this.MaskA);
+        MaskB?.ApplyTo(this.MaskB);
+        return this;
+    }
 }

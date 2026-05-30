@@ -32,18 +32,21 @@ public sealed class CreateHookModelAsLoraNode : ComfyNode
         PrevHooks = AddInput<HooksType>("prev_hooks", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public CreateHookModelAsLoraNode With(
-        string? CkptName = null,
-        double? StrengthModel = null,
-        double? StrengthClip = null
+        StringArg? CkptName = null,
+        FloatArg? StrengthModel = null,
+        FloatArg? StrengthClip = null,
+        In<HooksType>? PrevHooks = null
     )
     {
-        if (CkptName is { } v_CkptName) this.CkptName.Set(v_CkptName);
-        if (StrengthModel is { } v_StrengthModel) this.StrengthModel.Set(v_StrengthModel);
-        if (StrengthClip is { } v_StrengthClip) this.StrengthClip.Set(v_StrengthClip);
+        CkptName?.ApplyTo(this.CkptName);
+        StrengthModel?.ApplyTo(this.StrengthModel);
+        StrengthClip?.ApplyTo(this.StrengthClip);
+        PrevHooks?.ApplyTo(this.PrevHooks);
         return this;
     }
 }

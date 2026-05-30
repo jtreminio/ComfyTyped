@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: sampling/samplers</remarks>
+/// <remarks>Category: model/sampling/samplers</remarks>
 public sealed class SamplerDPMAdaptativeNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -52,32 +52,33 @@ public sealed class SamplerDPMAdaptativeNode : ComfyNode
         SNoise.Set(1.0);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SamplerDPMAdaptativeNode With(
-        long? Order = null,
-        double? Rtol = null,
-        double? Atol = null,
-        double? HInit = null,
-        double? Pcoeff = null,
-        double? Icoeff = null,
-        double? Dcoeff = null,
-        double? AcceptSafety = null,
-        double? Eta = null,
-        double? SNoise = null
+        IntArg? Order = null,
+        FloatArg? Rtol = null,
+        FloatArg? Atol = null,
+        FloatArg? HInit = null,
+        FloatArg? Pcoeff = null,
+        FloatArg? Icoeff = null,
+        FloatArg? Dcoeff = null,
+        FloatArg? AcceptSafety = null,
+        FloatArg? Eta = null,
+        FloatArg? SNoise = null
     )
     {
-        if (Order is { } v_Order) this.Order.Set(v_Order);
-        if (Rtol is { } v_Rtol) this.Rtol.Set(v_Rtol);
-        if (Atol is { } v_Atol) this.Atol.Set(v_Atol);
-        if (HInit is { } v_HInit) this.HInit.Set(v_HInit);
-        if (Pcoeff is { } v_Pcoeff) this.Pcoeff.Set(v_Pcoeff);
-        if (Icoeff is { } v_Icoeff) this.Icoeff.Set(v_Icoeff);
-        if (Dcoeff is { } v_Dcoeff) this.Dcoeff.Set(v_Dcoeff);
-        if (AcceptSafety is { } v_AcceptSafety) this.AcceptSafety.Set(v_AcceptSafety);
-        if (Eta is { } v_Eta) this.Eta.Set(v_Eta);
-        if (SNoise is { } v_SNoise) this.SNoise.Set(v_SNoise);
+        Order?.ApplyTo(this.Order);
+        Rtol?.ApplyTo(this.Rtol);
+        Atol?.ApplyTo(this.Atol);
+        HInit?.ApplyTo(this.HInit);
+        Pcoeff?.ApplyTo(this.Pcoeff);
+        Icoeff?.ApplyTo(this.Icoeff);
+        Dcoeff?.ApplyTo(this.Dcoeff);
+        AcceptSafety?.ApplyTo(this.AcceptSafety);
+        Eta?.ApplyTo(this.Eta);
+        SNoise?.ApplyTo(this.SNoise);
         return this;
     }
 }

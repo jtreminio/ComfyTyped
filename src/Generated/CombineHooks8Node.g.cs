@@ -37,4 +37,30 @@ public sealed class CombineHooks8Node : ComfyNode
         HooksG = AddInput<HooksType>("hooks_G", required: false);
         HooksH = AddInput<HooksType>("hooks_H", required: false);
     }
+
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
+    public CombineHooks8Node With(
+        In<HooksType>? HooksA = null,
+        In<HooksType>? HooksB = null,
+        In<HooksType>? HooksC = null,
+        In<HooksType>? HooksD = null,
+        In<HooksType>? HooksE = null,
+        In<HooksType>? HooksF = null,
+        In<HooksType>? HooksG = null,
+        In<HooksType>? HooksH = null
+    )
+    {
+        HooksA?.ApplyTo(this.HooksA);
+        HooksB?.ApplyTo(this.HooksB);
+        HooksC?.ApplyTo(this.HooksC);
+        HooksD?.ApplyTo(this.HooksD);
+        HooksE?.ApplyTo(this.HooksE);
+        HooksF?.ApplyTo(this.HooksF);
+        HooksG?.ApplyTo(this.HooksG);
+        HooksH?.ApplyTo(this.HooksH);
+        return this;
+    }
 }

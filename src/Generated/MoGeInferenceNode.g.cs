@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Run MoGe on a single image to estimate depth and geometry.</summary>
-/// <remarks>Category: image/geometry_estimation</remarks>
+/// <remarks>Category: image/geometry estimation</remarks>
 public sealed class MoGeInferenceNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -42,22 +42,27 @@ public sealed class MoGeInferenceNode : ComfyNode
         ApplyMask.Set(true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public MoGeInferenceNode With(
-        long? ResolutionLevel = null,
-        double? FovXDegrees = null,
-        long? BatchSize = null,
-        bool? ForceProjection = null,
-        bool? ApplyMask = null
+        In<MogeModelType>? MogeModel = null,
+        In<ImageType>? Image = null,
+        IntArg? ResolutionLevel = null,
+        FloatArg? FovXDegrees = null,
+        IntArg? BatchSize = null,
+        BoolArg? ForceProjection = null,
+        BoolArg? ApplyMask = null
     )
     {
-        if (ResolutionLevel is { } v_ResolutionLevel) this.ResolutionLevel.Set(v_ResolutionLevel);
-        if (FovXDegrees is { } v_FovXDegrees) this.FovXDegrees.Set(v_FovXDegrees);
-        if (BatchSize is { } v_BatchSize) this.BatchSize.Set(v_BatchSize);
-        if (ForceProjection is { } v_ForceProjection) this.ForceProjection.Set(v_ForceProjection);
-        if (ApplyMask is { } v_ApplyMask) this.ApplyMask.Set(v_ApplyMask);
+        MogeModel?.ApplyTo(this.MogeModel);
+        Image?.ApplyTo(this.Image);
+        ResolutionLevel?.ApplyTo(this.ResolutionLevel);
+        FovXDegrees?.ApplyTo(this.FovXDegrees);
+        BatchSize?.ApplyTo(this.BatchSize);
+        ForceProjection?.ApplyTo(this.ForceProjection);
+        ApplyMask?.ApplyTo(this.ApplyMask);
         return this;
     }
 }

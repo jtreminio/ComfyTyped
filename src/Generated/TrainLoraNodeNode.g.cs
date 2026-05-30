@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: training</remarks>
+/// <remarks>Category: model/training</remarks>
 public sealed class TrainLoraNodeNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -86,48 +86,55 @@ public sealed class TrainLoraNodeNode : ComfyNode
         BypassMode.Set(false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public TrainLoraNodeNode With(
-        long? BatchSize = null,
-        long? GradAccumulationSteps = null,
-        long? StepsInput = null,
-        double? LearningRate = null,
-        long? Rank = null,
-        string? Optimizer = null,
-        string? LossFunction = null,
-        long? Seed = null,
-        string? TrainingDtype = null,
-        string? LoraDtype = null,
-        bool? QuantizedBackward = null,
-        string? Algorithm = null,
-        bool? GradientCheckpointing = null,
-        long? CheckpointDepth = null,
-        bool? Offloading = null,
-        string? ExistingLora = null,
-        bool? BucketMode = null,
-        bool? BypassMode = null
+        In<ModelType>? Model = null,
+        In<LatentType>? Latents = null,
+        In<ConditioningType>? Positive = null,
+        IntArg? BatchSize = null,
+        IntArg? GradAccumulationSteps = null,
+        IntArg? StepsInput = null,
+        FloatArg? LearningRate = null,
+        IntArg? Rank = null,
+        StringArg? Optimizer = null,
+        StringArg? LossFunction = null,
+        IntArg? Seed = null,
+        StringArg? TrainingDtype = null,
+        StringArg? LoraDtype = null,
+        BoolArg? QuantizedBackward = null,
+        StringArg? Algorithm = null,
+        BoolArg? GradientCheckpointing = null,
+        IntArg? CheckpointDepth = null,
+        BoolArg? Offloading = null,
+        StringArg? ExistingLora = null,
+        BoolArg? BucketMode = null,
+        BoolArg? BypassMode = null
     )
     {
-        if (BatchSize is { } v_BatchSize) this.BatchSize.Set(v_BatchSize);
-        if (GradAccumulationSteps is { } v_GradAccumulationSteps) this.GradAccumulationSteps.Set(v_GradAccumulationSteps);
-        if (StepsInput is { } v_StepsInput) this.StepsInput.Set(v_StepsInput);
-        if (LearningRate is { } v_LearningRate) this.LearningRate.Set(v_LearningRate);
-        if (Rank is { } v_Rank) this.Rank.Set(v_Rank);
-        if (Optimizer is { } v_Optimizer) this.Optimizer.Set(v_Optimizer);
-        if (LossFunction is { } v_LossFunction) this.LossFunction.Set(v_LossFunction);
-        if (Seed is { } v_Seed) this.Seed.Set(v_Seed);
-        if (TrainingDtype is { } v_TrainingDtype) this.TrainingDtype.Set(v_TrainingDtype);
-        if (LoraDtype is { } v_LoraDtype) this.LoraDtype.Set(v_LoraDtype);
-        if (QuantizedBackward is { } v_QuantizedBackward) this.QuantizedBackward.Set(v_QuantizedBackward);
-        if (Algorithm is { } v_Algorithm) this.Algorithm.Set(v_Algorithm);
-        if (GradientCheckpointing is { } v_GradientCheckpointing) this.GradientCheckpointing.Set(v_GradientCheckpointing);
-        if (CheckpointDepth is { } v_CheckpointDepth) this.CheckpointDepth.Set(v_CheckpointDepth);
-        if (Offloading is { } v_Offloading) this.Offloading.Set(v_Offloading);
-        if (ExistingLora is { } v_ExistingLora) this.ExistingLora.Set(v_ExistingLora);
-        if (BucketMode is { } v_BucketMode) this.BucketMode.Set(v_BucketMode);
-        if (BypassMode is { } v_BypassMode) this.BypassMode.Set(v_BypassMode);
+        Model?.ApplyTo(this.Model);
+        Latents?.ApplyTo(this.Latents);
+        Positive?.ApplyTo(this.Positive);
+        BatchSize?.ApplyTo(this.BatchSize);
+        GradAccumulationSteps?.ApplyTo(this.GradAccumulationSteps);
+        StepsInput?.ApplyTo(this.StepsInput);
+        LearningRate?.ApplyTo(this.LearningRate);
+        Rank?.ApplyTo(this.Rank);
+        Optimizer?.ApplyTo(this.Optimizer);
+        LossFunction?.ApplyTo(this.LossFunction);
+        Seed?.ApplyTo(this.Seed);
+        TrainingDtype?.ApplyTo(this.TrainingDtype);
+        LoraDtype?.ApplyTo(this.LoraDtype);
+        QuantizedBackward?.ApplyTo(this.QuantizedBackward);
+        Algorithm?.ApplyTo(this.Algorithm);
+        GradientCheckpointing?.ApplyTo(this.GradientCheckpointing);
+        CheckpointDepth?.ApplyTo(this.CheckpointDepth);
+        Offloading?.ApplyTo(this.Offloading);
+        ExistingLora?.ApplyTo(this.ExistingLora);
+        BucketMode?.ApplyTo(this.BucketMode);
+        BypassMode?.ApplyTo(this.BypassMode);
         return this;
     }
 }

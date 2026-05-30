@@ -45,26 +45,29 @@ public sealed class AudioEqualizer3BandNode : ComfyNode
         HighFreq.Set(5000L);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public AudioEqualizer3BandNode With(
-        double? LowGainDB = null,
-        long? LowFreq = null,
-        double? MidGainDB = null,
-        long? MidFreq = null,
-        double? MidQ = null,
-        double? HighGainDB = null,
-        long? HighFreq = null
+        In<AudioType>? Audio = null,
+        FloatArg? LowGainDB = null,
+        IntArg? LowFreq = null,
+        FloatArg? MidGainDB = null,
+        IntArg? MidFreq = null,
+        FloatArg? MidQ = null,
+        FloatArg? HighGainDB = null,
+        IntArg? HighFreq = null
     )
     {
-        if (LowGainDB is { } v_LowGainDB) this.LowGainDB.Set(v_LowGainDB);
-        if (LowFreq is { } v_LowFreq) this.LowFreq.Set(v_LowFreq);
-        if (MidGainDB is { } v_MidGainDB) this.MidGainDB.Set(v_MidGainDB);
-        if (MidFreq is { } v_MidFreq) this.MidFreq.Set(v_MidFreq);
-        if (MidQ is { } v_MidQ) this.MidQ.Set(v_MidQ);
-        if (HighGainDB is { } v_HighGainDB) this.HighGainDB.Set(v_HighGainDB);
-        if (HighFreq is { } v_HighFreq) this.HighFreq.Set(v_HighFreq);
+        Audio?.ApplyTo(this.Audio);
+        LowGainDB?.ApplyTo(this.LowGainDB);
+        LowFreq?.ApplyTo(this.LowFreq);
+        MidGainDB?.ApplyTo(this.MidGainDB);
+        MidFreq?.ApplyTo(this.MidFreq);
+        MidQ?.ApplyTo(this.MidQ);
+        HighGainDB?.ApplyTo(this.HighGainDB);
+        HighFreq?.ApplyTo(this.HighFreq);
         return this;
     }
 }

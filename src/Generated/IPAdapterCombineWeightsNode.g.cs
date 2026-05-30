@@ -30,16 +30,17 @@ public sealed class IPAdapterCombineWeightsNode : ComfyNode
         Weights2.Set(0.0);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public IPAdapterCombineWeightsNode With(
-        double? Weights1 = null,
-        double? Weights2 = null
+        FloatArg? Weights1 = null,
+        FloatArg? Weights2 = null
     )
     {
-        if (Weights1 is { } v_Weights1) this.Weights1.Set(v_Weights1);
-        if (Weights2 is { } v_Weights2) this.Weights2.Set(v_Weights2);
+        Weights1?.ApplyTo(this.Weights1);
+        Weights2?.ApplyTo(this.Weights2);
         return this;
     }
 }

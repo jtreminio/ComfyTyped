@@ -47,22 +47,35 @@ public sealed class IPAdapterEmbedsBatchNode : ComfyNode
         ClipVision = AddInput<ClipVisionType>("clip_vision", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public IPAdapterEmbedsBatchNode With(
-        double? Weight = null,
-        string? WeightType = null,
-        double? StartAt = null,
-        double? EndAt = null,
-        string? EmbedsScaling = null
+        In<ModelType>? Model = null,
+        In<IpAdapterType>? Ipadapter = null,
+        In<EmbedsType>? PosEmbed = null,
+        FloatArg? Weight = null,
+        StringArg? WeightType = null,
+        FloatArg? StartAt = null,
+        FloatArg? EndAt = null,
+        StringArg? EmbedsScaling = null,
+        In<EmbedsType>? NegEmbed = null,
+        In<MaskType>? AttnMask = null,
+        In<ClipVisionType>? ClipVision = null
     )
     {
-        if (Weight is { } v_Weight) this.Weight.Set(v_Weight);
-        if (WeightType is { } v_WeightType) this.WeightType.Set(v_WeightType);
-        if (StartAt is { } v_StartAt) this.StartAt.Set(v_StartAt);
-        if (EndAt is { } v_EndAt) this.EndAt.Set(v_EndAt);
-        if (EmbedsScaling is { } v_EmbedsScaling) this.EmbedsScaling.Set(v_EmbedsScaling);
+        Model?.ApplyTo(this.Model);
+        Ipadapter?.ApplyTo(this.Ipadapter);
+        PosEmbed?.ApplyTo(this.PosEmbed);
+        Weight?.ApplyTo(this.Weight);
+        WeightType?.ApplyTo(this.WeightType);
+        StartAt?.ApplyTo(this.StartAt);
+        EndAt?.ApplyTo(this.EndAt);
+        EmbedsScaling?.ApplyTo(this.EmbedsScaling);
+        NegEmbed?.ApplyTo(this.NegEmbed);
+        AttnMask?.ApplyTo(this.AttnMask);
+        ClipVision?.ApplyTo(this.ClipVision);
         return this;
     }
 }

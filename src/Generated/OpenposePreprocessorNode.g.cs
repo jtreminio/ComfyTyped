@@ -41,22 +41,25 @@ public sealed class OpenposePreprocessorNode : ComfyNode
         ScaleStickForXinsrCn.Set("disable");
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public OpenposePreprocessorNode With(
-        string? DetectHand = null,
-        string? DetectBody = null,
-        string? DetectFace = null,
-        long? Resolution = null,
-        string? ScaleStickForXinsrCn = null
+        In<ImageType>? Image = null,
+        StringArg? DetectHand = null,
+        StringArg? DetectBody = null,
+        StringArg? DetectFace = null,
+        IntArg? Resolution = null,
+        StringArg? ScaleStickForXinsrCn = null
     )
     {
-        if (DetectHand is { } v_DetectHand) this.DetectHand.Set(v_DetectHand);
-        if (DetectBody is { } v_DetectBody) this.DetectBody.Set(v_DetectBody);
-        if (DetectFace is { } v_DetectFace) this.DetectFace.Set(v_DetectFace);
-        if (Resolution is { } v_Resolution) this.Resolution.Set(v_Resolution);
-        if (ScaleStickForXinsrCn is { } v_ScaleStickForXinsrCn) this.ScaleStickForXinsrCn.Set(v_ScaleStickForXinsrCn);
+        Image?.ApplyTo(this.Image);
+        DetectHand?.ApplyTo(this.DetectHand);
+        DetectBody?.ApplyTo(this.DetectBody);
+        DetectFace?.ApplyTo(this.DetectFace);
+        Resolution?.ApplyTo(this.Resolution);
+        ScaleStickForXinsrCn?.ApplyTo(this.ScaleStickForXinsrCn);
         return this;
     }
 }

@@ -50,28 +50,31 @@ public sealed class SwarmInputImageNode : ComfyNode
         Group = AddInput<GroupType>("group", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SwarmInputImageNode With(
-        string? Title = null,
-        string? Value = null,
-        bool? AutoResize = null,
-        string? Description = null,
-        double? OrderPriority = null,
-        bool? IsAdvanced = null,
-        string? RawId = null,
-        string? Image = null
+        StringArg? Title = null,
+        StringArg? Value = null,
+        BoolArg? AutoResize = null,
+        StringArg? Description = null,
+        FloatArg? OrderPriority = null,
+        BoolArg? IsAdvanced = null,
+        StringArg? RawId = null,
+        StringArg? Image = null,
+        In<GroupType>? Group = null
     )
     {
-        if (Title is { } v_Title) this.Title.Set(v_Title);
-        if (Value is { } v_Value) this.Value.Set(v_Value);
-        if (AutoResize is { } v_AutoResize) this.AutoResize.Set(v_AutoResize);
-        if (Description is { } v_Description) this.Description.Set(v_Description);
-        if (OrderPriority is { } v_OrderPriority) this.OrderPriority.Set(v_OrderPriority);
-        if (IsAdvanced is { } v_IsAdvanced) this.IsAdvanced.Set(v_IsAdvanced);
-        if (RawId is { } v_RawId) this.RawId.Set(v_RawId);
-        if (Image is { } v_Image) this.Image.Set(v_Image);
+        Title?.ApplyTo(this.Title);
+        Value?.ApplyTo(this.Value);
+        AutoResize?.ApplyTo(this.AutoResize);
+        Description?.ApplyTo(this.Description);
+        OrderPriority?.ApplyTo(this.OrderPriority);
+        IsAdvanced?.ApplyTo(this.IsAdvanced);
+        RawId?.ApplyTo(this.RawId);
+        Image?.ApplyTo(this.Image);
+        Group?.ApplyTo(this.Group);
         return this;
     }
 }

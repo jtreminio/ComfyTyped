@@ -37,20 +37,25 @@ public sealed class FLAVRVFINode : ComfyNode
         OptionalInterpolationStates = AddInput<InterpolationStatesType>("optional_interpolation_states", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public FLAVRVFINode With(
-        string? CkptName = null,
-        long? ClearCacheAfterNFrames = null,
-        long? Multiplier = null,
-        bool? DuplicateFirstLastFrames = null
+        StringArg? CkptName = null,
+        In<ImageType>? Frames = null,
+        IntArg? ClearCacheAfterNFrames = null,
+        IntArg? Multiplier = null,
+        BoolArg? DuplicateFirstLastFrames = null,
+        In<InterpolationStatesType>? OptionalInterpolationStates = null
     )
     {
-        if (CkptName is { } v_CkptName) this.CkptName.Set(v_CkptName);
-        if (ClearCacheAfterNFrames is { } v_ClearCacheAfterNFrames) this.ClearCacheAfterNFrames.Set(v_ClearCacheAfterNFrames);
-        if (Multiplier is { } v_Multiplier) this.Multiplier.Set(v_Multiplier);
-        if (DuplicateFirstLastFrames is { } v_DuplicateFirstLastFrames) this.DuplicateFirstLastFrames.Set(v_DuplicateFirstLastFrames);
+        CkptName?.ApplyTo(this.CkptName);
+        Frames?.ApplyTo(this.Frames);
+        ClearCacheAfterNFrames?.ApplyTo(this.ClearCacheAfterNFrames);
+        Multiplier?.ApplyTo(this.Multiplier);
+        DuplicateFirstLastFrames?.ApplyTo(this.DuplicateFirstLastFrames);
+        OptionalInterpolationStates?.ApplyTo(this.OptionalInterpolationStates);
         return this;
     }
 }

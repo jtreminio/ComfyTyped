@@ -36,20 +36,23 @@ public sealed class FeatherMaskNode : ComfyNode
         Bottom.Set(0L);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public FeatherMaskNode With(
-        long? Left = null,
-        long? Top = null,
-        long? Right = null,
-        long? Bottom = null
+        In<MaskType>? Mask = null,
+        IntArg? Left = null,
+        IntArg? Top = null,
+        IntArg? Right = null,
+        IntArg? Bottom = null
     )
     {
-        if (Left is { } v_Left) this.Left.Set(v_Left);
-        if (Top is { } v_Top) this.Top.Set(v_Top);
-        if (Right is { } v_Right) this.Right.Set(v_Right);
-        if (Bottom is { } v_Bottom) this.Bottom.Set(v_Bottom);
+        Mask?.ApplyTo(this.Mask);
+        Left?.ApplyTo(this.Left);
+        Top?.ApplyTo(this.Top);
+        Right?.ApplyTo(this.Right);
+        Bottom?.ApplyTo(this.Bottom);
         return this;
     }
 }

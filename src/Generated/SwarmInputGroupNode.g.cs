@@ -41,24 +41,25 @@ public sealed class SwarmInputGroupNode : ComfyNode
         CanShrink.Set(true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SwarmInputGroupNode With(
-        string? Title = null,
-        bool? OpenByDefault = null,
-        string? Description = null,
-        double? OrderPriority = null,
-        bool? IsAdvanced = null,
-        bool? CanShrink = null
+        StringArg? Title = null,
+        BoolArg? OpenByDefault = null,
+        StringArg? Description = null,
+        FloatArg? OrderPriority = null,
+        BoolArg? IsAdvanced = null,
+        BoolArg? CanShrink = null
     )
     {
-        if (Title is { } v_Title) this.Title.Set(v_Title);
-        if (OpenByDefault is { } v_OpenByDefault) this.OpenByDefault.Set(v_OpenByDefault);
-        if (Description is { } v_Description) this.Description.Set(v_Description);
-        if (OrderPriority is { } v_OrderPriority) this.OrderPriority.Set(v_OrderPriority);
-        if (IsAdvanced is { } v_IsAdvanced) this.IsAdvanced.Set(v_IsAdvanced);
-        if (CanShrink is { } v_CanShrink) this.CanShrink.Set(v_CanShrink);
+        Title?.ApplyTo(this.Title);
+        OpenByDefault?.ApplyTo(this.OpenByDefault);
+        Description?.ApplyTo(this.Description);
+        OrderPriority?.ApplyTo(this.OrderPriority);
+        IsAdvanced?.ApplyTo(this.IsAdvanced);
+        CanShrink?.ApplyTo(this.CanShrink);
         return this;
     }
 }

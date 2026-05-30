@@ -28,16 +28,19 @@ public sealed class CLIPTextEncodeKandinsky5Node : ComfyNode
         Qwen257b = AddInput<StringType>("qwen25_7b", required: true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public CLIPTextEncodeKandinsky5Node With(
-        string? ClipL = null,
-        string? Qwen257b = null
+        In<ClipType>? Clip = null,
+        StringArg? ClipL = null,
+        StringArg? Qwen257b = null
     )
     {
-        if (ClipL is { } v_ClipL) this.ClipL.Set(v_ClipL);
-        if (Qwen257b is { } v_Qwen257b) this.Qwen257b.Set(v_Qwen257b);
+        Clip?.ApplyTo(this.Clip);
+        ClipL?.ApplyTo(this.ClipL);
+        Qwen257b?.ApplyTo(this.Qwen257b);
         return this;
     }
 }

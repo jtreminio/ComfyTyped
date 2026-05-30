@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>LTXV Separate AV Latent</summary>
-/// <remarks>Category: latent/video/ltxv</remarks>
+/// <remarks>Category: model/latent/video/ltxv</remarks>
 public sealed class LTXVSeparateAVLatentNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -25,5 +25,17 @@ public sealed class LTXVSeparateAVLatentNode : ComfyNode
         VideoLatent = AddOutput<LatentType>(0, "video_latent");
         AudioLatent = AddOutput<LatentType>(1, "audio_latent");
         AvLatent = AddInput<LatentType>("av_latent", required: true);
+    }
+
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
+    public LTXVSeparateAVLatentNode With(
+        In<LatentType>? AvLatent = null
+    )
+    {
+        AvLatent?.ApplyTo(this.AvLatent);
+        return this;
     }
 }

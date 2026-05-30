@@ -19,6 +19,8 @@ namespace ComfyTyped.Generated;
 /// wan: umt5 xxl
 /// hidream: llama-3.1 (Recommend) or t5
 /// omnigen2: qwen vl 2.5 3B
+/// lens: gpt-oss-20b
+/// pixeldit: gemma 2 2B elm
 /// </summary>
 /// <remarks>Category: advanced/loaders</remarks>
 public sealed class CLIPLoaderNode : ComfyNode
@@ -43,18 +45,19 @@ public sealed class CLIPLoaderNode : ComfyNode
         Device = AddInput<StringType>("device", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public CLIPLoaderNode With(
-        string? ClipName = null,
-        string? Type = null,
-        string? Device = null
+        StringArg? ClipName = null,
+        StringArg? Type = null,
+        StringArg? Device = null
     )
     {
-        if (ClipName is { } v_ClipName) this.ClipName.Set(v_ClipName);
-        if (Type is { } v_Type) this.Type.Set(v_Type);
-        if (Device is { } v_Device) this.Device.Set(v_Device);
+        ClipName?.ApplyTo(this.ClipName);
+        Type?.ApplyTo(this.Type);
+        Device?.ApplyTo(this.Device);
         return this;
     }
 }

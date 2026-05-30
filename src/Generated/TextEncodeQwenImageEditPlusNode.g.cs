@@ -34,14 +34,25 @@ public sealed class TextEncodeQwenImageEditPlusNode : ComfyNode
         Image3 = AddInput<ImageType>("image3", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public TextEncodeQwenImageEditPlusNode With(
-        string? Prompt = null
+        In<ClipType>? Clip = null,
+        StringArg? Prompt = null,
+        In<VaeType>? Vae = null,
+        In<ImageType>? Image1 = null,
+        In<ImageType>? Image2 = null,
+        In<ImageType>? Image3 = null
     )
     {
-        if (Prompt is { } v_Prompt) this.Prompt.Set(v_Prompt);
+        Clip?.ApplyTo(this.Clip);
+        Prompt?.ApplyTo(this.Prompt);
+        Vae?.ApplyTo(this.Vae);
+        Image1?.ApplyTo(this.Image1);
+        Image2?.ApplyTo(this.Image2);
+        Image3?.ApplyTo(this.Image3);
         return this;
     }
 }

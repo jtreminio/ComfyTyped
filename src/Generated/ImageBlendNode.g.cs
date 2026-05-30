@@ -31,16 +31,21 @@ public sealed class ImageBlendNode : ComfyNode
         BlendMode = AddInput<StringType>("blend_mode", required: true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public ImageBlendNode With(
-        double? BlendFactor = null,
-        string? BlendMode = null
+        In<ImageType>? Image1 = null,
+        In<ImageType>? Image2 = null,
+        FloatArg? BlendFactor = null,
+        StringArg? BlendMode = null
     )
     {
-        if (BlendFactor is { } v_BlendFactor) this.BlendFactor.Set(v_BlendFactor);
-        if (BlendMode is { } v_BlendMode) this.BlendMode.Set(v_BlendMode);
+        Image1?.ApplyTo(this.Image1);
+        Image2?.ApplyTo(this.Image2);
+        BlendFactor?.ApplyTo(this.BlendFactor);
+        BlendMode?.ApplyTo(this.BlendMode);
         return this;
     }
 }

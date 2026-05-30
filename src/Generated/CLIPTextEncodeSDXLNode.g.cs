@@ -46,28 +46,31 @@ public sealed class CLIPTextEncodeSDXLNode : ComfyNode
         TextL = AddInput<StringType>("text_l", required: true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public CLIPTextEncodeSDXLNode With(
-        long? Width = null,
-        long? Height = null,
-        long? CropW = null,
-        long? CropH = null,
-        long? TargetWidth = null,
-        long? TargetHeight = null,
-        string? TextG = null,
-        string? TextL = null
+        In<ClipType>? Clip = null,
+        IntArg? Width = null,
+        IntArg? Height = null,
+        IntArg? CropW = null,
+        IntArg? CropH = null,
+        IntArg? TargetWidth = null,
+        IntArg? TargetHeight = null,
+        StringArg? TextG = null,
+        StringArg? TextL = null
     )
     {
-        if (Width is { } v_Width) this.Width.Set(v_Width);
-        if (Height is { } v_Height) this.Height.Set(v_Height);
-        if (CropW is { } v_CropW) this.CropW.Set(v_CropW);
-        if (CropH is { } v_CropH) this.CropH.Set(v_CropH);
-        if (TargetWidth is { } v_TargetWidth) this.TargetWidth.Set(v_TargetWidth);
-        if (TargetHeight is { } v_TargetHeight) this.TargetHeight.Set(v_TargetHeight);
-        if (TextG is { } v_TextG) this.TextG.Set(v_TextG);
-        if (TextL is { } v_TextL) this.TextL.Set(v_TextL);
+        Clip?.ApplyTo(this.Clip);
+        Width?.ApplyTo(this.Width);
+        Height?.ApplyTo(this.Height);
+        CropW?.ApplyTo(this.CropW);
+        CropH?.ApplyTo(this.CropH);
+        TargetWidth?.ApplyTo(this.TargetWidth);
+        TargetHeight?.ApplyTo(this.TargetHeight);
+        TextG?.ApplyTo(this.TextG);
+        TextL?.ApplyTo(this.TextL);
         return this;
     }
 }

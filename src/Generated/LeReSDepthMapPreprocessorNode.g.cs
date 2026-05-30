@@ -36,20 +36,23 @@ public sealed class LeReSDepthMapPreprocessorNode : ComfyNode
         Resolution.Set(512L);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public LeReSDepthMapPreprocessorNode With(
-        double? RmNearest = null,
-        double? RmBackground = null,
-        string? Boost = null,
-        long? Resolution = null
+        In<ImageType>? Image = null,
+        FloatArg? RmNearest = null,
+        FloatArg? RmBackground = null,
+        StringArg? Boost = null,
+        IntArg? Resolution = null
     )
     {
-        if (RmNearest is { } v_RmNearest) this.RmNearest.Set(v_RmNearest);
-        if (RmBackground is { } v_RmBackground) this.RmBackground.Set(v_RmBackground);
-        if (Boost is { } v_Boost) this.Boost.Set(v_Boost);
-        if (Resolution is { } v_Resolution) this.Resolution.Set(v_Resolution);
+        Image?.ApplyTo(this.Image);
+        RmNearest?.ApplyTo(this.RmNearest);
+        RmBackground?.ApplyTo(this.RmBackground);
+        Boost?.ApplyTo(this.Boost);
+        Resolution?.ApplyTo(this.Resolution);
         return this;
     }
 }

@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: sampling/samplers</remarks>
+/// <remarks>Category: model/sampling/samplers</remarks>
 public sealed class SamplerLCMUpscaleNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -30,18 +30,19 @@ public sealed class SamplerLCMUpscaleNode : ComfyNode
         UpscaleMethod = AddInput<StringType>("upscale_method", required: true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SamplerLCMUpscaleNode With(
-        double? ScaleRatio = null,
-        long? ScaleSteps = null,
-        string? UpscaleMethod = null
+        FloatArg? ScaleRatio = null,
+        IntArg? ScaleSteps = null,
+        StringArg? UpscaleMethod = null
     )
     {
-        if (ScaleRatio is { } v_ScaleRatio) this.ScaleRatio.Set(v_ScaleRatio);
-        if (ScaleSteps is { } v_ScaleSteps) this.ScaleSteps.Set(v_ScaleSteps);
-        if (UpscaleMethod is { } v_UpscaleMethod) this.UpscaleMethod.Set(v_UpscaleMethod);
+        ScaleRatio?.ApplyTo(this.ScaleRatio);
+        ScaleSteps?.ApplyTo(this.ScaleSteps);
+        UpscaleMethod?.ApplyTo(this.UpscaleMethod);
         return this;
     }
 }

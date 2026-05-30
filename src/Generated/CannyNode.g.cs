@@ -30,16 +30,19 @@ public sealed class CannyNode : ComfyNode
         HighThreshold.Set(0.8);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public CannyNode With(
-        double? LowThreshold = null,
-        double? HighThreshold = null
+        In<ImageType>? Image = null,
+        FloatArg? LowThreshold = null,
+        FloatArg? HighThreshold = null
     )
     {
-        if (LowThreshold is { } v_LowThreshold) this.LowThreshold.Set(v_LowThreshold);
-        if (HighThreshold is { } v_HighThreshold) this.HighThreshold.Set(v_HighThreshold);
+        Image?.ApplyTo(this.Image);
+        LowThreshold?.ApplyTo(this.LowThreshold);
+        HighThreshold?.ApplyTo(this.HighThreshold);
         return this;
     }
 }

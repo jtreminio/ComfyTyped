@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Encodes a system prompt and a user prompt using a CLIP model into an embedding that can be used to guide the diffusion model towards generating specific images.</summary>
-/// <remarks>Category: conditioning</remarks>
+/// <remarks>Category: model/conditioning</remarks>
 public sealed class CLIPTextEncodeLumina2Node : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -29,16 +29,19 @@ public sealed class CLIPTextEncodeLumina2Node : ComfyNode
         Clip = AddInput<ClipType>("clip", required: true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public CLIPTextEncodeLumina2Node With(
-        string? SystemPrompt = null,
-        string? UserPrompt = null
+        StringArg? SystemPrompt = null,
+        StringArg? UserPrompt = null,
+        In<ClipType>? Clip = null
     )
     {
-        if (SystemPrompt is { } v_SystemPrompt) this.SystemPrompt.Set(v_SystemPrompt);
-        if (UserPrompt is { } v_UserPrompt) this.UserPrompt.Set(v_UserPrompt);
+        SystemPrompt?.ApplyTo(this.SystemPrompt);
+        UserPrompt?.ApplyTo(this.UserPrompt);
+        Clip?.ApplyTo(this.Clip);
         return this;
     }
 }

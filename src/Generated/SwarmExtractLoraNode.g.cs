@@ -39,22 +39,31 @@ public sealed class SwarmExtractLoraNode : ComfyNode
         Metadata = AddInput<StringType>("metadata", required: true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SwarmExtractLoraNode With(
-        long? Rank = null,
-        string? SaveRawpath = null,
-        string? SaveFilename = null,
-        bool? SaveClip = null,
-        string? Metadata = null
+        In<ModelType>? BaseModel = null,
+        In<ClipType>? BaseModelClip = null,
+        In<ModelType>? OtherModel = null,
+        In<ClipType>? OtherModelClip = null,
+        IntArg? Rank = null,
+        StringArg? SaveRawpath = null,
+        StringArg? SaveFilename = null,
+        BoolArg? SaveClip = null,
+        StringArg? Metadata = null
     )
     {
-        if (Rank is { } v_Rank) this.Rank.Set(v_Rank);
-        if (SaveRawpath is { } v_SaveRawpath) this.SaveRawpath.Set(v_SaveRawpath);
-        if (SaveFilename is { } v_SaveFilename) this.SaveFilename.Set(v_SaveFilename);
-        if (SaveClip is { } v_SaveClip) this.SaveClip.Set(v_SaveClip);
-        if (Metadata is { } v_Metadata) this.Metadata.Set(v_Metadata);
+        BaseModel?.ApplyTo(this.BaseModel);
+        BaseModelClip?.ApplyTo(this.BaseModelClip);
+        OtherModel?.ApplyTo(this.OtherModel);
+        OtherModelClip?.ApplyTo(this.OtherModelClip);
+        Rank?.ApplyTo(this.Rank);
+        SaveRawpath?.ApplyTo(this.SaveRawpath);
+        SaveFilename?.ApplyTo(this.SaveFilename);
+        SaveClip?.ApplyTo(this.SaveClip);
+        Metadata?.ApplyTo(this.Metadata);
         return this;
     }
 }

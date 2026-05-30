@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: conditioning/video_models</remarks>
+/// <remarks>Category: model/conditioning/video_models</remarks>
 public sealed class WanMoveVisualizeTracksNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -38,20 +38,25 @@ public sealed class WanMoveVisualizeTracksNode : ComfyNode
         Tracks = AddInput<TracksType>("tracks", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public WanMoveVisualizeTracksNode With(
-        long? LineResolution = null,
-        long? CircleSize = null,
-        double? Opacity = null,
-        long? LineWidth = null
+        In<ImageType>? Images = null,
+        IntArg? LineResolution = null,
+        IntArg? CircleSize = null,
+        FloatArg? Opacity = null,
+        IntArg? LineWidth = null,
+        In<TracksType>? Tracks = null
     )
     {
-        if (LineResolution is { } v_LineResolution) this.LineResolution.Set(v_LineResolution);
-        if (CircleSize is { } v_CircleSize) this.CircleSize.Set(v_CircleSize);
-        if (Opacity is { } v_Opacity) this.Opacity.Set(v_Opacity);
-        if (LineWidth is { } v_LineWidth) this.LineWidth.Set(v_LineWidth);
+        Images?.ApplyTo(this.Images);
+        LineResolution?.ApplyTo(this.LineResolution);
+        CircleSize?.ApplyTo(this.CircleSize);
+        Opacity?.ApplyTo(this.Opacity);
+        LineWidth?.ApplyTo(this.LineWidth);
+        Tracks?.ApplyTo(this.Tracks);
         return this;
     }
 }

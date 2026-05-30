@@ -25,4 +25,18 @@ public sealed class SetHookKeyframesNode : ComfyNode
         Hooks = AddInput<HooksType>("hooks", required: true);
         HookKf = AddInput<HookKeyframesType>("hook_kf", required: false);
     }
+
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
+    public SetHookKeyframesNode With(
+        In<HooksType>? Hooks = null,
+        In<HookKeyframesType>? HookKf = null
+    )
+    {
+        Hooks?.ApplyTo(this.Hooks);
+        HookKf?.ApplyTo(this.HookKf);
+        return this;
+    }
 }

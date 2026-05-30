@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: sampling/guiders</remarks>
+/// <remarks>Category: model/sampling/guiders</remarks>
 public sealed class BasicGuiderNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -24,5 +24,19 @@ public sealed class BasicGuiderNode : ComfyNode
         GUIDER = AddOutput<GuiderType>(0, "GUIDER");
         Model = AddInput<ModelType>("model", required: true);
         Conditioning = AddInput<ConditioningType>("conditioning", required: true);
+    }
+
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
+    public BasicGuiderNode With(
+        In<ModelType>? Model = null,
+        In<ConditioningType>? Conditioning = null
+    )
+    {
+        Model?.ApplyTo(this.Model);
+        Conditioning?.ApplyTo(this.Conditioning);
+        return this;
     }
 }

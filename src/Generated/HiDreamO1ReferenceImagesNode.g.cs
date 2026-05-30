@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Attach 1-10 reference images to conditioning, one for edit instructionor multiple for subject-driven personalization.</summary>
-/// <remarks>Category: conditioning/image</remarks>
+/// <remarks>Category: model/conditioning/image</remarks>
 public sealed class HiDreamO1ReferenceImagesNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -31,5 +31,19 @@ public sealed class HiDreamO1ReferenceImagesNode : ComfyNode
         PositiveInput = AddInput<ConditioningType>("positive", required: true);
         NegativeInput = AddInput<ConditioningType>("negative", required: true);
         Images = AddInputList<ImageType>("images", names: new string[] { "image_1", "image_2", "image_3", "image_4", "image_5", "image_6", "image_7", "image_8", "image_9", "image_10" }, min: 1, max: 10, required: true);
+    }
+
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
+    public HiDreamO1ReferenceImagesNode With(
+        In<ConditioningType>? PositiveInput = null,
+        In<ConditioningType>? NegativeInput = null
+    )
+    {
+        PositiveInput?.ApplyTo(this.PositiveInput);
+        NegativeInput?.ApplyTo(this.NegativeInput);
+        return this;
     }
 }

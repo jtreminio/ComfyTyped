@@ -36,16 +36,21 @@ public sealed class WanDancerPadKeyframesListNode : ComfyNode
         Audio = AddInput<AudioType>("audio", required: true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public WanDancerPadKeyframesListNode With(
-        long? SegmentLength = null,
-        long? NumSegments = null
+        In<ImageType>? Images = null,
+        IntArg? SegmentLength = null,
+        IntArg? NumSegments = null,
+        In<AudioType>? Audio = null
     )
     {
-        if (SegmentLength is { } v_SegmentLength) this.SegmentLength.Set(v_SegmentLength);
-        if (NumSegments is { } v_NumSegments) this.NumSegments.Set(v_NumSegments);
+        Images?.ApplyTo(this.Images);
+        SegmentLength?.ApplyTo(this.SegmentLength);
+        NumSegments?.ApplyTo(this.NumSegments);
+        Audio?.ApplyTo(this.Audio);
         return this;
     }
 }

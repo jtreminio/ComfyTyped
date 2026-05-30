@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: advanced/model_patches/flux</remarks>
+/// <remarks>Category: model/patch/flux</remarks>
 public sealed class USOStyleReferenceNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -26,5 +26,21 @@ public sealed class USOStyleReferenceNode : ComfyNode
         Model = AddInput<ModelType>("model", required: true);
         ModelPatch = AddInput<ModelPatchType>("model_patch", required: true);
         ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output", required: true);
+    }
+
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
+    public USOStyleReferenceNode With(
+        In<ModelType>? Model = null,
+        In<ModelPatchType>? ModelPatch = null,
+        In<ClipVisionOutputType>? ClipVisionOutput = null
+    )
+    {
+        Model?.ApplyTo(this.Model);
+        ModelPatch?.ApplyTo(this.ModelPatch);
+        ClipVisionOutput?.ApplyTo(this.ClipVisionOutput);
+        return this;
     }
 }

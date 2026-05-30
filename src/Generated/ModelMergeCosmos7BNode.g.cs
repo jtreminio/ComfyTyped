@@ -128,80 +128,85 @@ public sealed class ModelMergeCosmos7BNode : ComfyNode
         FinalLayer.Set(1.0);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public ModelMergeCosmos7BNode With(
-        double? PosEmbedder = null,
-        double? ExtraPosEmbedder = null,
-        double? XEmbedder = null,
-        double? TEmbedder = null,
-        double? AfflineNorm = null,
-        double? BlocksBlock0 = null,
-        double? BlocksBlock1 = null,
-        double? BlocksBlock2 = null,
-        double? BlocksBlock3 = null,
-        double? BlocksBlock4 = null,
-        double? BlocksBlock5 = null,
-        double? BlocksBlock6 = null,
-        double? BlocksBlock7 = null,
-        double? BlocksBlock8 = null,
-        double? BlocksBlock9 = null,
-        double? BlocksBlock10 = null,
-        double? BlocksBlock11 = null,
-        double? BlocksBlock12 = null,
-        double? BlocksBlock13 = null,
-        double? BlocksBlock14 = null,
-        double? BlocksBlock15 = null,
-        double? BlocksBlock16 = null,
-        double? BlocksBlock17 = null,
-        double? BlocksBlock18 = null,
-        double? BlocksBlock19 = null,
-        double? BlocksBlock20 = null,
-        double? BlocksBlock21 = null,
-        double? BlocksBlock22 = null,
-        double? BlocksBlock23 = null,
-        double? BlocksBlock24 = null,
-        double? BlocksBlock25 = null,
-        double? BlocksBlock26 = null,
-        double? BlocksBlock27 = null,
-        double? FinalLayer = null
+        In<ModelType>? Model1 = null,
+        In<ModelType>? Model2 = null,
+        FloatArg? PosEmbedder = null,
+        FloatArg? ExtraPosEmbedder = null,
+        FloatArg? XEmbedder = null,
+        FloatArg? TEmbedder = null,
+        FloatArg? AfflineNorm = null,
+        FloatArg? BlocksBlock0 = null,
+        FloatArg? BlocksBlock1 = null,
+        FloatArg? BlocksBlock2 = null,
+        FloatArg? BlocksBlock3 = null,
+        FloatArg? BlocksBlock4 = null,
+        FloatArg? BlocksBlock5 = null,
+        FloatArg? BlocksBlock6 = null,
+        FloatArg? BlocksBlock7 = null,
+        FloatArg? BlocksBlock8 = null,
+        FloatArg? BlocksBlock9 = null,
+        FloatArg? BlocksBlock10 = null,
+        FloatArg? BlocksBlock11 = null,
+        FloatArg? BlocksBlock12 = null,
+        FloatArg? BlocksBlock13 = null,
+        FloatArg? BlocksBlock14 = null,
+        FloatArg? BlocksBlock15 = null,
+        FloatArg? BlocksBlock16 = null,
+        FloatArg? BlocksBlock17 = null,
+        FloatArg? BlocksBlock18 = null,
+        FloatArg? BlocksBlock19 = null,
+        FloatArg? BlocksBlock20 = null,
+        FloatArg? BlocksBlock21 = null,
+        FloatArg? BlocksBlock22 = null,
+        FloatArg? BlocksBlock23 = null,
+        FloatArg? BlocksBlock24 = null,
+        FloatArg? BlocksBlock25 = null,
+        FloatArg? BlocksBlock26 = null,
+        FloatArg? BlocksBlock27 = null,
+        FloatArg? FinalLayer = null
     )
     {
-        if (PosEmbedder is { } v_PosEmbedder) this.PosEmbedder.Set(v_PosEmbedder);
-        if (ExtraPosEmbedder is { } v_ExtraPosEmbedder) this.ExtraPosEmbedder.Set(v_ExtraPosEmbedder);
-        if (XEmbedder is { } v_XEmbedder) this.XEmbedder.Set(v_XEmbedder);
-        if (TEmbedder is { } v_TEmbedder) this.TEmbedder.Set(v_TEmbedder);
-        if (AfflineNorm is { } v_AfflineNorm) this.AfflineNorm.Set(v_AfflineNorm);
-        if (BlocksBlock0 is { } v_BlocksBlock0) this.BlocksBlock0.Set(v_BlocksBlock0);
-        if (BlocksBlock1 is { } v_BlocksBlock1) this.BlocksBlock1.Set(v_BlocksBlock1);
-        if (BlocksBlock2 is { } v_BlocksBlock2) this.BlocksBlock2.Set(v_BlocksBlock2);
-        if (BlocksBlock3 is { } v_BlocksBlock3) this.BlocksBlock3.Set(v_BlocksBlock3);
-        if (BlocksBlock4 is { } v_BlocksBlock4) this.BlocksBlock4.Set(v_BlocksBlock4);
-        if (BlocksBlock5 is { } v_BlocksBlock5) this.BlocksBlock5.Set(v_BlocksBlock5);
-        if (BlocksBlock6 is { } v_BlocksBlock6) this.BlocksBlock6.Set(v_BlocksBlock6);
-        if (BlocksBlock7 is { } v_BlocksBlock7) this.BlocksBlock7.Set(v_BlocksBlock7);
-        if (BlocksBlock8 is { } v_BlocksBlock8) this.BlocksBlock8.Set(v_BlocksBlock8);
-        if (BlocksBlock9 is { } v_BlocksBlock9) this.BlocksBlock9.Set(v_BlocksBlock9);
-        if (BlocksBlock10 is { } v_BlocksBlock10) this.BlocksBlock10.Set(v_BlocksBlock10);
-        if (BlocksBlock11 is { } v_BlocksBlock11) this.BlocksBlock11.Set(v_BlocksBlock11);
-        if (BlocksBlock12 is { } v_BlocksBlock12) this.BlocksBlock12.Set(v_BlocksBlock12);
-        if (BlocksBlock13 is { } v_BlocksBlock13) this.BlocksBlock13.Set(v_BlocksBlock13);
-        if (BlocksBlock14 is { } v_BlocksBlock14) this.BlocksBlock14.Set(v_BlocksBlock14);
-        if (BlocksBlock15 is { } v_BlocksBlock15) this.BlocksBlock15.Set(v_BlocksBlock15);
-        if (BlocksBlock16 is { } v_BlocksBlock16) this.BlocksBlock16.Set(v_BlocksBlock16);
-        if (BlocksBlock17 is { } v_BlocksBlock17) this.BlocksBlock17.Set(v_BlocksBlock17);
-        if (BlocksBlock18 is { } v_BlocksBlock18) this.BlocksBlock18.Set(v_BlocksBlock18);
-        if (BlocksBlock19 is { } v_BlocksBlock19) this.BlocksBlock19.Set(v_BlocksBlock19);
-        if (BlocksBlock20 is { } v_BlocksBlock20) this.BlocksBlock20.Set(v_BlocksBlock20);
-        if (BlocksBlock21 is { } v_BlocksBlock21) this.BlocksBlock21.Set(v_BlocksBlock21);
-        if (BlocksBlock22 is { } v_BlocksBlock22) this.BlocksBlock22.Set(v_BlocksBlock22);
-        if (BlocksBlock23 is { } v_BlocksBlock23) this.BlocksBlock23.Set(v_BlocksBlock23);
-        if (BlocksBlock24 is { } v_BlocksBlock24) this.BlocksBlock24.Set(v_BlocksBlock24);
-        if (BlocksBlock25 is { } v_BlocksBlock25) this.BlocksBlock25.Set(v_BlocksBlock25);
-        if (BlocksBlock26 is { } v_BlocksBlock26) this.BlocksBlock26.Set(v_BlocksBlock26);
-        if (BlocksBlock27 is { } v_BlocksBlock27) this.BlocksBlock27.Set(v_BlocksBlock27);
-        if (FinalLayer is { } v_FinalLayer) this.FinalLayer.Set(v_FinalLayer);
+        Model1?.ApplyTo(this.Model1);
+        Model2?.ApplyTo(this.Model2);
+        PosEmbedder?.ApplyTo(this.PosEmbedder);
+        ExtraPosEmbedder?.ApplyTo(this.ExtraPosEmbedder);
+        XEmbedder?.ApplyTo(this.XEmbedder);
+        TEmbedder?.ApplyTo(this.TEmbedder);
+        AfflineNorm?.ApplyTo(this.AfflineNorm);
+        BlocksBlock0?.ApplyTo(this.BlocksBlock0);
+        BlocksBlock1?.ApplyTo(this.BlocksBlock1);
+        BlocksBlock2?.ApplyTo(this.BlocksBlock2);
+        BlocksBlock3?.ApplyTo(this.BlocksBlock3);
+        BlocksBlock4?.ApplyTo(this.BlocksBlock4);
+        BlocksBlock5?.ApplyTo(this.BlocksBlock5);
+        BlocksBlock6?.ApplyTo(this.BlocksBlock6);
+        BlocksBlock7?.ApplyTo(this.BlocksBlock7);
+        BlocksBlock8?.ApplyTo(this.BlocksBlock8);
+        BlocksBlock9?.ApplyTo(this.BlocksBlock9);
+        BlocksBlock10?.ApplyTo(this.BlocksBlock10);
+        BlocksBlock11?.ApplyTo(this.BlocksBlock11);
+        BlocksBlock12?.ApplyTo(this.BlocksBlock12);
+        BlocksBlock13?.ApplyTo(this.BlocksBlock13);
+        BlocksBlock14?.ApplyTo(this.BlocksBlock14);
+        BlocksBlock15?.ApplyTo(this.BlocksBlock15);
+        BlocksBlock16?.ApplyTo(this.BlocksBlock16);
+        BlocksBlock17?.ApplyTo(this.BlocksBlock17);
+        BlocksBlock18?.ApplyTo(this.BlocksBlock18);
+        BlocksBlock19?.ApplyTo(this.BlocksBlock19);
+        BlocksBlock20?.ApplyTo(this.BlocksBlock20);
+        BlocksBlock21?.ApplyTo(this.BlocksBlock21);
+        BlocksBlock22?.ApplyTo(this.BlocksBlock22);
+        BlocksBlock23?.ApplyTo(this.BlocksBlock23);
+        BlocksBlock24?.ApplyTo(this.BlocksBlock24);
+        BlocksBlock25?.ApplyTo(this.BlocksBlock25);
+        BlocksBlock26?.ApplyTo(this.BlocksBlock26);
+        BlocksBlock27?.ApplyTo(this.BlocksBlock27);
+        FinalLayer?.ApplyTo(this.FinalLayer);
         return this;
     }
 }

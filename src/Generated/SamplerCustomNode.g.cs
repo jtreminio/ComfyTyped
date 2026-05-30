@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: sampling/custom_sampling</remarks>
+/// <remarks>Category: model/sampling/custom_sampling</remarks>
 public sealed class SamplerCustomNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -45,18 +45,31 @@ public sealed class SamplerCustomNode : ComfyNode
         LatentImage = AddInput<LatentType>("latent_image", required: true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SamplerCustomNode With(
-        bool? AddNoise = null,
-        long? NoiseSeed = null,
-        double? Cfg = null
+        In<ModelType>? Model = null,
+        BoolArg? AddNoise = null,
+        IntArg? NoiseSeed = null,
+        FloatArg? Cfg = null,
+        In<ConditioningType>? Positive = null,
+        In<ConditioningType>? Negative = null,
+        In<SamplerType>? Sampler = null,
+        In<SigmasType>? Sigmas = null,
+        In<LatentType>? LatentImage = null
     )
     {
-        if (AddNoise is { } v_AddNoise) this.AddNoise.Set(v_AddNoise);
-        if (NoiseSeed is { } v_NoiseSeed) this.NoiseSeed.Set(v_NoiseSeed);
-        if (Cfg is { } v_Cfg) this.Cfg.Set(v_Cfg);
+        Model?.ApplyTo(this.Model);
+        AddNoise?.ApplyTo(this.AddNoise);
+        NoiseSeed?.ApplyTo(this.NoiseSeed);
+        Cfg?.ApplyTo(this.Cfg);
+        Positive?.ApplyTo(this.Positive);
+        Negative?.ApplyTo(this.Negative);
+        Sampler?.ApplyTo(this.Sampler);
+        Sigmas?.ApplyTo(this.Sigmas);
+        LatentImage?.ApplyTo(this.LatentImage);
         return this;
     }
 }

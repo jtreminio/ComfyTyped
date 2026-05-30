@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: conditioning/video_models</remarks>
+/// <remarks>Category: model/conditioning/video_models</remarks>
 public sealed class WanSoundImageToVideoExtendNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -43,14 +43,29 @@ public sealed class WanSoundImageToVideoExtendNode : ComfyNode
         ControlVideo = AddInput<ImageType>("control_video", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public WanSoundImageToVideoExtendNode With(
-        long? Length = null
+        In<ConditioningType>? PositiveInput = null,
+        In<ConditioningType>? NegativeInput = null,
+        In<VaeType>? Vae = null,
+        IntArg? Length = null,
+        In<LatentType>? VideoLatent = null,
+        In<AudioEncoderOutputType>? AudioEncoderOutput = null,
+        In<ImageType>? RefImage = null,
+        In<ImageType>? ControlVideo = null
     )
     {
-        if (Length is { } v_Length) this.Length.Set(v_Length);
+        PositiveInput?.ApplyTo(this.PositiveInput);
+        NegativeInput?.ApplyTo(this.NegativeInput);
+        Vae?.ApplyTo(this.Vae);
+        Length?.ApplyTo(this.Length);
+        VideoLatent?.ApplyTo(this.VideoLatent);
+        AudioEncoderOutput?.ApplyTo(this.AudioEncoderOutput);
+        RefImage?.ApplyTo(this.RefImage);
+        ControlVideo?.ApplyTo(this.ControlVideo);
         return this;
     }
 }

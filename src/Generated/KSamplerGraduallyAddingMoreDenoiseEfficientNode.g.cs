@@ -62,28 +62,39 @@ public sealed class KSamplerGraduallyAddingMoreDenoiseEfficientNode : ComfyNode
         OptionalVae = AddInput<VaeType>("optional_vae", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public KSamplerGraduallyAddingMoreDenoiseEfficientNode With(
-        long? Seed = null,
-        long? Steps = null,
-        double? Cfg = null,
-        string? SamplerName = null,
-        string? Scheduler = null,
-        double? StartDenoise = null,
-        double? DenoiseIncrement = null,
-        long? DenoiseIncrementSteps = null
+        In<ModelType>? Model = null,
+        In<ConditioningType>? Positive = null,
+        In<ConditioningType>? Negative = null,
+        In<LatentType>? LatentImage = null,
+        IntArg? Seed = null,
+        IntArg? Steps = null,
+        FloatArg? Cfg = null,
+        StringArg? SamplerName = null,
+        StringArg? Scheduler = null,
+        FloatArg? StartDenoise = null,
+        FloatArg? DenoiseIncrement = null,
+        IntArg? DenoiseIncrementSteps = null,
+        In<VaeType>? OptionalVae = null
     )
     {
-        if (Seed is { } v_Seed) this.Seed.Set(v_Seed);
-        if (Steps is { } v_Steps) this.Steps.Set(v_Steps);
-        if (Cfg is { } v_Cfg) this.Cfg.Set(v_Cfg);
-        if (SamplerName is { } v_SamplerName) this.SamplerName.Set(v_SamplerName);
-        if (Scheduler is { } v_Scheduler) this.Scheduler.Set(v_Scheduler);
-        if (StartDenoise is { } v_StartDenoise) this.StartDenoise.Set(v_StartDenoise);
-        if (DenoiseIncrement is { } v_DenoiseIncrement) this.DenoiseIncrement.Set(v_DenoiseIncrement);
-        if (DenoiseIncrementSteps is { } v_DenoiseIncrementSteps) this.DenoiseIncrementSteps.Set(v_DenoiseIncrementSteps);
+        Model?.ApplyTo(this.Model);
+        Positive?.ApplyTo(this.Positive);
+        Negative?.ApplyTo(this.Negative);
+        LatentImage?.ApplyTo(this.LatentImage);
+        Seed?.ApplyTo(this.Seed);
+        Steps?.ApplyTo(this.Steps);
+        Cfg?.ApplyTo(this.Cfg);
+        SamplerName?.ApplyTo(this.SamplerName);
+        Scheduler?.ApplyTo(this.Scheduler);
+        StartDenoise?.ApplyTo(this.StartDenoise);
+        DenoiseIncrement?.ApplyTo(this.DenoiseIncrement);
+        DenoiseIncrementSteps?.ApplyTo(this.DenoiseIncrementSteps);
+        OptionalVae?.ApplyTo(this.OptionalVae);
         return this;
     }
 }

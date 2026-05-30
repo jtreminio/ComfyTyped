@@ -55,28 +55,41 @@ public sealed class IPAdapterClipVisionEnhancerNode : ComfyNode
         ClipVision = AddInput<ClipVisionType>("clip_vision", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public IPAdapterClipVisionEnhancerNode With(
-        double? Weight = null,
-        string? WeightType = null,
-        string? CombineEmbeds = null,
-        double? StartAt = null,
-        double? EndAt = null,
-        string? EmbedsScaling = null,
-        long? EnhanceTiles = null,
-        double? EnhanceRatio = null
+        In<ModelType>? Model = null,
+        In<IpAdapterType>? Ipadapter = null,
+        In<ImageType>? Image = null,
+        FloatArg? Weight = null,
+        StringArg? WeightType = null,
+        StringArg? CombineEmbeds = null,
+        FloatArg? StartAt = null,
+        FloatArg? EndAt = null,
+        StringArg? EmbedsScaling = null,
+        IntArg? EnhanceTiles = null,
+        FloatArg? EnhanceRatio = null,
+        In<ImageType>? ImageNegative = null,
+        In<MaskType>? AttnMask = null,
+        In<ClipVisionType>? ClipVision = null
     )
     {
-        if (Weight is { } v_Weight) this.Weight.Set(v_Weight);
-        if (WeightType is { } v_WeightType) this.WeightType.Set(v_WeightType);
-        if (CombineEmbeds is { } v_CombineEmbeds) this.CombineEmbeds.Set(v_CombineEmbeds);
-        if (StartAt is { } v_StartAt) this.StartAt.Set(v_StartAt);
-        if (EndAt is { } v_EndAt) this.EndAt.Set(v_EndAt);
-        if (EmbedsScaling is { } v_EmbedsScaling) this.EmbedsScaling.Set(v_EmbedsScaling);
-        if (EnhanceTiles is { } v_EnhanceTiles) this.EnhanceTiles.Set(v_EnhanceTiles);
-        if (EnhanceRatio is { } v_EnhanceRatio) this.EnhanceRatio.Set(v_EnhanceRatio);
+        Model?.ApplyTo(this.Model);
+        Ipadapter?.ApplyTo(this.Ipadapter);
+        Image?.ApplyTo(this.Image);
+        Weight?.ApplyTo(this.Weight);
+        WeightType?.ApplyTo(this.WeightType);
+        CombineEmbeds?.ApplyTo(this.CombineEmbeds);
+        StartAt?.ApplyTo(this.StartAt);
+        EndAt?.ApplyTo(this.EndAt);
+        EmbedsScaling?.ApplyTo(this.EmbedsScaling);
+        EnhanceTiles?.ApplyTo(this.EnhanceTiles);
+        EnhanceRatio?.ApplyTo(this.EnhanceRatio);
+        ImageNegative?.ApplyTo(this.ImageNegative);
+        AttnMask?.ApplyTo(this.AttnMask);
+        ClipVision?.ApplyTo(this.ClipVision);
         return this;
     }
 }

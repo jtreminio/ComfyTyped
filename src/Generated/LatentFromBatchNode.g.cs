@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: latent/batch</remarks>
+/// <remarks>Category: model/latent/batch</remarks>
 public sealed class LatentFromBatchNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -30,16 +30,19 @@ public sealed class LatentFromBatchNode : ComfyNode
         Length.Set(1L);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public LatentFromBatchNode With(
-        long? BatchIndex = null,
-        long? Length = null
+        In<LatentType>? Samples = null,
+        IntArg? BatchIndex = null,
+        IntArg? Length = null
     )
     {
-        if (BatchIndex is { } v_BatchIndex) this.BatchIndex.Set(v_BatchIndex);
-        if (Length is { } v_Length) this.Length.Set(v_Length);
+        Samples?.ApplyTo(this.Samples);
+        BatchIndex?.ApplyTo(this.BatchIndex);
+        Length?.ApplyTo(this.Length);
         return this;
     }
 }

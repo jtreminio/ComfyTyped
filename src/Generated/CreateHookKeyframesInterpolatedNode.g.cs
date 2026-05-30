@@ -44,26 +44,29 @@ public sealed class CreateHookKeyframesInterpolatedNode : ComfyNode
         PrevHookKf = AddInput<HookKeyframesType>("prev_hook_kf", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public CreateHookKeyframesInterpolatedNode With(
-        double? StrengthStart = null,
-        double? StrengthEnd = null,
-        string? Interpolation = null,
-        double? StartPercent = null,
-        double? EndPercent = null,
-        long? KeyframesCount = null,
-        bool? PrintKeyframes = null
+        FloatArg? StrengthStart = null,
+        FloatArg? StrengthEnd = null,
+        StringArg? Interpolation = null,
+        FloatArg? StartPercent = null,
+        FloatArg? EndPercent = null,
+        IntArg? KeyframesCount = null,
+        BoolArg? PrintKeyframes = null,
+        In<HookKeyframesType>? PrevHookKf = null
     )
     {
-        if (StrengthStart is { } v_StrengthStart) this.StrengthStart.Set(v_StrengthStart);
-        if (StrengthEnd is { } v_StrengthEnd) this.StrengthEnd.Set(v_StrengthEnd);
-        if (Interpolation is { } v_Interpolation) this.Interpolation.Set(v_Interpolation);
-        if (StartPercent is { } v_StartPercent) this.StartPercent.Set(v_StartPercent);
-        if (EndPercent is { } v_EndPercent) this.EndPercent.Set(v_EndPercent);
-        if (KeyframesCount is { } v_KeyframesCount) this.KeyframesCount.Set(v_KeyframesCount);
-        if (PrintKeyframes is { } v_PrintKeyframes) this.PrintKeyframes.Set(v_PrintKeyframes);
+        StrengthStart?.ApplyTo(this.StrengthStart);
+        StrengthEnd?.ApplyTo(this.StrengthEnd);
+        Interpolation?.ApplyTo(this.Interpolation);
+        StartPercent?.ApplyTo(this.StartPercent);
+        EndPercent?.ApplyTo(this.EndPercent);
+        KeyframesCount?.ApplyTo(this.KeyframesCount);
+        PrintKeyframes?.ApplyTo(this.PrintKeyframes);
+        PrevHookKf?.ApplyTo(this.PrevHookKf);
         return this;
     }
 }

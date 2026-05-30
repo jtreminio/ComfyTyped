@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Encode images with VAE and texts with CLIP to create a training dataset of latents and conditionings.</summary>
-/// <remarks>Category: training</remarks>
+/// <remarks>Category: model/training</remarks>
 public sealed class MakeTrainingDatasetNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -33,14 +33,21 @@ public sealed class MakeTrainingDatasetNode : ComfyNode
         Texts = AddInput<StringType>("texts", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public MakeTrainingDatasetNode With(
-        string? Texts = null
+        In<ImageType>? Images = null,
+        In<VaeType>? Vae = null,
+        In<ClipType>? Clip = null,
+        StringArg? Texts = null
     )
     {
-        if (Texts is { } v_Texts) this.Texts.Set(v_Texts);
+        Images?.ApplyTo(this.Images);
+        Vae?.ApplyTo(this.Vae);
+        Clip?.ApplyTo(this.Clip);
+        Texts?.ApplyTo(this.Texts);
         return this;
     }
 }

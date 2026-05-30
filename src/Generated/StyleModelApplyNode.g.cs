@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: conditioning/style_model</remarks>
+/// <remarks>Category: model/conditioning/style_model</remarks>
 public sealed class StyleModelApplyNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -33,16 +33,23 @@ public sealed class StyleModelApplyNode : ComfyNode
         StrengthType = AddInput<StringType>("strength_type", required: true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public StyleModelApplyNode With(
-        double? Strength = null,
-        string? StrengthType = null
+        In<ConditioningType>? Conditioning = null,
+        In<StyleModelType>? StyleModel = null,
+        In<ClipVisionOutputType>? ClipVisionOutput = null,
+        FloatArg? Strength = null,
+        StringArg? StrengthType = null
     )
     {
-        if (Strength is { } v_Strength) this.Strength.Set(v_Strength);
-        if (StrengthType is { } v_StrengthType) this.StrengthType.Set(v_StrengthType);
+        Conditioning?.ApplyTo(this.Conditioning);
+        StyleModel?.ApplyTo(this.StyleModel);
+        ClipVisionOutput?.ApplyTo(this.ClipVisionOutput);
+        Strength?.ApplyTo(this.Strength);
+        StrengthType?.ApplyTo(this.StrengthType);
         return this;
     }
 }

@@ -36,16 +36,27 @@ public sealed class IPAdapterFromParamsNode : ComfyNode
         ClipVision = AddInput<ClipVisionType>("clip_vision", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public IPAdapterFromParamsNode With(
-        string? CombineEmbeds = null,
-        string? EmbedsScaling = null
+        In<ModelType>? Model = null,
+        In<IpAdapterType>? Ipadapter = null,
+        In<IpadapterParamsType>? IpadapterParams = null,
+        StringArg? CombineEmbeds = null,
+        StringArg? EmbedsScaling = null,
+        In<ImageType>? ImageNegative = null,
+        In<ClipVisionType>? ClipVision = null
     )
     {
-        if (CombineEmbeds is { } v_CombineEmbeds) this.CombineEmbeds.Set(v_CombineEmbeds);
-        if (EmbedsScaling is { } v_EmbedsScaling) this.EmbedsScaling.Set(v_EmbedsScaling);
+        Model?.ApplyTo(this.Model);
+        Ipadapter?.ApplyTo(this.Ipadapter);
+        IpadapterParams?.ApplyTo(this.IpadapterParams);
+        CombineEmbeds?.ApplyTo(this.CombineEmbeds);
+        EmbedsScaling?.ApplyTo(this.EmbedsScaling);
+        ImageNegative?.ApplyTo(this.ImageNegative);
+        ClipVision?.ApplyTo(this.ClipVision);
         return this;
     }
 }

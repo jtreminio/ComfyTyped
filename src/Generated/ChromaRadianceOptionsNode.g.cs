@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Allows setting advanced options for the Chroma Radiance model.</summary>
-/// <remarks>Category: model_patches/chroma_radiance</remarks>
+/// <remarks>Category: model/patch/chroma_radiance</remarks>
 public sealed class ChromaRadianceOptionsNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -37,20 +37,23 @@ public sealed class ChromaRadianceOptionsNode : ComfyNode
         NerfTileSize.Set(-1L);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public ChromaRadianceOptionsNode With(
-        bool? PreserveWrapper = null,
-        double? StartSigma = null,
-        double? EndSigma = null,
-        long? NerfTileSize = null
+        In<ModelType>? Model = null,
+        BoolArg? PreserveWrapper = null,
+        FloatArg? StartSigma = null,
+        FloatArg? EndSigma = null,
+        IntArg? NerfTileSize = null
     )
     {
-        if (PreserveWrapper is { } v_PreserveWrapper) this.PreserveWrapper.Set(v_PreserveWrapper);
-        if (StartSigma is { } v_StartSigma) this.StartSigma.Set(v_StartSigma);
-        if (EndSigma is { } v_EndSigma) this.EndSigma.Set(v_EndSigma);
-        if (NerfTileSize is { } v_NerfTileSize) this.NerfTileSize.Set(v_NerfTileSize);
+        Model?.ApplyTo(this.Model);
+        PreserveWrapper?.ApplyTo(this.PreserveWrapper);
+        StartSigma?.ApplyTo(this.StartSigma);
+        EndSigma?.ApplyTo(this.EndSigma);
+        NerfTileSize?.ApplyTo(this.NerfTileSize);
         return this;
     }
 }

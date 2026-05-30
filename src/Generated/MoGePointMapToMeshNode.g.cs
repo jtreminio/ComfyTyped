@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Convert a MoGe point map into a 3D mesh.</summary>
-/// <remarks>Category: image/geometry_estimation</remarks>
+/// <remarks>Category: image/geometry estimation</remarks>
 public sealed class MoGePointMapToMeshNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -37,20 +37,23 @@ public sealed class MoGePointMapToMeshNode : ComfyNode
         Texture.Set(true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public MoGePointMapToMeshNode With(
-        long? BatchIndex = null,
-        long? Decimation = null,
-        double? DiscontinuityThreshold = null,
-        bool? Texture = null
+        In<MogeGeometryType>? MogeGeometry = null,
+        IntArg? BatchIndex = null,
+        IntArg? Decimation = null,
+        FloatArg? DiscontinuityThreshold = null,
+        BoolArg? Texture = null
     )
     {
-        if (BatchIndex is { } v_BatchIndex) this.BatchIndex.Set(v_BatchIndex);
-        if (Decimation is { } v_Decimation) this.Decimation.Set(v_Decimation);
-        if (DiscontinuityThreshold is { } v_DiscontinuityThreshold) this.DiscontinuityThreshold.Set(v_DiscontinuityThreshold);
-        if (Texture is { } v_Texture) this.Texture.Set(v_Texture);
+        MogeGeometry?.ApplyTo(this.MogeGeometry);
+        BatchIndex?.ApplyTo(this.BatchIndex);
+        Decimation?.ApplyTo(this.Decimation);
+        DiscontinuityThreshold?.ApplyTo(this.DiscontinuityThreshold);
+        Texture?.ApplyTo(this.Texture);
         return this;
     }
 }

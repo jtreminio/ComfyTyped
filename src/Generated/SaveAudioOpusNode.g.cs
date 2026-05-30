@@ -26,16 +26,19 @@ public sealed class SaveAudioOpusNode : ComfyNode
         Quality.Set("128k");
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SaveAudioOpusNode With(
-        string? FilenamePrefix = null,
-        string? Quality = null
+        In<AudioType>? Audio = null,
+        StringArg? FilenamePrefix = null,
+        StringArg? Quality = null
     )
     {
-        if (FilenamePrefix is { } v_FilenamePrefix) this.FilenamePrefix.Set(v_FilenamePrefix);
-        if (Quality is { } v_Quality) this.Quality.Set(v_Quality);
+        Audio?.ApplyTo(this.Audio);
+        FilenamePrefix?.ApplyTo(this.FilenamePrefix);
+        Quality?.ApplyTo(this.Quality);
         return this;
     }
 }

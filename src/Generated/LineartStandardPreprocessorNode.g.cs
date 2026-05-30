@@ -33,18 +33,21 @@ public sealed class LineartStandardPreprocessorNode : ComfyNode
         Resolution.Set(512L);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public LineartStandardPreprocessorNode With(
-        double? GuassianSigma = null,
-        long? IntensityThreshold = null,
-        long? Resolution = null
+        In<ImageType>? Image = null,
+        FloatArg? GuassianSigma = null,
+        IntArg? IntensityThreshold = null,
+        IntArg? Resolution = null
     )
     {
-        if (GuassianSigma is { } v_GuassianSigma) this.GuassianSigma.Set(v_GuassianSigma);
-        if (IntensityThreshold is { } v_IntensityThreshold) this.IntensityThreshold.Set(v_IntensityThreshold);
-        if (Resolution is { } v_Resolution) this.Resolution.Set(v_Resolution);
+        Image?.ApplyTo(this.Image);
+        GuassianSigma?.ApplyTo(this.GuassianSigma);
+        IntensityThreshold?.ApplyTo(this.IntensityThreshold);
+        Resolution?.ApplyTo(this.Resolution);
         return this;
     }
 }

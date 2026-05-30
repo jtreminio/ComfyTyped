@@ -33,18 +33,21 @@ public sealed class VideoSliceNode : ComfyNode
         StrictDuration.Set(false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public VideoSliceNode With(
-        double? StartTime = null,
-        double? Duration = null,
-        bool? StrictDuration = null
+        In<VideoType>? Video = null,
+        FloatArg? StartTime = null,
+        FloatArg? Duration = null,
+        BoolArg? StrictDuration = null
     )
     {
-        if (StartTime is { } v_StartTime) this.StartTime.Set(v_StartTime);
-        if (Duration is { } v_Duration) this.Duration.Set(v_Duration);
-        if (StrictDuration is { } v_StrictDuration) this.StrictDuration.Set(v_StrictDuration);
+        Video?.ApplyTo(this.Video);
+        StartTime?.ApplyTo(this.StartTime);
+        Duration?.ApplyTo(this.Duration);
+        StrictDuration?.ApplyTo(this.StrictDuration);
         return this;
     }
 }

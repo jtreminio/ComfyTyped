@@ -31,18 +31,21 @@ public sealed class CLIPTextEncodeFluxNode : ComfyNode
         Guidance.Set(3.5);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public CLIPTextEncodeFluxNode With(
-        string? ClipL = null,
-        string? T5xxl = null,
-        double? Guidance = null
+        In<ClipType>? Clip = null,
+        StringArg? ClipL = null,
+        StringArg? T5xxl = null,
+        FloatArg? Guidance = null
     )
     {
-        if (ClipL is { } v_ClipL) this.ClipL.Set(v_ClipL);
-        if (T5xxl is { } v_T5xxl) this.T5xxl.Set(v_T5xxl);
-        if (Guidance is { } v_Guidance) this.Guidance.Set(v_Guidance);
+        Clip?.ApplyTo(this.Clip);
+        ClipL?.ApplyTo(this.ClipL);
+        T5xxl?.ApplyTo(this.T5xxl);
+        Guidance?.ApplyTo(this.Guidance);
         return this;
     }
 }

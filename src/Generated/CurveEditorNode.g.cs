@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: utils</remarks>
+/// <remarks>Category: utilities</remarks>
 public sealed class CurveEditorNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -24,5 +24,19 @@ public sealed class CurveEditorNode : ComfyNode
         Curve = AddOutput<CurveType>(0, "curve");
         CurveInput = AddInput<CurveType>("curve", required: true);
         Histogram = AddInput<HistogramType>("histogram", required: false);
+    }
+
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
+    public CurveEditorNode With(
+        In<CurveType>? CurveInput = null,
+        In<HistogramType>? Histogram = null
+    )
+    {
+        CurveInput?.ApplyTo(this.CurveInput);
+        Histogram?.ApplyTo(this.Histogram);
+        return this;
     }
 }

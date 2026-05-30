@@ -34,20 +34,23 @@ public sealed class ImageScaleNode : ComfyNode
         Crop = AddInput<StringType>("crop", required: true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public ImageScaleNode With(
-        string? UpscaleMethod = null,
-        long? Width = null,
-        long? Height = null,
-        string? Crop = null
+        In<ImageType>? Image = null,
+        StringArg? UpscaleMethod = null,
+        IntArg? Width = null,
+        IntArg? Height = null,
+        StringArg? Crop = null
     )
     {
-        if (UpscaleMethod is { } v_UpscaleMethod) this.UpscaleMethod.Set(v_UpscaleMethod);
-        if (Width is { } v_Width) this.Width.Set(v_Width);
-        if (Height is { } v_Height) this.Height.Set(v_Height);
-        if (Crop is { } v_Crop) this.Crop.Set(v_Crop);
+        Image?.ApplyTo(this.Image);
+        UpscaleMethod?.ApplyTo(this.UpscaleMethod);
+        Width?.ApplyTo(this.Width);
+        Height?.ApplyTo(this.Height);
+        Crop?.ApplyTo(this.Crop);
         return this;
     }
 }

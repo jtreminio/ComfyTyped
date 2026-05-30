@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: latent/advanced</remarks>
+/// <remarks>Category: model/latent/advanced</remarks>
 public sealed class LatentInterpolateNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -29,14 +29,19 @@ public sealed class LatentInterpolateNode : ComfyNode
         Ratio.Set(1.0);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public LatentInterpolateNode With(
-        double? Ratio = null
+        In<LatentType>? Samples1 = null,
+        In<LatentType>? Samples2 = null,
+        FloatArg? Ratio = null
     )
     {
-        if (Ratio is { } v_Ratio) this.Ratio.Set(v_Ratio);
+        Samples1?.ApplyTo(this.Samples1);
+        Samples2?.ApplyTo(this.Samples2);
+        Ratio?.ApplyTo(this.Ratio);
         return this;
     }
 }

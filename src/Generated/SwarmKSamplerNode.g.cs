@@ -77,46 +77,55 @@ public sealed class SwarmKSamplerNode : ComfyNode
         TileSize.Set(1024L);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SwarmKSamplerNode With(
-        long? NoiseSeed = null,
-        long? Steps = null,
-        double? Cfg = null,
-        string? SamplerName = null,
-        string? Scheduler = null,
-        long? StartAtStep = null,
-        long? EndAtStep = null,
-        long? VarSeed = null,
-        double? VarSeedStrength = null,
-        double? SigmaMax = null,
-        double? SigmaMin = null,
-        double? Rho = null,
-        string? AddNoise = null,
-        string? ReturnWithLeftoverNoise = null,
-        string? Previews = null,
-        bool? TileSample = null,
-        long? TileSize = null
+        In<ModelType>? Model = null,
+        IntArg? NoiseSeed = null,
+        IntArg? Steps = null,
+        FloatArg? Cfg = null,
+        StringArg? SamplerName = null,
+        StringArg? Scheduler = null,
+        In<ConditioningType>? Positive = null,
+        In<ConditioningType>? Negative = null,
+        In<LatentType>? LatentImage = null,
+        IntArg? StartAtStep = null,
+        IntArg? EndAtStep = null,
+        IntArg? VarSeed = null,
+        FloatArg? VarSeedStrength = null,
+        FloatArg? SigmaMax = null,
+        FloatArg? SigmaMin = null,
+        FloatArg? Rho = null,
+        StringArg? AddNoise = null,
+        StringArg? ReturnWithLeftoverNoise = null,
+        StringArg? Previews = null,
+        BoolArg? TileSample = null,
+        IntArg? TileSize = null
     )
     {
-        if (NoiseSeed is { } v_NoiseSeed) this.NoiseSeed.Set(v_NoiseSeed);
-        if (Steps is { } v_Steps) this.Steps.Set(v_Steps);
-        if (Cfg is { } v_Cfg) this.Cfg.Set(v_Cfg);
-        if (SamplerName is { } v_SamplerName) this.SamplerName.Set(v_SamplerName);
-        if (Scheduler is { } v_Scheduler) this.Scheduler.Set(v_Scheduler);
-        if (StartAtStep is { } v_StartAtStep) this.StartAtStep.Set(v_StartAtStep);
-        if (EndAtStep is { } v_EndAtStep) this.EndAtStep.Set(v_EndAtStep);
-        if (VarSeed is { } v_VarSeed) this.VarSeed.Set(v_VarSeed);
-        if (VarSeedStrength is { } v_VarSeedStrength) this.VarSeedStrength.Set(v_VarSeedStrength);
-        if (SigmaMax is { } v_SigmaMax) this.SigmaMax.Set(v_SigmaMax);
-        if (SigmaMin is { } v_SigmaMin) this.SigmaMin.Set(v_SigmaMin);
-        if (Rho is { } v_Rho) this.Rho.Set(v_Rho);
-        if (AddNoise is { } v_AddNoise) this.AddNoise.Set(v_AddNoise);
-        if (ReturnWithLeftoverNoise is { } v_ReturnWithLeftoverNoise) this.ReturnWithLeftoverNoise.Set(v_ReturnWithLeftoverNoise);
-        if (Previews is { } v_Previews) this.Previews.Set(v_Previews);
-        if (TileSample is { } v_TileSample) this.TileSample.Set(v_TileSample);
-        if (TileSize is { } v_TileSize) this.TileSize.Set(v_TileSize);
+        Model?.ApplyTo(this.Model);
+        NoiseSeed?.ApplyTo(this.NoiseSeed);
+        Steps?.ApplyTo(this.Steps);
+        Cfg?.ApplyTo(this.Cfg);
+        SamplerName?.ApplyTo(this.SamplerName);
+        Scheduler?.ApplyTo(this.Scheduler);
+        Positive?.ApplyTo(this.Positive);
+        Negative?.ApplyTo(this.Negative);
+        LatentImage?.ApplyTo(this.LatentImage);
+        StartAtStep?.ApplyTo(this.StartAtStep);
+        EndAtStep?.ApplyTo(this.EndAtStep);
+        VarSeed?.ApplyTo(this.VarSeed);
+        VarSeedStrength?.ApplyTo(this.VarSeedStrength);
+        SigmaMax?.ApplyTo(this.SigmaMax);
+        SigmaMin?.ApplyTo(this.SigmaMin);
+        Rho?.ApplyTo(this.Rho);
+        AddNoise?.ApplyTo(this.AddNoise);
+        ReturnWithLeftoverNoise?.ApplyTo(this.ReturnWithLeftoverNoise);
+        Previews?.ApplyTo(this.Previews);
+        TileSample?.ApplyTo(this.TileSample);
+        TileSize?.ApplyTo(this.TileSize);
         return this;
     }
 }

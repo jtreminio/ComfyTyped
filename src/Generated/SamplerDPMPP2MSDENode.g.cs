@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: sampling/samplers</remarks>
+/// <remarks>Category: model/sampling/samplers</remarks>
 public sealed class SamplerDPMPP2MSDENode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -32,20 +32,21 @@ public sealed class SamplerDPMPP2MSDENode : ComfyNode
         NoiseDevice = AddInput<StringType>("noise_device", required: true);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SamplerDPMPP2MSDENode With(
-        string? SolverType = null,
-        double? Eta = null,
-        double? SNoise = null,
-        string? NoiseDevice = null
+        StringArg? SolverType = null,
+        FloatArg? Eta = null,
+        FloatArg? SNoise = null,
+        StringArg? NoiseDevice = null
     )
     {
-        if (SolverType is { } v_SolverType) this.SolverType.Set(v_SolverType);
-        if (Eta is { } v_Eta) this.Eta.Set(v_Eta);
-        if (SNoise is { } v_SNoise) this.SNoise.Set(v_SNoise);
-        if (NoiseDevice is { } v_NoiseDevice) this.NoiseDevice.Set(v_NoiseDevice);
+        SolverType?.ApplyTo(this.SolverType);
+        Eta?.ApplyTo(this.Eta);
+        SNoise?.ApplyTo(this.SNoise);
+        NoiseDevice?.ApplyTo(this.NoiseDevice);
         return this;
     }
 }

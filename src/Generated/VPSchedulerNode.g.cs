@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: sampling/schedulers</remarks>
+/// <remarks>Category: model/sampling/schedulers</remarks>
 public sealed class VPSchedulerNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -34,20 +34,21 @@ public sealed class VPSchedulerNode : ComfyNode
         EpsS.Set(0.001);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public VPSchedulerNode With(
-        long? Steps = null,
-        double? BetaD = null,
-        double? BetaMin = null,
-        double? EpsS = null
+        IntArg? Steps = null,
+        FloatArg? BetaD = null,
+        FloatArg? BetaMin = null,
+        FloatArg? EpsS = null
     )
     {
-        if (Steps is { } v_Steps) this.Steps.Set(v_Steps);
-        if (BetaD is { } v_BetaD) this.BetaD.Set(v_BetaD);
-        if (BetaMin is { } v_BetaMin) this.BetaMin.Set(v_BetaMin);
-        if (EpsS is { } v_EpsS) this.EpsS.Set(v_EpsS);
+        Steps?.ApplyTo(this.Steps);
+        BetaD?.ApplyTo(this.BetaD);
+        BetaMin?.ApplyTo(this.BetaMin);
+        EpsS?.ApplyTo(this.EpsS);
         return this;
     }
 }

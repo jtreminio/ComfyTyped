@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: sampling/schedulers</remarks>
+/// <remarks>Category: model/sampling/schedulers</remarks>
 public sealed class BetaSamplingSchedulerNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -33,18 +33,21 @@ public sealed class BetaSamplingSchedulerNode : ComfyNode
         Beta.Set(0.6);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public BetaSamplingSchedulerNode With(
-        long? Steps = null,
-        double? Alpha = null,
-        double? Beta = null
+        In<ModelType>? Model = null,
+        IntArg? Steps = null,
+        FloatArg? Alpha = null,
+        FloatArg? Beta = null
     )
     {
-        if (Steps is { } v_Steps) this.Steps.Set(v_Steps);
-        if (Alpha is { } v_Alpha) this.Alpha.Set(v_Alpha);
-        if (Beta is { } v_Beta) this.Beta.Set(v_Beta);
+        Model?.ApplyTo(this.Model);
+        Steps?.ApplyTo(this.Steps);
+        Alpha?.ApplyTo(this.Alpha);
+        Beta?.ApplyTo(this.Beta);
         return this;
     }
 }

@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: dataset/text</remarks>
+/// <remarks>Category: text</remarks>
 public sealed class AddTextSuffixNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -27,16 +27,17 @@ public sealed class AddTextSuffixNode : ComfyNode
         Suffix.Set("");
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public AddTextSuffixNode With(
-        string? TextsInput = null,
-        string? Suffix = null
+        StringArg? TextsInput = null,
+        StringArg? Suffix = null
     )
     {
-        if (TextsInput is { } v_TextsInput) this.TextsInput.Set(v_TextsInput);
-        if (Suffix is { } v_Suffix) this.Suffix.Set(v_Suffix);
+        TextsInput?.ApplyTo(this.TextsInput);
+        Suffix?.ApplyTo(this.Suffix);
         return this;
     }
 }

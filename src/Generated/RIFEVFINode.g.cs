@@ -53,30 +53,35 @@ public sealed class RIFEVFINode : ComfyNode
         OptionalInterpolationStates = AddInput<InterpolationStatesType>("optional_interpolation_states", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public RIFEVFINode With(
-        string? CkptName = null,
-        long? ClearCacheAfterNFrames = null,
-        long? Multiplier = null,
-        bool? FastMode = null,
-        bool? Ensemble = null,
-        string? ScaleFactor = null,
-        string? Dtype = null,
-        bool? TorchCompile = null,
-        long? BatchSize = null
+        StringArg? CkptName = null,
+        In<ImageType>? Frames = null,
+        IntArg? ClearCacheAfterNFrames = null,
+        IntArg? Multiplier = null,
+        BoolArg? FastMode = null,
+        BoolArg? Ensemble = null,
+        StringArg? ScaleFactor = null,
+        StringArg? Dtype = null,
+        BoolArg? TorchCompile = null,
+        IntArg? BatchSize = null,
+        In<InterpolationStatesType>? OptionalInterpolationStates = null
     )
     {
-        if (CkptName is { } v_CkptName) this.CkptName.Set(v_CkptName);
-        if (ClearCacheAfterNFrames is { } v_ClearCacheAfterNFrames) this.ClearCacheAfterNFrames.Set(v_ClearCacheAfterNFrames);
-        if (Multiplier is { } v_Multiplier) this.Multiplier.Set(v_Multiplier);
-        if (FastMode is { } v_FastMode) this.FastMode.Set(v_FastMode);
-        if (Ensemble is { } v_Ensemble) this.Ensemble.Set(v_Ensemble);
-        if (ScaleFactor is { } v_ScaleFactor) this.ScaleFactor.Set(v_ScaleFactor);
-        if (Dtype is { } v_Dtype) this.Dtype.Set(v_Dtype);
-        if (TorchCompile is { } v_TorchCompile) this.TorchCompile.Set(v_TorchCompile);
-        if (BatchSize is { } v_BatchSize) this.BatchSize.Set(v_BatchSize);
+        CkptName?.ApplyTo(this.CkptName);
+        Frames?.ApplyTo(this.Frames);
+        ClearCacheAfterNFrames?.ApplyTo(this.ClearCacheAfterNFrames);
+        Multiplier?.ApplyTo(this.Multiplier);
+        FastMode?.ApplyTo(this.FastMode);
+        Ensemble?.ApplyTo(this.Ensemble);
+        ScaleFactor?.ApplyTo(this.ScaleFactor);
+        Dtype?.ApplyTo(this.Dtype);
+        TorchCompile?.ApplyTo(this.TorchCompile);
+        BatchSize?.ApplyTo(this.BatchSize);
+        OptionalInterpolationStates?.ApplyTo(this.OptionalInterpolationStates);
         return this;
     }
 }

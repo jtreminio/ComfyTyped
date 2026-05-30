@@ -36,20 +36,23 @@ public sealed class Metric3DDepthMapPreprocessorNode : ComfyNode
         Resolution.Set(512L);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public Metric3DDepthMapPreprocessorNode With(
-        string? Backbone = null,
-        long? Fx = null,
-        long? Fy = null,
-        long? Resolution = null
+        In<ImageType>? Image = null,
+        StringArg? Backbone = null,
+        IntArg? Fx = null,
+        IntArg? Fy = null,
+        IntArg? Resolution = null
     )
     {
-        if (Backbone is { } v_Backbone) this.Backbone.Set(v_Backbone);
-        if (Fx is { } v_Fx) this.Fx.Set(v_Fx);
-        if (Fy is { } v_Fy) this.Fy.Set(v_Fy);
-        if (Resolution is { } v_Resolution) this.Resolution.Set(v_Resolution);
+        Image?.ApplyTo(this.Image);
+        Backbone?.ApplyTo(this.Backbone);
+        Fx?.ApplyTo(this.Fx);
+        Fy?.ApplyTo(this.Fy);
+        Resolution?.ApplyTo(this.Resolution);
         return this;
     }
 }

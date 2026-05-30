@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: conditioning/video_models</remarks>
+/// <remarks>Category: model/conditioning/video_models</remarks>
 public sealed class WanInfiniteTalkToVideoNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -65,24 +65,43 @@ public sealed class WanInfiniteTalkToVideoNode : ComfyNode
         PreviousFrames = AddInput<ImageType>("previous_frames", required: false);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public WanInfiniteTalkToVideoNode With(
-        string? Mode = null,
-        long? Width = null,
-        long? Height = null,
-        long? Length = null,
-        long? MotionFrameCount = null,
-        double? AudioScale = null
+        StringArg? Mode = null,
+        In<ModelType>? ModelInput = null,
+        In<ModelPatchType>? ModelPatch = null,
+        In<ConditioningType>? PositiveInput = null,
+        In<ConditioningType>? NegativeInput = null,
+        In<VaeType>? Vae = null,
+        IntArg? Width = null,
+        IntArg? Height = null,
+        IntArg? Length = null,
+        In<AudioEncoderOutputType>? AudioEncoderOutput1 = null,
+        IntArg? MotionFrameCount = null,
+        FloatArg? AudioScale = null,
+        In<ClipVisionOutputType>? ClipVisionOutput = null,
+        In<ImageType>? StartImage = null,
+        In<ImageType>? PreviousFrames = null
     )
     {
-        if (Mode is { } v_Mode) this.Mode.Set(v_Mode);
-        if (Width is { } v_Width) this.Width.Set(v_Width);
-        if (Height is { } v_Height) this.Height.Set(v_Height);
-        if (Length is { } v_Length) this.Length.Set(v_Length);
-        if (MotionFrameCount is { } v_MotionFrameCount) this.MotionFrameCount.Set(v_MotionFrameCount);
-        if (AudioScale is { } v_AudioScale) this.AudioScale.Set(v_AudioScale);
+        Mode?.ApplyTo(this.Mode);
+        ModelInput?.ApplyTo(this.ModelInput);
+        ModelPatch?.ApplyTo(this.ModelPatch);
+        PositiveInput?.ApplyTo(this.PositiveInput);
+        NegativeInput?.ApplyTo(this.NegativeInput);
+        Vae?.ApplyTo(this.Vae);
+        Width?.ApplyTo(this.Width);
+        Height?.ApplyTo(this.Height);
+        Length?.ApplyTo(this.Length);
+        AudioEncoderOutput1?.ApplyTo(this.AudioEncoderOutput1);
+        MotionFrameCount?.ApplyTo(this.MotionFrameCount);
+        AudioScale?.ApplyTo(this.AudioScale);
+        ClipVisionOutput?.ApplyTo(this.ClipVisionOutput);
+        StartImage?.ApplyTo(this.StartImage);
+        PreviousFrames?.ApplyTo(this.PreviousFrames);
         return this;
     }
 }

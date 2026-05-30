@@ -39,22 +39,25 @@ public sealed class TTPlanetTileGFPreprocessorNode : ComfyNode
         Resolution.Set(512L);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public TTPlanetTileGFPreprocessorNode With(
-        double? ScaleFactor = null,
-        double? BlurStrength = null,
-        long? Radius = null,
-        double? Eps = null,
-        long? Resolution = null
+        In<ImageType>? Image = null,
+        FloatArg? ScaleFactor = null,
+        FloatArg? BlurStrength = null,
+        IntArg? Radius = null,
+        FloatArg? Eps = null,
+        IntArg? Resolution = null
     )
     {
-        if (ScaleFactor is { } v_ScaleFactor) this.ScaleFactor.Set(v_ScaleFactor);
-        if (BlurStrength is { } v_BlurStrength) this.BlurStrength.Set(v_BlurStrength);
-        if (Radius is { } v_Radius) this.Radius.Set(v_Radius);
-        if (Eps is { } v_Eps) this.Eps.Set(v_Eps);
-        if (Resolution is { } v_Resolution) this.Resolution.Set(v_Resolution);
+        Image?.ApplyTo(this.Image);
+        ScaleFactor?.ApplyTo(this.ScaleFactor);
+        BlurStrength?.ApplyTo(this.BlurStrength);
+        Radius?.ApplyTo(this.Radius);
+        Eps?.ApplyTo(this.Eps);
+        Resolution?.ApplyTo(this.Resolution);
         return this;
     }
 }

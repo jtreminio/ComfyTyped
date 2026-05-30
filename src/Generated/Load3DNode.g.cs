@@ -20,6 +20,7 @@ public sealed class Load3DNode : ComfyNode
     public NodeOutput<Load3dCameraType> CameraInfo { get; }
     public NodeOutput<VideoType> RecordingVideo { get; }
     public NodeOutput<File3dType> Model3d { get; }
+    public NodeOutput<Load3dModelInfoType> Model3dInfo { get; }
 
     // ── Inputs ──
     public NodeInput<StringType> ModelFile { get; }
@@ -36,6 +37,7 @@ public sealed class Load3DNode : ComfyNode
         CameraInfo = AddOutput<Load3dCameraType>(4, "camera_info");
         RecordingVideo = AddOutput<VideoType>(5, "recording_video");
         Model3d = AddOutput<File3dType>(6, "model_3d");
+        Model3dInfo = AddOutput<Load3dModelInfoType>(7, "model_3d_info");
         ModelFile = AddInput<StringType>("model_file", required: true);
         ImageInput = AddInput<Load3dType>("image", required: true);
         Width = AddInput<IntType>("width", required: true);
@@ -44,18 +46,21 @@ public sealed class Load3DNode : ComfyNode
         Height.Set(1024L);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public Load3DNode With(
-        string? ModelFile = null,
-        long? Width = null,
-        long? Height = null
+        StringArg? ModelFile = null,
+        In<Load3dType>? ImageInput = null,
+        IntArg? Width = null,
+        IntArg? Height = null
     )
     {
-        if (ModelFile is { } v_ModelFile) this.ModelFile.Set(v_ModelFile);
-        if (Width is { } v_Width) this.Width.Set(v_Width);
-        if (Height is { } v_Height) this.Height.Set(v_Height);
+        ModelFile?.ApplyTo(this.ModelFile);
+        ImageInput?.ApplyTo(this.ImageInput);
+        Width?.ApplyTo(this.Width);
+        Height?.ApplyTo(this.Height);
         return this;
     }
 }

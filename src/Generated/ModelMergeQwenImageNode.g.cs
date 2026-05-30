@@ -224,144 +224,149 @@ public sealed class ModelMergeQwenImageNode : ComfyNode
         ProjOut.Set(1.0);
     }
 
-    /// <summary>Fluent setter for primitive inputs. Returns <c>this</c> for chaining.
-    /// Pass only the inputs you want to set; <c>null</c> leaves the existing value untouched.
-    /// Connection inputs are not exposed here — use <c>ConnectTo(...)</c>.</summary>
+    /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
+    /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
+    /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
+    /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public ModelMergeQwenImageNode With(
-        double? PosEmbeds = null,
-        double? ImgIn = null,
-        double? TxtNorm = null,
-        double? TxtIn = null,
-        double? TimeTextEmbed = null,
-        double? TransformerBlocks0 = null,
-        double? TransformerBlocks1 = null,
-        double? TransformerBlocks2 = null,
-        double? TransformerBlocks3 = null,
-        double? TransformerBlocks4 = null,
-        double? TransformerBlocks5 = null,
-        double? TransformerBlocks6 = null,
-        double? TransformerBlocks7 = null,
-        double? TransformerBlocks8 = null,
-        double? TransformerBlocks9 = null,
-        double? TransformerBlocks10 = null,
-        double? TransformerBlocks11 = null,
-        double? TransformerBlocks12 = null,
-        double? TransformerBlocks13 = null,
-        double? TransformerBlocks14 = null,
-        double? TransformerBlocks15 = null,
-        double? TransformerBlocks16 = null,
-        double? TransformerBlocks17 = null,
-        double? TransformerBlocks18 = null,
-        double? TransformerBlocks19 = null,
-        double? TransformerBlocks20 = null,
-        double? TransformerBlocks21 = null,
-        double? TransformerBlocks22 = null,
-        double? TransformerBlocks23 = null,
-        double? TransformerBlocks24 = null,
-        double? TransformerBlocks25 = null,
-        double? TransformerBlocks26 = null,
-        double? TransformerBlocks27 = null,
-        double? TransformerBlocks28 = null,
-        double? TransformerBlocks29 = null,
-        double? TransformerBlocks30 = null,
-        double? TransformerBlocks31 = null,
-        double? TransformerBlocks32 = null,
-        double? TransformerBlocks33 = null,
-        double? TransformerBlocks34 = null,
-        double? TransformerBlocks35 = null,
-        double? TransformerBlocks36 = null,
-        double? TransformerBlocks37 = null,
-        double? TransformerBlocks38 = null,
-        double? TransformerBlocks39 = null,
-        double? TransformerBlocks40 = null,
-        double? TransformerBlocks41 = null,
-        double? TransformerBlocks42 = null,
-        double? TransformerBlocks43 = null,
-        double? TransformerBlocks44 = null,
-        double? TransformerBlocks45 = null,
-        double? TransformerBlocks46 = null,
-        double? TransformerBlocks47 = null,
-        double? TransformerBlocks48 = null,
-        double? TransformerBlocks49 = null,
-        double? TransformerBlocks50 = null,
-        double? TransformerBlocks51 = null,
-        double? TransformerBlocks52 = null,
-        double? TransformerBlocks53 = null,
-        double? TransformerBlocks54 = null,
-        double? TransformerBlocks55 = null,
-        double? TransformerBlocks56 = null,
-        double? TransformerBlocks57 = null,
-        double? TransformerBlocks58 = null,
-        double? TransformerBlocks59 = null,
-        double? ProjOut = null
+        In<ModelType>? Model1 = null,
+        In<ModelType>? Model2 = null,
+        FloatArg? PosEmbeds = null,
+        FloatArg? ImgIn = null,
+        FloatArg? TxtNorm = null,
+        FloatArg? TxtIn = null,
+        FloatArg? TimeTextEmbed = null,
+        FloatArg? TransformerBlocks0 = null,
+        FloatArg? TransformerBlocks1 = null,
+        FloatArg? TransformerBlocks2 = null,
+        FloatArg? TransformerBlocks3 = null,
+        FloatArg? TransformerBlocks4 = null,
+        FloatArg? TransformerBlocks5 = null,
+        FloatArg? TransformerBlocks6 = null,
+        FloatArg? TransformerBlocks7 = null,
+        FloatArg? TransformerBlocks8 = null,
+        FloatArg? TransformerBlocks9 = null,
+        FloatArg? TransformerBlocks10 = null,
+        FloatArg? TransformerBlocks11 = null,
+        FloatArg? TransformerBlocks12 = null,
+        FloatArg? TransformerBlocks13 = null,
+        FloatArg? TransformerBlocks14 = null,
+        FloatArg? TransformerBlocks15 = null,
+        FloatArg? TransformerBlocks16 = null,
+        FloatArg? TransformerBlocks17 = null,
+        FloatArg? TransformerBlocks18 = null,
+        FloatArg? TransformerBlocks19 = null,
+        FloatArg? TransformerBlocks20 = null,
+        FloatArg? TransformerBlocks21 = null,
+        FloatArg? TransformerBlocks22 = null,
+        FloatArg? TransformerBlocks23 = null,
+        FloatArg? TransformerBlocks24 = null,
+        FloatArg? TransformerBlocks25 = null,
+        FloatArg? TransformerBlocks26 = null,
+        FloatArg? TransformerBlocks27 = null,
+        FloatArg? TransformerBlocks28 = null,
+        FloatArg? TransformerBlocks29 = null,
+        FloatArg? TransformerBlocks30 = null,
+        FloatArg? TransformerBlocks31 = null,
+        FloatArg? TransformerBlocks32 = null,
+        FloatArg? TransformerBlocks33 = null,
+        FloatArg? TransformerBlocks34 = null,
+        FloatArg? TransformerBlocks35 = null,
+        FloatArg? TransformerBlocks36 = null,
+        FloatArg? TransformerBlocks37 = null,
+        FloatArg? TransformerBlocks38 = null,
+        FloatArg? TransformerBlocks39 = null,
+        FloatArg? TransformerBlocks40 = null,
+        FloatArg? TransformerBlocks41 = null,
+        FloatArg? TransformerBlocks42 = null,
+        FloatArg? TransformerBlocks43 = null,
+        FloatArg? TransformerBlocks44 = null,
+        FloatArg? TransformerBlocks45 = null,
+        FloatArg? TransformerBlocks46 = null,
+        FloatArg? TransformerBlocks47 = null,
+        FloatArg? TransformerBlocks48 = null,
+        FloatArg? TransformerBlocks49 = null,
+        FloatArg? TransformerBlocks50 = null,
+        FloatArg? TransformerBlocks51 = null,
+        FloatArg? TransformerBlocks52 = null,
+        FloatArg? TransformerBlocks53 = null,
+        FloatArg? TransformerBlocks54 = null,
+        FloatArg? TransformerBlocks55 = null,
+        FloatArg? TransformerBlocks56 = null,
+        FloatArg? TransformerBlocks57 = null,
+        FloatArg? TransformerBlocks58 = null,
+        FloatArg? TransformerBlocks59 = null,
+        FloatArg? ProjOut = null
     )
     {
-        if (PosEmbeds is { } v_PosEmbeds) this.PosEmbeds.Set(v_PosEmbeds);
-        if (ImgIn is { } v_ImgIn) this.ImgIn.Set(v_ImgIn);
-        if (TxtNorm is { } v_TxtNorm) this.TxtNorm.Set(v_TxtNorm);
-        if (TxtIn is { } v_TxtIn) this.TxtIn.Set(v_TxtIn);
-        if (TimeTextEmbed is { } v_TimeTextEmbed) this.TimeTextEmbed.Set(v_TimeTextEmbed);
-        if (TransformerBlocks0 is { } v_TransformerBlocks0) this.TransformerBlocks0.Set(v_TransformerBlocks0);
-        if (TransformerBlocks1 is { } v_TransformerBlocks1) this.TransformerBlocks1.Set(v_TransformerBlocks1);
-        if (TransformerBlocks2 is { } v_TransformerBlocks2) this.TransformerBlocks2.Set(v_TransformerBlocks2);
-        if (TransformerBlocks3 is { } v_TransformerBlocks3) this.TransformerBlocks3.Set(v_TransformerBlocks3);
-        if (TransformerBlocks4 is { } v_TransformerBlocks4) this.TransformerBlocks4.Set(v_TransformerBlocks4);
-        if (TransformerBlocks5 is { } v_TransformerBlocks5) this.TransformerBlocks5.Set(v_TransformerBlocks5);
-        if (TransformerBlocks6 is { } v_TransformerBlocks6) this.TransformerBlocks6.Set(v_TransformerBlocks6);
-        if (TransformerBlocks7 is { } v_TransformerBlocks7) this.TransformerBlocks7.Set(v_TransformerBlocks7);
-        if (TransformerBlocks8 is { } v_TransformerBlocks8) this.TransformerBlocks8.Set(v_TransformerBlocks8);
-        if (TransformerBlocks9 is { } v_TransformerBlocks9) this.TransformerBlocks9.Set(v_TransformerBlocks9);
-        if (TransformerBlocks10 is { } v_TransformerBlocks10) this.TransformerBlocks10.Set(v_TransformerBlocks10);
-        if (TransformerBlocks11 is { } v_TransformerBlocks11) this.TransformerBlocks11.Set(v_TransformerBlocks11);
-        if (TransformerBlocks12 is { } v_TransformerBlocks12) this.TransformerBlocks12.Set(v_TransformerBlocks12);
-        if (TransformerBlocks13 is { } v_TransformerBlocks13) this.TransformerBlocks13.Set(v_TransformerBlocks13);
-        if (TransformerBlocks14 is { } v_TransformerBlocks14) this.TransformerBlocks14.Set(v_TransformerBlocks14);
-        if (TransformerBlocks15 is { } v_TransformerBlocks15) this.TransformerBlocks15.Set(v_TransformerBlocks15);
-        if (TransformerBlocks16 is { } v_TransformerBlocks16) this.TransformerBlocks16.Set(v_TransformerBlocks16);
-        if (TransformerBlocks17 is { } v_TransformerBlocks17) this.TransformerBlocks17.Set(v_TransformerBlocks17);
-        if (TransformerBlocks18 is { } v_TransformerBlocks18) this.TransformerBlocks18.Set(v_TransformerBlocks18);
-        if (TransformerBlocks19 is { } v_TransformerBlocks19) this.TransformerBlocks19.Set(v_TransformerBlocks19);
-        if (TransformerBlocks20 is { } v_TransformerBlocks20) this.TransformerBlocks20.Set(v_TransformerBlocks20);
-        if (TransformerBlocks21 is { } v_TransformerBlocks21) this.TransformerBlocks21.Set(v_TransformerBlocks21);
-        if (TransformerBlocks22 is { } v_TransformerBlocks22) this.TransformerBlocks22.Set(v_TransformerBlocks22);
-        if (TransformerBlocks23 is { } v_TransformerBlocks23) this.TransformerBlocks23.Set(v_TransformerBlocks23);
-        if (TransformerBlocks24 is { } v_TransformerBlocks24) this.TransformerBlocks24.Set(v_TransformerBlocks24);
-        if (TransformerBlocks25 is { } v_TransformerBlocks25) this.TransformerBlocks25.Set(v_TransformerBlocks25);
-        if (TransformerBlocks26 is { } v_TransformerBlocks26) this.TransformerBlocks26.Set(v_TransformerBlocks26);
-        if (TransformerBlocks27 is { } v_TransformerBlocks27) this.TransformerBlocks27.Set(v_TransformerBlocks27);
-        if (TransformerBlocks28 is { } v_TransformerBlocks28) this.TransformerBlocks28.Set(v_TransformerBlocks28);
-        if (TransformerBlocks29 is { } v_TransformerBlocks29) this.TransformerBlocks29.Set(v_TransformerBlocks29);
-        if (TransformerBlocks30 is { } v_TransformerBlocks30) this.TransformerBlocks30.Set(v_TransformerBlocks30);
-        if (TransformerBlocks31 is { } v_TransformerBlocks31) this.TransformerBlocks31.Set(v_TransformerBlocks31);
-        if (TransformerBlocks32 is { } v_TransformerBlocks32) this.TransformerBlocks32.Set(v_TransformerBlocks32);
-        if (TransformerBlocks33 is { } v_TransformerBlocks33) this.TransformerBlocks33.Set(v_TransformerBlocks33);
-        if (TransformerBlocks34 is { } v_TransformerBlocks34) this.TransformerBlocks34.Set(v_TransformerBlocks34);
-        if (TransformerBlocks35 is { } v_TransformerBlocks35) this.TransformerBlocks35.Set(v_TransformerBlocks35);
-        if (TransformerBlocks36 is { } v_TransformerBlocks36) this.TransformerBlocks36.Set(v_TransformerBlocks36);
-        if (TransformerBlocks37 is { } v_TransformerBlocks37) this.TransformerBlocks37.Set(v_TransformerBlocks37);
-        if (TransformerBlocks38 is { } v_TransformerBlocks38) this.TransformerBlocks38.Set(v_TransformerBlocks38);
-        if (TransformerBlocks39 is { } v_TransformerBlocks39) this.TransformerBlocks39.Set(v_TransformerBlocks39);
-        if (TransformerBlocks40 is { } v_TransformerBlocks40) this.TransformerBlocks40.Set(v_TransformerBlocks40);
-        if (TransformerBlocks41 is { } v_TransformerBlocks41) this.TransformerBlocks41.Set(v_TransformerBlocks41);
-        if (TransformerBlocks42 is { } v_TransformerBlocks42) this.TransformerBlocks42.Set(v_TransformerBlocks42);
-        if (TransformerBlocks43 is { } v_TransformerBlocks43) this.TransformerBlocks43.Set(v_TransformerBlocks43);
-        if (TransformerBlocks44 is { } v_TransformerBlocks44) this.TransformerBlocks44.Set(v_TransformerBlocks44);
-        if (TransformerBlocks45 is { } v_TransformerBlocks45) this.TransformerBlocks45.Set(v_TransformerBlocks45);
-        if (TransformerBlocks46 is { } v_TransformerBlocks46) this.TransformerBlocks46.Set(v_TransformerBlocks46);
-        if (TransformerBlocks47 is { } v_TransformerBlocks47) this.TransformerBlocks47.Set(v_TransformerBlocks47);
-        if (TransformerBlocks48 is { } v_TransformerBlocks48) this.TransformerBlocks48.Set(v_TransformerBlocks48);
-        if (TransformerBlocks49 is { } v_TransformerBlocks49) this.TransformerBlocks49.Set(v_TransformerBlocks49);
-        if (TransformerBlocks50 is { } v_TransformerBlocks50) this.TransformerBlocks50.Set(v_TransformerBlocks50);
-        if (TransformerBlocks51 is { } v_TransformerBlocks51) this.TransformerBlocks51.Set(v_TransformerBlocks51);
-        if (TransformerBlocks52 is { } v_TransformerBlocks52) this.TransformerBlocks52.Set(v_TransformerBlocks52);
-        if (TransformerBlocks53 is { } v_TransformerBlocks53) this.TransformerBlocks53.Set(v_TransformerBlocks53);
-        if (TransformerBlocks54 is { } v_TransformerBlocks54) this.TransformerBlocks54.Set(v_TransformerBlocks54);
-        if (TransformerBlocks55 is { } v_TransformerBlocks55) this.TransformerBlocks55.Set(v_TransformerBlocks55);
-        if (TransformerBlocks56 is { } v_TransformerBlocks56) this.TransformerBlocks56.Set(v_TransformerBlocks56);
-        if (TransformerBlocks57 is { } v_TransformerBlocks57) this.TransformerBlocks57.Set(v_TransformerBlocks57);
-        if (TransformerBlocks58 is { } v_TransformerBlocks58) this.TransformerBlocks58.Set(v_TransformerBlocks58);
-        if (TransformerBlocks59 is { } v_TransformerBlocks59) this.TransformerBlocks59.Set(v_TransformerBlocks59);
-        if (ProjOut is { } v_ProjOut) this.ProjOut.Set(v_ProjOut);
+        Model1?.ApplyTo(this.Model1);
+        Model2?.ApplyTo(this.Model2);
+        PosEmbeds?.ApplyTo(this.PosEmbeds);
+        ImgIn?.ApplyTo(this.ImgIn);
+        TxtNorm?.ApplyTo(this.TxtNorm);
+        TxtIn?.ApplyTo(this.TxtIn);
+        TimeTextEmbed?.ApplyTo(this.TimeTextEmbed);
+        TransformerBlocks0?.ApplyTo(this.TransformerBlocks0);
+        TransformerBlocks1?.ApplyTo(this.TransformerBlocks1);
+        TransformerBlocks2?.ApplyTo(this.TransformerBlocks2);
+        TransformerBlocks3?.ApplyTo(this.TransformerBlocks3);
+        TransformerBlocks4?.ApplyTo(this.TransformerBlocks4);
+        TransformerBlocks5?.ApplyTo(this.TransformerBlocks5);
+        TransformerBlocks6?.ApplyTo(this.TransformerBlocks6);
+        TransformerBlocks7?.ApplyTo(this.TransformerBlocks7);
+        TransformerBlocks8?.ApplyTo(this.TransformerBlocks8);
+        TransformerBlocks9?.ApplyTo(this.TransformerBlocks9);
+        TransformerBlocks10?.ApplyTo(this.TransformerBlocks10);
+        TransformerBlocks11?.ApplyTo(this.TransformerBlocks11);
+        TransformerBlocks12?.ApplyTo(this.TransformerBlocks12);
+        TransformerBlocks13?.ApplyTo(this.TransformerBlocks13);
+        TransformerBlocks14?.ApplyTo(this.TransformerBlocks14);
+        TransformerBlocks15?.ApplyTo(this.TransformerBlocks15);
+        TransformerBlocks16?.ApplyTo(this.TransformerBlocks16);
+        TransformerBlocks17?.ApplyTo(this.TransformerBlocks17);
+        TransformerBlocks18?.ApplyTo(this.TransformerBlocks18);
+        TransformerBlocks19?.ApplyTo(this.TransformerBlocks19);
+        TransformerBlocks20?.ApplyTo(this.TransformerBlocks20);
+        TransformerBlocks21?.ApplyTo(this.TransformerBlocks21);
+        TransformerBlocks22?.ApplyTo(this.TransformerBlocks22);
+        TransformerBlocks23?.ApplyTo(this.TransformerBlocks23);
+        TransformerBlocks24?.ApplyTo(this.TransformerBlocks24);
+        TransformerBlocks25?.ApplyTo(this.TransformerBlocks25);
+        TransformerBlocks26?.ApplyTo(this.TransformerBlocks26);
+        TransformerBlocks27?.ApplyTo(this.TransformerBlocks27);
+        TransformerBlocks28?.ApplyTo(this.TransformerBlocks28);
+        TransformerBlocks29?.ApplyTo(this.TransformerBlocks29);
+        TransformerBlocks30?.ApplyTo(this.TransformerBlocks30);
+        TransformerBlocks31?.ApplyTo(this.TransformerBlocks31);
+        TransformerBlocks32?.ApplyTo(this.TransformerBlocks32);
+        TransformerBlocks33?.ApplyTo(this.TransformerBlocks33);
+        TransformerBlocks34?.ApplyTo(this.TransformerBlocks34);
+        TransformerBlocks35?.ApplyTo(this.TransformerBlocks35);
+        TransformerBlocks36?.ApplyTo(this.TransformerBlocks36);
+        TransformerBlocks37?.ApplyTo(this.TransformerBlocks37);
+        TransformerBlocks38?.ApplyTo(this.TransformerBlocks38);
+        TransformerBlocks39?.ApplyTo(this.TransformerBlocks39);
+        TransformerBlocks40?.ApplyTo(this.TransformerBlocks40);
+        TransformerBlocks41?.ApplyTo(this.TransformerBlocks41);
+        TransformerBlocks42?.ApplyTo(this.TransformerBlocks42);
+        TransformerBlocks43?.ApplyTo(this.TransformerBlocks43);
+        TransformerBlocks44?.ApplyTo(this.TransformerBlocks44);
+        TransformerBlocks45?.ApplyTo(this.TransformerBlocks45);
+        TransformerBlocks46?.ApplyTo(this.TransformerBlocks46);
+        TransformerBlocks47?.ApplyTo(this.TransformerBlocks47);
+        TransformerBlocks48?.ApplyTo(this.TransformerBlocks48);
+        TransformerBlocks49?.ApplyTo(this.TransformerBlocks49);
+        TransformerBlocks50?.ApplyTo(this.TransformerBlocks50);
+        TransformerBlocks51?.ApplyTo(this.TransformerBlocks51);
+        TransformerBlocks52?.ApplyTo(this.TransformerBlocks52);
+        TransformerBlocks53?.ApplyTo(this.TransformerBlocks53);
+        TransformerBlocks54?.ApplyTo(this.TransformerBlocks54);
+        TransformerBlocks55?.ApplyTo(this.TransformerBlocks55);
+        TransformerBlocks56?.ApplyTo(this.TransformerBlocks56);
+        TransformerBlocks57?.ApplyTo(this.TransformerBlocks57);
+        TransformerBlocks58?.ApplyTo(this.TransformerBlocks58);
+        TransformerBlocks59?.ApplyTo(this.TransformerBlocks59);
+        ProjOut?.ApplyTo(this.ProjOut);
         return this;
     }
 }
