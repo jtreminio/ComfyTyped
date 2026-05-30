@@ -247,6 +247,54 @@ public sealed class NodeInput<T> : INodeInput where T : IComfyType
         return true;
     }
 
+    /// <summary>
+    /// Wire this input to the same upstream output that feeds <paramref name="source"/> — i.e. make
+    /// this slot connect the same as <paramref name="source"/>. The two inputs do not become
+    /// connected to each other; they end up fed by the same producer. Because both slots share the
+    /// static type <typeparamref name="T"/>, this is statically type-checked — unlike reading
+    /// <see cref="Connection"/>, which erases <typeparamref name="T"/> to the bare
+    /// <see cref="INodeOutput"/> and forces a <see cref="ConnectToUntyped"/> round-trip at the call
+    /// site even when both endpoints are provably the same type. Preserves a typed wire as typed and
+    /// an untyped (wildcard-resolved) wire as untyped. Throws
+    /// <see cref="InvalidOperationException"/> when <paramref name="source"/> carries a literal or is
+    /// unset (nothing to be the same as) — use <see cref="TryConnectSameAs"/> to tolerate that.
+    /// </summary>
+    public void ConnectSameAs(NodeInput<T> source)
+    {
+        ArgumentNullException.ThrowIfNull(source);
+        if (!TryConnectSameAs(source))
+        {
+            throw new InvalidOperationException(
+                $"Source input '{source.Name}' on {source.Owner.GetType().Name}#{source.Owner.Id} "
+                + $"has no connection for '{Name}' on {Owner.GetType().Name}#{Owner.Id} to match "
+                + "(it holds a literal or is unset).");
+        }
+    }
+
+    /// <summary>
+    /// Soft variant of <see cref="ConnectSameAs"/>: when <paramref name="source"/> has an upstream
+    /// output, wire this input to it and return <c>true</c>; return <c>false</c> (no-op, this slot's
+    /// existing state preserved) when <paramref name="source"/> holds a literal or is unset.
+    /// Mirrors <see cref="TryConnectToUntyped"/>'s soft-failure contract for the same-typed
+    /// slot-to-slot case.
+    /// </summary>
+    public bool TryConnectSameAs(NodeInput<T> source)
+    {
+        ArgumentNullException.ThrowIfNull(source);
+        if (source._connection is not null)
+        {
+            ConnectTo(source._connection);
+            return true;
+        }
+        if (source._untypedConnection is not null)
+        {
+            ConnectToUntyped(source._untypedConnection);
+            return true;
+        }
+
+        return false;
+    }
+
     private static bool IsWildcard(Type? markerType) =>
         markerType == typeof(AnyType) || markerType == typeof(ComfyMatchTypeV3);
 
