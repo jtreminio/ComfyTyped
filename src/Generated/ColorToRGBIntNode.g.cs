@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Convert a color to a RGB integer value.</summary>
-/// <remarks>Category: utils</remarks>
+/// <remarks>Category: utilities</remarks>
 public sealed class ColorToRGBIntNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

@@ -18,6 +18,7 @@ public sealed class CFGNormNode : ComfyNode
     // ── Inputs ──
     public NodeInput<ModelType> Model { get; }
     public NodeInput<FloatType> Strength { get; }
+    public NodeInput<BooleanType> PreCfg { get; } // optional
 
     public CFGNormNode()
     {
@@ -25,6 +26,8 @@ public sealed class CFGNormNode : ComfyNode
         Model = AddInput<ModelType>("model");
         Strength = AddInput<FloatType>("strength");
         Strength.Set(1.0);
+        PreCfg = AddInput<BooleanType>("pre_cfg");
+        PreCfg.Set(false);
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -33,11 +36,13 @@ public sealed class CFGNormNode : ComfyNode
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public CFGNormNode With(
         In<ModelType>? Model = null,
-        FloatArg? Strength = null
+        FloatArg? Strength = null,
+        BoolArg? PreCfg = null
     )
     {
         Model?.ApplyTo(this.Model);
         Strength?.ApplyTo(this.Strength);
+        PreCfg?.ApplyTo(this.PreCfg);
         return this;
     }
 }

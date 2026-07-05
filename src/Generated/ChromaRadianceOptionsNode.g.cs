@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Allows setting advanced options for the Chroma Radiance model.</summary>
-/// <remarks>Category: model_patches/chroma_radiance</remarks>
+/// <remarks>Category: model/patch/chroma_radiance</remarks>
 public sealed class ChromaRadianceOptionsNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

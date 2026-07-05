@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Scale and shift the ROPE of the model.</summary>
-/// <remarks>Category: advanced/model_patches</remarks>
+/// <remarks>Category: model/patch</remarks>
 public sealed class ScaleROPENode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Create a new batch of empty latent images to be denoised via sampling.</summary>
-/// <remarks>Category: latent</remarks>
+/// <remarks>Category: model/latent</remarks>
 public sealed class EmptyLatentImageNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

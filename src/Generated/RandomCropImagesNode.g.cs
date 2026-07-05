@@ -5,7 +5,8 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: dataset/image</remarks>
+/// <summary>Randomly crop an image to the specified dimensions.</summary>
+/// <remarks>Category: image/transform</remarks>
 public sealed class RandomCropImagesNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: latent/stable_cascade</remarks>
+/// <remarks>Category: model/latent/stable_cascade</remarks>
 public sealed class StableCascadeStageCVAEEncodeNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

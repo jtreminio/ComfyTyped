@@ -19,6 +19,8 @@ namespace ComfyTyped.Generated;
 /// wan: umt5 xxl
 /// hidream: llama-3.1 (Recommend) or t5
 /// omnigen2: qwen vl 2.5 3B
+/// lens: gpt-oss-20b
+/// pixeldit: gemma 2 2B elm
 /// </summary>
 /// <remarks>Category: advanced/loaders</remarks>
 public sealed class CLIPLoaderNode : ComfyNode
@@ -82,6 +84,8 @@ public sealed class CLIPLoaderNode : ComfyNode
         public const string Ovis = "ovis";
         public const string LongcatImage = "longcat_image";
         public const string Cogvideox = "cogvideox";
+        public const string Lens = "lens";
+        public const string Pixeldit = "pixeldit";
     }
 
     /// <summary>Known ComfyUI values for <c>device</c> (suggestions — any string is also accepted).</summary>

@@ -12,7 +12,7 @@ namespace ComfyTyped.Generated;
 /// Rescaling the model's score or noise to steer the sampling diversity.
 /// <br/>
 /// </summary>
-/// <remarks>Category: model_patches/unet</remarks>
+/// <remarks>Category: model/patch/unet</remarks>
 public sealed class TemporalScoreRescalingNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

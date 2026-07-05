@@ -63,5 +63,7 @@ public sealed class CLIPLoaderGGUFNode : ComfyNode
         public const string Ovis = "ovis";
         public const string LongcatImage = "longcat_image";
         public const string Cogvideox = "cogvideox";
+        public const string Lens = "lens";
+        public const string Pixeldit = "pixeldit";
     }
 }

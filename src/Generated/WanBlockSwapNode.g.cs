@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>NOP</summary>
+/// <summary>Intercept wanBlockSwap custom node that causes major instability and make it no-op.</summary>
 /// <remarks>Category: </remarks>
 public sealed class WanBlockSwapNode : ComfyNode
 {

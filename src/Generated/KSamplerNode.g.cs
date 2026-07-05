@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Uses the provided model, positive and negative conditioning to denoise the latent image.</summary>
-/// <remarks>Category: sampling</remarks>
+/// <remarks>Category: model/sampling</remarks>
 public sealed class KSamplerNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
