@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>1.3B model has 30 blocks, 14B model has 40 blocks. Image to video model has the extra img_emb.</summary>
-/// <remarks>Category: advanced/model_merging/model_specific</remarks>
+/// <remarks>Category: model/merging/model specific</remarks>
 public sealed class ModelMergeWAN21Node : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

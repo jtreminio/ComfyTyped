@@ -6,8 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>
-/// [Recipes]
-/// <br/>
+/// Recipes:
 /// sdxl: clip-l, clip-g
 /// sd3: clip-l, clip-g / clip-l, t5 / clip-g, t5
 /// flux: clip-l, t5
@@ -15,7 +14,7 @@ namespace ComfyTyped.Generated;
 /// hunyuan_image: qwen2.5vl 7b and byt5 small
 /// newbie: gemma-3-4b-it, jina clip v2
 /// </summary>
-/// <remarks>Category: advanced/loaders</remarks>
+/// <remarks>Category: model/loaders</remarks>
 public sealed class DualCLIPLoaderNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

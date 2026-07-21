@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Attaches a latent and a degrade_sigma scalar to a CONDITIONING for PiD decoding/upscaling</summary>
-/// <remarks>Category: advanced/conditioning</remarks>
+/// <remarks>Category: model/conditioning</remarks>
 public sealed class PiDConditioningNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

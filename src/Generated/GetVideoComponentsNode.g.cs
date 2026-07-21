@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>Extracts all components from a video: frames, audio, and framerate.</summary>
+/// <summary>Extracts all components from a video: frames, audio, framerate, and bit depth.</summary>
 /// <remarks>Category: video</remarks>
 public sealed class GetVideoComponentsNode : ComfyNode
 {
@@ -17,6 +17,7 @@ public sealed class GetVideoComponentsNode : ComfyNode
     public NodeOutput<ImageType> Images { get; }
     public NodeOutput<AudioType> Audio { get; }
     public NodeOutput<FloatType> Fps { get; }
+    public NodeOutput<IntType> BitDepth { get; }
 
     // ── Inputs ──
     public NodeInput<VideoType> Video { get; }
@@ -26,6 +27,7 @@ public sealed class GetVideoComponentsNode : ComfyNode
         Images = AddOutput<ImageType>(0, "images");
         Audio = AddOutput<AudioType>(1, "audio");
         Fps = AddOutput<FloatType>(2, "fps");
+        BitDepth = AddOutput<IntType>(3, "bit_depth");
         Video = AddInput<VideoType>("video");
     }
 

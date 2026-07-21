@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>This node resizes the image to one that is more optimal for flux kontext.</summary>
-/// <remarks>Category: advanced/conditioning/flux</remarks>
+/// <remarks>Category: model/conditioning/flux</remarks>
 public sealed class FluxKontextImageScaleNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

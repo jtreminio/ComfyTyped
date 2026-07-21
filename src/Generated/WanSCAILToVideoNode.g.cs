@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: model/conditioning/video_models</remarks>
+/// <remarks>Category: model/conditioning/wan/scail</remarks>
 public sealed class WanSCAILToVideoNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -16,6 +16,7 @@ public sealed class WanSCAILToVideoNode : ComfyNode
     public NodeOutput<ConditioningType> Positive { get; }
     public NodeOutput<ConditioningType> Negative { get; }
     public NodeOutput<LatentType> Latent { get; }
+    public NodeOutput<IntType> VideoFrameOffset { get; }
 
     // ── Inputs ──
     public NodeInput<ConditioningType> PositiveInput { get; }
@@ -28,15 +29,22 @@ public sealed class WanSCAILToVideoNode : ComfyNode
     public NodeInput<FloatType> PoseStrength { get; }
     public NodeInput<FloatType> PoseStart { get; }
     public NodeInput<FloatType> PoseEnd { get; }
-    public NodeInput<ClipVisionOutputType> ClipVisionOutput { get; } // optional
-    public NodeInput<ImageType> ReferenceImage { get; } // optional
+    public NodeInput<IntType> VideoFrameOffsetInput { get; }
+    public NodeInput<IntType> PreviousFrameCount { get; }
     public NodeInput<ImageType> PoseVideo { get; } // optional
+    public NodeInput<ImageType> PoseVideoMask { get; } // optional
+    public NodeInput<BooleanType> ReplacementMode { get; } // optional
+    public NodeInput<ImageType> ReferenceImage { get; } // optional
+    public NodeInput<ImageType> ReferenceImageMask { get; } // optional
+    public NodeInput<ClipVisionOutputType> ClipVisionOutput { get; } // optional
+    public NodeInput<ImageType> PreviousFrames { get; } // optional
 
     public WanSCAILToVideoNode()
     {
         Positive = AddOutput<ConditioningType>(0, "positive");
         Negative = AddOutput<ConditioningType>(1, "negative");
         Latent = AddOutput<LatentType>(2, "latent");
+        VideoFrameOffset = AddOutput<IntType>(3, "video_frame_offset");
         PositiveInput = AddInput<ConditioningType>("positive");
         NegativeInput = AddInput<ConditioningType>("negative");
         Vae = AddInput<VaeType>("vae");
@@ -54,9 +62,18 @@ public sealed class WanSCAILToVideoNode : ComfyNode
         PoseStart.Set(0.0);
         PoseEnd = AddInput<FloatType>("pose_end");
         PoseEnd.Set(1.0);
-        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output");
-        ReferenceImage = AddInput<ImageType>("reference_image");
+        VideoFrameOffsetInput = AddInput<IntType>("video_frame_offset");
+        VideoFrameOffsetInput.Set(0L);
+        PreviousFrameCount = AddInput<IntType>("previous_frame_count");
+        PreviousFrameCount.Set(5L);
         PoseVideo = AddInput<ImageType>("pose_video");
+        PoseVideoMask = AddInput<ImageType>("pose_video_mask");
+        ReplacementMode = AddInput<BooleanType>("replacement_mode");
+        ReplacementMode.Set(false);
+        ReferenceImage = AddInput<ImageType>("reference_image");
+        ReferenceImageMask = AddInput<ImageType>("reference_image_mask");
+        ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output");
+        PreviousFrames = AddInput<ImageType>("previous_frames");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -74,9 +91,15 @@ public sealed class WanSCAILToVideoNode : ComfyNode
         FloatArg? PoseStrength = null,
         FloatArg? PoseStart = null,
         FloatArg? PoseEnd = null,
-        In<ClipVisionOutputType>? ClipVisionOutput = null,
+        IntArg? VideoFrameOffsetInput = null,
+        IntArg? PreviousFrameCount = null,
+        In<ImageType>? PoseVideo = null,
+        In<ImageType>? PoseVideoMask = null,
+        BoolArg? ReplacementMode = null,
         In<ImageType>? ReferenceImage = null,
-        In<ImageType>? PoseVideo = null
+        In<ImageType>? ReferenceImageMask = null,
+        In<ClipVisionOutputType>? ClipVisionOutput = null,
+        In<ImageType>? PreviousFrames = null
     )
     {
         PositiveInput?.ApplyTo(this.PositiveInput);
@@ -89,9 +112,15 @@ public sealed class WanSCAILToVideoNode : ComfyNode
         PoseStrength?.ApplyTo(this.PoseStrength);
         PoseStart?.ApplyTo(this.PoseStart);
         PoseEnd?.ApplyTo(this.PoseEnd);
-        ClipVisionOutput?.ApplyTo(this.ClipVisionOutput);
-        ReferenceImage?.ApplyTo(this.ReferenceImage);
+        VideoFrameOffsetInput?.ApplyTo(this.VideoFrameOffsetInput);
+        PreviousFrameCount?.ApplyTo(this.PreviousFrameCount);
         PoseVideo?.ApplyTo(this.PoseVideo);
+        PoseVideoMask?.ApplyTo(this.PoseVideoMask);
+        ReplacementMode?.ApplyTo(this.ReplacementMode);
+        ReferenceImage?.ApplyTo(this.ReferenceImage);
+        ReferenceImageMask?.ApplyTo(this.ReferenceImageMask);
+        ClipVisionOutput?.ApplyTo(this.ClipVisionOutput);
+        PreviousFrames?.ApplyTo(this.PreviousFrames);
         return this;
     }
 }

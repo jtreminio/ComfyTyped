@@ -5,6 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
+/// <summary>Preview any input value as text.</summary>
 /// <remarks>Category: utilities</remarks>
 public sealed class PreviewAnyNode : ComfyNode
 {

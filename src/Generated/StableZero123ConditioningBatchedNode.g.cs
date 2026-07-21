@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: model/conditioning/3d_models</remarks>
+/// <remarks>Category: model/conditioning/stable zero123</remarks>
 public sealed class StableZero123ConditioningBatchedNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

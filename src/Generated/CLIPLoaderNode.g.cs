@@ -6,12 +6,11 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>
-/// [Recipes]
-/// <br/>
-/// stable_diffusion: clip-l
-/// stable_cascade: clip-g
-/// sd3: t5 xxl/ clip-g / clip-l
-/// stable_audio: t5 base
+/// Recipes:
+/// sd: clip-l
+/// stable cascade: clip-g
+/// sd3: t5 xxl / clip-g / clip-l
+/// stable audio: t5 base
 /// mochi: t5 xxl
 /// cogvideox: t5 xxl (226-token padding)
 /// cosmos: old t5 xxl
@@ -19,10 +18,11 @@ namespace ComfyTyped.Generated;
 /// wan: umt5 xxl
 /// hidream: llama-3.1 (Recommend) or t5
 /// omnigen2: qwen vl 2.5 3B
+/// joyimage: qwen3-vl 8B
 /// lens: gpt-oss-20b
 /// pixeldit: gemma 2 2B elm
 /// </summary>
-/// <remarks>Category: advanced/loaders</remarks>
+/// <remarks>Category: model/loaders</remarks>
 public sealed class CLIPLoaderNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -86,6 +86,10 @@ public sealed class CLIPLoaderNode : ComfyNode
         public const string Cogvideox = "cogvideox";
         public const string Lens = "lens";
         public const string Pixeldit = "pixeldit";
+        public const string Ideogram4 = "ideogram4";
+        public const string Boogu = "boogu";
+        public const string Krea2 = "krea2";
+        public const string Joyimage = "joyimage";
     }
 
     /// <summary>Known ComfyUI values for <c>device</c> (suggestions — any string is also accepted).</summary>

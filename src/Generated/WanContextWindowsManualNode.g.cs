@@ -5,8 +5,8 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>Manually set context windows for WAN-like models (dim=2).</summary>
-/// <remarks>Category: model/patch</remarks>
+/// <summary>Set context windows for Wan-like models.</summary>
+/// <remarks>Category: model/patch/wan</remarks>
 public sealed class WanContextWindowsManualNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -25,6 +25,8 @@ public sealed class WanContextWindowsManualNode : ComfyNode
     public NodeInput<BooleanType> ClosedLoop { get; }
     public NodeInput<StringType> FuseMethod { get; }
     public NodeInput<BooleanType> Freenoise { get; }
+    public NodeInput<BooleanType> RetainFirstFrame { get; }
+    public NodeInput<BooleanType> SplitCondsToWindows { get; }
 
     public WanContextWindowsManualNode()
     {
@@ -35,6 +37,7 @@ public sealed class WanContextWindowsManualNode : ComfyNode
         ContextOverlap = AddInput<IntType>("context_overlap");
         ContextOverlap.Set(30L);
         ContextSchedule = AddInput<StringType>("context_schedule");
+        ContextSchedule.Set("standard_uniform");
         ContextStride = AddInput<IntType>("context_stride");
         ContextStride.Set(1L);
         ClosedLoop = AddInput<BooleanType>("closed_loop");
@@ -42,7 +45,11 @@ public sealed class WanContextWindowsManualNode : ComfyNode
         FuseMethod = AddInput<StringType>("fuse_method");
         FuseMethod.Set("pyramid");
         Freenoise = AddInput<BooleanType>("freenoise");
-        Freenoise.Set(false);
+        Freenoise.Set(true);
+        RetainFirstFrame = AddInput<BooleanType>("retain_first_frame");
+        RetainFirstFrame.Set(false);
+        SplitCondsToWindows = AddInput<BooleanType>("split_conds_to_windows");
+        SplitCondsToWindows.Set(false);
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -57,7 +64,9 @@ public sealed class WanContextWindowsManualNode : ComfyNode
         IntArg? ContextStride = null,
         BoolArg? ClosedLoop = null,
         StringArg? FuseMethod = null,
-        BoolArg? Freenoise = null
+        BoolArg? Freenoise = null,
+        BoolArg? RetainFirstFrame = null,
+        BoolArg? SplitCondsToWindows = null
     )
     {
         Model?.ApplyTo(this.Model);
@@ -68,6 +77,8 @@ public sealed class WanContextWindowsManualNode : ComfyNode
         ClosedLoop?.ApplyTo(this.ClosedLoop);
         FuseMethod?.ApplyTo(this.FuseMethod);
         Freenoise?.ApplyTo(this.Freenoise);
+        RetainFirstFrame?.ApplyTo(this.RetainFirstFrame);
+        SplitCondsToWindows?.ApplyTo(this.SplitCondsToWindows);
         return this;
     }
 }

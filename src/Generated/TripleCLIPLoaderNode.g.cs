@@ -6,11 +6,10 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>
-/// [Recipes]
-/// <br/>
+/// Recipes:
 /// sd3: clip-l, clip-g, t5
 /// </summary>
-/// <remarks>Category: advanced/loaders</remarks>
+/// <remarks>Category: model/loaders</remarks>
 public sealed class TripleCLIPLoaderNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

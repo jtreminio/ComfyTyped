@@ -15,27 +15,20 @@ public sealed class SwarmExtractLoraNode : ComfyNode
 
     // ── Inputs ──
     public NodeInput<ModelType> BaseModel { get; }
-    public NodeInput<ClipType> BaseModelClip { get; }
     public NodeInput<ModelType> OtherModel { get; }
-    public NodeInput<ClipType> OtherModelClip { get; }
     public NodeInput<IntType> Rank { get; }
     public NodeInput<StringType> SaveRawpath { get; }
     public NodeInput<StringType> SaveFilename { get; }
-    public NodeInput<BooleanType> SaveClip { get; }
     public NodeInput<StringType> Metadata { get; }
 
     public SwarmExtractLoraNode()
     {
         BaseModel = AddInput<ModelType>("base_model");
-        BaseModelClip = AddInput<ClipType>("base_model_clip");
         OtherModel = AddInput<ModelType>("other_model");
-        OtherModelClip = AddInput<ClipType>("other_model_clip");
         Rank = AddInput<IntType>("rank");
         Rank.Set(16L);
         SaveRawpath = AddInput<StringType>("save_rawpath");
         SaveFilename = AddInput<StringType>("save_filename");
-        SaveClip = AddInput<BooleanType>("save_clip");
-        SaveClip.Set(true);
         Metadata = AddInput<StringType>("metadata");
     }
 
@@ -45,24 +38,18 @@ public sealed class SwarmExtractLoraNode : ComfyNode
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SwarmExtractLoraNode With(
         In<ModelType>? BaseModel = null,
-        In<ClipType>? BaseModelClip = null,
         In<ModelType>? OtherModel = null,
-        In<ClipType>? OtherModelClip = null,
         IntArg? Rank = null,
         StringArg? SaveRawpath = null,
         StringArg? SaveFilename = null,
-        BoolArg? SaveClip = null,
         StringArg? Metadata = null
     )
     {
         BaseModel?.ApplyTo(this.BaseModel);
-        BaseModelClip?.ApplyTo(this.BaseModelClip);
         OtherModel?.ApplyTo(this.OtherModel);
-        OtherModelClip?.ApplyTo(this.OtherModelClip);
         Rank?.ApplyTo(this.Rank);
         SaveRawpath?.ApplyTo(this.SaveRawpath);
         SaveFilename?.ApplyTo(this.SaveFilename);
-        SaveClip?.ApplyTo(this.SaveClip);
         Metadata?.ApplyTo(this.Metadata);
         return this;
     }

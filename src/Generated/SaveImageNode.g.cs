@@ -13,13 +13,17 @@ public sealed class SaveImageNode : ComfyNode
     public const string ClassType = "SaveImage";
     public override string ClassTypeName => ClassType;
 
+    // ── Outputs ──
+    public NodeOutput<ImageType> Images { get; }
+
     // ── Inputs ──
-    public NodeInput<ImageType> Images { get; }
+    public NodeInput<ImageType> ImagesInput { get; }
     public NodeInput<StringType> FilenamePrefix { get; }
 
     public SaveImageNode()
     {
-        Images = AddInput<ImageType>("images");
+        Images = AddOutput<ImageType>(0, "images");
+        ImagesInput = AddInput<ImageType>("images");
         FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("ComfyUI");
     }
@@ -29,11 +33,11 @@ public sealed class SaveImageNode : ComfyNode
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SaveImageNode With(
-        In<ImageType>? Images = null,
+        In<ImageType>? ImagesInput = null,
         StringArg? FilenamePrefix = null
     )
     {
-        Images?.ApplyTo(this.Images);
+        ImagesInput?.ApplyTo(this.ImagesInput);
         FilenamePrefix?.ApplyTo(this.FilenamePrefix);
         return this;
     }

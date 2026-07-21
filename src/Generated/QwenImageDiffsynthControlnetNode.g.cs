@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: advanced/loaders/qwen</remarks>
+/// <remarks>Category: model/patch/qwen</remarks>
 public sealed class QwenImageDiffsynthControlnetNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

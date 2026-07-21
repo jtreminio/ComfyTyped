@@ -5,6 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
+/// <summary>Preview a 3D model file without saving it to the ComfyUI output directory.</summary>
 /// <remarks>Category: 3d</remarks>
 public sealed class Preview3DNode : ComfyNode
 {

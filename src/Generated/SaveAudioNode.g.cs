@@ -12,13 +12,17 @@ public sealed class SaveAudioNode : ComfyNode
     public const string ClassType = "SaveAudio";
     public override string ClassTypeName => ClassType;
 
+    // ── Outputs ──
+    public NodeOutput<AudioType> Audio { get; }
+
     // ── Inputs ──
-    public NodeInput<AudioType> Audio { get; }
+    public NodeInput<AudioType> AudioInput { get; }
     public NodeInput<StringType> FilenamePrefix { get; }
 
     public SaveAudioNode()
     {
-        Audio = AddInput<AudioType>("audio");
+        Audio = AddOutput<AudioType>(0, "audio");
+        AudioInput = AddInput<AudioType>("audio");
         FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("audio/ComfyUI");
     }
@@ -28,11 +32,11 @@ public sealed class SaveAudioNode : ComfyNode
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SaveAudioNode With(
-        In<AudioType>? Audio = null,
+        In<AudioType>? AudioInput = null,
         StringArg? FilenamePrefix = null
     )
     {
-        Audio?.ApplyTo(this.Audio);
+        AudioInput?.ApplyTo(this.AudioInput);
         FilenamePrefix?.ApplyTo(this.FilenamePrefix);
         return this;
     }

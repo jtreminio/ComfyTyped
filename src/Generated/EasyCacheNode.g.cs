@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Native EasyCache implementation.</summary>
-/// <remarks>Category: advanced/debug/model</remarks>
+/// <remarks>Category: advanced/debug</remarks>
 public sealed class EasyCacheNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

@@ -12,8 +12,11 @@ public sealed class SaveAnimatedWEBPNode : ComfyNode
     public const string ClassType = "SaveAnimatedWEBP";
     public override string ClassTypeName => ClassType;
 
+    // ── Outputs ──
+    public NodeOutput<ImageType> Images { get; }
+
     // ── Inputs ──
-    public NodeInput<ImageType> Images { get; }
+    public NodeInput<ImageType> ImagesInput { get; }
     public NodeInput<StringType> FilenamePrefix { get; }
     public NodeInput<FloatType> Fps { get; }
     public NodeInput<BooleanType> Lossless { get; }
@@ -22,7 +25,8 @@ public sealed class SaveAnimatedWEBPNode : ComfyNode
 
     public SaveAnimatedWEBPNode()
     {
-        Images = AddInput<ImageType>("images");
+        Images = AddOutput<ImageType>(0, "images");
+        ImagesInput = AddInput<ImageType>("images");
         FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("ComfyUI");
         Fps = AddInput<FloatType>("fps");
@@ -39,7 +43,7 @@ public sealed class SaveAnimatedWEBPNode : ComfyNode
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SaveAnimatedWEBPNode With(
-        In<ImageType>? Images = null,
+        In<ImageType>? ImagesInput = null,
         StringArg? FilenamePrefix = null,
         FloatArg? Fps = null,
         BoolArg? Lossless = null,
@@ -47,7 +51,7 @@ public sealed class SaveAnimatedWEBPNode : ComfyNode
         StringArg? Method = null
     )
     {
-        Images?.ApplyTo(this.Images);
+        ImagesInput?.ApplyTo(this.ImagesInput);
         FilenamePrefix?.ApplyTo(this.FilenamePrefix);
         Fps?.ApplyTo(this.Fps);
         Lossless?.ApplyTo(this.Lossless);

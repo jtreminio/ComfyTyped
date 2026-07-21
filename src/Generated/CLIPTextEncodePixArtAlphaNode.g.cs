@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Encodes text and sets the resolution conditioning for PixArt Alpha. Does not apply to PixArt Sigma.</summary>
-/// <remarks>Category: advanced/conditioning</remarks>
+/// <remarks>Category: model/conditioning/pixart</remarks>
 public sealed class CLIPTextEncodePixArtAlphaNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

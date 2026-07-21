@@ -5,6 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
+/// <summary>Preview the audio without saving it to the ComfyUI output directory.</summary>
 /// <remarks>Category: audio</remarks>
 public sealed class PreviewAudioNode : ComfyNode
 {
@@ -12,12 +13,16 @@ public sealed class PreviewAudioNode : ComfyNode
     public const string ClassType = "PreviewAudio";
     public override string ClassTypeName => ClassType;
 
+    // ── Outputs ──
+    public NodeOutput<AudioType> Audio { get; }
+
     // ── Inputs ──
-    public NodeInput<AudioType> Audio { get; }
+    public NodeInput<AudioType> AudioInput { get; }
 
     public PreviewAudioNode()
     {
-        Audio = AddInput<AudioType>("audio");
+        Audio = AddOutput<AudioType>(0, "audio");
+        AudioInput = AddInput<AudioType>("audio");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -25,10 +30,10 @@ public sealed class PreviewAudioNode : ComfyNode
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public PreviewAudioNode With(
-        In<AudioType>? Audio = null
+        In<AudioType>? AudioInput = null
     )
     {
-        Audio?.ApplyTo(this.Audio);
+        AudioInput?.ApplyTo(this.AudioInput);
         return this;
     }
 }

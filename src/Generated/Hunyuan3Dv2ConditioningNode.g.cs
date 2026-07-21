@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: model/conditioning/3d_models</remarks>
+/// <remarks>Category: model/conditioning/hunyuan 3d</remarks>
 public sealed class Hunyuan3Dv2ConditioningNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

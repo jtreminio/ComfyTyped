@@ -24,6 +24,7 @@ public sealed class SDPoseDrawKeypointsNode : ComfyNode
     public NodeInput<IntType> StickWidth { get; }
     public NodeInput<IntType> FacePointSize { get; }
     public NodeInput<FloatType> ScoreThreshold { get; }
+    public NodeInput<BooleanType> DrawHead { get; }
 
     public SDPoseDrawKeypointsNode()
     {
@@ -43,6 +44,8 @@ public sealed class SDPoseDrawKeypointsNode : ComfyNode
         FacePointSize.Set(3L);
         ScoreThreshold = AddInput<FloatType>("score_threshold");
         ScoreThreshold.Set(0.3);
+        DrawHead = AddInput<BooleanType>("draw_head");
+        DrawHead.Set(true);
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -57,7 +60,8 @@ public sealed class SDPoseDrawKeypointsNode : ComfyNode
         BoolArg? DrawFeet = null,
         IntArg? StickWidth = null,
         IntArg? FacePointSize = null,
-        FloatArg? ScoreThreshold = null
+        FloatArg? ScoreThreshold = null,
+        BoolArg? DrawHead = null
     )
     {
         Keypoints?.ApplyTo(this.Keypoints);
@@ -68,6 +72,7 @@ public sealed class SDPoseDrawKeypointsNode : ComfyNode
         StickWidth?.ApplyTo(this.StickWidth);
         FacePointSize?.ApplyTo(this.FacePointSize);
         ScoreThreshold?.ApplyTo(this.ScoreThreshold);
+        DrawHead?.ApplyTo(this.DrawHead);
         return this;
     }
 }

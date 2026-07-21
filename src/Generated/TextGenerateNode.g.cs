@@ -33,7 +33,7 @@ public sealed class TextGenerateNode : ComfyNode
         Prompt = AddInput<StringType>("prompt");
         Prompt.Set("");
         MaxLength = AddInput<IntType>("max_length");
-        MaxLength.Set(256L);
+        MaxLength.Set(512L);
         SamplingMode = AddInput<StringType>("sampling_mode");
         Image = AddInput<ImageType>("image");
         Video = AddInput<ImageType>("video");

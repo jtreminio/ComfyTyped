@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>Saves the input images to your ComfyUI output directory.</summary>
+/// <summary>Preview the masks without saving them to the ComfyUI output directory.</summary>
 /// <remarks>Category: image/mask</remarks>
 public sealed class MaskPreviewNode : ComfyNode
 {
@@ -13,12 +13,16 @@ public sealed class MaskPreviewNode : ComfyNode
     public const string ClassType = "MaskPreview";
     public override string ClassTypeName => ClassType;
 
+    // ── Outputs ──
+    public NodeOutput<MaskType> Mask { get; }
+
     // ── Inputs ──
-    public NodeInput<MaskType> Mask { get; }
+    public NodeInput<MaskType> MaskInput { get; }
 
     public MaskPreviewNode()
     {
-        Mask = AddInput<MaskType>("mask");
+        Mask = AddOutput<MaskType>(0, "mask");
+        MaskInput = AddInput<MaskType>("mask");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -26,10 +30,10 @@ public sealed class MaskPreviewNode : ComfyNode
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public MaskPreviewNode With(
-        In<MaskType>? Mask = null
+        In<MaskType>? MaskInput = null
     )
     {
-        Mask?.ApplyTo(this.Mask);
+        MaskInput?.ApplyTo(this.MaskInput);
         return this;
     }
 }

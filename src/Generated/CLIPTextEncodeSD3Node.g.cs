@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: advanced/conditioning</remarks>
+/// <remarks>Category: model/conditioning/stable diffusion</remarks>
 public sealed class CLIPTextEncodeSD3Node : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

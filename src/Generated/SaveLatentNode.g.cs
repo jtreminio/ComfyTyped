@@ -5,20 +5,24 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: experimental</remarks>
+/// <remarks>Category: model/latent</remarks>
 public sealed class SaveLatentNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
     public const string ClassType = "SaveLatent";
     public override string ClassTypeName => ClassType;
 
+    // ── Outputs ──
+    public NodeOutput<LatentType> Samples { get; }
+
     // ── Inputs ──
-    public NodeInput<LatentType> Samples { get; }
+    public NodeInput<LatentType> SamplesInput { get; }
     public NodeInput<StringType> FilenamePrefix { get; }
 
     public SaveLatentNode()
     {
-        Samples = AddInput<LatentType>("samples");
+        Samples = AddOutput<LatentType>(0, "samples");
+        SamplesInput = AddInput<LatentType>("samples");
         FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("latents/ComfyUI");
     }
@@ -28,11 +32,11 @@ public sealed class SaveLatentNode : ComfyNode
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SaveLatentNode With(
-        In<LatentType>? Samples = null,
+        In<LatentType>? SamplesInput = null,
         StringArg? FilenamePrefix = null
     )
     {
-        Samples?.ApplyTo(this.Samples);
+        SamplesInput?.ApplyTo(this.SamplesInput);
         FilenamePrefix?.ApplyTo(this.FilenamePrefix);
         return this;
     }

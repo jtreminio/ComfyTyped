@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: model/latent</remarks>
+/// <remarks>Category: model/latent/hunyhuan video</remarks>
 public sealed class HunyuanVideo15LatentUpscaleWithModelNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

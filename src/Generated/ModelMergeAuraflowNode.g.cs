@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: advanced/model_merging/model_specific</remarks>
+/// <remarks>Category: model/merging/model specific</remarks>
 public sealed class ModelMergeAuraflowNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

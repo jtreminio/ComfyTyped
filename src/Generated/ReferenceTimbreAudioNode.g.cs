@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>This node sets the reference audio for ace step 1.5</summary>
-/// <remarks>Category: advanced/conditioning/audio</remarks>
+/// <remarks>Category: model/conditioning</remarks>
 public sealed class ReferenceTimbreAudioNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

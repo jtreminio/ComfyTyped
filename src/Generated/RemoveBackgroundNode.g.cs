@@ -17,14 +17,14 @@ public sealed class RemoveBackgroundNode : ComfyNode
     public NodeOutput<MaskType> Mask { get; }
 
     // ── Inputs ──
-    public NodeInput<ImageType> Image { get; }
     public NodeInput<BackgroundRemovalType> BgRemovalModel { get; }
+    public NodeInput<ImageType> Image { get; }
 
     public RemoveBackgroundNode()
     {
         Mask = AddOutput<MaskType>(0, "mask");
-        Image = AddInput<ImageType>("image");
         BgRemovalModel = AddInput<BackgroundRemovalType>("bg_removal_model");
+        Image = AddInput<ImageType>("image");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -32,12 +32,12 @@ public sealed class RemoveBackgroundNode : ComfyNode
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public RemoveBackgroundNode With(
-        In<ImageType>? Image = null,
-        In<BackgroundRemovalType>? BgRemovalModel = null
+        In<BackgroundRemovalType>? BgRemovalModel = null,
+        In<ImageType>? Image = null
     )
     {
-        Image?.ApplyTo(this.Image);
         BgRemovalModel?.ApplyTo(this.BgRemovalModel);
+        Image?.ApplyTo(this.Image);
         return this;
     }
 }

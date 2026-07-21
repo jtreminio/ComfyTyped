@@ -20,6 +20,7 @@ public sealed class ResolutionSelectorNode : ComfyNode
     // ── Inputs ──
     public NodeInput<StringType> AspectRatio { get; }
     public NodeInput<FloatType> Megapixels { get; }
+    public NodeInput<IntType> Multiple { get; }
 
     public ResolutionSelectorNode()
     {
@@ -29,6 +30,8 @@ public sealed class ResolutionSelectorNode : ComfyNode
         AspectRatio.Set("1:1 (Square)");
         Megapixels = AddInput<FloatType>("megapixels");
         Megapixels.Set(1.0);
+        Multiple = AddInput<IntType>("multiple");
+        Multiple.Set(8L);
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -37,11 +40,13 @@ public sealed class ResolutionSelectorNode : ComfyNode
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public ResolutionSelectorNode With(
         StringArg? AspectRatio = null,
-        FloatArg? Megapixels = null
+        FloatArg? Megapixels = null,
+        IntArg? Multiple = null
     )
     {
         AspectRatio?.ApplyTo(this.AspectRatio);
         Megapixels?.ApplyTo(this.Megapixels);
+        Multiple?.ApplyTo(this.Multiple);
         return this;
     }
 }

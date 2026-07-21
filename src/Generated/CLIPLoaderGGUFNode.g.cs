@@ -65,5 +65,9 @@ public sealed class CLIPLoaderGGUFNode : ComfyNode
         public const string Cogvideox = "cogvideox";
         public const string Lens = "lens";
         public const string Pixeldit = "pixeldit";
+        public const string Ideogram4 = "ideogram4";
+        public const string Boogu = "boogu";
+        public const string Krea2 = "krea2";
+        public const string Joyimage = "joyimage";
     }
 }

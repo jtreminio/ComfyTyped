@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: experimental</remarks>
+/// <remarks>Category: model/latent</remarks>
 public sealed class VAEDecodeTiledNode : ComfyNode, ComfyTyped.Families.IVaeDecode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

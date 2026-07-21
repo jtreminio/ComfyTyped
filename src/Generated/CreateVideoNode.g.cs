@@ -20,6 +20,7 @@ public sealed class CreateVideoNode : ComfyNode
     public NodeInput<ImageType> Images { get; }
     public NodeInput<FloatType> Fps { get; }
     public NodeInput<AudioType> Audio { get; } // optional
+    public NodeInput<IntType> BitDepth { get; } // optional
 
     public CreateVideoNode()
     {
@@ -28,6 +29,8 @@ public sealed class CreateVideoNode : ComfyNode
         Fps = AddInput<FloatType>("fps");
         Fps.Set(30.0);
         Audio = AddInput<AudioType>("audio");
+        BitDepth = AddInput<IntType>("bit_depth");
+        BitDepth.Set(8L);
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -37,12 +40,14 @@ public sealed class CreateVideoNode : ComfyNode
     public CreateVideoNode With(
         In<ImageType>? Images = null,
         FloatArg? Fps = null,
-        In<AudioType>? Audio = null
+        In<AudioType>? Audio = null,
+        IntArg? BitDepth = null
     )
     {
         Images?.ApplyTo(this.Images);
         Fps?.ApplyTo(this.Fps);
         Audio?.ApplyTo(this.Audio);
+        BitDepth?.ApplyTo(this.BitDepth);
         return this;
     }
 }

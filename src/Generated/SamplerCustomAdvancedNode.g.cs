@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: model/sampling/custom_sampling</remarks>
+/// <remarks>Category: model/sampling/custom</remarks>
 public sealed class SamplerCustomAdvancedNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

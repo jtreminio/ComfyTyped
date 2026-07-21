@@ -38,6 +38,7 @@ public sealed class SwarmKSamplerNode : ComfyNode
     public NodeInput<StringType> Previews { get; }
     public NodeInput<BooleanType> TileSample { get; }
     public NodeInput<IntType> TileSize { get; }
+    public NodeInput<ModelType> ModelNegative { get; } // optional
 
     public SwarmKSamplerNode()
     {
@@ -75,6 +76,7 @@ public sealed class SwarmKSamplerNode : ComfyNode
         TileSample.Set(false);
         TileSize = AddInput<IntType>("tile_size");
         TileSize.Set(1024L);
+        ModelNegative = AddInput<ModelType>("model_negative");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -102,7 +104,8 @@ public sealed class SwarmKSamplerNode : ComfyNode
         StringArg? ReturnWithLeftoverNoise = null,
         StringArg? Previews = null,
         BoolArg? TileSample = null,
-        IntArg? TileSize = null
+        IntArg? TileSize = null,
+        In<ModelType>? ModelNegative = null
     )
     {
         Model?.ApplyTo(this.Model);
@@ -126,6 +129,7 @@ public sealed class SwarmKSamplerNode : ComfyNode
         Previews?.ApplyTo(this.Previews);
         TileSample?.ApplyTo(this.TileSample);
         TileSize?.ApplyTo(this.TileSize);
+        ModelNegative?.ApplyTo(this.ModelNegative);
         return this;
     }
 
@@ -186,6 +190,8 @@ public sealed class SwarmKSamplerNode : ComfyNode
         public const string Ltxv = "ltxv";
         public const string LtxvImage = "ltxv-image";
         public const string Flux2 = "flux2";
+        public const string Ideogram4 = "ideogram4";
+        public const string Ideogram4turbo = "ideogram4turbo";
         public const string Simple = "simple";
         public const string SgmUniform = "sgm_uniform";
         public const string Karras = "karras";

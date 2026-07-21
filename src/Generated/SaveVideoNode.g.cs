@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>Saves the input images to your ComfyUI output directory.</summary>
+/// <summary>Saves the input videos to your ComfyUI output directory.</summary>
 /// <remarks>Category: video</remarks>
 public sealed class SaveVideoNode : ComfyNode
 {
@@ -13,15 +13,19 @@ public sealed class SaveVideoNode : ComfyNode
     public const string ClassType = "SaveVideo";
     public override string ClassTypeName => ClassType;
 
+    // ── Outputs ──
+    public NodeOutput<VideoType> Video { get; }
+
     // ── Inputs ──
-    public NodeInput<VideoType> Video { get; }
+    public NodeInput<VideoType> VideoInput { get; }
     public NodeInput<StringType> FilenamePrefix { get; }
     public NodeInput<StringType> Format { get; }
     public NodeInput<StringType> Codec { get; }
 
     public SaveVideoNode()
     {
-        Video = AddInput<VideoType>("video");
+        Video = AddOutput<VideoType>(0, "video");
+        VideoInput = AddInput<VideoType>("video");
         FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("video/ComfyUI");
         Format = AddInput<StringType>("format");
@@ -35,13 +39,13 @@ public sealed class SaveVideoNode : ComfyNode
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SaveVideoNode With(
-        In<VideoType>? Video = null,
+        In<VideoType>? VideoInput = null,
         StringArg? FilenamePrefix = null,
         StringArg? Format = null,
         StringArg? Codec = null
     )
     {
-        Video?.ApplyTo(this.Video);
+        VideoInput?.ApplyTo(this.VideoInput);
         FilenamePrefix?.ApplyTo(this.FilenamePrefix);
         Format?.ApplyTo(this.Format);
         Codec?.ApplyTo(this.Codec);

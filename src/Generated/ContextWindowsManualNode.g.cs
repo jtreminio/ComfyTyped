@@ -28,6 +28,7 @@ public sealed class ContextWindowsManualNode : ComfyNode
     public NodeInput<BooleanType> Freenoise { get; }
     public NodeInput<StringType> CondRetainIndexList { get; }
     public NodeInput<BooleanType> SplitCondsToWindows { get; }
+    public NodeInput<StringType> LatentRetainIndexList { get; }
     public NodeInput<BooleanType> CausalWindowFix { get; }
 
     public ContextWindowsManualNode()
@@ -39,6 +40,7 @@ public sealed class ContextWindowsManualNode : ComfyNode
         ContextOverlap = AddInput<IntType>("context_overlap");
         ContextOverlap.Set(4L);
         ContextSchedule = AddInput<StringType>("context_schedule");
+        ContextSchedule.Set("standard_static");
         ContextStride = AddInput<IntType>("context_stride");
         ContextStride.Set(1L);
         ClosedLoop = AddInput<BooleanType>("closed_loop");
@@ -53,6 +55,8 @@ public sealed class ContextWindowsManualNode : ComfyNode
         CondRetainIndexList.Set("");
         SplitCondsToWindows = AddInput<BooleanType>("split_conds_to_windows");
         SplitCondsToWindows.Set(false);
+        LatentRetainIndexList = AddInput<StringType>("latent_retain_index_list");
+        LatentRetainIndexList.Set("");
         CausalWindowFix = AddInput<BooleanType>("causal_window_fix");
         CausalWindowFix.Set(true);
     }
@@ -73,6 +77,7 @@ public sealed class ContextWindowsManualNode : ComfyNode
         BoolArg? Freenoise = null,
         StringArg? CondRetainIndexList = null,
         BoolArg? SplitCondsToWindows = null,
+        StringArg? LatentRetainIndexList = null,
         BoolArg? CausalWindowFix = null
     )
     {
@@ -87,6 +92,7 @@ public sealed class ContextWindowsManualNode : ComfyNode
         Freenoise?.ApplyTo(this.Freenoise);
         CondRetainIndexList?.ApplyTo(this.CondRetainIndexList);
         SplitCondsToWindows?.ApplyTo(this.SplitCondsToWindows);
+        LatentRetainIndexList?.ApplyTo(this.LatentRetainIndexList);
         CausalWindowFix?.ApplyTo(this.CausalWindowFix);
         return this;
     }

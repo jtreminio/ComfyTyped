@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: experimental/photomaker</remarks>
+/// <remarks>Category: model/conditioning/photomaker</remarks>
 public sealed class PhotoMakerEncodeNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

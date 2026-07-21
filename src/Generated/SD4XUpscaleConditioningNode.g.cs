@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: model/conditioning/upscale_diffusion</remarks>
+/// <remarks>Category: model/conditioning/stable diffusion upscaler</remarks>
 public sealed class SD4XUpscaleConditioningNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Average the model output across multiple shifted patch-grid positions during the late portion of sampling. Cancels seams.</summary>
-/// <remarks>Category: advanced/model</remarks>
+/// <remarks>Category: model/patch/hidream</remarks>
 public sealed class HiDreamO1PatchSeamSmoothingNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

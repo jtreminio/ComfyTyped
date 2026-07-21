@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: model/conditioning/video_models</remarks>
+/// <remarks>Category: model/conditioning/ltxv</remarks>
 public sealed class LTXVConditioningNode : ComfyNode, ComfyTyped.Families.IConditioningPairNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

@@ -13,13 +13,17 @@ public sealed class SaveSVGNodeNode : ComfyNode
     public const string ClassType = "SaveSVGNode";
     public override string ClassTypeName => ClassType;
 
+    // ── Outputs ──
+    public NodeOutput<SvgType> Svg { get; }
+
     // ── Inputs ──
-    public NodeInput<SvgType> Svg { get; }
+    public NodeInput<SvgType> SvgInput { get; }
     public NodeInput<StringType> FilenamePrefix { get; }
 
     public SaveSVGNodeNode()
     {
-        Svg = AddInput<SvgType>("svg");
+        Svg = AddOutput<SvgType>(0, "svg");
+        SvgInput = AddInput<SvgType>("svg");
         FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("svg/ComfyUI");
     }
@@ -29,11 +33,11 @@ public sealed class SaveSVGNodeNode : ComfyNode
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SaveSVGNodeNode With(
-        In<SvgType>? Svg = null,
+        In<SvgType>? SvgInput = null,
         StringArg? FilenamePrefix = null
     )
     {
-        Svg?.ApplyTo(this.Svg);
+        SvgInput?.ApplyTo(this.SvgInput);
         FilenamePrefix?.ApplyTo(this.FilenamePrefix);
         return this;
     }

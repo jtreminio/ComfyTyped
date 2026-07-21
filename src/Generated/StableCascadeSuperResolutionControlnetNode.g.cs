@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: experimental/stable_cascade</remarks>
+/// <remarks>Category: experimental/stable cascade</remarks>
 public sealed class StableCascadeSuperResolutionControlnetNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

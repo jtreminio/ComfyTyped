@@ -26,7 +26,7 @@ ComfyUI instead of the committed `object_info.json`:
 cd /path/to/ComfyTyped
 dotnet run --project tools/ComfyTyped.CodeGen -- \
   --root \
-  --comfy-json http://192.168.1.99:7801/ComfyBackendDirect/api/object_info \
+  --comfy-json http://192.168.0.1:7801/ComfyBackendDirect/api/object_info \
   --families families.json
 ```
 
@@ -102,8 +102,14 @@ dotnet run --project tools/ComfyTyped.CodeGen -- \
   --output /path/to/your-extension/src/Generated \
   --namespace YourExt.Generated \
   --core-assembly /path/to/your-extension/lib/ComfyTyped.dll \
-  --keep-list /path/to/your-extension/comfytyped.keep.json
+  --keep-list /path/to/your-extension/comfytyped.keep.json \
+  --families /path/to/your-extension/comfytyped.families.json
 ```
+
+Pass `--families` in diff mode too whenever the extension ships its own nodes
+that implement a core family interface (listed in the consumer's
+`comfytyped.families.json`). As in root mode, codegen drops the interface from
+the generated class if it is omitted.
 
 `prune` then needs no extra flag - it reads `PruneManifest.g.cs` from the
 generated directory and keeps every class name it lists, regardless of

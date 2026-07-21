@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>This node sets the guiding latent for an edit model. If the model supports it you can chain multiple to set multiple reference images.</summary>
-/// <remarks>Category: advanced/conditioning/edit_models</remarks>
+/// <remarks>Category: model/conditioning</remarks>
 public sealed class ReferenceLatentNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

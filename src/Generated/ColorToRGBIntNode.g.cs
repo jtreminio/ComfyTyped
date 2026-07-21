@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>Convert a color to a RGB integer value.</summary>
+/// <summary>Return a color RGB integer value and hexadecimal representation.</summary>
 /// <remarks>Category: utilities</remarks>
 public sealed class ColorToRGBIntNode : ComfyNode
 {
@@ -15,6 +15,8 @@ public sealed class ColorToRGBIntNode : ComfyNode
 
     // ── Outputs ──
     public NodeOutput<IntType> RgbInt { get; }
+    public NodeOutput<ColorType> Hex { get; }
+    public NodeOutput<FloatType> Alpha { get; }
 
     // ── Inputs ──
     public NodeInput<ColorType> Color { get; }
@@ -22,6 +24,8 @@ public sealed class ColorToRGBIntNode : ComfyNode
     public ColorToRGBIntNode()
     {
         RgbInt = AddOutput<IntType>(0, "rgb_int");
+        Hex = AddOutput<ColorType>(1, "hex");
+        Alpha = AddOutput<FloatType>(2, "alpha");
         Color = AddInput<ColorType>("color");
     }
 

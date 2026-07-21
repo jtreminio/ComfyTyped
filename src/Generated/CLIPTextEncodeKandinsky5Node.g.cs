@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: advanced/conditioning/kandinsky5</remarks>
+/// <remarks>Category: model/conditioning/kandinsky</remarks>
 public sealed class CLIPTextEncodeKandinsky5Node : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

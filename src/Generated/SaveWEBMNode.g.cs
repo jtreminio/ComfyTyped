@@ -12,8 +12,11 @@ public sealed class SaveWEBMNode : ComfyNode
     public const string ClassType = "SaveWEBM";
     public override string ClassTypeName => ClassType;
 
+    // ── Outputs ──
+    public NodeOutput<ImageType> Images { get; }
+
     // ── Inputs ──
-    public NodeInput<ImageType> Images { get; }
+    public NodeInput<ImageType> ImagesInput { get; }
     public NodeInput<StringType> FilenamePrefix { get; }
     public NodeInput<StringType> Codec { get; }
     public NodeInput<FloatType> Fps { get; }
@@ -21,7 +24,8 @@ public sealed class SaveWEBMNode : ComfyNode
 
     public SaveWEBMNode()
     {
-        Images = AddInput<ImageType>("images");
+        Images = AddOutput<ImageType>(0, "images");
+        ImagesInput = AddInput<ImageType>("images");
         FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("ComfyUI");
         Codec = AddInput<StringType>("codec");
@@ -36,14 +40,14 @@ public sealed class SaveWEBMNode : ComfyNode
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SaveWEBMNode With(
-        In<ImageType>? Images = null,
+        In<ImageType>? ImagesInput = null,
         StringArg? FilenamePrefix = null,
         StringArg? Codec = null,
         FloatArg? Fps = null,
         FloatArg? Crf = null
     )
     {
-        Images?.ApplyTo(this.Images);
+        ImagesInput?.ApplyTo(this.ImagesInput);
         FilenamePrefix?.ApplyTo(this.FilenamePrefix);
         Codec?.ApplyTo(this.Codec);
         Fps?.ApplyTo(this.Fps);

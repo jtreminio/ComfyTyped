@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>Saves the input images to your ComfyUI output directory.</summary>
+/// <summary>Preview the images without saving them to the ComfyUI output directory.</summary>
 /// <remarks>Category: image</remarks>
 public sealed class PreviewImageNode : ComfyNode
 {
@@ -13,12 +13,16 @@ public sealed class PreviewImageNode : ComfyNode
     public const string ClassType = "PreviewImage";
     public override string ClassTypeName => ClassType;
 
+    // ── Outputs ──
+    public NodeOutput<ImageType> Images { get; }
+
     // ── Inputs ──
-    public NodeInput<ImageType> Images { get; }
+    public NodeInput<ImageType> ImagesInput { get; }
 
     public PreviewImageNode()
     {
-        Images = AddInput<ImageType>("images");
+        Images = AddOutput<ImageType>(0, "images");
+        ImagesInput = AddInput<ImageType>("images");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -26,10 +30,10 @@ public sealed class PreviewImageNode : ComfyNode
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public PreviewImageNode With(
-        In<ImageType>? Images = null
+        In<ImageType>? ImagesInput = null
     )
     {
-        Images?.ApplyTo(this.Images);
+        ImagesInput?.ApplyTo(this.ImagesInput);
         return this;
     }
 }

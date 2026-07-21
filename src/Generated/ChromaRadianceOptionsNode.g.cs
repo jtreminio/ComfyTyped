@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Allows setting advanced options for the Chroma Radiance model.</summary>
-/// <remarks>Category: model/patch/chroma_radiance</remarks>
+/// <remarks>Category: model/patch/chroma radiance</remarks>
 public sealed class ChromaRadianceOptionsNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -22,6 +22,7 @@ public sealed class ChromaRadianceOptionsNode : ComfyNode
     public NodeInput<FloatType> StartSigma { get; }
     public NodeInput<FloatType> EndSigma { get; }
     public NodeInput<IntType> NerfTileSize { get; }
+    public NodeInput<BooleanType> ForceSequentialTxtIds { get; }
 
     public ChromaRadianceOptionsNode()
     {
@@ -35,6 +36,8 @@ public sealed class ChromaRadianceOptionsNode : ComfyNode
         EndSigma.Set(0.0);
         NerfTileSize = AddInput<IntType>("nerf_tile_size");
         NerfTileSize.Set(-1L);
+        ForceSequentialTxtIds = AddInput<BooleanType>("force_sequential_txt_ids");
+        ForceSequentialTxtIds.Set(false);
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -46,7 +49,8 @@ public sealed class ChromaRadianceOptionsNode : ComfyNode
         BoolArg? PreserveWrapper = null,
         FloatArg? StartSigma = null,
         FloatArg? EndSigma = null,
-        IntArg? NerfTileSize = null
+        IntArg? NerfTileSize = null,
+        BoolArg? ForceSequentialTxtIds = null
     )
     {
         Model?.ApplyTo(this.Model);
@@ -54,6 +58,7 @@ public sealed class ChromaRadianceOptionsNode : ComfyNode
         StartSigma?.ApplyTo(this.StartSigma);
         EndSigma?.ApplyTo(this.EndSigma);
         NerfTileSize?.ApplyTo(this.NerfTileSize);
+        ForceSequentialTxtIds?.ApplyTo(this.ForceSequentialTxtIds);
         return this;
     }
 }
