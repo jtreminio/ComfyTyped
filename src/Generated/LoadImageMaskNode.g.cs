@@ -40,12 +40,6 @@ public sealed class LoadImageMaskNode : ComfyNode
         return this;
     }
 
-    /// <summary>Known ComfyUI values for <c>image</c> (suggestions — any string is also accepted).</summary>
-    public static class ImageValues
-    {
-        public const string ExamplePng = "example.png";
-    }
-
     /// <summary>Known ComfyUI values for <c>channel</c> (suggestions — any string is also accepted).</summary>
     public static class ChannelValues
     {

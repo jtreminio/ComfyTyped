@@ -949,8 +949,18 @@ public static partial class Program
 
             // A COMBO's spec[0] is the JArray of allowed values; capture the all-string ones so
             // codegen can surface them as discoverable constants (see EmitComboConstants).
+            // A combo flagged as an upload picker (image_upload/video_upload/audio_upload) draws its
+            // values from ComfyUI's per-environment input/ folder, so those "values" are just whatever
+            // files happen to be uploaded — dropping them keeps ephemeral filenames out of committed
+            // generated code (same intent as the model-file guard in ComboConstants).
+            bool isUploadPicker =
+                spec.Count >= 2 && spec[1] is JObject uploadOpts
+                && uploadOpts.Properties().Any(p =>
+                    p.Name.EndsWith("_upload", StringComparison.Ordinal)
+                    && p.Value.Type == JTokenType.Boolean && (bool)p.Value);
             IReadOnlyList<string>? comboValues =
-                spec[0] is JArray comboArr && comboArr.Count > 0 && comboArr.All(v => v.Type == JTokenType.String)
+                !isUploadPicker
+                    && spec[0] is JArray comboArr && comboArr.Count > 0 && comboArr.All(v => v.Type == JTokenType.String)
                     ? comboArr.Select(v => v.ToString()).ToList()
                     : null;
 

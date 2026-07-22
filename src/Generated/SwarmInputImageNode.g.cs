@@ -77,10 +77,4 @@ public sealed class SwarmInputImageNode : ComfyNode
         Group?.ApplyTo(this.Group);
         return this;
     }
-
-    /// <summary>Known ComfyUI values for <c>image</c> (suggestions — any string is also accepted).</summary>
-    public static class ImageValues
-    {
-        public const string ExamplePng = "example.png";
-    }
 }

@@ -5,36 +5,35 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: image</remarks>
-public sealed class LoadImageNode : ComfyNode
+/// <summary>Load a dataset of videos from a specified folder and return a list of videos. Supported formats: MP4, AVI, MOV, WEBM, MKV, FLV.</summary>
+/// <remarks>Category: video</remarks>
+public sealed class LoadVideoDataSetFromFolderNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
-    public const string ClassType = "LoadImage";
+    public const string ClassType = "LoadVideoDataSetFromFolder";
     public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
-    public NodeOutput<ImageType> IMAGE { get; }
-    public NodeOutput<MaskType> MASK { get; }
+    public NodeOutput<VideoType> Videos { get; }
 
     // ── Inputs ──
-    public NodeInput<StringType> Image { get; }
+    public NodeInput<StringType> Folder { get; }
 
-    public LoadImageNode()
+    public LoadVideoDataSetFromFolderNode()
     {
-        IMAGE = AddOutput<ImageType>(0, "IMAGE");
-        MASK = AddOutput<MaskType>(1, "MASK");
-        Image = AddInput<StringType>("image");
+        Videos = AddOutput<VideoType>(0, "videos");
+        Folder = AddInput<StringType>("folder");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
     /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
-    public LoadImageNode With(
-        StringArg? Image = null
+    public LoadVideoDataSetFromFolderNode With(
+        StringArg? Folder = null
     )
     {
-        Image?.ApplyTo(this.Image);
+        Folder?.ApplyTo(this.Folder);
         return this;
     }
 }
