@@ -50,7 +50,7 @@ public class RoundTripTests
         decode.Vae.ConnectTo(ckpt.VAE);
 
         SaveImageNode save = graph.AddNode(new SaveImageNode());
-        save.Images.ConnectTo(decode.IMAGE);
+        save.ImagesInput.ConnectTo(decode.IMAGE);
         save.FilenamePrefix.Set("ComfyTyped_");
 
         JObject workflow = graph.ToWorkflow();
