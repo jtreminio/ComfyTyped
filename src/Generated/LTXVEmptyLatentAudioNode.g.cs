@@ -17,7 +17,7 @@ public sealed class LTXVEmptyLatentAudioNode : ComfyNode
 
     // ── Inputs ──
     public NodeInput<IntType> FramesNumber { get; }
-    public NodeInput<IntType> FrameRate { get; }
+    public NodeInput<StringType> FrameRate { get; }
     public NodeInput<IntType> BatchSize { get; }
     public NodeInput<VaeType> AudioVae { get; }
 
@@ -26,8 +26,8 @@ public sealed class LTXVEmptyLatentAudioNode : ComfyNode
         Latent = AddOutput<LatentType>(0, "Latent");
         FramesNumber = AddInput<IntType>("frames_number");
         FramesNumber.Set(97L);
-        FrameRate = AddInput<IntType>("frame_rate");
-        FrameRate.Set(25L);
+        FrameRate = AddInput<StringType>("frame_rate");
+        FrameRate.Set("25");
         BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
         AudioVae = AddInput<VaeType>("audio_vae");
@@ -39,7 +39,7 @@ public sealed class LTXVEmptyLatentAudioNode : ComfyNode
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public LTXVEmptyLatentAudioNode With(
         IntArg? FramesNumber = null,
-        IntArg? FrameRate = null,
+        StringArg? FrameRate = null,
         IntArg? BatchSize = null,
         In<VaeType>? AudioVae = null
     )

@@ -31,7 +31,6 @@ public sealed class SaveVideoNode : ComfyNode
         Format = AddInput<StringType>("format");
         Format.Set("auto");
         Codec = AddInput<StringType>("codec");
-        Codec.Set("auto");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

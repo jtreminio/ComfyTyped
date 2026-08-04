@@ -90,6 +90,8 @@ public sealed class CLIPLoaderNode : ComfyNode
         public const string Boogu = "boogu";
         public const string Krea2 = "krea2";
         public const string Joyimage = "joyimage";
+        public const string Mage = "mage";
+        public const string Minimax = "minimax";
     }
 
     /// <summary>Known ComfyUI values for <c>device</c> (suggestions — any string is also accepted).</summary>

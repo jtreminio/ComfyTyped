@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>LTXV Separate AV Latent</summary>
+/// <summary>Split a joint AV latent into its video and audio latents (any AV model, e.g. LTXV or MiniMax H3).</summary>
 /// <remarks>Category: model/latent/ltxv</remarks>
 public sealed class LTXVSeparateAVLatentNode : ComfyNode
 {

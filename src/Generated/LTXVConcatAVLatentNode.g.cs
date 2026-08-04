@@ -5,6 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
+/// <summary>Merge a video latent and an audio latent into a joint AV latent (any AV model, e.g. LTXV or MiniMax H3).</summary>
 /// <remarks>Category: model/latent/ltxv</remarks>
 public sealed class LTXVConcatAVLatentNode : ComfyNode
 {

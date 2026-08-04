@@ -5,34 +5,45 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: bootleg</remarks>
-public sealed class UnetLoaderGGUFNode : ComfyNode
+/// <summary>Set the video/audio flow shifts.</summary>
+/// <remarks>Category: model/patch/minimax</remarks>
+public sealed class MiniMaxH3SigmaShiftNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
-    public const string ClassType = "UnetLoaderGGUF";
+    public const string ClassType = "MiniMaxH3SigmaShift";
     public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ModelType> MODEL { get; }
 
     // ── Inputs ──
-    public NodeInput<StringType> UnetName { get; }
+    public NodeInput<ModelType> Model { get; }
+    public NodeInput<FloatType> ShiftVideo { get; }
+    public NodeInput<FloatType> ShiftAudio { get; }
 
-    public UnetLoaderGGUFNode()
+    public MiniMaxH3SigmaShiftNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
-        UnetName = AddInput<StringType>("unet_name");
+        Model = AddInput<ModelType>("model");
+        ShiftVideo = AddInput<FloatType>("shift_video");
+        ShiftVideo.Set(12.0);
+        ShiftAudio = AddInput<FloatType>("shift_audio");
+        ShiftAudio.Set(3.0);
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
     /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
-    public UnetLoaderGGUFNode With(
-        StringArg? UnetName = null
+    public MiniMaxH3SigmaShiftNode With(
+        In<ModelType>? Model = null,
+        FloatArg? ShiftVideo = null,
+        FloatArg? ShiftAudio = null
     )
     {
-        UnetName?.ApplyTo(this.UnetName);
+        Model?.ApplyTo(this.Model);
+        ShiftVideo?.ApplyTo(this.ShiftVideo);
+        ShiftAudio?.ApplyTo(this.ShiftAudio);
         return this;
     }
 }
