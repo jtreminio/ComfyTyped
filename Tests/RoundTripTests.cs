@@ -1,4 +1,5 @@
 using ComfyTyped.Core;
+using ComfyTyped.Families;
 using ComfyTyped.Generated;
 using Newtonsoft.Json.Linq;
 using Xunit;
@@ -217,6 +218,34 @@ public class RoundTripTests
         CheckpointLoaderSimpleNode? found2 = graph.FindNearestUpstream<CheckpointLoaderSimpleNode>(encode);
         Assert.NotNull(found2);
         Assert.Same(ckpt, found2);
+    }
+
+    /// <summary>
+    /// The shape this exists for: one latent, two decodes, a sampler between them. Unbounded,
+    /// "nearest" is whichever decode the walk reaches first and the caller cannot tell the two
+    /// apart; with the sampler as a barrier the answer is the decode of the latent actually asked
+    /// about.
+    /// </summary>
+    [Fact]
+    public void FindNearestDownstream_StopsAtTheBarrierType()
+    {
+        ComfyGraph graph = new ComfyGraph();
+        EmptyLatentImageNode latent = graph.AddNode(new EmptyLatentImageNode());
+        KSamplerNode sampler = graph.AddNode(new KSamplerNode());
+        sampler.LatentImage.ConnectTo(latent.LATENT);
+        VAEDecodeNode refinedDecode = graph.AddNode(new VAEDecodeNode());
+        refinedDecode.Samples.ConnectTo(sampler.LATENT);
+
+        Assert.Same(refinedDecode, graph.FindNearestDownstream<IVaeDecode>(latent.LATENT));
+        Assert.Null(graph.FindNearestDownstream<IVaeDecode, KSamplerNode>(latent.LATENT));
+
+        VAEDecodeTiledNode ownDecode = graph.AddNode(new VAEDecodeTiledNode());
+        ownDecode.Samples.ConnectTo(latent.LATENT);
+
+        Assert.Same(ownDecode, graph.FindNearestDownstream<IVaeDecode, KSamplerNode>(latent.LATENT));
+        Assert.Same(
+            ownDecode,
+            graph.FindNearestDownstream<IVaeDecode>(latent.LATENT, node => node is KSamplerNode));
     }
 
     [Fact]

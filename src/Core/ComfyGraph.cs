@@ -345,9 +345,9 @@ public sealed class ComfyGraph
     }
 
     /// <summary>Walk upstream from a node to find the nearest node matching <paramref name="predicate"/>.
-    /// Upstream peer of <see cref="FindNearestDownstream(INodeOutput, Func{ComfyNode, bool})"/>; like
-    /// <see cref="FindNearestUpstream{T}(ComfyNode)"/> this excludes <paramref name="startNode"/> itself
-    /// — test it separately if you need start-inclusive behavior.</summary>
+    /// Like <see cref="FindNearestUpstream{T}(ComfyNode)"/> this excludes <paramref name="startNode"/>
+    /// itself — test it separately if you need start-inclusive behavior. There is no downstream peer:
+    /// the downstream predicate overload takes a barrier, not a match.</summary>
     public ComfyNode? FindNearestUpstream(ComfyNode startNode, Func<ComfyNode, bool> predicate)
     {
         if (startNode is null || predicate is null)
@@ -461,7 +461,33 @@ public sealed class ComfyGraph
 
     /// <summary>Walk downstream from a node's output to find the nearest node assignable to
     /// <typeparamref name="T"/> — a node class or a shared node interface.</summary>
-    public T? FindNearestDownstream<T>(INodeOutput output) where T : class
+    public T? FindNearestDownstream<T>(INodeOutput output) where T : class =>
+        FindNearestDownstream<T>(output, stopAt: null);
+
+    /// <summary>Walk downstream as <see cref="FindNearestDownstream{T}(INodeOutput)"/>, but treat
+    /// nodes assignable to <typeparamref name="TStop"/> as barriers: they are neither returned nor
+    /// traversed past.
+    /// <para>
+    /// Use this when "nearest" alone is the wrong question because something between the two ends
+    /// rewrites the data. A latent reaches a decode both before and after a sampler, and the
+    /// unbounded walk happily returns the far one — but that decode is of different pixels. Stopping
+    /// at the sampler asks the question the caller meant: a decode of <em>this</em> latent.
+    /// </para>
+    /// <para>
+    /// A node that is both <typeparamref name="T"/> and <typeparamref name="TStop"/> is returned —
+    /// the match is tested first.
+    /// </para></summary>
+    public T? FindNearestDownstream<T, TStop>(INodeOutput output)
+        where T : class
+        where TStop : class =>
+        FindNearestDownstream<T>(output, node => node is TStop);
+
+    /// <summary>Walk downstream as <see cref="FindNearestDownstream{T}(INodeOutput)"/>, stopping at
+    /// nodes matching <paramref name="stopAt"/>. Prefer
+    /// <see cref="FindNearestDownstream{T, TStop}(INodeOutput)"/> when the barrier is a type;
+    /// this overload is for barriers no type expresses (a widget value, a node's connectivity).</summary>
+    public T? FindNearestDownstream<T>(INodeOutput output, Func<ComfyNode, bool>? stopAt)
+        where T : class
     {
         Queue<ComfyNode> pending = new();
         HashSet<string> visited = [];
@@ -477,6 +503,10 @@ public sealed class ComfyGraph
             if (current is T match)
             {
                 return match;
+            }
+            if (stopAt is not null && stopAt(current))
+            {
+                continue;
             }
             foreach (INodeOutput currentOutput in current.Outputs)
             {
