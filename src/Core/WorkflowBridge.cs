@@ -105,10 +105,13 @@ public sealed class WorkflowBridge : IDisposable
         _idCounter = idCounter;
         _onInputChanged = OnInputChanged;
         _onInputListChanged = OnInputListChanged;
+        // Subscribe only. The counter follows IDs this bridge mints, never IDs the host already
+        // minted: SwarmUI allocates from banded ranges (LoRA loaders at 3000+, saves at 51000+) that
+        // its own unbanded `LastID++` never checks, so raising LastID to cover a banded node makes
+        // the very next host-minted node overwrite one.
         foreach (ComfyNode node in graph.Nodes.Values)
         {
             Subscribe(node);
-            AdvanceIdCounter(node);
         }
     }
 

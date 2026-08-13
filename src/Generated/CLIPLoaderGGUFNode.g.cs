@@ -5,29 +5,11 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>
-/// Recipes:
-/// sd: clip-l
-/// stable cascade: clip-g
-/// sd3: t5 xxl / clip-g / clip-l
-/// stable audio: t5 base
-/// mochi: t5 xxl
-/// cogvideox: t5 xxl (226-token padding)
-/// cosmos: old t5 xxl
-/// lumina2: gemma 2 2B
-/// wan: umt5 xxl
-/// hidream: llama-3.1 (Recommend) or t5
-/// omnigen2: qwen vl 2.5 3B
-/// joyimage: qwen3-vl 8B
-/// lens: gpt-oss-20b
-/// pixeldit: gemma 2 2B elm
-/// minimax: MiniMax H3 Qwen3-VL or Music3 Qwen/RVQ
-/// </summary>
-/// <remarks>Category: model/loaders</remarks>
-public sealed class CLIPLoaderNode : ComfyNode
+/// <remarks>Category: bootleg</remarks>
+public sealed class CLIPLoaderGGUFNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
-    public const string ClassType = "CLIPLoader";
+    public const string ClassType = "CLIPLoaderGGUF";
     public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
@@ -36,29 +18,25 @@ public sealed class CLIPLoaderNode : ComfyNode
     // ── Inputs ──
     public NodeInput<StringType> ClipName { get; }
     public NodeInput<StringType> Type { get; }
-    public NodeInput<StringType> Device { get; } // optional
 
-    public CLIPLoaderNode()
+    public CLIPLoaderGGUFNode()
     {
         CLIP = AddOutput<ClipType>(0, "CLIP");
         ClipName = AddInput<StringType>("clip_name");
         Type = AddInput<StringType>("type");
-        Device = AddInput<StringType>("device");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
     /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
-    public CLIPLoaderNode With(
+    public CLIPLoaderGGUFNode With(
         StringArg? ClipName = null,
-        StringArg? Type = null,
-        StringArg? Device = null
+        StringArg? Type = null
     )
     {
         ClipName?.ApplyTo(this.ClipName);
         Type?.ApplyTo(this.Type);
-        Device?.ApplyTo(this.Device);
         return this;
     }
 
@@ -93,12 +71,5 @@ public sealed class CLIPLoaderNode : ComfyNode
         public const string Joyimage = "joyimage";
         public const string Mage = "mage";
         public const string Minimax = "minimax";
-    }
-
-    /// <summary>Known ComfyUI values for <c>device</c> (suggestions — any string is also accepted).</summary>
-    public static class DeviceValues
-    {
-        public const string Default = "default";
-        public const string Cpu = "cpu";
     }
 }

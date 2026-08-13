@@ -5,46 +5,42 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>
-/// Recipes:
-/// ltxav: gemma 3 12B or matching gemma 4 model
-/// </summary>
-/// <remarks>Category: model/loaders</remarks>
-public sealed class LTXAVTextEncoderLoaderNode : ComfyNode
+/// <remarks>Category: bootleg</remarks>
+public sealed class TripleCLIPLoaderGGUFNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
-    public const string ClassType = "LTXAVTextEncoderLoader";
+    public const string ClassType = "TripleCLIPLoaderGGUF";
     public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
     public NodeOutput<ClipType> CLIP { get; }
 
     // ── Inputs ──
-    public NodeInput<StringType> TextEncoder { get; }
-    public NodeInput<StringType> CkptName { get; }
-    public NodeInput<StringType> Device { get; }
+    public NodeInput<StringType> ClipName1 { get; }
+    public NodeInput<StringType> ClipName2 { get; }
+    public NodeInput<StringType> ClipName3 { get; }
 
-    public LTXAVTextEncoderLoaderNode()
+    public TripleCLIPLoaderGGUFNode()
     {
         CLIP = AddOutput<ClipType>(0, "CLIP");
-        TextEncoder = AddInput<StringType>("text_encoder");
-        CkptName = AddInput<StringType>("ckpt_name");
-        Device = AddInput<StringType>("device");
+        ClipName1 = AddInput<StringType>("clip_name1");
+        ClipName2 = AddInput<StringType>("clip_name2");
+        ClipName3 = AddInput<StringType>("clip_name3");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
     /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
-    public LTXAVTextEncoderLoaderNode With(
-        StringArg? TextEncoder = null,
-        StringArg? CkptName = null,
-        StringArg? Device = null
+    public TripleCLIPLoaderGGUFNode With(
+        StringArg? ClipName1 = null,
+        StringArg? ClipName2 = null,
+        StringArg? ClipName3 = null
     )
     {
-        TextEncoder?.ApplyTo(this.TextEncoder);
-        CkptName?.ApplyTo(this.CkptName);
-        Device?.ApplyTo(this.Device);
+        ClipName1?.ApplyTo(this.ClipName1);
+        ClipName2?.ApplyTo(this.ClipName2);
+        ClipName3?.ApplyTo(this.ClipName3);
         return this;
     }
 }
