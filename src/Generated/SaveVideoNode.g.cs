@@ -20,7 +20,7 @@ public sealed class SaveVideoNode : ComfyNode
     public NodeInput<VideoType> VideoInput { get; }
     public NodeInput<StringType> FilenamePrefix { get; }
     public NodeInput<StringType> Format { get; }
-    public NodeInput<StringType> Codec { get; }
+    public NodeInput<StringType> Codec { get; } // optional
 
     public SaveVideoNode()
     {
@@ -29,7 +29,6 @@ public sealed class SaveVideoNode : ComfyNode
         FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("video/ComfyUI");
         Format = AddInput<StringType>("format");
-        Format.Set("auto");
         Codec = AddInput<StringType>("codec");
     }
 

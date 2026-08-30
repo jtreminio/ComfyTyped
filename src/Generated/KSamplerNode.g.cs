@@ -110,6 +110,7 @@ public sealed class KSamplerNode : ComfyNode
         public const string Ipndm = "ipndm";
         public const string IpndmV = "ipndm_v";
         public const string Deis = "deis";
+        public const string CfgppUd10Ab = "cfgpp_ud10_ab";
         public const string ResMultistep = "res_multistep";
         public const string ResMultistepCfgPp = "res_multistep_cfg_pp";
         public const string ResMultistepAncestral = "res_multistep_ancestral";

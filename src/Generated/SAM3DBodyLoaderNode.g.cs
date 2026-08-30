@@ -5,40 +5,34 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>Truncate text to a maximum length.</summary>
-/// <remarks>Category: text</remarks>
-public sealed class TruncateTextNode : ComfyNode
+/// <remarks>Category: image/detection</remarks>
+public sealed class SAM3DBodyLoaderNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
-    public const string ClassType = "TruncateText";
+    public const string ClassType = "SAM3DBody_Loader";
     public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
-    public NodeOutput<StringType> Texts { get; }
+    public NodeOutput<Sam3dBodyModelType> Sam3dBodyModel { get; }
 
     // ── Inputs ──
-    public NodeInput<StringType> TextsInput { get; }
-    public NodeInput<IntType> MaxLength { get; }
+    public NodeInput<StringType> ModelFile { get; }
 
-    public TruncateTextNode()
+    public SAM3DBodyLoaderNode()
     {
-        Texts = AddOutput<StringType>(0, "texts");
-        TextsInput = AddInput<StringType>("texts");
-        MaxLength = AddInput<IntType>("max_length");
-        MaxLength.Set(77L);
+        Sam3dBodyModel = AddOutput<Sam3dBodyModelType>(0, "sam3d_body_model");
+        ModelFile = AddInput<StringType>("model_file");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
     /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
-    public TruncateTextNode With(
-        StringArg? TextsInput = null,
-        IntArg? MaxLength = null
+    public SAM3DBodyLoaderNode With(
+        StringArg? ModelFile = null
     )
     {
-        TextsInput?.ApplyTo(this.TextsInput);
-        MaxLength?.ApplyTo(this.MaxLength);
+        ModelFile?.ApplyTo(this.ModelFile);
         return this;
     }
 }

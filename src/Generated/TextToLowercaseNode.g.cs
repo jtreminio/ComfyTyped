@@ -5,6 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
+/// <summary>Convert text to lowercase.</summary>
 /// <remarks>Category: text</remarks>
 public sealed class TextToLowercaseNode : ComfyNode
 {

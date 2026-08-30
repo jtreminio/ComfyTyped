@@ -5,6 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
+/// <summary>Add a suffix to all texts.</summary>
 /// <remarks>Category: text</remarks>
 public sealed class AddTextSuffixNode : ComfyNode
 {

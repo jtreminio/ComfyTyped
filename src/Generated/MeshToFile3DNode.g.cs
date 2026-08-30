@@ -5,40 +5,35 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>Truncate text to a maximum length.</summary>
-/// <remarks>Category: text</remarks>
-public sealed class TruncateTextNode : ComfyNode
+/// <summary>Serialize a mesh to a GLB File3D object for Save / Preview 3D nodes, carrying its UVs, colors, normals, texture, normal/occlusion/emissive maps and material. Supports one item per batch only.</summary>
+/// <remarks>Category: 3d</remarks>
+public sealed class MeshToFile3DNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
-    public const string ClassType = "TruncateText";
+    public const string ClassType = "MeshToFile3D";
     public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
-    public NodeOutput<StringType> Texts { get; }
+    public NodeOutput<File3dGlbType> Model3d { get; }
 
     // ── Inputs ──
-    public NodeInput<StringType> TextsInput { get; }
-    public NodeInput<IntType> MaxLength { get; }
+    public NodeInput<MeshType> Mesh { get; }
 
-    public TruncateTextNode()
+    public MeshToFile3DNode()
     {
-        Texts = AddOutput<StringType>(0, "texts");
-        TextsInput = AddInput<StringType>("texts");
-        MaxLength = AddInput<IntType>("max_length");
-        MaxLength.Set(77L);
+        Model3d = AddOutput<File3dGlbType>(0, "model_3d");
+        Mesh = AddInput<MeshType>("mesh");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
     /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
-    public TruncateTextNode With(
-        StringArg? TextsInput = null,
-        IntArg? MaxLength = null
+    public MeshToFile3DNode With(
+        In<MeshType>? Mesh = null
     )
     {
-        TextsInput?.ApplyTo(this.TextsInput);
-        MaxLength?.ApplyTo(this.MaxLength);
+        Mesh?.ApplyTo(this.Mesh);
         return this;
     }
 }

@@ -5,6 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
+/// <summary>Strip leading and trailing whitespace from all texts.</summary>
 /// <remarks>Category: text</remarks>
 public sealed class StripWhitespaceNode : ComfyNode
 {

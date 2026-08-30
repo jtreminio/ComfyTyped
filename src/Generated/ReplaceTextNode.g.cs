@@ -5,6 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
+/// <summary>Replace text in all texts.</summary>
 /// <remarks>Category: text</remarks>
 public sealed class ReplaceTextNode : ComfyNode
 {

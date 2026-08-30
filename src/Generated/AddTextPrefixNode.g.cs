@@ -5,6 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
+/// <summary>Add a prefix to all texts.</summary>
 /// <remarks>Category: text</remarks>
 public sealed class AddTextPrefixNode : ComfyNode
 {

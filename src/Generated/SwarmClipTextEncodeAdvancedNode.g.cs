@@ -28,6 +28,7 @@ public sealed class SwarmClipTextEncodeAdvancedNode : ComfyNode
     public NodeInput<StringType> LlamaTemplate { get; } // optional
     public NodeInput<ClipVisionOutputType> ClipVisionOutput { get; } // optional
     public NodeInput<ImageType> Images { get; } // optional
+    public NodeInput<MinimaxreferencesType> MinimaxRefs { get; } // optional
 
     public SwarmClipTextEncodeAdvancedNode()
     {
@@ -50,6 +51,7 @@ public sealed class SwarmClipTextEncodeAdvancedNode : ComfyNode
         LlamaTemplate.Set("");
         ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output");
         Images = AddInput<ImageType>("images");
+        MinimaxRefs = AddInput<MinimaxreferencesType>("minimax_refs");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -67,7 +69,8 @@ public sealed class SwarmClipTextEncodeAdvancedNode : ComfyNode
         FloatArg? Guidance = null,
         StringArg? LlamaTemplate = null,
         In<ClipVisionOutputType>? ClipVisionOutput = null,
-        In<ImageType>? Images = null
+        In<ImageType>? Images = null,
+        In<MinimaxreferencesType>? MinimaxRefs = null
     )
     {
         Clip?.ApplyTo(this.Clip);
@@ -81,6 +84,7 @@ public sealed class SwarmClipTextEncodeAdvancedNode : ComfyNode
         LlamaTemplate?.ApplyTo(this.LlamaTemplate);
         ClipVisionOutput?.ApplyTo(this.ClipVisionOutput);
         Images?.ApplyTo(this.Images);
+        MinimaxRefs?.ApplyTo(this.MinimaxRefs);
         return this;
     }
 }

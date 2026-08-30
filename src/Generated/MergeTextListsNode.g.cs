@@ -5,6 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
+/// <summary>Concatenate multiple text lists into one.</summary>
 /// <remarks>Category: text</remarks>
 public sealed class MergeTextListsNode : ComfyNode
 {
