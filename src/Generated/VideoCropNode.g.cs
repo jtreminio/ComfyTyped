@@ -5,34 +5,38 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: bootleg</remarks>
-public sealed class UnetLoaderGGUFNode : ComfyNode
+/// <remarks>Category: video</remarks>
+public sealed class VideoCropNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
-    public const string ClassType = "UnetLoaderGGUF";
+    public const string ClassType = "VideoCrop";
     public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
-    public NodeOutput<ModelType> MODEL { get; }
+    public NodeOutput<VideoType> VIDEO { get; }
 
     // ── Inputs ──
-    public NodeInput<StringType> UnetName { get; }
+    public NodeInput<VideoType> Video { get; }
+    public NodeInput<VideoEditType> Crop { get; }
 
-    public UnetLoaderGGUFNode()
+    public VideoCropNode()
     {
-        MODEL = AddOutput<ModelType>(0, "MODEL");
-        UnetName = AddInput<StringType>("unet_name");
+        VIDEO = AddOutput<VideoType>(0, "VIDEO");
+        Video = AddInput<VideoType>("video");
+        Crop = AddInput<VideoEditType>("crop");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
     /// Pass only the inputs you want to set; omitted (<c>null</c>) args leave the existing value untouched.
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
-    public UnetLoaderGGUFNode With(
-        StringArg? UnetName = null
+    public VideoCropNode With(
+        In<VideoType>? Video = null,
+        In<VideoEditType>? Crop = null
     )
     {
-        UnetName?.ApplyTo(this.UnetName);
+        Video?.ApplyTo(this.Video);
+        Crop?.ApplyTo(this.Crop);
         return this;
     }
 }
