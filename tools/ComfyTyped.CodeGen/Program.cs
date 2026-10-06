@@ -994,11 +994,12 @@ public static partial class Program
                 };
             }
 
-            // COMBO, multi-types ("CLIP,GEMMA"), and DYNAMICCOMBO_V3 (variant-shaped) collapse to STRING.
+            // COMBO and DYNAMICCOMBO_V3 (variant-shaped) collapse to STRING.
+            // Union sockets (e.g. "CLIP,GEMMA") must reach ResolveMarkerType,
+            // which represents them as AnyType connections instead of string literals.
             // AUTOGROW_V3 that failed parse above also lands here as a safety fallback.
             string effectiveType = comfyType;
             if (comfyType == "COMBO"
-                || comfyType.Contains(',')
                 || comfyType.StartsWith("COMFY_AUTOGROW_V3", StringComparison.Ordinal)
                 || comfyType.StartsWith("COMFY_DYNAMICCOMBO_V3", StringComparison.Ordinal))
             {
@@ -1296,9 +1297,23 @@ public static partial class Program
         {
             sb.AppendLine(
                 $"        {inp.PropertyName} = AddInput<{inp.Marker.ShortName}>(\"{inp.Name}\");");
-            if (inp.IsPrimitive && inp.DefaultValue is not null)
+            string? literalType = inp.CSharpType;
+            if (inp.ComfyType.Contains(','))
             {
-                sb.AppendLine($"        {inp.PropertyName}.Set({FormatLiteral(inp.DefaultValue, inp.CSharpType!)});");
+                // Union sockets may also have primitive defaults. Preserve the JSON
+                // value's type rather than coercing numbers and booleans to strings.
+                literalType = inp.DefaultValue switch
+                {
+                    long => "long",
+                    double => "double",
+                    string => "string",
+                    bool => "bool",
+                    _ => null
+                };
+            }
+            if (literalType is not null && inp.DefaultValue is not null)
+            {
+                sb.AppendLine($"        {inp.PropertyName}.Set({FormatLiteral(inp.DefaultValue, literalType)});");
             }
         }
         foreach (InputDef inp in listInputs)
@@ -1656,8 +1671,10 @@ public static partial class Program
     }
 
     /// <summary>The With(...) parameter type (before the trailing <c>?</c>) for a singular input:
-    /// a primitive binding struct for INT/FLOAT/STRING/BOOLEAN, or <c>In&lt;Marker&gt;</c> for a connection.</summary>
+    /// <c>AnyArg</c> for a union, a primitive binding struct for INT/FLOAT/STRING/BOOLEAN,
+    /// or <c>In&lt;Marker&gt;</c> for a connection.</summary>
     private static string WithParamType(InputDef inp) =>
+        inp.ComfyType.Contains(',') ? "AnyArg" :
         inp.IsPrimitive
             ? inp.CSharpType switch
             {

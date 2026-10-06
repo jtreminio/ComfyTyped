@@ -17,13 +17,13 @@ public sealed class ComfyNumberConvertNode : ComfyNode
     public NodeOutput<IntType> INT { get; }
 
     // ── Inputs ──
-    public NodeInput<StringType> Value { get; }
+    public NodeInput<AnyType> Value { get; }
 
     public ComfyNumberConvertNode()
     {
         FLOAT = AddOutput<FloatType>(0, "FLOAT");
         INT = AddOutput<IntType>(1, "INT");
-        Value = AddInput<StringType>("value");
+        Value = AddInput<AnyType>("value");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -31,7 +31,7 @@ public sealed class ComfyNumberConvertNode : ComfyNode
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public ComfyNumberConvertNode With(
-        StringArg? Value = null
+        AnyArg? Value = null
     )
     {
         Value?.ApplyTo(this.Value);

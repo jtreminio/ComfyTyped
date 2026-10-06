@@ -21,7 +21,7 @@ public sealed class PreviewPointCloudNode : ComfyNode
     public NodeOutput<IntType> Height { get; }
 
     // ── Inputs ──
-    public NodeInput<StringType> Model3dInput { get; }
+    public NodeInput<AnyType> Model3dInput { get; }
     public NodeInput<Load3dType> ViewportState { get; }
     public NodeInput<IntType> WidthInput { get; }
     public NodeInput<IntType> HeightInput { get; }
@@ -35,7 +35,7 @@ public sealed class PreviewPointCloudNode : ComfyNode
         CameraInfo = AddOutput<Load3dCameraType>(2, "camera_info");
         Width = AddOutput<IntType>(3, "width");
         Height = AddOutput<IntType>(4, "height");
-        Model3dInput = AddInput<StringType>("model_3d");
+        Model3dInput = AddInput<AnyType>("model_3d");
         ViewportState = AddInput<Load3dType>("viewport_state");
         WidthInput = AddInput<IntType>("width");
         WidthInput.Set(1024L);
@@ -50,7 +50,7 @@ public sealed class PreviewPointCloudNode : ComfyNode
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public PreviewPointCloudNode With(
-        StringArg? Model3dInput = null,
+        AnyArg? Model3dInput = null,
         In<Load3dType>? ViewportState = null,
         IntArg? WidthInput = null,
         IntArg? HeightInput = null,

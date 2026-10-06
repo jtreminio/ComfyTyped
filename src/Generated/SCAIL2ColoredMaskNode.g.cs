@@ -21,7 +21,7 @@ public sealed class SCAIL2ColoredMaskNode : ComfyNode
     public NodeInput<StringType> ObjectIndices { get; }
     public NodeInput<StringType> SortBy { get; }
     public NodeInput<BooleanType> ReplacementMode { get; }
-    public NodeInput<StringType> RefTrackData { get; } // optional
+    public NodeInput<AnyType> RefTrackData { get; } // optional
 
     public SCAIL2ColoredMaskNode()
     {
@@ -34,7 +34,7 @@ public sealed class SCAIL2ColoredMaskNode : ComfyNode
         SortBy.Set("left_to_right");
         ReplacementMode = AddInput<BooleanType>("replacement_mode");
         ReplacementMode.Set(false);
-        RefTrackData = AddInput<StringType>("ref_track_data");
+        RefTrackData = AddInput<AnyType>("ref_track_data");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -46,7 +46,7 @@ public sealed class SCAIL2ColoredMaskNode : ComfyNode
         StringArg? ObjectIndices = null,
         StringArg? SortBy = null,
         BoolArg? ReplacementMode = null,
-        StringArg? RefTrackData = null
+        AnyArg? RefTrackData = null
     )
     {
         DrivingTrackData?.ApplyTo(this.DrivingTrackData);

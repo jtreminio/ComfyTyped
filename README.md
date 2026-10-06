@@ -49,6 +49,29 @@ IO type names encountered in the comfy-json (e.g. an extension's custom
 `SOME_CUSTOM_TYPE`) get a marker class generated automatically - mechanical
 PascalCase + `Type` suffix, so `SOME_CUSTOM_TYPE` → `SomeCustomTypeType`.
 
+### Union inputs
+
+Comma-separated socket types such as `CLIP,GEMMA` use `AnyType` so workflow
+imports preserve connections from either type. ComfyTyped does not validate the
+union's member types; ComfyUI remains responsible for that validation. Primitive
+defaults retain their JSON types.
+
+The generated `With(...)` argument is `AnyArg`: primitive literals convert
+implicitly, and typed outputs use an explicit wrapper, for example
+`node.With(Clip: new AnyArg(checkpoint.CLIP))`. Numeric union inputs also accept
+literals such as `audio.With(FrameRate: 29.97)`.
+
+This matters when SwarmUI skips sampling and inserts
+`SwarmJustLoadTheModelPlease`, such as a **Refine Img** request with zero
+creativity. Its `clip` input accepts `CLIP,GEMMA`; older bindings incorrectly
+declared it as `STRING`, causing workflow import to fail. Non-union inputs such
+as `model` and `vae` still reject incompatible connections. Connection errors
+include both node class types and IDs, plus the source output slot.
+
+After regenerating bindings, rebuild ComfyTyped, refresh consumers' vendored
+`ComfyTyped.dll`, and restart the host to load the new assembly. Verify the
+skipped-sampler path: a successful fresh generation may not exercise this node.
+
 ### Pruning unused generated files
 
 Delete generated files whose class name isn't referenced anywhere under

@@ -224,7 +224,9 @@ public sealed class NodeInput<T> : INodeInput where T : IComfyType
         }
 
         throw new InvalidOperationException(
-            $"Cannot connect output of type '{output.TypeName}' to input '{Name}' of type '{T.TypeName}'.");
+            $"Cannot connect output of type '{output.TypeName}' to input '{Name}' of type '{T.TypeName}'. "
+            + $"Source: {output.Node.ClassTypeName}#{output.Node.Id} output slot {output.SlotIndex} ('{output.SlotName}'); "
+            + $"target: {Owner.ClassTypeName}#{Owner.Id}.");
     }
 
     public bool TryConnectToUntyped(INodeOutput? output)

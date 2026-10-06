@@ -16,7 +16,7 @@ public sealed class SAM3DBodyRenderNode : ComfyNode
     public NodeOutput<ImageType> Image { get; }
 
     // ── Inputs ──
-    public NodeInput<StringType> PoseData { get; }
+    public NodeInput<AnyType> PoseData { get; }
     public NodeInput<IntType> Width { get; }
     public NodeInput<IntType> Height { get; }
     public NodeInput<StringType> RenderStyle { get; }
@@ -26,7 +26,7 @@ public sealed class SAM3DBodyRenderNode : ComfyNode
     public SAM3DBodyRenderNode()
     {
         Image = AddOutput<ImageType>(0, "image");
-        PoseData = AddInput<StringType>("pose_data");
+        PoseData = AddInput<AnyType>("pose_data");
         Width = AddInput<IntType>("width");
         Width.Set(0L);
         Height = AddInput<IntType>("height");
@@ -41,7 +41,7 @@ public sealed class SAM3DBodyRenderNode : ComfyNode
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SAM3DBodyRenderNode With(
-        StringArg? PoseData = null,
+        AnyArg? PoseData = null,
         IntArg? Width = null,
         IntArg? Height = null,
         StringArg? RenderStyle = null,

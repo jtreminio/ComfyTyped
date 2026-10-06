@@ -21,6 +21,7 @@ public sealed class ResolutionSelectorNode : ComfyNode
     public NodeInput<StringType> AspectRatio { get; }
     public NodeInput<FloatType> Megapixels { get; }
     public NodeInput<IntType> Multiple { get; }
+    public NodeInput<ResolutionPreviewType> Preview { get; } // optional
 
     public ResolutionSelectorNode()
     {
@@ -32,6 +33,7 @@ public sealed class ResolutionSelectorNode : ComfyNode
         Megapixels.Set(1.0);
         Multiple = AddInput<IntType>("multiple");
         Multiple.Set(8L);
+        Preview = AddInput<ResolutionPreviewType>("preview");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -41,12 +43,14 @@ public sealed class ResolutionSelectorNode : ComfyNode
     public ResolutionSelectorNode With(
         StringArg? AspectRatio = null,
         FloatArg? Megapixels = null,
-        IntArg? Multiple = null
+        IntArg? Multiple = null,
+        In<ResolutionPreviewType>? Preview = null
     )
     {
         AspectRatio?.ApplyTo(this.AspectRatio);
         Megapixels?.ApplyTo(this.Megapixels);
         Multiple?.ApplyTo(this.Multiple);
+        Preview?.ApplyTo(this.Preview);
         return this;
     }
 }

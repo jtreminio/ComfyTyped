@@ -14,13 +14,13 @@ public sealed class Preview3DNode : ComfyNode
     public override string ClassTypeName => ClassType;
 
     // ── Inputs ──
-    public NodeInput<StringType> ModelFile { get; }
+    public NodeInput<AnyType> ModelFile { get; }
     public NodeInput<Load3dCameraType> CameraInfo { get; } // optional
     public NodeInput<ImageType> BgImage { get; } // optional
 
     public Preview3DNode()
     {
-        ModelFile = AddInput<StringType>("model_file");
+        ModelFile = AddInput<AnyType>("model_file");
         ModelFile.Set("");
         CameraInfo = AddInput<Load3dCameraType>("camera_info");
         BgImage = AddInput<ImageType>("bg_image");
@@ -31,7 +31,7 @@ public sealed class Preview3DNode : ComfyNode
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public Preview3DNode With(
-        StringArg? ModelFile = null,
+        AnyArg? ModelFile = null,
         In<Load3dCameraType>? CameraInfo = null,
         In<ImageType>? BgImage = null
     )

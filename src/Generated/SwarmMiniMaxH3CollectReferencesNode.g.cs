@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>&lt;Picture i&gt; / &lt;Video k&gt; / &lt;Audio j&gt; reference collection for MiniMax H3. Feed the output into SwarmClipTextEncodeAdvanced.</summary>
+/// <summary>&lt;Picture i&gt; / &lt;Video k&gt; / &lt;Audio j&gt; reference collection for MiniMax H3. Feed the output into SwarmTextEncodeAdvanced.</summary>
 /// <remarks>Category: SwarmUI/video</remarks>
 public sealed class SwarmMiniMaxH3CollectReferencesNode : ComfyNode
 {

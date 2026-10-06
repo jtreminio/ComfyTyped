@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>Attach 1-10 reference images to conditioning, one for edit instructionor multiple for subject-driven personalization.</summary>
+/// <summary>Attach ordered reference images to positive and negative conditioning.</summary>
 /// <remarks>Category: model/conditioning/hidream</remarks>
 public sealed class HiDreamO1ReferenceImagesNode : ComfyNode
 {
@@ -22,7 +22,7 @@ public sealed class HiDreamO1ReferenceImagesNode : ComfyNode
     public NodeInput<ConditioningType> NegativeInput { get; }
 
     // ── Input lists (COMFY_AUTOGROW_V3) ──
-    public NodeInputList<ImageType> Images { get; }
+    public NodeInputList<ImageType> Images { get; } // optional
 
     public HiDreamO1ReferenceImagesNode()
     {
@@ -30,7 +30,7 @@ public sealed class HiDreamO1ReferenceImagesNode : ComfyNode
         Negative = AddOutput<ConditioningType>(1, "negative");
         PositiveInput = AddInput<ConditioningType>("positive");
         NegativeInput = AddInput<ConditioningType>("negative");
-        Images = AddInputList<ImageType>("images", names: new string[] { "image_1", "image_2", "image_3", "image_4", "image_5", "image_6", "image_7", "image_8", "image_9", "image_10" }, max: 10);
+        Images = AddInputList<ImageType>("images", names: new string[] { "image_1", "image_2", "image_3", "image_4", "image_5", "image_6", "image_7", "image_8", "image_9", "image_10", "image_11", "image_12", "image_13", "image_14", "image_15", "image_16", "image_17", "image_18", "image_19", "image_20", "image_21", "image_22", "image_23", "image_24", "image_25", "image_26", "image_27", "image_28", "image_29", "image_30", "image_31", "image_32", "image_33", "image_34", "image_35", "image_36", "image_37", "image_38", "image_39", "image_40", "image_41", "image_42", "image_43", "image_44", "image_45", "image_46", "image_47", "image_48", "image_49", "image_50", "image_51", "image_52", "image_53", "image_54", "image_55", "image_56", "image_57", "image_58", "image_59", "image_60", "image_61", "image_62", "image_63", "image_64", "image_65", "image_66", "image_67", "image_68", "image_69", "image_70", "image_71", "image_72", "image_73", "image_74", "image_75", "image_76", "image_77", "image_78", "image_79", "image_80", "image_81", "image_82", "image_83", "image_84", "image_85", "image_86", "image_87", "image_88", "image_89", "image_90", "image_91", "image_92", "image_93", "image_94", "image_95", "image_96", "image_97", "image_98", "image_99", "image_100" }, max: 100);
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.

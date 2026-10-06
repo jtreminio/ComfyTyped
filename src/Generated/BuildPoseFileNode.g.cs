@@ -17,7 +17,7 @@ public sealed class BuildPoseFileNode : ComfyNode
     public NodeOutput<File3dType> Model3d { get; }
 
     // ── Inputs ──
-    public NodeInput<StringType> PoseData { get; }
+    public NodeInput<AnyType> PoseData { get; }
     public NodeInput<StringType> Format { get; }
     public NodeInput<FloatType> Fps { get; }
     public NodeInput<StringType> CameraTranslation { get; }
@@ -27,7 +27,7 @@ public sealed class BuildPoseFileNode : ComfyNode
     public BuildPoseFileNode()
     {
         Model3d = AddOutput<File3dType>(0, "model_3d");
-        PoseData = AddInput<StringType>("pose_data");
+        PoseData = AddInput<AnyType>("pose_data");
         Format = AddInput<StringType>("format");
         Fps = AddInput<FloatType>("fps");
         Fps.Set(24.0);
@@ -43,7 +43,7 @@ public sealed class BuildPoseFileNode : ComfyNode
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public BuildPoseFileNode With(
-        StringArg? PoseData = null,
+        AnyArg? PoseData = null,
         StringArg? Format = null,
         FloatArg? Fps = null,
         StringArg? CameraTranslation = null,

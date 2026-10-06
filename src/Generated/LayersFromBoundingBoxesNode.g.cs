@@ -18,7 +18,7 @@ public sealed class LayersFromBoundingBoxesNode : ComfyNode
 
     // ── Inputs ──
     public NodeInput<ImageType> Image { get; }
-    public NodeInput<StringType> Bboxes { get; }
+    public NodeInput<AnyType> Bboxes { get; }
     public NodeInput<MaskType> Mask { get; } // optional
     public NodeInput<LayersType> Layers { get; } // optional
     public NodeInput<BooleanType> CropToContent { get; } // optional
@@ -29,7 +29,7 @@ public sealed class LayersFromBoundingBoxesNode : ComfyNode
     {
         LAYERS = AddOutput<LayersType>(0, "LAYERS");
         Image = AddInput<ImageType>("image");
-        Bboxes = AddInput<StringType>("bboxes");
+        Bboxes = AddInput<AnyType>("bboxes");
         Mask = AddInput<MaskType>("mask");
         Layers = AddInput<LayersType>("layers");
         CropToContent = AddInput<BooleanType>("crop_to_content");
@@ -46,7 +46,7 @@ public sealed class LayersFromBoundingBoxesNode : ComfyNode
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public LayersFromBoundingBoxesNode With(
         In<ImageType>? Image = null,
-        StringArg? Bboxes = null,
+        AnyArg? Bboxes = null,
         In<MaskType>? Mask = null,
         In<LayersType>? Layers = null,
         BoolArg? CropToContent = null,

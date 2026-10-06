@@ -17,12 +17,12 @@ public sealed class Get3DComponentsNode : ComfyNode
     public NodeOutput<MeshType> Mesh { get; }
 
     // ── Inputs ──
-    public NodeInput<StringType> Model3d { get; }
+    public NodeInput<AnyType> Model3d { get; }
 
     public Get3DComponentsNode()
     {
         Mesh = AddOutput<MeshType>(0, "mesh");
-        Model3d = AddInput<StringType>("model_3d");
+        Model3d = AddInput<AnyType>("model_3d");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -30,7 +30,7 @@ public sealed class Get3DComponentsNode : ComfyNode
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public Get3DComponentsNode With(
-        StringArg? Model3d = null
+        AnyArg? Model3d = null
     )
     {
         Model3d?.ApplyTo(this.Model3d);

@@ -17,12 +17,12 @@ public sealed class File3DToSplatNode : ComfyNode
     public NodeOutput<SplatType> Splat { get; }
 
     // ── Inputs ──
-    public NodeInput<StringType> Model3d { get; }
+    public NodeInput<AnyType> Model3d { get; }
 
     public File3DToSplatNode()
     {
         Splat = AddOutput<SplatType>(0, "splat");
-        Model3d = AddInput<StringType>("model_3d");
+        Model3d = AddInput<AnyType>("model_3d");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -30,7 +30,7 @@ public sealed class File3DToSplatNode : ComfyNode
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public File3DToSplatNode With(
-        StringArg? Model3d = null
+        AnyArg? Model3d = null
     )
     {
         Model3d?.ApplyTo(this.Model3d);

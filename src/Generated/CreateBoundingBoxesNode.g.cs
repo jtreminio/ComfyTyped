@@ -23,7 +23,7 @@ public sealed class CreateBoundingBoxesNode : ComfyNode
     public NodeInput<IntType> Height { get; }
     public NodeInput<BoundingBoxesType> EditorState { get; }
     public NodeInput<ImageType> Background { get; } // optional
-    public NodeInput<StringType> BboxesInput { get; } // optional
+    public NodeInput<AnyType> BboxesInput { get; } // optional
     public NodeInput<BoundingBoxesType> LastIncoming { get; } // optional
 
     public CreateBoundingBoxesNode()
@@ -37,7 +37,7 @@ public sealed class CreateBoundingBoxesNode : ComfyNode
         Height.Set(1024L);
         EditorState = AddInput<BoundingBoxesType>("editor_state");
         Background = AddInput<ImageType>("background");
-        BboxesInput = AddInput<StringType>("bboxes");
+        BboxesInput = AddInput<AnyType>("bboxes");
         LastIncoming = AddInput<BoundingBoxesType>("last_incoming");
     }
 
@@ -50,7 +50,7 @@ public sealed class CreateBoundingBoxesNode : ComfyNode
         IntArg? Height = null,
         In<BoundingBoxesType>? EditorState = null,
         In<ImageType>? Background = null,
-        StringArg? BboxesInput = null,
+        AnyArg? BboxesInput = null,
         In<BoundingBoxesType>? LastIncoming = null
     )
     {

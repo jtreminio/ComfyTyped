@@ -13,12 +13,12 @@ public sealed class SaveGLBNode : ComfyNode
     public override string ClassTypeName => ClassType;
 
     // ── Inputs ──
-    public NodeInput<StringType> Mesh { get; }
+    public NodeInput<AnyType> Mesh { get; }
     public NodeInput<StringType> FilenamePrefix { get; }
 
     public SaveGLBNode()
     {
-        Mesh = AddInput<StringType>("mesh");
+        Mesh = AddInput<AnyType>("mesh");
         FilenamePrefix = AddInput<StringType>("filename_prefix");
         FilenamePrefix.Set("3d/ComfyUI");
     }
@@ -28,7 +28,7 @@ public sealed class SaveGLBNode : ComfyNode
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SaveGLBNode With(
-        StringArg? Mesh = null,
+        AnyArg? Mesh = null,
         StringArg? FilenamePrefix = null
     )
     {

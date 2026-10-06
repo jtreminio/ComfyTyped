@@ -15,13 +15,13 @@ public sealed class SwarmJustLoadTheModelPleaseNode : ComfyNode
 
     // ── Inputs ──
     public NodeInput<ModelType> Model { get; }
-    public NodeInput<StringType> Clip { get; }
+    public NodeInput<AnyType> Clip { get; }
     public NodeInput<VaeType> Vae { get; }
 
     public SwarmJustLoadTheModelPleaseNode()
     {
         Model = AddInput<ModelType>("model");
-        Clip = AddInput<StringType>("clip");
+        Clip = AddInput<AnyType>("clip");
         Vae = AddInput<VaeType>("vae");
     }
 
@@ -31,7 +31,7 @@ public sealed class SwarmJustLoadTheModelPleaseNode : ComfyNode
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public SwarmJustLoadTheModelPleaseNode With(
         In<ModelType>? Model = null,
-        StringArg? Clip = null,
+        AnyArg? Clip = null,
         In<VaeType>? Vae = null
     )
     {
