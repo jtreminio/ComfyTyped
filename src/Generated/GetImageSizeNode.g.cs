@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>Returns width and height of the image, and passes it through unchanged.</summary>
+/// <summary>Returns the width, height, and batch size of the image.</summary>
 /// <remarks>Category: image</remarks>
 public sealed class GetImageSizeNode : ComfyNode
 {

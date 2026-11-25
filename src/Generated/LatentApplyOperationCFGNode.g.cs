@@ -18,12 +18,18 @@ public sealed class LatentApplyOperationCFGNode : ComfyNode
     // ── Inputs ──
     public NodeInput<ModelType> Model { get; }
     public NodeInput<LatentOperationType> Operation { get; }
+    public NodeInput<FloatType> StartPercent { get; } // optional
+    public NodeInput<FloatType> EndPercent { get; } // optional
 
     public LatentApplyOperationCFGNode()
     {
         MODEL = AddOutput<ModelType>(0, "MODEL");
         Model = AddInput<ModelType>("model");
         Operation = AddInput<LatentOperationType>("operation");
+        StartPercent = AddInput<FloatType>("start_percent");
+        StartPercent.Set(0.0);
+        EndPercent = AddInput<FloatType>("end_percent");
+        EndPercent.Set(1.0);
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -32,11 +38,15 @@ public sealed class LatentApplyOperationCFGNode : ComfyNode
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public LatentApplyOperationCFGNode With(
         In<ModelType>? Model = null,
-        In<LatentOperationType>? Operation = null
+        In<LatentOperationType>? Operation = null,
+        FloatArg? StartPercent = null,
+        FloatArg? EndPercent = null
     )
     {
         Model?.ApplyTo(this.Model);
         Operation?.ApplyTo(this.Operation);
+        StartPercent?.ApplyTo(this.StartPercent);
+        EndPercent?.ApplyTo(this.EndPercent);
         return this;
     }
 }

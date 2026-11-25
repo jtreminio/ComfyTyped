@@ -14,6 +14,7 @@ public sealed class TextGenerateLTX2PromptNode : ComfyNode
 
     // ── Outputs ──
     public NodeOutput<StringType> GeneratedText { get; }
+    public NodeOutput<StringType> Thinking { get; }
 
     // ── Inputs ──
     public NodeInput<ClipType> Clip { get; }
@@ -23,12 +24,15 @@ public sealed class TextGenerateLTX2PromptNode : ComfyNode
     public NodeInput<ImageType> Image { get; } // optional
     public NodeInput<ImageType> Video { get; } // optional
     public NodeInput<AudioType> Audio { get; } // optional
-    public NodeInput<BooleanType> Thinking { get; } // optional
+    public NodeInput<BooleanType> ThinkingInput { get; } // optional
     public NodeInput<BooleanType> UseDefaultTemplate { get; } // optional
+    public NodeInput<StringType> Mtp { get; } // optional
+    public NodeInput<StringType> SystemPrompt { get; } // optional
 
     public TextGenerateLTX2PromptNode()
     {
         GeneratedText = AddOutput<StringType>(0, "generated_text");
+        Thinking = AddOutput<StringType>(1, "thinking");
         Clip = AddInput<ClipType>("clip");
         Prompt = AddInput<StringType>("prompt");
         Prompt.Set("");
@@ -38,10 +42,13 @@ public sealed class TextGenerateLTX2PromptNode : ComfyNode
         Image = AddInput<ImageType>("image");
         Video = AddInput<ImageType>("video");
         Audio = AddInput<AudioType>("audio");
-        Thinking = AddInput<BooleanType>("thinking");
-        Thinking.Set(false);
+        ThinkingInput = AddInput<BooleanType>("thinking");
+        ThinkingInput.Set(false);
         UseDefaultTemplate = AddInput<BooleanType>("use_default_template");
         UseDefaultTemplate.Set(true);
+        Mtp = AddInput<StringType>("mtp");
+        Mtp.Set("auto");
+        SystemPrompt = AddInput<StringType>("system_prompt");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -56,8 +63,10 @@ public sealed class TextGenerateLTX2PromptNode : ComfyNode
         In<ImageType>? Image = null,
         In<ImageType>? Video = null,
         In<AudioType>? Audio = null,
-        BoolArg? Thinking = null,
-        BoolArg? UseDefaultTemplate = null
+        BoolArg? ThinkingInput = null,
+        BoolArg? UseDefaultTemplate = null,
+        StringArg? Mtp = null,
+        StringArg? SystemPrompt = null
     )
     {
         Clip?.ApplyTo(this.Clip);
@@ -67,8 +76,10 @@ public sealed class TextGenerateLTX2PromptNode : ComfyNode
         Image?.ApplyTo(this.Image);
         Video?.ApplyTo(this.Video);
         Audio?.ApplyTo(this.Audio);
-        Thinking?.ApplyTo(this.Thinking);
+        ThinkingInput?.ApplyTo(this.ThinkingInput);
         UseDefaultTemplate?.ApplyTo(this.UseDefaultTemplate);
+        Mtp?.ApplyTo(this.Mtp);
+        SystemPrompt?.ApplyTo(this.SystemPrompt);
         return this;
     }
 }

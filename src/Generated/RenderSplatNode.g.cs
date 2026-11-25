@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>Render a gaussian splat as an image with an anisotropic EWA rasterizer (oriented elliptical splats, antialiased, depth-sorted front-to-back). The camera comes from a camera_info input (Load / Preview 3D, or a Create Camera Info node); leave it empty to auto-frame the splat. Set frames greater than 1 for a turntable batch of images to feed a Video node.</summary>
+/// <summary>Render a gaussian splat as an image with an anisotropic EWA rasterizer (oriented elliptical splats, antialiased, depth-sorted front-to-back). The camera comes from a camera_info input (Load / Preview 3D, Create Camera Info, or a camera list from Create Camera Orbit / Batch Cameras: one image per camera); leave it empty to auto-frame the splat. Set frames greater than 1 for a turntable batch of images to feed a Video node.</summary>
 /// <remarks>Category: 3d/splat</remarks>
 public sealed class RenderSplatNode : ComfyNode
 {

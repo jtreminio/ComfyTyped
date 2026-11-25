@@ -22,6 +22,8 @@ namespace ComfyTyped.Generated;
 /// lens: gpt-oss-20b
 /// pixeldit: gemma 2 2B elm
 /// minimax: MiniMax H3 Qwen3-VL or Music3 Qwen/RVQ
+/// flux3: qwen3-vl 4B
+/// fibo2: qwen3-vl 4B
 /// </summary>
 /// <remarks>Category: model/loaders</remarks>
 public sealed class CLIPLoaderNode : ComfyNode
@@ -93,6 +95,11 @@ public sealed class CLIPLoaderNode : ComfyNode
         public const string Joyimage = "joyimage";
         public const string Mage = "mage";
         public const string Minimax = "minimax";
+        public const string Yue2 = "yue2";
+        public const string Flux3 = "flux3";
+        public const string MossImage = "moss_image";
+        public const string Fibo2 = "fibo2";
+        public const string Pan2 = "pan2";
     }
 
     /// <summary>Known ComfyUI values for <c>device</c> (suggestions — any string is also accepted).</summary>

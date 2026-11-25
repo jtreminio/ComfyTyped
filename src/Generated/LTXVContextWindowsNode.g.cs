@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Set context windows for LTXV-like models.</summary>
-/// <remarks>Category: model/patch</remarks>
+/// <remarks>Category: model/patch/ltxv</remarks>
 public sealed class LTXVContextWindowsNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

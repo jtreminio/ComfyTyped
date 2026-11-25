@@ -23,6 +23,7 @@ public sealed class MoGePanoramaInferenceNode : ComfyNode
     public NodeInput<IntType> SplitResolution { get; }
     public NodeInput<IntType> MergeResolution { get; }
     public NodeInput<IntType> BatchSize { get; }
+    public NodeInput<IntType> RefineSteps { get; }
 
     public MoGePanoramaInferenceNode()
     {
@@ -37,6 +38,8 @@ public sealed class MoGePanoramaInferenceNode : ComfyNode
         MergeResolution.Set(1920L);
         BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(4L);
+        RefineSteps = AddInput<IntType>("refine_steps");
+        RefineSteps.Set(3L);
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -49,7 +52,8 @@ public sealed class MoGePanoramaInferenceNode : ComfyNode
         IntArg? ResolutionLevel = null,
         IntArg? SplitResolution = null,
         IntArg? MergeResolution = null,
-        IntArg? BatchSize = null
+        IntArg? BatchSize = null,
+        IntArg? RefineSteps = null
     )
     {
         MogeModel?.ApplyTo(this.MogeModel);
@@ -58,6 +62,7 @@ public sealed class MoGePanoramaInferenceNode : ComfyNode
         SplitResolution?.ApplyTo(this.SplitResolution);
         MergeResolution?.ApplyTo(this.MergeResolution);
         BatchSize?.ApplyTo(this.BatchSize);
+        RefineSteps?.ApplyTo(this.RefineSteps);
         return this;
     }
 }

@@ -27,6 +27,7 @@ public sealed class WanImageToVideoNode : ComfyNode, ComfyTyped.Families.ICondit
     public NodeInput<IntType> BatchSize { get; }
     public NodeInput<ClipVisionOutputType> ClipVisionOutput { get; } // optional
     public NodeInput<ImageType> StartImage { get; } // optional
+    public NodeInput<ImageType> RefPadImage { get; } // optional
 
     public WanImageToVideoNode()
     {
@@ -46,6 +47,7 @@ public sealed class WanImageToVideoNode : ComfyNode, ComfyTyped.Families.ICondit
         BatchSize.Set(1L);
         ClipVisionOutput = AddInput<ClipVisionOutputType>("clip_vision_output");
         StartImage = AddInput<ImageType>("start_image");
+        RefPadImage = AddInput<ImageType>("ref_pad_image");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -61,7 +63,8 @@ public sealed class WanImageToVideoNode : ComfyNode, ComfyTyped.Families.ICondit
         IntArg? Length = null,
         IntArg? BatchSize = null,
         In<ClipVisionOutputType>? ClipVisionOutput = null,
-        In<ImageType>? StartImage = null
+        In<ImageType>? StartImage = null,
+        In<ImageType>? RefPadImage = null
     )
     {
         PositiveInput?.ApplyTo(this.PositiveInput);
@@ -73,6 +76,7 @@ public sealed class WanImageToVideoNode : ComfyNode, ComfyTyped.Families.ICondit
         BatchSize?.ApplyTo(this.BatchSize);
         ClipVisionOutput?.ApplyTo(this.ClipVisionOutput);
         StartImage?.ApplyTo(this.StartImage);
+        RefPadImage?.ApplyTo(this.RefPadImage);
         return this;
     }
 }

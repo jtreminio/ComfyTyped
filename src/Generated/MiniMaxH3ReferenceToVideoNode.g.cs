@@ -19,13 +19,13 @@ public sealed class MiniMaxH3ReferenceToVideoNode : ComfyNode
 
     // ── Inputs ──
     public NodeInput<ClipType> Clip { get; }
-    public NodeInput<VaeType> Vae { get; }
-    public NodeInput<VaeType> AudioVae { get; }
     public NodeInput<StringType> Prompt { get; }
     public NodeInput<IntType> Width { get; }
     public NodeInput<IntType> Height { get; }
     public NodeInput<IntType> Length { get; }
     public NodeInput<StringType> RefImageSize { get; }
+    public NodeInput<VaeType> Vae { get; } // optional
+    public NodeInput<VaeType> AudioVae { get; } // optional
 
     // ── Input lists (COMFY_AUTOGROW_V3) ──
     public NodeInputList<ImageType> RefImages { get; } // optional
@@ -38,8 +38,6 @@ public sealed class MiniMaxH3ReferenceToVideoNode : ComfyNode
         Positive = AddOutput<ConditioningType>(0, "positive");
         LATENT = AddOutput<LatentType>(1, "LATENT");
         Clip = AddInput<ClipType>("clip");
-        Vae = AddInput<VaeType>("vae");
-        AudioVae = AddInput<VaeType>("audio_vae");
         Prompt = AddInput<StringType>("prompt");
         Width = AddInput<IntType>("width");
         Width.Set(1344L);
@@ -49,6 +47,8 @@ public sealed class MiniMaxH3ReferenceToVideoNode : ComfyNode
         Length.Set(124L);
         RefImageSize = AddInput<StringType>("ref_image_size");
         RefImageSize.Set("match");
+        Vae = AddInput<VaeType>("vae");
+        AudioVae = AddInput<VaeType>("audio_vae");
         RefImages = AddInputList<ImageType>("ref_images", prefix: "ref_image_", max: 9);
         RefVideos = AddInputList<ImageType>("ref_videos", prefix: "ref_video_", max: 3);
         RefVideoAudios = AddInputList<AudioType>("ref_video_audios", prefix: "ref_video_audio_", max: 3);
@@ -61,23 +61,23 @@ public sealed class MiniMaxH3ReferenceToVideoNode : ComfyNode
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public MiniMaxH3ReferenceToVideoNode With(
         In<ClipType>? Clip = null,
-        In<VaeType>? Vae = null,
-        In<VaeType>? AudioVae = null,
         StringArg? Prompt = null,
         IntArg? Width = null,
         IntArg? Height = null,
         IntArg? Length = null,
-        StringArg? RefImageSize = null
+        StringArg? RefImageSize = null,
+        In<VaeType>? Vae = null,
+        In<VaeType>? AudioVae = null
     )
     {
         Clip?.ApplyTo(this.Clip);
-        Vae?.ApplyTo(this.Vae);
-        AudioVae?.ApplyTo(this.AudioVae);
         Prompt?.ApplyTo(this.Prompt);
         Width?.ApplyTo(this.Width);
         Height?.ApplyTo(this.Height);
         Length?.ApplyTo(this.Length);
         RefImageSize?.ApplyTo(this.RefImageSize);
+        Vae?.ApplyTo(this.Vae);
+        AudioVae?.ApplyTo(this.AudioVae);
         return this;
     }
 }

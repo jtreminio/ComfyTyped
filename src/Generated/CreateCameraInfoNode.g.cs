@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>Build a camera_infoMode 'orbit' aims with yaw/pitch/distance around the target; 'look_at' places the camera at world position. Coordinates are the viewer's world space (right-handed,Y-up).</summary>
+/// <summary>Build a camera_info. Mode 'orbit' aims with yaw/pitch/distance around the target; 'look_at' places the camera at world position. Coordinates are the viewer's world space (right-handed,Y-up), or with a mesh connected that mesh's frame, so the same settings frame any mesh.</summary>
 /// <remarks>Category: 3d</remarks>
 public sealed class CreateCameraInfoNode : ComfyNode
 {
@@ -25,6 +25,8 @@ public sealed class CreateCameraInfoNode : ComfyNode
     public NodeInput<FloatType> Fov { get; }
     public NodeInput<FloatType> Zoom { get; }
     public NodeInput<StringType> CameraType { get; }
+    public NodeInput<CameraInfoStateType> CameraInfoState { get; } // optional
+    public NodeInput<MeshType> Mesh { get; } // optional
 
     public CreateCameraInfoNode()
     {
@@ -43,6 +45,8 @@ public sealed class CreateCameraInfoNode : ComfyNode
         Zoom = AddInput<FloatType>("zoom");
         Zoom.Set(1.0);
         CameraType = AddInput<StringType>("camera_type");
+        CameraInfoState = AddInput<CameraInfoStateType>("camera_info_state");
+        Mesh = AddInput<MeshType>("mesh");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -57,7 +61,9 @@ public sealed class CreateCameraInfoNode : ComfyNode
         FloatArg? Roll = null,
         FloatArg? Fov = null,
         FloatArg? Zoom = null,
-        StringArg? CameraType = null
+        StringArg? CameraType = null,
+        In<CameraInfoStateType>? CameraInfoState = null,
+        In<MeshType>? Mesh = null
     )
     {
         Mode?.ApplyTo(this.Mode);
@@ -68,6 +74,8 @@ public sealed class CreateCameraInfoNode : ComfyNode
         Fov?.ApplyTo(this.Fov);
         Zoom?.ApplyTo(this.Zoom);
         CameraType?.ApplyTo(this.CameraType);
+        CameraInfoState?.ApplyTo(this.CameraInfoState);
+        Mesh?.ApplyTo(this.Mesh);
         return this;
     }
 }

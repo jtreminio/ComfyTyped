@@ -25,17 +25,19 @@ public sealed class SplatToMeshNode : ComfyNode
     public NodeInput<IntType> MinComponent { get; }
     public NodeInput<FloatType> MinOpacity { get; }
     public NodeInput<FloatType> ColorSharpen { get; }
+    public NodeInput<BooleanType> Solid { get; } // optional
+    public NodeInput<FloatType> Fill { get; } // optional
 
     public SplatToMeshNode()
     {
         Mesh = AddOutput<MeshType>(0, "mesh");
         Splat = AddInput<SplatType>("splat");
         Resolution = AddInput<IntType>("resolution");
-        Resolution.Set(384L);
+        Resolution.Set(512L);
         Kernel = AddInput<IntType>("kernel");
         Kernel.Set(5L);
         Smooth = AddInput<IntType>("smooth");
-        Smooth.Set(0L);
+        Smooth.Set(3L);
         Level = AddInput<FloatType>("level");
         Level.Set(0.4);
         MinComponent = AddInput<IntType>("min_component");
@@ -44,6 +46,10 @@ public sealed class SplatToMeshNode : ComfyNode
         MinOpacity.Set(0.02);
         ColorSharpen = AddInput<FloatType>("color_sharpen");
         ColorSharpen.Set(2.0);
+        Solid = AddInput<BooleanType>("solid");
+        Solid.Set(true);
+        Fill = AddInput<FloatType>("fill");
+        Fill.Set(20.0);
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -58,7 +64,9 @@ public sealed class SplatToMeshNode : ComfyNode
         FloatArg? Level = null,
         IntArg? MinComponent = null,
         FloatArg? MinOpacity = null,
-        FloatArg? ColorSharpen = null
+        FloatArg? ColorSharpen = null,
+        BoolArg? Solid = null,
+        FloatArg? Fill = null
     )
     {
         Splat?.ApplyTo(this.Splat);
@@ -69,6 +77,8 @@ public sealed class SplatToMeshNode : ComfyNode
         MinComponent?.ApplyTo(this.MinComponent);
         MinOpacity?.ApplyTo(this.MinOpacity);
         ColorSharpen?.ApplyTo(this.ColorSharpen);
+        Solid?.ApplyTo(this.Solid);
+        Fill?.ApplyTo(this.Fill);
         return this;
     }
 }

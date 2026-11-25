@@ -18,6 +18,7 @@ public sealed class ModelSamplingAuraFlowNode : ComfyNode
     // ── Inputs ──
     public NodeInput<ModelType> Model { get; }
     public NodeInput<FloatType> Shift { get; }
+    public NodeInput<StringType> Sampling { get; } // optional
 
     public ModelSamplingAuraFlowNode()
     {
@@ -25,6 +26,8 @@ public sealed class ModelSamplingAuraFlowNode : ComfyNode
         Model = AddInput<ModelType>("model");
         Shift = AddInput<FloatType>("shift");
         Shift.Set(1.73);
+        Sampling = AddInput<StringType>("sampling");
+        Sampling.Set("flow");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -33,11 +36,20 @@ public sealed class ModelSamplingAuraFlowNode : ComfyNode
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public ModelSamplingAuraFlowNode With(
         In<ModelType>? Model = null,
-        FloatArg? Shift = null
+        FloatArg? Shift = null,
+        StringArg? Sampling = null
     )
     {
         Model?.ApplyTo(this.Model);
         Shift?.ApplyTo(this.Shift);
+        Sampling?.ApplyTo(this.Sampling);
         return this;
+    }
+
+    /// <summary>Known ComfyUI values for <c>sampling</c> (suggestions — any string is also accepted).</summary>
+    public static class SamplingValues
+    {
+        public const string Flow = "flow";
+        public const string ImgToImgVelocity = "img_to_img_velocity";
     }
 }

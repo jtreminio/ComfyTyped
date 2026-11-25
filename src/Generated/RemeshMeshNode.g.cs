@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>Re-extracts a uniformly tessellated mesh via a narrow-band distance field + Dual Contouring, on the active compute device. Normalizes messy / non-manifold / self-intersecting topology; run before Decimate Mesh to hit an exact face count. Output stays welded.</summary>
+/// <summary>Re-extracts a uniformly tessellated mesh via a narrow-band distance field + Dual Contouring, on the active compute device. Normalizes messy / non-manifold / self-intersecting topology; run before Decimate Mesh to hit an exact face count. Output stays welded. Meshes reaching past 0.51 or spanning under 0.5 are fitted to the [-0.5,0.5] cube first and mapped back.</summary>
 /// <remarks>Category: 3d/mesh</remarks>
 public sealed class RemeshMeshNode : ComfyNode
 {

@@ -5,6 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
+/// <summary>Extract a key's value from the first valid JSON object in the text, including Markdown code blocks.</summary>
 /// <remarks>Category: text</remarks>
 public sealed class JsonExtractStringNode : ComfyNode
 {

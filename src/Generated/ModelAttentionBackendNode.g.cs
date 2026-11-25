@@ -5,6 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
+/// <summary>Selects the dense attention implementation for the model. When used with Block Sparse Attention, this backend is used whenever sparse attention is inactive or unsupported.</summary>
 /// <remarks>Category: model/patch</remarks>
 public sealed class ModelAttentionBackendNode : ComfyNode
 {
@@ -13,17 +14,18 @@ public sealed class ModelAttentionBackendNode : ComfyNode
     public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
-    public NodeOutput<ModelType> MODEL { get; }
+    public NodeOutput<ModelType> Model { get; }
 
     // ── Inputs ──
-    public NodeInput<ModelType> Model { get; }
+    public NodeInput<ModelType> ModelInput { get; }
     public NodeInput<StringType> Attention { get; }
 
     public ModelAttentionBackendNode()
     {
-        MODEL = AddOutput<ModelType>(0, "MODEL");
-        Model = AddInput<ModelType>("model");
+        Model = AddOutput<ModelType>(0, "model");
+        ModelInput = AddInput<ModelType>("model");
         Attention = AddInput<StringType>("attention");
+        Attention.Set("pytorch attention");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -31,19 +33,12 @@ public sealed class ModelAttentionBackendNode : ComfyNode
     /// Primitive inputs accept a literal or a same-typed output; connection inputs accept a same-typed
     /// output (mismatches are a compile error). Input lists are not exposed here — use <c>Add</c>/<c>AddRange</c>.</summary>
     public ModelAttentionBackendNode With(
-        In<ModelType>? Model = null,
+        In<ModelType>? ModelInput = null,
         StringArg? Attention = null
     )
     {
-        Model?.ApplyTo(this.Model);
+        ModelInput?.ApplyTo(this.ModelInput);
         Attention?.ApplyTo(this.Attention);
         return this;
-    }
-
-    /// <summary>Known ComfyUI values for <c>attention</c> (suggestions — any string is also accepted).</summary>
-    public static class AttentionValues
-    {
-        public const string PytorchAttention = "pytorch attention";
-        public const string ComfyKitchenAttention = "comfy kitchen attention";
     }
 }

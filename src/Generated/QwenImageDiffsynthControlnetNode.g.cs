@@ -22,6 +22,8 @@ public sealed class QwenImageDiffsynthControlnetNode : ComfyNode
     public NodeInput<ImageType> Image { get; }
     public NodeInput<FloatType> Strength { get; }
     public NodeInput<MaskType> Mask { get; } // optional
+    public NodeInput<FloatType> StartPercent { get; } // optional
+    public NodeInput<FloatType> EndPercent { get; } // optional
 
     public QwenImageDiffsynthControlnetNode()
     {
@@ -33,6 +35,10 @@ public sealed class QwenImageDiffsynthControlnetNode : ComfyNode
         Strength = AddInput<FloatType>("strength");
         Strength.Set(1.0);
         Mask = AddInput<MaskType>("mask");
+        StartPercent = AddInput<FloatType>("start_percent");
+        StartPercent.Set(0.0);
+        EndPercent = AddInput<FloatType>("end_percent");
+        EndPercent.Set(1.0);
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -45,7 +51,9 @@ public sealed class QwenImageDiffsynthControlnetNode : ComfyNode
         In<VaeType>? Vae = null,
         In<ImageType>? Image = null,
         FloatArg? Strength = null,
-        In<MaskType>? Mask = null
+        In<MaskType>? Mask = null,
+        FloatArg? StartPercent = null,
+        FloatArg? EndPercent = null
     )
     {
         Model?.ApplyTo(this.Model);
@@ -54,6 +62,8 @@ public sealed class QwenImageDiffsynthControlnetNode : ComfyNode
         Image?.ApplyTo(this.Image);
         Strength?.ApplyTo(this.Strength);
         Mask?.ApplyTo(this.Mask);
+        StartPercent?.ApplyTo(this.StartPercent);
+        EndPercent?.ApplyTo(this.EndPercent);
         return this;
     }
 }

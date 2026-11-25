@@ -24,6 +24,7 @@ public sealed class MoGeInferenceNode : ComfyNode
     public NodeInput<IntType> BatchSize { get; }
     public NodeInput<BooleanType> ForceProjection { get; }
     public NodeInput<BooleanType> ApplyMask { get; }
+    public NodeInput<IntType> RefineSteps { get; }
 
     public MoGeInferenceNode()
     {
@@ -40,6 +41,8 @@ public sealed class MoGeInferenceNode : ComfyNode
         ForceProjection.Set(true);
         ApplyMask = AddInput<BooleanType>("apply_mask");
         ApplyMask.Set(true);
+        RefineSteps = AddInput<IntType>("refine_steps");
+        RefineSteps.Set(3L);
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -53,7 +56,8 @@ public sealed class MoGeInferenceNode : ComfyNode
         FloatArg? FovXDegrees = null,
         IntArg? BatchSize = null,
         BoolArg? ForceProjection = null,
-        BoolArg? ApplyMask = null
+        BoolArg? ApplyMask = null,
+        IntArg? RefineSteps = null
     )
     {
         MogeModel?.ApplyTo(this.MogeModel);
@@ -63,6 +67,7 @@ public sealed class MoGeInferenceNode : ComfyNode
         BatchSize?.ApplyTo(this.BatchSize);
         ForceProjection?.ApplyTo(this.ForceProjection);
         ApplyMask?.ApplyTo(this.ApplyMask);
+        RefineSteps?.ApplyTo(this.RefineSteps);
         return this;
     }
 }

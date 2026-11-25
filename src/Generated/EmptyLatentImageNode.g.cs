@@ -25,9 +25,9 @@ public sealed class EmptyLatentImageNode : ComfyNode
     {
         LATENT = AddOutput<LatentType>(0, "LATENT");
         Width = AddInput<IntType>("width");
-        Width.Set(512L);
+        Width.Set(1024L);
         Height = AddInput<IntType>("height");
-        Height.Set(512L);
+        Height.Set(1024L);
         BatchSize = AddInput<IntType>("batch_size");
         BatchSize.Set(1L);
     }

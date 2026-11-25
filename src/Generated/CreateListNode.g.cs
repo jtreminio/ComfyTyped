@@ -13,14 +13,14 @@ public sealed class CreateListNode : ComfyNode
     public override string ClassTypeName => ClassType;
 
     // ── Outputs ──
-    public NodeOutput<ComfyMatchTypeV3> List { get; }
+    public NodeOutput<AnyType> List { get; }
 
     // ── Input lists (COMFY_AUTOGROW_V3) ──
-    public NodeInputList<ComfyMatchTypeV3> InputsInput { get; }
+    public NodeInputList<AnyType> InputsInput { get; }
 
     public CreateListNode()
     {
-        List = AddOutput<ComfyMatchTypeV3>(0, "list");
-        InputsInput = AddInputList<ComfyMatchTypeV3>("inputs", prefix: "input", max: 10);
+        List = AddOutput<AnyType>(0, "list");
+        InputsInput = AddInputList<AnyType>("inputs", prefix: "input", max: 10);
     }
 }

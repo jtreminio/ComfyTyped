@@ -6,7 +6,7 @@ using ComfyTyped.Types;
 namespace ComfyTyped.Generated;
 
 /// <summary>Predicts the natural shot duration for a prompt using the LTX 2.4 duration head (loaded with ModelPatchLoader), and snaps it to the VAE's 8k+1 frame grid.</summary>
-/// <remarks>Category: conditioning/video_models</remarks>
+/// <remarks>Category: model/conditioning/ltxv</remarks>
 public sealed class LTXVDurationPredictorNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>

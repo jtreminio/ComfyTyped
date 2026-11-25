@@ -5,7 +5,8 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <remarks>Category: model/patch/z-image</remarks>
+/// <summary>Applies a Z-Image or Qwen Image 2.1 Fun ControlNet loaded with Load Model Patch.</summary>
+/// <remarks>Category: model/patch</remarks>
 public sealed class ZImageFunControlnetNode : ComfyNode
 {
     /// <summary>ComfyUI <c>class_type</c> for this node — use for static refs (switch cases, <c>g.CreateNode(...)</c>).</summary>
@@ -23,6 +24,8 @@ public sealed class ZImageFunControlnetNode : ComfyNode
     public NodeInput<ImageType> Image { get; } // optional
     public NodeInput<ImageType> InpaintImage { get; } // optional
     public NodeInput<MaskType> Mask { get; } // optional
+    public NodeInput<FloatType> StartPercent { get; } // optional
+    public NodeInput<FloatType> EndPercent { get; } // optional
 
     public ZImageFunControlnetNode()
     {
@@ -35,6 +38,10 @@ public sealed class ZImageFunControlnetNode : ComfyNode
         Image = AddInput<ImageType>("image");
         InpaintImage = AddInput<ImageType>("inpaint_image");
         Mask = AddInput<MaskType>("mask");
+        StartPercent = AddInput<FloatType>("start_percent");
+        StartPercent.Set(0.0);
+        EndPercent = AddInput<FloatType>("end_percent");
+        EndPercent.Set(1.0);
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -48,7 +55,9 @@ public sealed class ZImageFunControlnetNode : ComfyNode
         FloatArg? Strength = null,
         In<ImageType>? Image = null,
         In<ImageType>? InpaintImage = null,
-        In<MaskType>? Mask = null
+        In<MaskType>? Mask = null,
+        FloatArg? StartPercent = null,
+        FloatArg? EndPercent = null
     )
     {
         Model?.ApplyTo(this.Model);
@@ -58,6 +67,8 @@ public sealed class ZImageFunControlnetNode : ComfyNode
         Image?.ApplyTo(this.Image);
         InpaintImage?.ApplyTo(this.InpaintImage);
         Mask?.ApplyTo(this.Mask);
+        StartPercent?.ApplyTo(this.StartPercent);
+        EndPercent?.ApplyTo(this.EndPercent);
         return this;
     }
 }

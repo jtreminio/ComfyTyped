@@ -5,7 +5,7 @@ using ComfyTyped.Types;
 
 namespace ComfyTyped.Generated;
 
-/// <summary>Ray-casts a single view of a mesh. The camera and optional model transform can come from a Load3D / Preview3D viewer.</summary>
+/// <summary>Renders a mesh, one image per camera. Cameras come from a Load3D / Preview3D viewer (with its model transform), Create Camera Info or Create Camera Orbit; without one, an auto-framed front view.</summary>
 /// <remarks>Category: 3d/mesh</remarks>
 public sealed class RenderMeshNode : ComfyNode
 {
@@ -25,6 +25,7 @@ public sealed class RenderMeshNode : ComfyNode
     public NodeInput<ColorType> Background { get; }
     public NodeInput<Load3dModelInfoType> Model3dInfo { get; } // optional
     public NodeInput<Load3dCameraType> CameraInfo { get; } // optional
+    public NodeInput<ImageType> Texture { get; } // optional
 
     public RenderMeshNode()
     {
@@ -39,6 +40,7 @@ public sealed class RenderMeshNode : ComfyNode
         Background = AddInput<ColorType>("background");
         Model3dInfo = AddInput<Load3dModelInfoType>("model_3d_info");
         CameraInfo = AddInput<Load3dCameraType>("camera_info");
+        Texture = AddInput<ImageType>("texture");
     }
 
     /// <summary>Fluent setter for inputs. Returns <c>this</c> for chaining.
@@ -52,7 +54,8 @@ public sealed class RenderMeshNode : ComfyNode
         IntArg? Height = null,
         In<ColorType>? Background = null,
         In<Load3dModelInfoType>? Model3dInfo = null,
-        In<Load3dCameraType>? CameraInfo = null
+        In<Load3dCameraType>? CameraInfo = null,
+        In<ImageType>? Texture = null
     )
     {
         Mesh?.ApplyTo(this.Mesh);
@@ -62,6 +65,7 @@ public sealed class RenderMeshNode : ComfyNode
         Background?.ApplyTo(this.Background);
         Model3dInfo?.ApplyTo(this.Model3dInfo);
         CameraInfo?.ApplyTo(this.CameraInfo);
+        Texture?.ApplyTo(this.Texture);
         return this;
     }
 }

@@ -17,8 +17,8 @@ public sealed class ComfySwitchNodeNode : ComfyNode
 
     // ── Inputs ──
     public NodeInput<BooleanType> Switch { get; }
-    public NodeInput<ComfyMatchTypeV3> OnFalse { get; }
-    public NodeInput<ComfyMatchTypeV3> OnTrue { get; }
+    public NodeInput<ComfyMatchTypeV3> OnFalse { get; } // optional
+    public NodeInput<ComfyMatchTypeV3> OnTrue { get; } // optional
 
     public ComfySwitchNodeNode()
     {
